@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "Register for Free Trial - TFC.tv: Official ABS-CBN Online Channel";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:register";
+
+    List<IPTV2_Model.Country> cList = null;
+    if (ViewBag.ListOfCountries != null)
+    {
+        cList = ViewBag.ListOfCountries;
+    }
+
+    List<IPTV2_Model.State> cState = null;
+    if (ViewBag.ListOfStates != null)
+    {
+        cState = ViewBag.ListOfStates;
+    }
+
+    string login_email = String.Empty;
+    string first_name = String.Empty;
+    string last_name = String.Empty;
+    string CountryCode = GlobalConfig.DefaultCountry;
+    string City = String.Empty;
+    string State = String.Empty;
+    string uid = String.Empty;
+    string provider = String.Empty;
+    Maxmind.Location location = null;
+    try
+    {
+        if (ViewBag.location != null)
+        {
+            location = ViewBag.location;
+            CountryCode = location.countryCode;
+            City = location.city;
+            State = CountryCode == GlobalConfig.DefaultCountry ? location.region : location.regionName;
+        }
+    }
+    catch (Exception) { }
+    login_email = Request.QueryString["login_email"];
+    first_name = Request.QueryString["first_name"];
+    last_name = Request.QueryString["last_name"];
+    if (!String.IsNullOrEmpty(Request.QueryString["city"]))
+    {
+        City = Request.QueryString["city"];
+    }
+    if (!String.IsNullOrEmpty(Request.QueryString["hstate"]))
+    {
+        State = Request.QueryString["hstate"];
+    }
+    if (!String.IsNullOrEmpty(Request.QueryString["hcountry"]))
+    {
+        CountryCode = Request.QueryString["hcountry"];
+    }
+
+    TransactionReturnType ErrorMessage = null;
+    System.Collections.Specialized.NameValueCollection qs = null;
+    string page_title = "Start your 7 day free trial now!";
+    try
+    {
+        if (ViewBag.PageTitle != null)
+        { page_title = ViewBag.PageTitle; }
+
+        if (Request.Cookies.AllKeys.Contains("vntycok"))
+        { page_title = "Start your 14-day free trial now!"; }
+    }
+    catch (Exception) { }
+    string button_copy = "Register Now!";
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+
+        if (ViewBag.qs != null)
+        {
+            qs = ViewBag.qs;
+            first_name = qs["firstName"];
+            last_name = qs["lastName"];
+            login_email = qs["email"];
+            uid = qs["UID"];
+            provider = qs["provider"];
+            page_title = "Get your free trial now!";
+            button_copy = "Confirm your free trial";
+
+            if (Request.Cookies.AllKeys.Contains("vntycok"))
+            { page_title = "Get your 14-day free trial now!"; }
+        }
+    }
+    catch (Exception) { }
+
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+}
+<section class="page_pagebody page_registration">
+    <div class="container">
+        <!-- reg page top -->
+        <div class="row registration_head">
+            <div class="reg_hleft col-md-8 col-sm-8 col-xs-12">
+                <h1 class="page_title">
+                    @page_title
+            </h1>
+        </div>
+        <div class="reg_hright col-md-4 col-sm-4 hidden-xs">
+            <p>
+                <span class="siteseal">
+                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                </span>
+            </p>
+        </div>
+    </div>
+    <!-- end top -->
+    <div class="row">
+        <!-- reg form -->
+        <div class="reg_left col-md-5 col-sm-6 col-xs-12">
+            <h2 class="registration_h2">
+                Create your account
+            </h2>
+            <form role="form" action="@Url.Action("_Register", "User")" method="post">
+                @Html.AntiForgeryToken()
+                @{if (ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">
+                        <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                    </div>
+                }
+                }
+                <div class="form-group">
+                    @*<h3 class="registration_h3">
+                        <label for="login_email">
+                            Email Address</label></h3>*@
+                    <input type="email" class="form-control" id="login_email" name="login_email" value="@login_email" maxlength="64" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    @*<h3 class="registration_h3">
+                        <label for="login_pass">
+                            Choose a password (4-8 characters)</label></h3>*@
+                    <input type="password" class="form-control" id="login_pass" name="login_pass" placeholder="Choose a Password..."
+                           required>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xs-5">
+                        @*<h3 class="registration_h3">
+                            <label for="first_name">
+                                First Name</label></h3>*@
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="@first_name" maxlength="32" placeholder="First Name" required>
+                    </div>
+                    <div class="col-xs-7">
+                        @*  <h3 class="registration_h3">
+                            <label for="last_name">
+                                Last Name</label></h3>*@
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="@last_name" maxlength="32" placeholder="Last Name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*<h3 class="registration_h3">
+                        <label for="city">
+                            City</label></h3>*@
+                    <input type="text" class="form-control" id="city" value="@Html.Raw(City)" name="city" maxlength="50" placeholder="City" required>
+                    <!-- /input-group -->
+                </div>
+                <div class="form-group three row">
+                    <div class="col-xs-4" id="stateCont">
+                        @*   <h3 class="registration_h3">
+                            <label for="state">
+                                State</label></h3>*@
+                    </div>
+                    <div class="col-xs-8">
+                        @*<h3 class="registration_h3">
+                            <label for="country">
+                                Country</label></h3>*@
+                        <select id="country" class="form-control" name="country" placeholder="Country">
+                            @{if (cList != null)
+                            {
+                                if (cList.Count() > 0)
+                                {
+                                    foreach (var item in cList)
+                                    {
+                                        <option value="@item.Code" @String.Format("{0}", String.Compare(CountryCode, item.Code, true) == 0 ? " selected" : String.Empty)>
+                                            @item.Description
+                                    </option>
+                                    }
+                                }
+                            }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xs-1">
+                        <input type="checkbox" class="form-control css-checkbox" id="confirm" required>
+                        <label for="confirm" class="css-label klaus">
+                        </label>
+                    </div>
+                    <div class="col-xs-11">
+                        <label for="confirm">
+                            I confirm that I have read and fully understand and accept the <a href="@Url.Action("TermsAndConditions", "Home")">
+                                Terms and Conditions of the Subscription and/or Use
+                            </a> of TFC.tv
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" name="provider" id="provider" value="@provider" />
+                <input type="hidden" name="uid" id="uid" value="@uid" />
+                <input type="submit" class="btn btn-primary blue_button" value="@button_copy">
+            </form>
+            <p>
+                <span class="siteseal">
+                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                </span>
+            </p>
+        </div>
+        <!-- end reg form -->
+        <!-- login with social -->
+        <div class="reg_right col-md-6 col-md-offset-1 col-sm-6 col-xs-12 regPanelContainer">
+            <h2 class="registration_h2">
+                Or create your account with your favorite social network
+            </h2>
+            <div id="registrationPanel" class="regPanelc">
+            </div>
+            <br />
+            @*<div class="row seal_area">
+                    <span id="sealUI"></span>
+                </div>*@
+        </div>
+        <!-- end login social -->
+    </div>
+</div>
+</section>
+<!-- end page body section -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "placeholders.jquery.min.js")
+    <script type="text/javascript">
+        var register_params =
+            {
+                width: 260
+                , height: '100%'
+                , containerID: 'registrationPanel'
+                , buttonsStyle: 'fullLogoColored'
+                , facepilePosition: 'none'
+                , hideGigyaLink: true
+                , showTermsLink: false
+                , redirectURL: '/Social/Socialize'
+                , version: 2
+            }
+        gigya.socialize.showLoginUI(register_params);
+    </script>
+    @{if (!String.IsNullOrEmpty(State))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () { $('#state').val("@Html.Raw(State)"); }, 850);
+            });
+        </script>
+    }
+    }
+    <script type="text/javascript">
+        $('.footer_register_li').remove();
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var date1 = new Date(readCookie("rcDate"));
+            var date2 = new Date();
+            var diffDays = dateDiffInDays(date1, date2);
+            if (diffDays < 14)
+                window.location.href = "/";
+        });
+    </script>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                gigya.socialize.showSealUI({
+                    containerID: "sealUI"
+                });
+            });
+        </script>*@
+}
+@section MetaTags{
+    <meta name="description" content="Start your free week now. Cancel online anytime you want. No Commitments, hidden fees or hassles." />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="TFC.tv" />
+    <meta property="og:description" content="As the official ABS-CBN online platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium subscription based videos from ABS-CBN." />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

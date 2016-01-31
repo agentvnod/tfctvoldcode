@@ -1,0 +1,160 @@
+﻿@model IPTV2_Model.Celebrity
+@{    
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+    }
+
+    int attribActionId = (int)AnniversaryPromo.AnnivPromo_PostingCOMMENTS;
+    string attribDescription = String.Format("You commented on <a href=\"{0}\">{1} {2}</a>", Request.Url.AbsoluteUri, Model.FirstName, Model.LastName);
+    var streamID = String.Format("Celebrity_{0}", Model.CelebrityId);
+    var noCommentText = String.Format("There are no comments available for {0} {1}", Model.FirstName, Model.LastName);
+}
+<!-- comment -->
+<div class="reviews-comments-Header">
+    <h2 class="h2-comments-header">
+        Comments</h2>
+</div>
+@{using (Html.BeginForm(String.Empty, String.Empty, FormMethod.Post, new { id = "naform1", style = "display: none;" }))
+  {                  
+    <div class="clear">@Html.AntiForgeryToken()</div>
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+  }
+
+  bool IsAjaxCrawlable = false;
+  if (ViewBag.IsAjaxCrawlable != null)
+  {
+      IsAjaxCrawlable = (bool)ViewBag.IsAjaxCrawlable;
+  }
+}
+<br />
+<div class="transparentBgs">
+    <div id="celebrity-comments">
+        <div id="commentsDiv">
+            @{if (IsAjaxCrawlable)
+              {
+                  try
+                  {
+                      var responseData = GigyaMethods.GetComments("Celebrities", streamID);
+                      if (responseData != null)
+                      {
+                          if (responseData.errorCode == 0)
+                          {
+                              if (responseData.commentCount > 0)
+                              {
+                @Html.Raw(responseData.comments)
+                              }
+                              else
+                              { 
+                <span>@noCommentText</span>
+                              }
+                          }
+                      }
+                  }
+                  catch (Exception) { }
+              }
+            }
+        </div>
+    </div>
+</div>
+<br />
+<script type='text/javascript'>            
+    function publishInternalUserAction(params) {
+        var actInternal = new gigya.services.socialize.UserAction();
+        actInternal.setLinkBack(location.href);
+        actInternal.setTitle('@Model.FirstName @Model.LastName');                    
+        actInternal.setDescription('has posted a comment : "' + params.comment + '"');                    
+        actInternal.addMediaItem({ type: 'image', src: '@GlobalConfig.CelebrityImgPath' + '@Model.CelebrityId' + '/' + '@Model.ImageUrl', href: location.href });                    
+        actInternal.actorUID = '@User.Identity.Name';                    
+        var params = {
+            feedID: 'UserAction',
+            userAction: actInternal,
+            scope: 'internal',
+            privacy: 'public',
+            callback: publishInternalUserAction_callback
+        };
+        @{
+            if (userData != null)
+            {
+                if (userData.IsInternalSharingEnabled.Contains("true"))
+                {
+                <text>
+                gigya.services.socialize.publishUserAction(params);
+                </text>
+                }
+            }
+        }
+    }
+
+    function publishInternalUserAction_callback(response) {
+        if (response.errorCode != 0) {                                           
+        }
+    }            
+</script>
+@{if (!IsAjaxCrawlable)
+  {
+    <script type="text/javascript">
+        var act = new gigya.services.socialize.UserAction();
+        act.setLinkBack(location.href);
+        act.setTitle("Pinoy TV Celebrities on TFC.tv");
+        act.setSubtitle("tfc.tv");
+        act.addActionLink("Read More", location.href);
+        act.addMediaItem({ type: 'image', src: '@GlobalConfig.CelebrityImgPath' + '@Model.CelebrityId' + '/' + '@Model.ImageUrl', href: location.href });
+        act.setUserMessage("has posted a comment about " + '@Model.FirstName' + ' ' + '@Model.LastName');
+
+        var params = {
+            enabledProviders: '@GlobalConfig.SocialProvidersList',
+            categoryID: 'Celebrities',
+            streamID: '@streamID',
+            containerID: 'commentsDiv',
+            userAction: act,
+            cid: '@Model.FirstName' + '-' + '@Model.LastName',
+            width: 860,
+            useSiteLogin: true,
+            shortURLs: 'never',
+            onSiteLoginClicked: onSiteLoginHandler,
+            onCommentSubmitted: onCommentSubmittedHandler,
+            version: 2
+        }
+        gigya.comments.showCommentsUI(params);
+
+        function onSiteLoginHandler(event) {
+            $('#signin').click();
+            return false;
+        }
+
+        function onCommentSubmittedHandler(eventObj) {
+            var userId = '@User.Identity.Name';
+            var reactionTypeId = tfc.Social.getEngagementId('comment');
+            var celebrityId = '@Model.CelebrityId';
+
+            jQuery.post('@Url.Action("CelebrityReactions", "SocialEngagement")',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    celebrityId: celebrityId
+                }, function (data) {
+                    //alert(data);
+                });
+            var nform = $('form#naform1');
+            $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+            });
+            if ("providerPostIDs" in eventObj) { //shared to Social Network
+                reactionTypeId = tfc.Social.getEngagementId('share');
+                jQuery.post('@Url.Action("CelebrityReactions", "SocialEngagement")',
+                    {
+                        userId: userId,
+                        reactionTypeId: reactionTypeId,
+                        celebrityId: celebrityId
+                    }, function (data) {
+                    });
+            }
+            var params = { comment: eventObj.commentText };
+            publishInternalUserAction(params);
+        }
+    </script>
+  }
+}

@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Reload";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Reload Your Wallet</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="reloadContainer">
+            <div class="breakStandard">
+            </div>
+            <div class="padLeftLarge">
+                <div class="subtext">
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div id="message">
+                </div>
+                <div id="registerBody">
+                    @{using (Ajax.BeginForm("Register", "User", new AjaxOptions { HttpMethod = "POST", OnSuccess = "showRegisterResponse" }, new { id = "registerform", name = "registerform", }))
+                      {
+
+                        <div class="formSubHeaders">
+                            Wallet Information</div>
+                        <div class="info-row">
+                            <div>
+                                Your current wallet balance is <span id="currentbalance">@ViewBag.currentBalance</span>
+                            </div>
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div class="formSubHeaders">
+                            Choose your reload method</div>
+                        <div id="paymentMethod">
+                            <ul class="poptions">
+                                <li>@Ajax.ActionLink("Reload via Prepaid Card", "PrepaidCard", new { controller = "Reload" }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "reloadMethod_container" })</li>
+                                <li>@Ajax.ActionLink("Reload via Credit Card", "CreditCard", new { controller = "Reload" }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "reloadMethod_container" })</li>
+                                <li>@Ajax.ActionLink("Reload via PayPal", "PayPal", new { controller = "Reload" }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "reloadMethod_container" })</li>
+                            </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="spanner">
+                            @Html.ImageBuilder(Url, "loading.gif", new { alt = "loading..." })
+                            <br />
+                            <span id="spannertext">please wait while we process your request...</span>
+                        </div>
+                        <div id="reloadMethod_container">
+                        </div>
+                        <div class="clear breakLarge">
+                        </div>
+                      }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "reload.css")
+}
+@section JScriptBottom{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#paymentMethod a').click(function () {
+                $('#paymentMethod a').removeClass('current');
+                $(this).addClass('current');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function checkUser() {
+            $('#reloadMethod_container').empty();
+            var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower()@Html.Raw(";")
+            if(!isLogin) {
+                   $('.t-window-title').html('Ooops! It seems that you are not logged in..');
+                   $('#Window').data('tWindow').center().open();
+                   return false;
+            }
+        }
+    </script>
+}

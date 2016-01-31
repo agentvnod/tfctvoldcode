@@ -1,0 +1,85 @@
+﻿@model List<MyMenu>
+@{
+    bool isDesktop = true;
+    if (ViewBag.IsDesktop != null)
+    {
+        isDesktop = ViewBag.IsDesktop;
+    }
+}
+@{if (Model != null)
+  {
+
+      if (Model.Count() > 0)
+      {
+    <div class="ib_marea">
+        <div @Html.Raw(String.Format("{0}", isDesktop ? " class=\"sub\"" : String.Empty))>
+            @foreach (var item in Model)
+            {
+                string href = String.Format("/Category/List/{0}/{1}", item.id, MyUtility.GetSlug(item.name));
+                if (Model.IndexOf(item) < 4)
+                {
+                    var divclass = string.Empty;
+                    if (Model.IndexOf(item) == 2)
+                    {
+                        divclass = "col-md-3 col-lg-2 visible-md";
+                    }
+                    else if (Model.IndexOf(item) == 3)
+                    {
+                        divclass = "col-lg-2 visible-lg";
+                    }
+                    else if (Model.IndexOf(item) == 0)
+                    {
+                        divclass = "col-sm-4 col-md-3 col-lg-2 first_menu";
+                    }
+                    else
+                    {
+                        divclass = "col-sm-4 col-md-3 col-lg-2";
+                    }
+
+                    if (item.shows != null)
+                    {
+                <div class="@divclass">
+                    <div class="sub_content collapse_menu short-menu">
+                        <p class="head">
+                            <a href="@href">@item.name</a></p>
+                        @foreach (var show in item.shows)
+                        {
+                            string showhref = String.Format("/Show/Details/{0}/{1}", show.id, MyUtility.GetSlug(show.name));
+                            <p>
+                                <a href="@showhref">@show.name</a></p>
+                        }
+                    </div>
+                    @if (item.shows.Count < item.showcount)
+                    {
+                        <p class="pshowall">
+                            <a href="@href">Show ALL >></a></p>
+                    }
+                </div>
+                    }
+                }
+            }
+            <div class="col-sm-4 col-md-3 col-lg-4 last_menu">
+                @foreach (var item in Model)
+                {
+                    string href = String.Format("/Category/List/{0}/{1}", item.id, MyUtility.GetSlug(item.name));
+                    string pclass = string.Empty;
+                    if (Model.IndexOf(item) > 1)
+                    {
+                        if (Model.IndexOf(item) == 2)
+                        {
+                            pclass = "hidden-md hidden-lg";
+                        }
+                        else if (Model.IndexOf(item) == 3)
+                        {
+                            pclass = "hidden-lg";
+                        }
+                    <p class="@pclass">
+                        <a href="@href">@item.name</a></p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+      }
+  }  
+}

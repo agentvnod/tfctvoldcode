@@ -1,0 +1,12 @@
+# git ignore file
+*.zip
+*.bak
+*.suo
+robots.txt
+*.ccproj.user
+
+# Build Folders
+obj
+Backup
+_UpgradeReport_Files
+TFCTV Website/TFCTV/robots.txt

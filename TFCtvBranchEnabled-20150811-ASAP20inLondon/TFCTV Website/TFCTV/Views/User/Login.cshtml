@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Login to TFC.tv - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdateLogin.cshtml";
+    ViewBag.DaxName = "tfc-tv:login";
+
+    string ErrorMessage = String.Empty;
+    string HideLoginFormClass = String.Empty;
+    string HideForgotPassFormClass = "hide";
+    string HideResendVerFormClass = "hide";
+    string ReturnUrl = String.Empty;
+    try
+    {
+        if (TempData["LoginErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["LoginErrorMessage"];
+        }
+        else if (TempData["ForgotPasswordErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ForgotPasswordErrorMessage"];
+            HideForgotPassFormClass = String.Empty;
+            HideLoginFormClass = "hide";
+            HideResendVerFormClass = "hide";
+        }
+        else if (TempData["ResendVerificationErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ResendVerificationErrorMessage"];
+            HideResendVerFormClass = String.Empty;
+            HideForgotPassFormClass = "hide";
+            HideLoginFormClass = "hide";
+
+        }
+        if (!String.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+        {
+            ReturnUrl = Request.QueryString["ReturnUrl"];
+        }
+    }
+    catch (Exception) { }
+}
+
+<!--  home page body -->
+<section class="page_pagebody home_pagebody home480">
+    <div class="container">
+        <div class="tfc_login_area">
+            <div class="top">
+                <h3>Login to watch TFC shows</h3>
+            </div>
+            <div class="mid clearfix">
+
+                <div class="left login_social">
+                    <p class="head">Sign in using your Social Network</p>
+                    <div id="loginPanel">
+                    </div>
+                </div>   <!-- end Login via social -->
+                <!-- TFC login -->
+                <div class="right login_tfc">
+                    <p class="head">Or sign in using your TFC.tv credentials</p>
+                    <form action="@Url.Action("_Login", "User", null, "https")" method="post" role="form" id="form_login" class="pageforms">
+                        @{if (!String.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ErrorMessage
+                            </div>
+                        }
+                        }
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="login_email">Email Address</label>
+                            <input type="email" class="form-control" id="login_email" name="login_email" placeholder="Email Address"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login_pass">Password</label>
+                            <input type="password" class="form-control" id="login_pass" name="login_pass" placeholder="Password"
+                                   required>
+                        </div>
+                        <input type="hidden" value="@Html.Raw(ReturnUrl)" name="rUri" id="rUri" />
+                        <input type="submit" value="Submit" class="btn btn-default button"><br>
+                        <p class="help-block">
+                            <a href="#" class="alogin_tfc" data-form="#form_forgotpass" data-copy="Enter your email address">Forgot your password?</a>
+                            <br /><a href="#" data-form="#form_resendverification" class="alogin_tfc" data-copy="Enter your email address">Account not verified? </a>
+                        </p>
+
+                    </form>
+                    <form action="@Url.Action("ForgotPassword", "User", null, "https")" method="post" role="form" id="form_forgotpass" class="pageforms">
+                        @{if (!String.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ErrorMessage
+                            </div>
+                        }
+                        }
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="login_email">Email Address</label>
+                            <input type="email" class="form-control" id="forgotpassword_email" name="forgotpassword_email" placeholder="Email Address"
+                                   required>
+                        </div>
+
+                        <input type="submit" value="Send instructions" class="btn btn-default button"><br>
+                        <p class="help-block"><a href="#" class="alogin_tfc" data-form="#form_login" data-copy="Or sign in using your TFC.tv credentials">Go back to sign in.</a></p>
+                    </form>
+                    <form action="@Url.Action("ResendVerification", "User", null, "https")" method="post" role="form" id="form_resendverification" class="pageforms">
+                        @{if (!String.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ErrorMessage
+                            </div>
+                        }
+                        }
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="login_email">Email Address</label>
+                            <input type="email" class="form-control" id="resendverification_email" name="resendverification_email" placeholder="Email Address"
+                                   required>
+                        </div>
+                        <input type="submit" value="Resend activation link" class="btn btn-default button"><br>
+                        <p class="help-block"><a href="#" class="alogin_tfc" data-form="#form_login" data-copy="Or sign in using your TFC.tv credentials">Go back to sign in.</a></p>
+
+                    </form>
+                </div>   <!-- end TFC login -->
+
+            </div>
+            <div class="bottom">
+                Don't have a TFC.tv account yet? <a href="@Url.Action("Register", "User")" class="a_register_link">
+                    Register here
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".alogin_tfc").click(function () {
+                $(".pageforms").hide();
+                $($(this).data("form")).show();
+                $(".login_tfc .head").html($(this).data("copy"));
+                return false;
+            });
+        });
+    </script>
+}

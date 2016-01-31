@@ -1,0 +1,63 @@
+﻿<div id="PayPalContainer" class="padLeftStandard transparentBg">
+    <div class="breakStandard">
+    </div>
+    <div id="PaypalSubHeader" class="paymentSubHeaders">
+        You are about to buy this product using a Paypal account.
+    </div>
+    <div class="breakLarge">
+    </div>
+    <div id="errMsg">
+    </div>
+    <div id="enterPin">
+        <div>
+            Should you choose to continue, please take note of the reminders below</div>
+        <div>
+            1. Do not close this browser.
+            <br />
+            2. On the Paypal page, follow the instructions carefully.<br />
+            3. Upon completion of payment, please wait for the Paypal window to auto-close.
+        </div>
+        <form id="paypalform" target="_blank" method="post" action="@GlobalConfig.PayPalSubmitUrl">
+        <div>
+            <input type="hidden" name="cmd" value="_xclick" />
+            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+            <input type="hidden" name="item_name" value="@ViewBag.productName" />
+            <input type="hidden" name="amount" value="@ViewBag.ProductPrice" />
+            <input type="hidden" name="currency_code" value="@ViewBag.Currency" />
+            <input type="hidden" name="return" value="@GlobalConfig.PayPalReturnUrl" />
+            @*<input type="hidden" name="notify_url" value="@ViewBag.IPNUrl" />*@
+            <input type="hidden" name="custom" value="@ViewBag.ProductId&@ViewBag.subscriptionType" />
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div>
+            Click
+            <input type="submit" class="textbuttons" value="here" />
+            to proceed to PayPal
+        </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function OnConfirmPayment(data) {
+        if (data.errorCode == 0) {
+            $('#enterPin').html('Thank you for purchasing this product!<br />' + data.errorMessage);
+        }
+        else
+            $('#errMsg').html(data.errorMessage);
+        $('#PayPalContainer').show();
+    }
+
+    function hidePrepaidContainer() {
+        $('#PayPalContainer').hide();
+    }
+
+    $(document).ready(function () {
+        $('form#paypalform').submit(function (event) {
+            var form = $(this);
+            window.open('', 'paypalwindow');
+            this.target = 'paypalwindow';
+        });
+
+    });
+</script>

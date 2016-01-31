@@ -1,0 +1,474 @@
+﻿@model IPTV2_Model.User
+@{
+    ViewBag.Title = "Edit Your Profile - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IEnumerable<IPTV2_Model.Country> cList = ViewBag.ListOfCountries;
+    var userHostAddress = Request.GetUserHostAddressFromCloudflare();
+
+    var cCode = Model.CountryCode == "--" ? MyUtility.getCountry(userHostAddress).getCode() : Model.CountryCode;
+    var userCountry = cCode == "--" ? GlobalConfig.DefaultCountry : cCode;
+
+    Maxmind.Location location = null;
+    var cState = Model.State;
+    var cCity = Model.City;
+    try
+    {
+        location = MyUtility.getLocation(userHostAddress);
+        if (location != null)
+        {
+            cState = String.IsNullOrEmpty(Model.State) ? location.region : Model.State;
+            cCity = String.IsNullOrEmpty(Model.City) ? location.city : Model.City;
+        }
+    }
+    catch (Exception)
+    {
+    }
+
+    IPTV2_Model.Country cCountry = ViewBag.UserCountry;
+    var stateCount = cCountry != null ? cCountry.States.Count() : 0;
+
+    IEnumerable<IPTV2_Model.State> listOfStates = null;
+    if (stateCount > 0)
+    {
+        listOfStates = cCountry.States.OrderBy(s => s.Name).ToList();
+    }
+
+    TFCTV.Helpers.UserData userData = new TFCTV.Helpers.UserData() { IsExternalSharingEnabled = "true,false", IsInternalSharingEnabled = "true,false", IsProfilePrivate = "false" };
+    bool IsExternalSharingEnabled = false;
+    bool IsInternalSharingEnabled = false;
+    bool IsProfilePrivate = false;
+    if (ViewBag.UserData != null)
+    {
+        userData = (TFCTV.Helpers.UserData)ViewBag.UserData;
+
+        if (!String.IsNullOrEmpty(userData.IsExternalSharingEnabled))
+        {
+            if (userData.IsExternalSharingEnabled.Contains("true"))
+            {
+                IsExternalSharingEnabled = true;
+            }
+        }
+        else
+        {
+            IsExternalSharingEnabled = true;
+
+        }
+        if (!String.IsNullOrEmpty(userData.IsInternalSharingEnabled))
+        {
+            if (userData.IsInternalSharingEnabled.Contains("true"))
+            {
+                IsInternalSharingEnabled = true;
+            }
+        }
+        else
+        {
+            IsInternalSharingEnabled = true;
+
+        }
+        if (!String.IsNullOrEmpty(userData.IsProfilePrivate))
+        {
+            if (userData.IsProfilePrivate.Contains("true"))
+            {
+                IsProfilePrivate = true;
+            }
+        }
+        else { IsProfilePrivate = false; }
+    }
+    else
+    {
+        IsExternalSharingEnabled = true;
+        IsInternalSharingEnabled = true;
+        IsProfilePrivate = false;
+    }
+
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Edit Your Profile</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <form id="editprofileform" method="post" action="/User/_EditProfile">
+        <div id="registerContainer">
+            <div class="breakLarge">
+            </div>
+            <div class="padLeftLarge">
+                <div id="registerBody">
+                    <div class="formSubHeaders">
+                        Account Information</div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            Email Address
+                        </div>
+                        <div>
+                            @Html.DisplayFor(m => m.EMail) <span class="status"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            Password
+                        </div>
+                        <div>
+                            @Html.ActionLink("Change Password", "ChangePassword", null, new { @class = "default_link" })
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.FirstName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "textbox", maxlength = 32 })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.LastName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "textbox", maxlength = 32 })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.City)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.City, new { @class = "textbox", @Value = @cCity, maxlength = 50 })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.State)
+                        </div>
+                        <div>
+                            @{if (stateCount > 0)
+                              {                              
+                                @(Html.DropDownList("StateDD", new SelectList(listOfStates, "StateCode", "Name", cState), new { @class = "textbox StateDD t-dropdown" }))
+                                @Html.TextBox("State", "", new { @class = "textbox" })
+                              }
+                              else
+                              {
+                                <select id="StateDD" class="textbox StateDD t-dropdown">
+                                </select>
+                                @Html.TextBox("State", cState, new { @class = "textbox", maxlength = 30, @Value = cState })                                
+                              }
+                            }
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.Country)
+                        </div>
+                        <div>
+                            @(Html.DropDownList("CountryCode", new SelectList(cList, "Code", "Description", userCountry), new { @class = "textbox t-dropdown" }))<span
+                                class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="clear breakLarge">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div id="social-privacy">
+                    <div class="formSubHeaders">
+                        Manage Social & Privacy</div>
+                    <div class="floatLeft">
+                        <div class="subtext">
+                            Manage your connections! Add a Social network to your current profile.
+                        </div>
+                        <div id="manageSocialConnection">
+                        </div>
+                    </div>
+                    <div class="floatLeft padLeftLarge">
+                        <div class="floatLeft" style="width: 440px;">
+                            <div class="padLeftLarge">
+                                <div class="subtext" style="font-weight: bold;">
+                                    Default Privacy Settings</div>
+                                <div class="breakStandard">
+                                </div>
+                                <div>
+                                    Manage how your activities on TFC.tv are shared publicly. Select from below the
+                                    options you are comfortable using:</div>
+                                <div class="breakStandard">
+                                </div>
+                                <div>@Html.CheckBox("IsInternalSharingEnabled", IsInternalSharingEnabled) I want to
+                                    automatically share my TFC.tv activities on TFC.tv page.</div>
+                                <div class="breakSmall">
+                                </div>
+                                <div>@Html.CheckBox("IsExternalSharingEnabled", IsExternalSharingEnabled) I want to
+                                    automatically share my TFC.tv activities on the social networking accounts I have
+                                    linked to my TFC.tv account.</div>
+                                <div class="breakSmall">
+                                </div>
+                                <div>@Html.CheckBox("IsProfilePrivate", IsProfilePrivate) I want to keep my TFC.tv Profile
+                                    page private.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="breakStandard">
+                </div>
+                @{if (GlobalConfig.IsRecurringBillingEnabled)
+                  {
+                    <text>
+                    <div id="recurbiling">
+                        <div class="formSubHeaders">
+                            Manage Subscription Automatic Renewal</div>
+                        <div class="rb-body">
+                            <div id="rbsave" class="transparentBg hideElement" style="width: 901px; height: 255px;
+                                position: absolute; z-index: 100;">
+                                <div id="rbsavemsg" style="position: relative; top: 5px; right: 10px; float: right;">
+                                    Saving data...</div>
+                            </div>
+                            @(Html.Telerik().Grid<RecurringBillingDisplay>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(e => e.RecurringBillingId).Visible(false);
+            columns.Bound(e => e.NextRun).Visible(false);
+            columns.Bound(e => e.isDisabled).Visible(false);
+            //columns.Bound(e => e.RecurringBillingId)
+            //       .ClientTemplate("<div class=\"rbi\"><#=RecurringBillingId#></div>").Title("RID").Width(80).HtmlAttributes(new { style = "width: 80px;" });
+            columns.Bound(e => e.ProductName).Width(240).Title("Product Name").HtmlAttributes(new { style = "width: 240px;" });
+            columns.Bound(e => e.EndDateStr)
+                .Width(120).Title("Expiration Date").Width(180).HtmlAttributes(new { style = "width: 180px;" });
+            columns.Bound(e => e.NextRunStr)
+                .Width(120).Title("Start of Renewal Processing").Width(180).HtmlAttributes(new { style = "width: 180px;" });
+            columns.Bound(e => e.PaymentType).Width(80).Title("Payment Type").HtmlAttributes(new { style = "width: 80px;" });
+            columns.Bound(e => e.StatusId).Title("Enabled")
+                   .ClientTemplate("<input id=\"rs<#=RecurringBillingId#>\" type=\"checkbox\" class=\"rb_status\" name=\"RecurringStatus\" <#=StatusId? checked=\"checked\" : \"\" #> <#=isDisabled ? \"disabled\" : \"\" #> />")
+                   .Width(80).HtmlAttributes(new { style = "width: 80px;" });
+        })
+        .DataBinding(dataBinding =>
+        {
+            dataBinding.Server().Select("GetRecurringProducts", "User");
+            dataBinding.Ajax().Select("_GetRecurringProducts", "User");
+
+        })
+                .Pageable(paging =>
+                    paging.PageSize(10))
+        .Sortable()
+        .Scrollable(c => c.Height("200px"))
+        .HtmlAttributes(new { style = "font-size:11px; width: 900px;" })
+            )
+                            <input id="rb_list" name="rb_list" type="hidden" value="" />
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div style="text-align: center;">
+                        Click Submit to confirm the change/s made. You may opt to automatically renew your
+                        subscription again on your next transaction.
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    </text>
+                  }
+                }
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="editor-row submit-row">
+                        <div style="margin-left: 245px;">
+                            <input type="submit" class="btnimage submitbtn floatLeft" id="regsubmit" value="Update Profile" /><div
+                                id="rsb-load" class="side-button-loader padLeftStandard">
+                            </div>
+                            <div class="breakStandard">
+                            </div>
+                            <div id="message">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="breakStandard">
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="breakLarge">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "loading.gif", new { alt = "loading...", width = "20", height = "20" })
+        <span id="spannertext" class="spannertextvalign">please wait while we process your request...</span>
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "user.css")
+    @Html.CssBuilder(Url, "editprofile.css")
+    <meta name="robots" content="nofollow" />
+}
+@section JScript {
+    @{if (!GlobalConfig.isUAT)
+      {
+        <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+      }
+    }
+    @(Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.black.css").Combined(true).Compress(true)))
+}
+@section JScriptBottom {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.common.min.js"></script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.draganddrop.min.js"></script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.window.min.js"></script>
+    @Html.JsBuilder(Url, "helpers.js")
+    <script type="text/javascript">
+        function showRegisterResponse(data) {
+            if (data == "1")
+                $('#message').html('Account creation was unsuccessful. Please correct the errors and try again.<div class="breakStandard"></div>');
+            else if (data == "2") {
+                $('#message').html('Email address is already taken.<div class="breakStandard"></div>');
+            }
+            else if (data == "0") {
+                $('#registerBody').html('Thank you! You are now registered to TFC.tv! Please wait...<div class="breakLarge"></div>');
+                setTimeout('redirect()', 3000);
+            }
+        }
+
+        $(document).ready(function () {
+            var validator = $('form#editprofileform').validate({
+                rules: {
+                    FirstName: { required: true },
+                    LastName: { required: true },
+                    CountryCode: { required: true }
+                },
+                messages: {
+                    FirstName: { required: 'This field is required.' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#editprofileform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $('#message').empty();
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading..." })');
+                    $.post('/User/_EditProfile', form.find('input,select').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#message').html(data.errorMessage + '<div class="breakStandard"></div>');
+                            $('#userFullName').text($('input#FirstName').val() + ' ' + $('input#LastName').val());
+                            window.location.href = '/Profile';
+                        }
+                        else {
+                            $('#message').html(data.errorMessage + '<div class="breakStandard"></div>');
+                            $('#rsb-load').empty();
+                        }
+
+                    });
+                }
+
+            });
+            $('#CountryCode').change(function () {
+                var cId = $("#CountryCode option:selected").val();
+                $('#City').val('');
+                jQuery.get('/Ajax/GetCountryState', { id: cId }, function (data) {
+
+                }).done(function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        $('#StateDD').empty();
+                        $.each(data, function () {
+                            $('#StateDD').append($("<option />").val(this.Value).text(this.Text));
+                        });
+                        $('#StateDD').show();
+                        $('#State').val($('#StateDD').val());
+                    }
+                });
+            });
+
+            $('#StateDD').on('change', function () {
+                $('#State').val($('#StateDD').val());
+            })
+        });
+
+    </script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.list.min.js"></script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.grid.min.js"></script>
+    @(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+                         .OutputScriptFiles(false)
+    )
+    <script type="text/javascript">
+        function toggleState(stateCount) {
+            $('#StateDD').val('');
+            if (stateCount > 0) {
+                $('#State').val('');
+                $('.StateDD').show();
+                $('#State').hide();
+            }
+            else {
+                if($('#State').is(':hidden'))
+                    $('#State').val('');
+                $('.StateDD').hide();
+                $('#State').show();
+            }
+        }
+        $(document).ready(function () {
+            toggleState(@stateCount);
+        });
+    </script>
+    @{if (GlobalConfig.IsRecurringBillingEnabled)
+      {
+        <text>
+        <script type="text/javascript">
+            //            $('.rb_status').live('click', function () {
+            //                $('#rbsavemsg').html('Saving data...');
+            //                $('#rbsave').show();
+            //                var form = $('form#editprofileform');
+            //                $.post('/User/UpdateRecurringProducts', { name: $(this).attr('id'), value: $(this).prop('checked') }, function (data) {
+            //                }).always(function (data) {
+            //                    $('.t-refresh').trigger('click');
+            //                    $('#rbsave').show().delay(500).queue(function (changeStatus) { $('#rbsavemsg').html(data.errorMessage); changeStatus(); }).fadeOut(1500);
+            //                })
+            //            });
+
+            var disabledObj = [], enabledObj = [];
+            $('.rb_status').live('change', function () {
+                disabledObj = []; enabledObj = [];
+                $('.rb_status').map(function () {
+                    this.checked ? enabledObj.push(this.id) : disabledObj.push(this.id);
+                });
+                $('#rb_list').val(disabledObj);
+                return false;
+            });
+        </script>
+        </text>
+      }
+    }
+}

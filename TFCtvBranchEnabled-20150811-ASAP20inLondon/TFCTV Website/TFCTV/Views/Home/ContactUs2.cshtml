@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "Contact Us - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:contact-us";
+
+    string email = String.Empty;
+    try
+    {
+        if (ViewBag.EmailAddress != null)
+        {
+            email = ViewBag.EmailAddress;
+        }
+    }
+    catch (Exception) { }
+}
+<section class="page_pagebody">
+    <!-- START PAGE BODY -->
+    <div class="container">
+        <!-- page top -->
+        <h1 class="page_title">
+            Get in touch with TFC.tv
+        </h1>
+        <div class="page_description">
+            We're here to listen to you and assist you with all your concerns.
+        </div>
+        <!-- END page top -->
+        <!-- contact section [3 contact box] -->
+        <div class="contact_sec">
+            @*<div class="contact contact1 clearfix">
+                    <!-- 1st contact box -->
+                    <div>
+                        <h2>
+                            Send us your customer concerns</h2>
+                        <p>
+                            Do you have questions or clarifications about TFC.tv? We are here to respond to
+                            your needs.</p>
+                        <button class="red_button" data-toggle="modal" data-target="#conemailback">
+                            Click HERE</button>
+                    </div>
+                </div>*@
+            <div class="contact contact2 clearfix">
+                <!-- 2nd contact box -->
+                <div>
+                    <h2>
+                        Live chat with us
+                    </h2>
+                    <p>
+                        Kailangan mo ng step-by-step assistance para magamit ng maayos ang iyong TFC.tv?
+                        Our customer agents are happy to help.
+                    </p>
+                    <a id="uspchatHolder" class="red_button">Click HERE</a>
+                    @*<a href="http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390" target="_blank" onclick="this.newWindow = window.open('http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390', 'LiveChatSoftware', 'toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=no,resizable=yes,replace=no');this.newWindow.focus();this.newWindow.opener=window;return false;" class="red_button">Click HERE</a>*@
+                </div>
+            </div>
+            <div class="contact contact3 clearfix">
+                <!-- 3rd contact box -->
+                <div>
+                    <h2>
+                        Send us your feedback about the site
+                    </h2>
+                    <p>
+                        Do you have comments and suggestions on how to improve TFC.tv? Let us know your
+                        thoughts.
+                    </p>
+                    <button class="red_button" data-toggle="modal" data-target="#conFeedback">
+                        Click HERE
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- end contact section [3 contact box] -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- end page body section -->
+<!-- popup Landing feedback -->
+<div class="modal fade conPopup" id="conFeedback" tabindex="-1" role="dialog" aria-labelledby="conFeedbackMsgLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <h1 class="page_title">
+                    Send us your Feedback
+                </h1>
+                <!-- page title -->
+                <p class="des">
+                    Do you have comments and suggestions on how to improve TFC.tv? Let us know your
+                    thoughts. Email us your concerns or your questions.
+                </p>
+                <form role="form" method="post" action="@Url.Action("SubmitFeedback", "Home")">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <label>
+                                From
+                            </label>
+                            <input type="email" class="form-control" id="email" name="email" value="@email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <label for="subject">
+                                Subject
+                            </label>
+                            <input type="text" class="form-control" id="subject" name="subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Your Message Here."
+                                  required></textarea>
+                    </div>
+                    <button type="submit" class="red_button">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <!-- END box body -->
+        </div>
+    </div>
+</div>
+<!-- END popup Landing feedback -->
+<!-- popup Landing Email -->
+@*<div class="modal fade conPopup" id="conemailback" tabindex="-1" role="dialog" aria-labelledby="conemailbackMsgLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X</span></button>
+                    <h1 class="page_title">
+                        EMAIL TFC.tv</h1>
+                    <!-- page title -->
+                    <p class="des">
+                        Do you have questions or clarifications about TFC.tv? We are here to respond to
+                        your needs. Email us your concerns or your questions lorem ipsum.</p>
+                    <form role="form" method="post">
+                    <div class="form-group">
+                        <label>
+                            From</label>
+                        <p>
+                            juandelacruz@yahoo.com</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">
+                            Subject</label>
+                        <p>
+                            Products and Services</p>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Your Message Here."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="red_button">
+                        Submit</button>
+                    </form>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>*@
+<!-- END popup Landing Email -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        var script = document.createElement('script');
+        var active_window = null;
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = '//chatsupport.tfc.tv/uspchat/index.php/chat/create/popup/tfctv';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(script, s);
+    </script>
+}

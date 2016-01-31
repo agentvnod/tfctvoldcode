@@ -1,0 +1,887 @@
+﻿Updated Tables:
+Country 
+- Added GomsSubsidiary nvarchar(100) null
+
+Episodes
+- EpisodeNo	int	Checked
+- Rating	float	Checked
+- ImageMobile	nvarchar(300)	Checked
+- ImagePlaylist	nvarchar(300)	Checked
+- ImageVideo	nvarchar(300)	Checked
+
+EpisodeAsset
+- EpisodeAssetTypeId
+  - 1 Paid
+  - 2 Preview
+  - 3 Free
+- EpisodeAssetId int (Add and make PrimaryKey)
+
+Packages
+- OfferingId
+
+Category
+- CategoryClassId (Added)
+  - 0 Category
+  - 1 Show
+- CategoryTypeId
+  - 1 Weekly Show
+  - 2 Daily Show
+  - 3 Specials
+  - 4 Movie		
+
+New Tables
+- Celebrities
+- RoleTypes
+- CelebrityRoles
+- CategoryCountryRestrictions
+- Carousels
+- CarouselSlides
+- CarouselCarouselSlides
+- Product 
+  - ProductTypeId
+    - 1 - SubscriptionProduct
+  - SubscriptionProductTypeId
+    - 1 - PackageSubscriptionProduct
+    - 2 - ShowSubscriptionProduct
+	- 3 - EpisodeSubscriptionProduct
+- ProductPrice
+- ProductPackage
+- ProductCategory
+- ProductEpisode
+- Offering
+- Entitlements
+- EntitlementRequests
+- Users
+- Feature
+- FeatureItems
+- UserWallet
+- Transactions
+  - TransactionTypeId
+    - 1 - Purchase
+    - 2 - Wallet Reload
+  - PaymentTypeId
+    - 1- Payment - PPC
+    - 2- Payment - Wallet
+    - 3- Payment - CreditCard
+    - 4- Payment - Paypal
+  - ReloadTypeId
+    - 1- Wallet Reload - PPC
+    - 2- Wallet Reload - CreditCard
+    - 3- Wallet Reload - Paypal
+- Purchases
+- PurchaseItems
+- PPC
+  - PpcTypeId
+    - 1 - Reload
+	- 2 - Product
+- CelebrityReactions
+- ShowReactions
+- EpisodeReactions
+- Currency
+- GomsPaymentMethods
+- BetaTester
+
+New Materialized Views
+- CategoryShows and index IX_CategoryShows_ParentId
+- CategorySubCategories
+
+----- Scripts ------
+
+/*** Table Creation ***/
+--------
+/****** Object:  Table [dbo].[CarouselSlides]    Script Date: 01/09/2012 09:06:48 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CarouselSlides](
+	[CarouselSlideId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](200) NOT NULL,
+	[BannerImageUrl] [nvarchar](500) NOT NULL,
+	[ThumbnailUrl] [nvarchar](500) NOT NULL,
+	[Header] [nvarchar](50) NOT NULL,
+	[Blurb] [nvarchar](500) NOT NULL,
+	[ButtonLabel] [nvarchar](50) NOT NULL,
+	[TargetUrl] [nvarchar](500) NOT NULL,
+	[StatusId] [tinyint] not null,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_CarouselSlides] PRIMARY KEY CLUSTERED 
+(
+	[CarouselSlideId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[CarouselSlides] ADD  CONSTRAINT [DF_CarouselSlides_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+/****** Object:  Table [dbo].[Carousels]    Script Date: 01/09/2012 09:06:41 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Carousels](
+	[CarouselId] [int] IDENTITY(1,1) NOT NULL,
+	[OfferingId] [int] NOT NULL,
+	[StatusId] [tinyint] NOT NULL,
+	[CategoryId] [int] NULL,
+	[PackageId] [int] NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Transition] [int] NOT NULL,
+	[Drop] [int] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_Carousel] PRIMARY KEY CLUSTERED 
+(
+	[CarouselId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Carousels] ADD  CONSTRAINT [DF_Carousels_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+/****** Object:  Table [dbo].[CarouselCarouselSlides]    Script Date: 01/09/2012 09:06:38 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CarouselCarouselSlides](
+	[CarouselId] [int] NOT NULL,
+	[CarouselSlideId] [int] NOT NULL,
+ CONSTRAINT [PK_CarouselItems] PRIMARY KEY CLUSTERED 
+(
+	[CarouselId] ASC,
+	[CarouselSlideId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+/****** Object:  Table [dbo].[CategoryCountryRestrictions]    Script Date: 01/09/2012 08:50:57 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CategoryCountryRestrictions](
+	[CategoryRestrictionId] [int] IDENTITY(1,1) NOT NULL,
+	[CountryCode] [nchar](2) NOT NULL,
+	[RestrictionTypeId] [int] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[StatusId] [tinyint] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_CategoryCountryRestriction] PRIMARY KEY CLUSTERED 
+(
+	[CategoryRestrictionId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+/****** Object:  Table [dbo].[RoleTypes]    Script Date: 01/09/2012 08:50:44 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[RoleTypes](
+	[RoleTypeId] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](50) NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_RoleType] PRIMARY KEY CLUSTERED 
+(
+	[RoleTypeId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[RoleTypes] ADD  CONSTRAINT [DF_RoleTypes_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+CREATE TABLE [dbo].[CelebrityRoles](
+	[CelebirtyRoleId] [int] IDENTITY(1,1) NOT NULL,
+	[CelebrityId] [int] NOT NULL,
+	[RoleTypeId] [int] NOT NULL,
+	[EpisodeId] [int] NULL,
+	[CategoryId] [int] NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_CelebrityRoles] PRIMARY KEY CLUSTERED 
+(
+	[CelebirtyRoleId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[CelebrityRoles] ADD  CONSTRAINT [DF_CelebrityRoles_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+CREATE TABLE [dbo].[Celebrities](
+	[CelebrityId] [int] IDENTITY(1,1) NOT NULL,
+	[IsIndividual] [bit] NOT NULL,
+	[FirstName] [nvarchar](200) NULL,
+	[LastName] [nvarchar](200) NULL,
+	[FullName] [nvarchar](500) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[Birthplace] [nvarchar](500) NULL,
+	[Height] [nvarchar](50) NULL,
+	[Weight] [nvarchar](50) NULL,
+	[Birthday] [nvarchar](50) NULL,
+	[ZodiacSign] [nvarchar](50) NULL,
+	[ChineseYear] [nvarchar](50) NULL,
+	[ImageUrl] [nvarchar](500) NULL,
+	[StatusId] [tinyint] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_Celebrity] PRIMARY KEY CLUSTERED 
+(
+	[CelebrityId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Celebrities] ADD  CONSTRAINT [DF_Celebrities_IsIndividual]  DEFAULT ((1)) FOR [IsIndividual]
+GO
+
+ALTER TABLE [dbo].[Celebrities] ADD  CONSTRAINT [DF_Celebrities_CreatedOn]  DEFAULT (getdate()) FOR [CreatedOn]
+GO
+
+
+CREATE TABLE [dbo].[Products](
+	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[OfferingId] [int] Not NULL,
+	[Name] [nvarchar](200) NOT NULL,
+	[Description] [nvarchar](1000) NOT NULL,
+	[ProductTypeId] [int] NOT NULL,
+	[SubscriptionProductTypeId] [int] NULL,		
+	[Duration] [int]  NULL,
+	[DurationType] [nchar](1)  NULL,
+	[StatusId] [tinyint] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+	[GomsProductId] [int] NULL,
+	[GomsProductQuantity] [int] NULL,
+ CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+CREATE TABLE [dbo].[ProductPrices](
+	[ProductId] [int] NOT NULL,
+	[CurrencyCode] [nchar](3) NOT NULL,
+	[Amount] [money] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_ProductPrices] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC,
+	[CurrencyCode] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+CREATE TABLE [dbo].[ProductPackage](
+	[ProductId] [int] NOT NULL,
+	[PackageId] [int] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_ProductPackage] PRIMARY KEY NONCLUSTERED 
+(
+	[ProductId] ASC,
+	[PackageId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+CREATE TABLE [dbo].[ProductEpisode](
+	[ProductId] [int] NOT NULL,
+	[EpisodeId] [int] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_ProductEpisode] PRIMARY KEY NONCLUSTERED 
+(
+	[ProductId] ASC,
+	[EpisodeId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[ProductCategory](
+	[ProductId] [int] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedOn] [datetime] NOT NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_ProductCategory] PRIMARY KEY NONCLUSTERED 
+(
+	[ProductId] ASC,
+	[CategoryId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+CREATE TABLE [dbo].[Offerings](
+	[OfferingId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Offerings] PRIMARY KEY CLUSTERED 
+(
+	[OfferingId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[Entitlements](
+	[EntitlementId] [int] identity(1,1) NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+    [EndDate] [datetime] not NULL,
+	[PackageId] [int] NULL,
+	[CategoryId] [int] NULL,
+	[EpisodeId] [int] NULL,
+	[OfferingId] [int] NOT NULL,
+
+ CONSTRAINT [PK_Entitlements] PRIMARY KEY CLUSTERED 
+(
+	[EntitlementId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
+CREATE TABLE [dbo].[EntitlementRequests](
+	[EntitlementRequestId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[DateRequested] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[Source] [nvarchar](50) NOT NULL,
+	[ReferenceId] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_EntitlementRequests] PRIMARY KEY CLUSTERED 
+(
+	[EntitlementRequestId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+drop table users
+CREATE TABLE [dbo].[Users](
+	[UserId] [uniqueidentifier] NOT NULL,
+	[EMail] [nvarchar](500) NOT NULL,
+	[Password] [nvarchar](500) NOT NULL,
+	[FirstName] [nvarchar](500) NULL,
+	[LastName] [nvarchar](500) NULL,
+	[GigyaUID] [nvarchar](500) NULL,
+	[CountryCode] [nchar](2) NULL,
+	[GomsCustomerId] [int] NULL,
+	[GomsServiceId] [int] NULL,
+	[GomsWalletId] [int] NULL,
+	[GomsSubsidiaryId] [int] NULL,
+	[RegistrationDate] [datetime] NOT NULL,
+	[LastUpdated] [datetime] NOT NULL,
+	[City] [nvarchar](100) NULL,
+	[State] [nvarchar](100) NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_RegistrationDate]  DEFAULT (getdate()) FOR [RegistrationDate]
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_LastUpdated]  DEFAULT (getdate()) FOR [LastUpdated]
+GO
+
+
+
+/****** Object:  View [dbo].[CategoryShows]    Script Date: 01/17/2012 12:09:22 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[CategoryShows]
+with SchemaBinding
+AS
+SELECT     dbo.CategoryRelationships.CategoryId, dbo.CategoryRelationships.ParentId
+FROM         dbo.CategoryRelationships INNER JOIN
+                      dbo.Categories ON dbo.CategoryRelationships.CategoryId = dbo.Categories.CategoryId
+WHERE     (dbo.Categories.CategoryClassId = 1)
+
+
+GO
+
+
+SET ARITHABORT ON
+GO
+
+SET CONCAT_NULL_YIELDS_NULL ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_WARNINGS ON
+GO
+
+SET NUMERIC_ROUNDABORT OFF
+GO
+
+/****** Object:  Index [IX_CategoryShows_ParentId]    Script Date: 01/17/2012 12:09:26 ******/
+CREATE UNIQUE CLUSTERED INDEX [IX_CategoryShows_ParentId] ON [dbo].[CategoryShows] 
+(
+	[ParentId] ASC,
+	[CategoryId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+
+
+CREATE VIEW [dbo].[CategorySubCategories]
+with SchemaBinding
+AS
+SELECT     dbo.CategoryRelationships.CategoryId, dbo.CategoryRelationships.ParentId
+FROM         dbo.CategoryRelationships INNER JOIN
+                      dbo.Categories ON dbo.CategoryRelationships.CategoryId = dbo.Categories.CategoryId
+WHERE     (dbo.Categories.CategoryClassId = 0)
+
+
+
+GO
+
+SET ARITHABORT ON
+GO
+
+SET CONCAT_NULL_YIELDS_NULL ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+SET ANSI_WARNINGS ON
+GO
+
+SET NUMERIC_ROUNDABORT OFF
+GO
+
+/****** Object:  Index [IX_CategorySubCategories_ParentId]    Script Date: 01/17/2012 12:10:59 ******/
+CREATE UNIQUE CLUSTERED INDEX [IX_CategorySubCategories_ParentId] ON [dbo].[CategorySubCategories] 
+(
+	[ParentId] ASC,
+	[CategoryId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[Feature](
+	[FeatureId] [int] IDENTITY(1,1) NOT NULL,
+	[OfferingId] [int] NOT NULL,
+	[Title] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](500) NULL,
+	[StatusId] [tinyint] not null,
+	[CreatedOn] [datetime] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+
+ CONSTRAINT [PK_Feature] PRIMARY KEY CLUSTERED 
+(
+	[FeatureId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[FeatureItems](
+	[FeatureItemId] [int] IDENTITY(1,1) NOT NULL,
+	[FeatureId] [int] NOT NULL,
+	[EpisodeId] [int] NULL,
+	[CategoryId] [int] NULL,
+	[CelebrityId] [int] NULL,
+	[StatusId] [tinyint] not null,
+	[CreatedOn] [datetime] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[UpdatedOn] [datetime] NULL,
+	[UpdatedBy] [uniqueidentifier] NULL,
+
+ CONSTRAINT [PK_FeaturedItems] PRIMARY KEY CLUSTERED 
+(
+	[FeatureItemId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+drop table userWallet
+CREATE TABLE [dbo].[UserWallet](
+	[WalletId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[Currency] [nvarchar](50) NOT NULL,
+	[Balance] [money] NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[LastUpdated] [datetime] NOT NULL,
+ CONSTRAINT [PK_UserWallet] PRIMARY KEY CLUSTERED 
+(
+	[WalletId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[UserWallet] ADD  CONSTRAINT [DF_UserWallet_Balance]  DEFAULT ((0)) FOR [Balance]
+GO
+
+ALTER TABLE [dbo].[UserWallet] ADD  CONSTRAINT [DF_UserWallet_IsActive]  DEFAULT ((1)) FOR [IsActive]
+GO
+
+ALTER TABLE [dbo].[UserWallet] ADD  CONSTRAINT [DF_UserWallet_LastUpdated]  DEFAULT (getdate()) FOR [LastUpdated]
+GO
+
+
+
+CREATE TABLE [dbo].[Purchases](
+	[PurchaseId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[Date] [datetime] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+ CONSTRAINT [PK_Purchase] PRIMARY KEY CLUSTERED 
+(
+	[PurchaseId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Purchases] ADD  CONSTRAINT [DF_Purchase_Date]  DEFAULT (getdate()) FOR [Date]
+GO
+
+
+CREATE TABLE [dbo].[PurchaseItems](
+	[PurchaseItemId] [int] IDENTITY(1,1) NOT NULL,
+	[PurchaseId] [int] NOT NULL,
+	[RecipientUserId] [uniqueidentifier] NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[Price] [money] NOT NULL,
+	[Currency] [nchar](10) NOT NULL,
+	[EntitlementRequestId] [int] NOT NULL,
+	[Remarks] [nvarchar](500) NULL,
+ CONSTRAINT [PK_PurchaseItems] PRIMARY KEY CLUSTERED 
+(
+	[PurchaseItemId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[CelebrityReactions](
+	[Reactionid] [int] IDENTITY(1,1) NOT NULL,
+	[ReactionTypeId] [int] NOT NULL,
+	[CelebrityId] [int] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_CelebrityReactions] PRIMARY KEY CLUSTERED 
+(
+	[Reactionid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[CelebrityReactions] ADD  CONSTRAINT [DF_CelebrityReactions_DateTime]  DEFAULT (getdate()) FOR [DateTime]
+GO
+
+
+CREATE TABLE [dbo].[ShowReactions](
+	[Reactionid] [int] IDENTITY(1,1) NOT NULL,
+	[ReactionTypeId] [int] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_ShowReactions] PRIMARY KEY CLUSTERED 
+(
+	[Reactionid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[ShowReactions] ADD  CONSTRAINT [DF_ShowReactions_DateTime]  DEFAULT (getdate()) FOR [DateTime]
+GO
+
+CREATE TABLE [dbo].[EpisodeReactions](
+	[Reactionid] [int] IDENTITY(1,1) NOT NULL,
+	[ReactionTypeId] [int] NOT NULL,
+	[EpisodeId] [int] NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[DateTime] [datetime] NOT NULL,
+ CONSTRAINT [PK_EpisodeReactions] PRIMARY KEY CLUSTERED 
+(
+	[Reactionid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[EpisodeReactions] ADD  CONSTRAINT [DF_EpisodeReactions_DateTime]  DEFAULT (getdate()) FOR [DateTime]
+GO
+
+CREATE TABLE [dbo].[Transactions](
+	[TransactionId] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [uniqueidentifier] NOT NULL,
+	[TransactionTypeId] [int] NOT NULL,
+	[PaymentTypeId] [int] NULL,
+	[ReloadTypeId] [int] NULL,
+	[Currency] [nchar](3) NOT NULL,
+	[Amount] [money] NOT NULL,
+	[Reference] [nvarchar](500) NULL,
+	[PurchaseId] [int] NULL,
+	[PaymentWalletId] [int] NULL,
+	[SubscriptionPpcId] [int] NULL,
+	[ReloadPpcId] [int] NULL,
+	[ReloadWalletId] [int] NULL,
+	[ProductId] [int] NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED 
+(
+	[TransactionId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Transactions] ADD  CONSTRAINT [DF_Transactions_Date]  DEFAULT (getdate()) FOR [Date]
+GO
+
+
+
+CREATE TABLE [dbo].[Ppc](
+	[PpcId] [int] IDENTITY(1,1) NOT NULL,
+	[PpcTypeId] [int] NOT NULL,
+	[SerialNumber] [nvarchar](50) NOT NULL,
+	[Pin] [nvarchar](150) NOT NULL,
+	[ExpirationDate] [datetime] NOT NULL,
+	[PpcProductId] [int] not NULL,
+	[ProductId] [int] NULL,
+	[Amount] [money] NOT NULL,
+	[Currency] [nchar](10) NOT NULL,
+	[Duration] [int] NULL,
+	[DurationType] [nchar](1) NULL,
+	[UsedDate] [datetime] NULL,
+	[UserId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Ppc] PRIMARY KEY CLUSTERED 
+(
+	[PpcId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+CREATE TABLE [dbo].[Currency](
+	[Code] [nchar](3) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Symbol] [nvarchar](10) NOT NULL,
+	[IsLeft] [bit] NOT NULL,
+	GomsId [int] null,
+ CONSTRAINT [PK_Currency] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Currency] ADD  CONSTRAINT [DF_Currency_IsLeft]  DEFAULT ((1)) FOR [IsLeft]
+GO
+
+
+
+CREATE TABLE [dbo].[GomsPaymentMethods](
+	[PaymentMethodId] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Subsidiary] [nvarchar](100) NOT NULL,
+	[SubsidiaryInt] [int] NOT NULL,
+	[IsCreditCard] [bit] NOT NULL,
+ CONSTRAINT [PK_GomsPaymentMethods] PRIMARY KEY CLUSTERED 
+(
+	[PaymentMethodId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+----
+alter table country 
+add GomsSubsidiary nvarchar(100) null
+
+CREATE TABLE [dbo].[BetaTester](
+	[TesterId] [int] IDENTITY(1,1) NOT NULL,
+	[EMailAddress] [nvarchar](500) NOT NULL,
+	[InvitationKey] [uniqueidentifier] not NULL,
+	[InvitedBy] [uniqueidentifier] NULL,
+	[DateSent] [datetime] NULL,
+	[DateClaimed] [datetime] NULL,
+	[IpAddress] [nvarchar](20) NULL,
+ CONSTRAINT [PK_BetaTester] PRIMARY KEY CLUSTERED 
+(
+	[TesterId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
+-------
+ADD IsTVE
+
+ALTER TABLE [dbo].[Users]
+	ADD 
+	[IsTVEverywhere] [bit] NULL DEFAULT 0
+
+-------
+RECURRING BILLING & CREDIT CARDS
+
+CREATE TABLE [dbo].[RecurringBillings](
+			[RecurringBillingId] [int] IDENTITY(1,1) NOT NULL,
+			[UserId] [uniqueidentifier] NOT NULL,
+			[ProductId] [int] NOT NULL,
+			[EndDate] [datetime] NULL,
+			[StatusId] [int] NOT NULL,
+			[CreatedOn] [datetime] NULL,
+			[UpdatedOn] [datetime] NULL,
+			[NextRun] [datetime] NULL,
+			[OfferingId] [int] NOT NULL,
+			[PackageId] [int] NOT NULL,
+			[CreditCardHash] [nvarchar](50) NULL,
+		 CONSTRAINT [PK_RecurringBillings] PRIMARY KEY CLUSTERED 
+		(
+			[RecurringBillingId] ASC
+		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON)
+		)
+	GO
+	CREATE INDEX IX_RecurringBillings_OfferingId
+		ON dbo.RecurringBillings (OfferingId);
+	GO
+	CREATE INDEX IX_RecurringBillings_ProductId
+		ON dbo.RecurringBillings (ProductId);
+	GO
+	CREATE INDEX IX_RecurringBillings_PackageId
+		ON dbo.RecurringBillings (PackageId);
+	GO
+	CREATE INDEX IX_RecurringBillings_UserId
+		ON dbo.RecurringBillings (UserId);
+	GO
+
+
+CREATE TABLE [dbo].[CreditCards](
+			[CCId] [int] IDENTITY(1,1) NOT NULL,
+			[UserId] [uniqueidentifier] NOT NULL,
+			[CreditCardHash] [nvarchar](50) NULL,
+			[LastDigits] [nvarchar](4) NOT NULL,
+			[StatusId] [int] NOT NULL,
+			[CreatedOn] [datetime] NULL,
+			[UpdatedOn] [datetime] NULL,
+			[OfferingId] [int] NOT NULL,
+		 CONSTRAINT [PK_CreditCards] PRIMARY KEY CLUSTERED 
+		(
+			[CCId] ASC
+		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON)
+		)
+	GO
+	CREATE INDEX IX_CreditCards_OfferingId
+		ON dbo.CreditCards (OfferingId);
+	GO	
+	CREATE INDEX IX_CreditCards_StatusId
+		ON dbo.CreditCards (StatusId);
+	GO
+	CREATE INDEX IX_CreditCards_UserId
+		ON dbo.CreditCards (UserId);
+	GO
+
+ALTER TABLE [dbo].[CreditCards]
+		ADD
+		[CardType] [nvarchar](50) NULL
+	
+	ALTER TABLE [dbo].[CreditCards]
+		ADD
+		[PaymentMethodId] [int] NOT NULL
+
+ALTER TABLE [dbo].[RecurringBillings]
+	ADD 
+	[LastSentEmail] [datetime] NULL

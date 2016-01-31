@@ -1,0 +1,11 @@
+# git ignore file
+*.zip
+*.orig
+*.suo
+robots.txt
+robots*
+
+# Build Folders
+obj
+UltimateSearchInclude
+connections.config

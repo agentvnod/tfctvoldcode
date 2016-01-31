@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = " Ala Carte - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="main_container" align="center">
+    <div id="body_container">
+        <div id="leftContainer" class="left">
+            <div id="payperserye">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerSerye" })">
+                    @Html.ImageBuilder(Url, "package/payperserye_inactive.png", new { height = "43", width = "217", alt = "Pay Per Serye" })
+                </a>
+            </div>
+            <div id="paypershow">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerShow" })">
+                    @Html.ImageBuilder(Url, "package/paypershow_inactive.png", new { height = "43", width = "217", alt = "Pay Per Show" })
+                </a>
+            </div>
+            <div id="payperspecial">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerSpecial" })">
+                    @Html.ImageBuilder(Url, "package/payperspecial_inactive.png", new { height = "43", width = "217", alt = "Pay Per Special" })
+                </a>
+            </div>
+            <div id="paypermovie">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerMovie" })">
+                    @Html.ImageBuilder(Url, "package/paypermovie_inactive.png", new { height = "43", width = "217", alt = "Pay Per Movie" })
+                </a>
+            </div>
+            <div id="paypersports">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerSports" })">
+                    @Html.ImageBuilder(Url, "package/paypersports_inactive.png", new { height = "43", width = "217", alt = "Pay Per Sports" })
+                </a>
+            </div>
+            @*<div id="livestreaming">
+                <a href="@Url.Action("AlaCarte","Packages", new{ id="PerLiveStreaming" })">
+                    @Html.ImageBuilder(Url, "package/livestreaming_inactive.png", new { height = "43", width = "217", alt = "Pay Per Livestream" })
+                </a>
+            </div>*@
+            <!--GO BACK  Button-->
+            <div id="backContainer">
+                <div id="goBackButton">
+                    <a href="@Url.Action("Index", "Packages")">
+                        @Html.ImageBuilder(Url, "package/goback.png", new { alt = "Go Back" })
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="rightContainer" class="right">
+            <div id="rightTopContainer">
+                <a href="http://">
+                    @Html.ImageBuilder(Url, "package/alacarte_headerpic_serye.jpg", new { alt = "Pay Per Serye" })
+                </a>
+            </div>
+            @*<div id="rightMiddleContainer">
+                <div id="ancContainer">
+                    <div id="ancTitleBar">
+                        <img src="images/anctitlebar.png" border="0" height="36" width="345" alt="">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="ANCprice_buttonsContainer">
+                        <div id="accessANC1day" class="left">
+                            <a href="http://">
+                                <img src="images/1dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                        <div id="accessANC7day" class="left">
+                            <a href="http://">
+                                <img src="images/7dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                        <div id="accessANC30day" class="left">
+                            <a href="http://">
+                                <img src="images/30dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="dzmmContainer">
+                    <div id="dzmmTitleBar">
+                        <img src="images/dzmmtitlebar.png" border="0" height="36" width="345" alt="">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="DZMMprice_buttonsContainer">
+                        <div id="accessDZMM1day" class="left">
+                            <a href="http://">
+                                <img src="images/1dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                        <div id="accessDZMM7day" class="left">
+                            <a href="http://">
+                                <img src="images/7dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                        <div id="accessDZMM30day" class="left">
+                            <a href="http://">
+                                <img src="images/30dayaccess.png" border="0" height="118" width="109" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="clear">
+            </div>
+            <div id="titleSearch">
+                <div id="categoryTitle" class="left">
+                    Latest in Live Streaming</div>
+                <div id="livestreamingsearch" class="right">
+                    <div id="livestreamingsearchbox">
+                        <form method="POST" action="/livestreamingTest/search">
+                        <input value="Search for Live Streaming..." style="font-family: Georgia; font-style: italic;
+                            color: rgb(102, 102, 102);" id="livestreamingtextbox" name="search_input_field"
+                            placeholder="" type="textbox">
+                        <input id="livestreamingsubmit" value="Submit" type="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="contentContainer">
+            
+            @switch(((string)ViewBag.ParamId).ToLower()){
+                    case "pershow":
+                        @Html.Action("GetPerShows", "Packages")
+                    break;
+                    case "perserye":
+                        @Html.Action("GetPerEpisodes", "Packages")
+                    break;
+                    case "permovie":
+                        @Html.Action("GetPerMovies", "Packages")
+                   break;
+                    default:
+                         @Html.Action("GetPerEpisodes", "Packages")
+                    break;
+            }
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "alacarte_livestreaming.css")
+}
+@section JScriptBottom {
+    
+}

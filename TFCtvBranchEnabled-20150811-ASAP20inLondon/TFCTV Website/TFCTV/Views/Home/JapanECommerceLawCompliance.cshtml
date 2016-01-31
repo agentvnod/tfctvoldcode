@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Special E-Commerce Law Compliance Page - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Special E-Commerce Law Compliance Page</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="bodyContainer" style="margin-left: 20px; color: #fff;">
+            <div class="whitetext">
+                <h3>
+                    Vendor Name:</h3>
+                <p style="margin-left: 20px;">
+                    ABS-CBN Japan Inc.
+                </p>
+                <h3>
+                    Japan Branch Representative:</h3>
+                <p style="margin-left: 20px;">
+                    Enrique Olives (Managing Director)</p>
+                <h3>
+                    Office Address:</h3>
+                <p style="margin-left: 20px;">
+                    Tokyo, Minato-ku 4-5-11 Shiba, Shiba Plaza Bldg. 3F<br />
+                    postal code : 108-0014
+                </p>
+                <h3>
+                    Contact Information:</h3>
+                <p style="margin-left: 20px;">
+                    Customer Service email address: <a href="mailto:support@tfc.tv" class="orange">support@tfc.tv</a>
+                    <br />
+                    Customer Service Hotline:
+                    <div style="margin-left: 40px;">
+                        <ul>
+                            <li>0120-832-863 (from landline)</li><li>03-6868-2024 (from mobile phones)</li></ul>
+                    </div>
+                </p>
+                <h3>
+                    How to Register:</h3>
+                <p style="margin-left: 20px;">
+                    Refer to this @Html.ActionLink("link", "Register", new { controller = "User" }, new { @class = "orange" })
+                </p>
+                <h3>
+                    Product Pricing and Subscription Method:</h3>
+                <p style="margin-left: 20px;">
+                    Refer to this @Html.ActionLink("link", "Index", new { controller = "GoPremium" }, new { @class = "orange" })
+                </p>
+                <h3>
+                    Payment Method:</h3>
+                <p style="margin-left: 20px;">
+                    Online purchases are payable using any of the following methods<div style="margin-left: 40px;">
+                        <ul>
+                            <li>PayPal</li>
+                            <li>TFC.tv Prepaid Cards (prepaid cards can be purchased from <a href="/Find-A-Dealer"
+                                class="orange">authorized dealers</a></li></ul>
+                    </div>
+                </p>
+                <h3>
+                    Product Delivery:</h3>
+                <p style="margin-left: 20px;">
+                    Products/subscriptions purchased on-line are available for viewing immediately upon
+                    confirmation of the purchase by the system.</p>
+                <h3>
+                    Other Terms and Conditions</h3>
+                <p style="margin-left: 20px;">
+                    Refer to this @Html.ActionLink("link", "TermsAndConditions", new { controller = "Home" }, new { @class = "orange" })</p>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>

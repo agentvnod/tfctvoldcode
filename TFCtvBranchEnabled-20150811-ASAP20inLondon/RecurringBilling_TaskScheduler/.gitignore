@@ -1,0 +1,8 @@
+# git ignore file
+*.zip
+*.bak
+*.user
+
+# Build Folders
+bin
+obj

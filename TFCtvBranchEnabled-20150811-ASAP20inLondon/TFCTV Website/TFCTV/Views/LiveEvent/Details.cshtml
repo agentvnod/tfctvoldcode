@@ -1,0 +1,266 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Episode
+@{
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    ViewBag.Title = String.Format("{0} - TFC.tv", Model.Description);
+    string countryCode = MyUtility.GetCurrentCountryCodeOrDefault();
+    bool ShowFreeTrialImage = ViewBag.ShowFreeTrialImage;
+    bool IsUserEntitled = false;
+
+    IPTV2_Model.Show show = (IPTV2_Model.Show)ViewBag.Show;
+
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    var LiveEventEpisodeId = Model.EpisodeId;
+
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", (bool)ViewBag.Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+    }
+
+    //Check for IsUserEntitled
+    try
+    {
+        IsUserEntitled = (bool)ViewBag.IsUserEntitled;
+    }
+    catch (Exception) { }
+
+    //ShareMedia
+    string title = String.Empty;
+    var image = Html.ContentBuilder(Url, "/content/images/blank-image.jpg").ToString();
+    try
+    {
+        title = Model.Description;
+        image = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.ImageAssets.ImageVideo);
+    }
+    catch (Exception) { }
+
+    string privacy = MyUtility.GetActivityFeedPrivacy(userData);
+    string scope = MyUtility.GetActivityFeedScope(userData);
+
+    var externalShare = userData.IsExternalSharingEnabled.Contains("true") ? "true" : "false";
+    var internalShare = userData.IsInternalSharingEnabled.Contains("true") ? "true" : "false";
+
+    var isLoggedIn = User.Identity.IsAuthenticated.ToString().ToLower();
+    var cid = Model.Description;
+
+    string src = !String.IsNullOrEmpty(show.ImagePoster) ? String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, show.CategoryId, show.ImagePoster) : image;
+
+    string trackingLabel = String.Format("{0}|{1}|{2}|{3}|{4}|{5}", LiveEventEpisodeId, Model.Description, String.Empty, ViewBag.CategoryType, ViewBag.EmailAddress, Request.UserHostAddress);
+
+    IPTV2_Model.Episode EpisodeModel = null;
+    try
+    {
+        var context = new IPTV2_Model.IPTV2Entities();
+        EpisodeModel = context.Episodes.Find(LiveEventEpisodeId);
+    }
+    catch (Exception) { }
+    
+}
+<br />
+<br />
+<div id="mainBody">
+    <form id="form1" name="form1" method="post" action="#">
+    <div class="transparentBg">
+        <!-- click tayo header -->
+        <div style="margin-bottom: -3px;">
+            @Html.ImageBuilder(Url, GlobalConfig.LiveStreamSpecialBannerImageUrl, new { title = Model.Description, alt = Model.Description, width = 940 })</div>
+        <!-- Video and Menu -->
+        <div id="videoPlayerMenu">
+            <div id="videoPlayer">
+                <div id="videoEmbed">
+                    <div id="playerContainer" style="width: 540px; height: 406px;">
+                    </div>
+                </div>
+            </div>
+            <div id="videoMenu">
+                <div id="videoCurrent">
+                    <div id="videoCurrentInfo">
+                        <div class="videoTitle">@Model.Description
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div class="videoDescription">
+                            <div class="more-less">
+                                <div class="more-block">@Model.Synopsis</div>
+                            </div>
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div>
+                            @Html.Partial("_SharePartial", Model) @Html.Partial("_LovePartial", Model, dictionary)
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.ImageBuilder(Url, "clicktayo/videoDivider.png", new { alt = "" })
+                </div>
+                <div class="review-selector">
+                    <a href="#" id="write-review">Post a comment</a> | <a href="#" id="show-review" class="active">
+                        See comments</a>
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div class="show-reviews">
+                    <div id="commentDiv">
+                        <div class="itemListBody">
+                            <div class="wrapper">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="write-a-review hideElement">
+                    <div id="result" class="hideElement">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div>
+                        <textarea rows="4" maxlength="5000" id="tComment" name="tComment" style="width: 340px;
+                            height: 170px;"></textarea></div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="floatRight">
+                        <input id="cmdSubmit" type="submit" name="submit" value="Post" /></div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div id="videoOthers">
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div id="user-comments">
+            @*<div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        User Comments
+                    </div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>*@
+            <div class="itemListBody">
+                <div class="wrapper">
+                    <div id="ratings-and-review">
+                        @Html.Partial("_EpisodesRatingsAndReviews", EpisodeModel)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+    </div>
+    </form>
+</div>
+<div id="not-available" class="hideElement">
+    @Html.ImageBuilder(Url, "video-not-available-register-square.jpg")
+</div>
+<div id="not-entitled" class="hideElement">
+    @Html.ImageBuilder(Url, "user-not-entitled-square.jpg")
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.css")
+    @Html.CssBuilder(Url, "ratingsreviews.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@HttpUtility.JavaScriptStringEncode(Model.Description)"/>
+    <meta property="og:description" content="@HttpUtility.JavaScriptStringEncode(Model.Synopsis)"/>
+    <meta property="og:type" content="Live Streaming" />
+    <meta property="og:image" content="@src" />
+    <meta property="og:site_name" content="TFC.tv" />
+}
+@section JScriptBottom{
+    @Html.Partial("FlowPlayerPartial")
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "jquery.timeago.js")
+    @Html.JsBuilder(Url, "commentsGenerator.js")
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        var socializePluginUrl = '@Html.ContentBuilder(Url, "scripts/socialize.1.js")';        
+    </script>
+    <script type="text/javascript">
+        var userActionURL = '@HttpContext.Current.Request.Url.AbsoluteUri';
+        var playerContainer = 'playerContainer';        
+        var label = '@trackingLabel';
+        var eid = null;
+        var sid = null;
+        var playbackId = @Model.EpisodeId;
+        var playbackType = 1; // Episode
+        var flow = {}; var config = {};               
+    </script>
+    <script type="text/javascript">
+        var actionParams = {
+            description: '@HttpUtility.JavaScriptStringEncode(Model.Synopsis)',
+            title: '@HttpUtility.JavaScriptStringEncode(Model.Description)',
+            url: userActionURL,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: '@src'
+        };
+        var action;
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '/Ajax/GetMedia/@LiveEventEpisodeId';
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            $.getScript(playerJS).done(function () {
+                                var akObj = { url: Afp };
+                                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, apObj: akObj, scaling: 'fit', url: data.data.Url, categoryType: 'ClickTayoMV', label: label, sid: sid, eid: eid, isClip: false, trackerSWF: trackerSWF, trackerID: trackerID, userActionURL: userActionURL, uri: uri, time: false, ipadUrl: data.data.Url, allowShare: false, playbackType: playbackType, playbackId: playbackId, analyticsSWF: analyticsSWF };
+                                flow.Player.Create(config);
+                            });
+                        }
+                        else if (data.errorCode == 402)
+                            $('#' + playerContainer).html($('#not-entitled').html());
+                        else
+                            $('#' + playerContainer).html($('#not-available').html());
+                    }
+            });
+        }); 
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var adjustHeight = 75;
+            var vpmHeight = 470;
+            var moreText = 'more';
+            var lessText = 'less';
+
+            $('.videoDescription .more-less .more-block').css('height', adjustHeight).css('overflow', 'hidden');
+            $(".videoDescription .more-less").append('<span class="continued">[&hellip;]&nbsp;</span><a href="#" class="orange adjust"></a>');
+            $('a.adjust').text(moreText);
+
+            $('a.adjust').toggle(function () {
+                $('#videoPlayerMenu').css('height', 'auto').css('padding-bottom', '5px');
+                $(this).parents("div:first").find(".more-block").css('height', 'auto').css('overflow', 'visible');
+                // Hide the [...] when expanded
+                $(this).parents("div:first").find("span.continued").css('display', 'none');
+                $(this).text(lessText);
+            }, function () {
+                $('#videoPlayerMenu').css('height', vpmHeight).css('padding-bottom', '0px');
+                $(this).parents("div:first").find(".more-block").css('height', adjustHeight).css('overflow', 'hidden');
+                $(this).parents("div:first").find("span.continued").css('display', 'inline');
+                $(this).text(moreText);
+            });
+
+        });
+    </script>
+}

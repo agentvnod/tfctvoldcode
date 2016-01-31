@@ -1,0 +1,660 @@
+﻿<?xml version="1.0"?>
+<ServiceConfiguration serviceName="TFCtv_Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="TFCTV">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="eugenecp" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCECHBlLu9ab+oRiWyRXq/fjMwDQYJKoZIhvcNAQEBBQAEggEAVAc8AWDNezhRZQ388cWGsO+sw22djb6pcHOZQxAV8Xyu0LVtZa0Au1mGKBt2hJzqBl+vOimxRt+rXld6UrXuUZGRRY64Kq5rndgzC5e/CbRki0cCJh149QSoWwVFkjDk0IQdRYUbYQ1OuONAhwLVVYCqA7BuwYaqrFRm7ypNdmoLPW7Qf8gyXLuRCWr38y5QbZywXOBvg5n/dcaJA++vHd271dSU1a7qBnA8iT0q45xnrZhLgZQYRKfZe+DpOeYJD59zbSLyMHCeWaJmDTDKlkB58Zlr11oQGSZa8ttWVGIJgGY1Npfs3n/InkFifaPJz/WcYHZg/OfcWOY07ufEEjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECCuf6U28a1nVgBDche93fcBGbcVUr3RctQ+t" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2017-08-31T23:59:59.0000000+08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+      <Setting name="TfcTvInternalStorage" value="UseDevelopmentStorage=true" />
+      <Setting name="MaxMindContainer" value="maxmind" />
+      <Setting name="MaxMindDatabase" value="GeoIPCity.dat" />
+      <Setting name="offeringId" value="2" />
+      <Setting name="serviceId" value="46" />
+      <Setting name="entertainmentCategoryId" value="736" />
+      <Setting name="moviesCategoryId" value="738" />
+      <Setting name="newsCategoryId" value="737" />
+      <Setting name="LatestFullEpisodesFeatureId" value="1" />
+      <Setting name="FreeTVFeatureId" value="23" />
+      <Setting name="MostViewedFeatureId" value="24" />
+      <Setting name="LatestShowsFeatureId" value="25" />
+      <Setting name="FeaturedCelebritiesFeatureId" value="26" />
+      <Setting name="CarouselEntertainmentId" value="4" />
+      <Setting name="CarouselMovieId" value="6" />
+      <Setting name="CarouselNewsId" value="5" />
+      <Setting name="pinEncryption" value="sha1" />
+      <Setting name="DefaultCurrency" value="USD" />
+      <Setting name="DefaultCountry" value="US" />
+      <Setting name="TrialCurrency" value="---" />
+      <Setting name="BlankGif" value="/content/images/blank.gif" />
+      <Setting name="LatestNewsFullEpisodesFeatureId" value="27" />
+      <Setting name="NewsFreeTVFeatureId" value="28" />
+      <Setting name="FeaturedCurrentAffairs" value="30" />
+      <Setting name="FeaturedJournalistsFeatureId" value="31" />
+      <Setting name="FeaturedRegionalNewsFeatureId" value="5" />
+      <Setting name="LatestMovieFeatureId" value="48" />
+      <Setting name="FeaturedPersonMovieFeatureId" value="14" />
+      <Setting name="StaffPicksFeatureId" value="49" />
+      <Setting name="MostPopularMovieseFeatureId" value="50" />
+      <Setting name="PDTToken" value="0if6Y6lnlmbzsqt8_GrTMPJZecQ-ADkJCIaHx721x7TvguzcEeX-m80ygGe" />
+      <Setting name="PayPalSubmitUrl" value="https://www.sandbox.paypal.com/cgi-bin/webscr" />
+      <Setting name="PayPalBusiness" value="istarbuxs-facilitator@gmail.com" />
+      <Setting name="PayPalReturnUrl" value="http://localhost:81/Subscribe/ConfirmPaypalPayment" />
+      <Setting name="PayPalReloadReturnUrl" value="http://localhost:81/Load/ConfirmPaypalPayment" />
+      <Setting name="GSapikey" value="" />
+      <Setting name="GSsecretkey" value="" />
+      <Setting name="GeoIpPath" value="/App_Data/GeoIPCity.dat" />
+      <Setting name="AkamaiTokenKey" value="" />
+      <Setting name="AnonymousDefaultPackageId" value="58" />
+      <Setting name="LoggedInDefaultPackageId" value="50" />
+      <Setting name="CarouselImgPath" value="http://res2.abs-cbnip.tv/images/carouselslides/" />
+      <Setting name="ShowImgPath" value="http://res2.abs-cbnip.tv/images/categoryimages/" />
+      <Setting name="EpisodeImgPath" value="http://res2.abs-cbnip.tv/images/episodeimages/" />
+      <Setting name="CelebrityImgPath" value="http://res2.abs-cbnip.tv/images/celebrityimages/" />
+      <Setting name="EntertainmentMenuIds" value="32,78,33,36,38,37,34,61,35,39,94" />
+      <Setting name="NewsMenuIds" value="40,41,67" />
+      <Setting name="MoviesMenuIds" value="72,43,45,46,44,42,47,110" />
+      <Setting name="LatestEpisodeDropdownListIds" value="1,15,16,17,18,19,20,59,21,22" />
+      <Setting name="FreeTVPlayListId" value="54" />
+      <Setting name="FreeTVMostViewedId" value="51" />
+      <Setting name="FreeTVMostSharedId" value="52" />
+      <Setting name="FreeTVTopLikedId" value="53" />
+      <Setting name="FreeTVComedyId" value="55" />
+      <Setting name="FreeTVDramaId" value="56" />
+      <Setting name="FreeTVSportsId" value="57" />
+      <Setting name="premiumPackageId" value="47" />
+      <Setting name="litePackageId" value="48" />
+      <Setting name="moviePackageId" value="49" />
+      <Setting name="IpWhitelist" value="::1;127.0.0.1;216.80.20.234;70.37.65.241;216.246.37.130;204.93.135.198;204.93.137.59;221.121.190.2;63.68.150.2;66.201.45.162;128.127.25.241;80.227.110.142;134.159.141.2;114.160.214.250;70.25.14.165;222.127.148.174;216.80.22.6;221.121.187.253;63.68.150.2;24.25.237.14;24.6.62.193;125.212.48.66" />
+      <Setting name="GomsTfcTvUserId" value="gomsphoenix" />
+      <Setting name="GomsTfcTvPassword" value="12345678" />
+      <Setting name="GomsTfcTvServiceUserId" value="gomstfctv" />
+      <Setting name="GomsTfcTvServicePassword" value="" />
+      <Setting name="GomsTfcTvServiceUrl" value="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" />
+      <Setting name="baseUrl" value="http://tfc.tv" />
+      <Setting name="FAQId" value="943" />
+      <Setting name="FAQTop5" value="977,949,1054,1059,1060" />
+      <Setting name="SocialComment" value="1" />
+      <Setting name="SocialRating" value="2" />
+      <Setting name="SocialShare" value="3" />
+      <Setting name="SocialLike" value="11" />
+      <Setting name="SocialLove" value="12" />
+      <Setting name="maximumDistance" value="250" />
+      <Setting name="hlsPrefixPattern" value="hls://o1-i.akamaihd.net/i/" />
+      <Setting name="hlsSuffixPattern" value="/master.m3u8" />
+      <Setting name="zeriPrefixPattern" value="http://o2-f.akamaihd.net/z/" />
+      <Setting name="zeriSuffixPattern" value="/manifest.f4m" />
+      <Setting name="httpPrefixPatternMobile" value="http://o1-i.akamaihd.net/i/" />
+      <Setting name="BingJsonApiUrl" value="http://api.bing.net/json.aspx" />
+      <Setting name="BingApiKey" value="119D8186EA835663F822E55CC94F80D258D9F06F" />
+      <Setting name="BingSiteQueryPiece" value="" />
+      <Setting name="BingSiteSearchCount" value="25" />
+      <Setting name="MSIEqid" value="1110" />
+      <Setting name="Chromeqid" value="1060" />
+      <Setting name="Firefoxqid" value="1109" />
+      <Setting name="Operaqid" value="1111" />
+      <Setting name="Safariqid" value="1112" />
+      <Setting name="ChatId" value="43072878" />
+      <Setting name="CustomSearchJsonApiUrl" value="https://www.googleapis.com/customsearch/v1" />
+      <Setting name="CustomSearchApiKey" value="AIzaSyDP0jSjHxwJKUiWFCnuuxtNQN8g-Jo4bQY" />
+      <Setting name="CustomSearchCX" value="014045967172328131312:je8wvy59rya" />
+      <Setting name="CustomSearchFilter" value="0" />
+      <Setting name="CustomSearchCount" value="10" />
+      <Setting name="CustomSearchFormat" value="json" />
+      <Setting name="CustomSearchStartIndex" value="1" />
+      <Setting name="CustomSearchResultCount" value="100" />
+      <Setting name="useGoogleCustomSiteSearch" value="true" />
+      <Setting name="useBingSiteSearch" value="false" />
+      <Setting name="moviesPremiumCategoryId" value="788" />
+      <Setting name="FormsAuthenticationTimeout" value="2628000" />
+      <Setting name="FreeTrial14ProductId" value="13" />
+      <Setting name="IsFreeTrialEnabled" value="true" />
+      <Setting name="IsEWalletPaymentModeEnabled" value="true" />
+      <Setting name="IsPpcPaymentModeEnabled" value="true" />
+      <Setting name="IsCreditCardPaymentModeEnabled" value="true" />
+      <Setting name="IsPaypalPaymentModeEnabled" value="true" />
+      <Setting name="IsPpcReloadModeEnabled" value="true" />
+      <Setting name="IsCreditCardReloadModeEnabled" value="true" />
+      <Setting name="IsPaypalReloadModeEnabled" value="true" />
+      <Setting name="ServiceDeskUsername" value="TFCtvTS" />
+      <Setting name="ServiceDeskPassword" value="" />
+      <Setting name="ServiceDeskDepartmentId" value="68" />
+      <Setting name="FeedbackEmail" value="feedback@tfc.tv" />
+      <Setting name="SupportEmail" value="istarbuxs@gmail.com" />
+      <Setting name="SmtpHost" value="localhost" />
+      <Setting name="SmtpPort" value="25" />
+      <Setting name="AllowedCountries" value="KR;JP" />
+      <Setting name="GomsTfcTvServiceId" value="110" />
+      <Setting name="SendGridUsername" value="" />
+      <Setting name="SendGridPassword" value="" />
+      <Setting name="SendGridSmtpHost" value="smtp.sendgrid.net" />
+      <Setting name="SendGridSmtpPort" value="587" />
+      <Setting name="RegistrationConfirmPage" value="/User/RegisterConfirm" />
+      <Setting name="IsCreateSupportTicketForLoggedInUsersEnabled" value="false" />
+      <Setting name="IsProfilingEnabled" value="false" />
+      <Setting name="TFCnowPackageIds" value="1427,1424,1425,1426,45,1,25,800,1486,1487" />
+      <Setting name="NoReplyEmail" value="noreply@tfc.tv" />
+      <Setting name="FreeTrial7ProductId" value="12" />
+      <Setting name="FreeTrial30ProductId" value="14" />
+      <Setting name="TFCnowPremium" value="1427,1,25,800" />
+      <Setting name="TFCnowPlus" value="1424" />
+      <Setting name="TFCnowBasic1" value="1425" />
+      <Setting name="TFCnowBasic2" value="1426" />
+      <Setting name="TFCnowMovieChannel" value="45" />
+      <Setting name="JapanCountryCode" value="JP" />
+      <Setting name="FreeTrialProductIds" value="12,13,14,262,263,264,265,807" />
+      <Setting name="TFCnowLite" value="1424,1425,1426" />
+      <Setting name="EmailVerificationBody" value="{0},&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;You have submitted {1} as your email address for your TFC.tv account. Para makumpleto ang registration mo, kailangan i-verify na sa iyo talaga ang email address na ito. I-click ang link sa ilalim para ma-verify ang TFC.tv account mo.&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;VERIFY NOW: &amp;lt;a href=&amp;quot;{2}&amp;quot;&amp;gt;{2}&amp;lt;/a&amp;gt;&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;-----------------------------------------------------------------------------------------------------------&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;Hindi ka nag-register sa TFC.tv?&amp;lt;br &amp;#47;&amp;gt;Huwag mag-alala, safe pa rin ang email address mo. Kailangan i-verify ang email address bago magamit sa TFC.tv.&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;If you have further questions, visit our Help Center: http://tfc.tv/Help&amp;lt;br &amp;#47;&amp;gt;&amp;lt;br &amp;#47;&amp;gt;Yours truly,&amp;lt;br &amp;#47;&amp;gt;TFC.tv" />
+      <Setting name="snippetEnd" value="60" />
+      <Setting name="TFCnowBasePackageIds" value="1427,1425,45" />
+      <Setting name="LiveMenuIds" value="79,80,81" />
+      <Setting name="TFCnowLiveStream" value="1486,1487" />
+      <Setting name="TFCnowMoviePPV" value="676,215,231,7,251,1223,1778,1272,1363,1046,1782" />
+      <Setting name="FreeTvCategoryId" value="929" />
+      <Setting name="EmailVerificationBodyTextOnly" value="{0},\r\n\r\n\r\nYou have submitted {1} as your email address for your TFC.tv account. Para makumpleto ang registration mo, kailangan i-verify na sa iyo talaga ang email address na ito. I-click ang link sa ilalim para ma-verify ang TFC.tv account mo.\r\n\r\n\r\nVERIFY NOW: {2}\r\n\r\n\r\n-----------------------------------------------------------------------------------------------------------\r\n\r\n\r\nHindi ka nag-register sa TFC.tv?\r\n\r\nHuwag mag-alala, safe pa rin ang email address mo. Kailangan i-verify ang email address bago magamit sa TFC.tv.\r\n\r\n\r\nIf you have further questions, visit our Help Center: http://tfc.tv/Help\r\n\r\n\r\nYours truly,\r\n\r\nTFC.tv" />
+      <Setting name="ResetPasswordBodyTextOnly" value="{0},\r\n\r\n\r\nNakalimutan ang password sa TFC.tv?\r\n\r\n\r\nDahil sa request na aming natanggap noong {1}, maaari ninyo nang baguhin ang password ng TFC.tv account mo. I-click lang ang link sa ilalim para ma-reset ang password.\r\n\r\n\r\nRESET PASSWORD NOW: {2}\r\n\r\n\r\n--------------------------------------------------------------------------------------------------------------------------------------------\r\n\r\n\r\nHindi ikaw ang nagpadala ng request?\r\n\r\n\r\nHuwag mag-alala, safe pa ring ang TFC.tv account mo. Kailangan matanggap nila ang email na ito para mapalitan ang password mo.\r\n\r\n\r\nKung meron kayong karagdagang tanong, bumisita sa TFC.tv Help Center: http://tfc.tv/Help\r\n\r\n\r\nSalamat Kapamilya,\r\n\r\nTFC.tv" />
+      <Setting name="SubscribeToProductBodyTextOnly" value="\r\n\r\nTransaction ID: {0}\r\n\r\nProduct: {1}\r\n\r\nDate: {2}\r\n\r\nAmount: {3}\r\n\r\nCurrency: {4}\r\n\r\nType: Subscription\r\n\r\nMode: {5}\r\n\r\nReference: {6}\r\n\r\n" />
+      <Setting name="ExtendSubscriptionBodyTextOnly" value="\r\n\r\nTransaction ID: {0}\r\n\r\nProduct: {1}\r\n\r\nDate: {2}\r\n\r\nAmount: {3}\r\n\r\nCurrency: {4}\r\n\r\nType: Subscription Extension\r\n\r\nMode: {5}\r\n\r\nReference: {6}\r\n\r\n" />
+      <Setting name="CustomSearchQueryPiece" value="" />
+      <Setting name="PaypalBuyIPNUrl" value="http://127.0.0.1:81/Buy/IPNListener" />
+      <Setting name="PaypalReloadIPNUrl" value="http://127.0.0.1:81/Reload/IPNListener" />
+      <Setting name="PaypalDefaultIPNUrl" value="http://127.0.0.1:81/Paypal/IPNListener" />
+      <Setting name="IsCDNEnabled" value="true" />
+      <Setting name="LogEmail" value="logs@abs-cbni.com" />
+      <Setting name="HeatMapIpWhiteList" value="124.107.151.66;63.68.150.2" />
+      <Setting name="GiftingSenderBodyTextOnly" value="\r\nTransaction ID: {0}\r\n\r\nProduct: {1}\r\n\r\nDate: {2}\r\n\r\nAmount: {3}\r\n\r\nCurrency: {4}\r\n\r\nType: Gifting\r\n\r\nMode: {5}\r\n\r\nReference: {6}\r\n\r\n" />
+      <Setting name="GiftingRecipientBodyTextOnly" value="{0},\r\n\r\n\r\nMAGANDANG BALITA!\r\n\r\n\r\nNakatanggap ka ng regalo mula kay {1} {2} sa TFC.tv. Ngayon, meron ka ng {3} hangang {4}.\r\n\r\n\r\nMagpasalamat at bumisita sa TFC.tv profile page ni {1} {2}: {5}/Profile/{6}\r\n\r\n\r\nKung meron kayong karagdagang tanong, bumisita sa TFC.tv Help Center: http://tfc.tv/Help\r\n\r\n\r\nSalamat Kapamilya,\r\n\r\nTFC.tv" />
+      <Setting name="OnlinePremierePreviewCategoryIds" value="1547,1549,1550,1552,1553,1688,1689,1723,1724,1725,1726,1802,1805,1804,1868,1867,1876,1875,1895,1896,1904,1905,1923,1922,2166,2179,2228,2224" />
+      <Setting name="OnlinePremiereFullCategoryIds" value="1531|1547;1532|1549;1533|1550;1546|1553;1535|1552;1624|1688;1623|1689;1706|1723;1701|1724;1708|1725;1707|1726;1717|1802;1715|1805;1716|1804;1713|1868;1774|1867;1721|1876;1775|1875;1776|1895;1777|1896;1779|1904;1778|1905;1720|1923;1719|1922;2125|2166;2178|2179;2126|2228;2222|2224" />
+      <Setting name="CDNBaseUrl" value="http://cdn.tfc.tv" />
+      <Setting name="AssetsBaseUrl" value="http://az332173.vo.msecnd.net" />
+      <Setting name="IsAssetsEnabled" value="true" />
+      <Setting name="HeatMapUrl" value="http://propelmanila.com/fbapps/TFC/map/online.html" />
+      <Setting name="ClickTayoMVEpisodeId" value="30393" />
+      <Setting name="ClickTayoMVCategoryId" value="1674" />
+      <Setting name="OkGoChannelId" value="23" />
+      <Setting name="DigitalShortsCategoryId" value="1676" />
+      <Setting name="OkGoCarouselSlideId" value="749" />
+      <Setting name="IsPDTEnabled" value="true" />
+      <Setting name="DBMGetUserUrl" value="http://designbluemanila.com/barkadaoke/access/api/getUser/{0}" />
+      <Setting name="YoutubeAPIVideoFeedUrl" value="http://gdata.youtube.com/feeds/api/users/{0}/uploads" />
+      <Setting name="YoutubeAPIVideoFeedUser" value="uploadApiTester" />
+      <Setting name="YoutubeAPIVideoFeedMaxResults" value="16" />
+      <Setting name="YoutubeAPIVideoFeedStartIndex" value="1" />
+      <Setting name="YoutubeAPISingleVideoUrl" value="https://gdata.youtube.com/feeds/api/videos/{0}" />
+      <Setting name="MultipleLoginRedirectedUrl" value="/Home/ConcurrentLogin" />
+      <Setting name="YoutubeAPIPlaylistFeedUrl" value="https://gdata.youtube.com/feeds/api/playlists/{0}" />
+      <Setting name="YoutubeAPIPlaylistID" value="PLWKfvKrhTr-y6rSR7anXfC-qqFp7wsO9W" />
+      <Setting name="IsPreventionOfMultipleLoginEnabled" value="true" />
+      <Setting name="BCWMHChannelId" value="24" />
+      <Setting name="LiveStreamRestrictedCountries" value="PH," />
+      <Setting name="LiveStreamSpecialChannelId" value="39" />
+      <Setting name="LiveStreamSpecialBannerImageUrl" value="banners/panagbenga1.png" />
+      <Setting name="IsLiveStreamRestrictionCheckEnabled" value="false" />
+      <Setting name="AkamaiAddSeconds" value="15" />
+      <Setting name="RegistrationCompleteTemplateUrl" value="http://cdnassets.tfc.tv/newsletters/email_templates/html/registration_confirmation.html" />
+      <Setting name="RegistrationCompleteSubject" value="You are now part of TFC.tv" />
+      <Setting name="IsCheckForEntitlementsForLiveSpecialsEnabled" value="true" />
+      <Setting name="LiveSpecialsPackageIdsRestriction" value="47,48" />
+      <Setting name="LiveSpecialsCategoryIdsRestriction" value="1731," />
+      <Setting name="CategoryIdsInCache" value="740,746,752,758,755,749,1500,743,764,770,774,776,777,775,773,778,767,2097,2096,2151,2553,2555,1962" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="SSLbaseUrl" value="https://127.0.0.1:81" />
+      <Setting name="isSSLEnabled" value="false" />
+      <Setting name="IsEffectiveMeasureEnabled" value="true" />
+      <Setting name="IsChatEnabled" value="true" />
+      <Setting name="KwentoNgPaskoCategoryId" value="1780" />
+      <Setting name="KwentoNgPaskoBannerImageUrl" value="banners/kwento-ng-pasko-2013.jpg" />
+      <Setting name="FreeTrialPackageId1" value="47" />
+      <Setting name="FreeTrialPackageId2" value="48" />
+      <Setting name="FreeTrialPackageId3" value="49" />
+      <Setting name="FreeTrialPackageId4" value="47" />
+      <Setting name="FreeTrialPackageIds" value="73,74,75,76,73,73" />
+      <Setting name="IsXmasSkinEnabled" value="false" />
+      <Setting name="DolphyCelebrityId" value="239" />
+      <Setting name="FreeTrialEarlyBirdProductId" value="269" />
+      <Setting name="FreeTrialProductIdsNEW" value="807,807,807,807,807,807" />
+      <Setting name="TFCTVPackageIds" value="47,48,49" />
+      <Setting name="FreeTrialAlaCarteSubscriptionTypes" value="1,2" />
+      <Setting name="zeriProgressivePrefixPattern" value="https://o1p-a.akamaihd.net" />
+      <Setting name="zeriProgressiveSuffixPattern" value="" />
+      <Setting name="httpProgressivePrefixPatternMobile" value="https://o1p-a.akamaihd.net" />
+      <Setting name="PMDSalt" value="22QfuPNgKCJJOybMJo51" />
+      <Setting name="hlsProgressiveSuffixPattern" value=".csmil/master.m3u8" />
+      <Setting name="hlsProgressivePrefixPattern" value="hls://o1-i.akamaihd.net/i" />
+      <Setting name="AkamaiPMDAddSeconds" value="60" />
+      <Setting name="IsPMDPlayerEnabled" value="true" />
+      <Setting name="TFCTVPlayerDownloadSalt" value="1656y13yu75oL2U@!17n" />
+      <Setting name="PMDHighBitrate" value="500000" />
+      <Setting name="PMDLowBitrate" value="300000" />
+      <Setting name="TFCTvDownloadPlayerUrl" value="http://204.93.205.224/tfctv/tfctv.aspx?d=" />
+      <Setting name="IsDownloadPlayerEnabled" value="false" />
+      <Setting name="HimigHandogCategoryId" value="1849" />
+      <Setting name="IsThemedSkinEnabled" value="false" />
+      <Setting name="PMDHDBitrate" value="1500000" />
+      <Setting name="JDCEpisodeId" value="37372" />
+      <Setting name="IsTVERegistrationEnabled" value="true" />
+      <Setting name="TVERegistrationPage" value="/User/RegisterToTFCEverywhere" />
+      <Setting name="RegistrationCompleteTVE" value="/User/RegistrationCompleteTFCEverywhere" />
+      <Setting name="ConcertsCategoryId" value="1842" />
+      <Setting name="IsEarlyBirdEnabled" value="false" />
+      <Setting name="RestrictedAdsCategoryIds" value="1692,1786,1517" />
+      <Setting name="TFCEverywhereParentCategoryId" value="1878" />
+      <Setting name="StreamingTVECategoryIds" value="1863,1864" />
+      <Setting name="TVEStreamingChannelCounterpart" value="1863|19;1864|20" />
+      <Setting name="UseResponseBufferOutput" value="true" />
+      <Setting name="UseResponseRedirectOnPreventionOfMultipleLogin" value="false" />
+      <Setting name="IsAdditionalCssEnabled" value="false" />
+      <Setting name="TFCkatCategoryId" value="1965" />
+      <Setting name="TVEMenuIds" value="1860,1866,1862,1861,1863,1864" />
+      <Setting name="OnlinePremiereCategoryId" value="2789" />
+      <Setting name="hlsLiveStreamPrefixPattern" value="hls://abscbnhdlive-i.akamaihd.net/i/" />
+      <Setting name="hlsLiveStreamSuffixPattern" value="/master.m3u8" />
+      <Setting name="zeriLiveStreamPrefixPattern" value="http://abscbnhdlive-f.akamaihd.net/z/" />
+      <Setting name="zeriLiveStreamSuffixPattern" value="/manifest.f4m" />
+      <Setting name="httpLiveStreamPrefixPatternMobile" value="http://abscbnhdlive-i.akamaihd.net/i/" />
+      <Setting name="TFCkatExclusivesCategoryId" value="1963" />
+      <Setting name="PackageIdsWithChannelAccess" value="47,80" />
+      <Setting name="HalalanChannelIds" value="19,20" />
+      <Setting name="HalalanParentCategoryId" value="775" />
+      <Setting name="HalalanOrderedListIds" value="19,1581,1394,20,1387" />
+      <Setting name="HalalanNewsAlertsParentCategoryId" value="1998" />
+      <Setting name="HalalanAdvisoriesParentCategoryId" value="1999" />
+      <Setting name="HalalanLatestEpisodesFeatureId" value="74" />
+      <Setting name="HalalanNewsAlertsFeatureId" value="73" />
+      <Setting name="HalalanAdvisoriesFeatureId" value="75" />
+      <Setting name="ElmahAllowedEmails" value="istarbuxs@hotmail.com,eugenecp@gmail.com,juzzanothakidd@yahoo.com,istarbuxs@gmail.com" />
+      <Setting name="ElmahTableName" value="ElmahErrorsLocal" />
+      <Setting name="IsRecurringBillingEnabled" value="true" />
+      <Setting name="isUAT" value="false" />
+      <Setting name="TVECountryWhiteList" value="JP,US" />
+      <Setting name="SubscribeToProductBodyWithAutoRenewTextOnly" value="\r\n\r\nTransaction ID: {0}\r\n\r\nProduct: {1}\r\n\r\nDate: {2}\r\n\r\nAmount: {3}\r\n\r\nCurrency: {4}\r\n\r\nType: Subscription\r\n\r\nMode: {5}\r\n\r\nReference: {6}\r\n\r\nOn Automatic Renewal* \r\n\r\n" />
+      <Setting name="ExtendSubscriptionBodyWithAutoRenewTextOnly" value="\r\n\r\nTransaction ID: {0}\r\n\r\nProduct: {1}\r\n\r\nDate: {2}\r\n\r\nAmount: {3}\r\n\r\nCurrency: {4}\r\n\r\nType: Subscription Extension\r\n\r\nMode: {5}\r\n\r\nReference: {6}\r\n\r\n\r\n\r\nOn Automatic Renewal* \r\n\r\n" />
+      <Setting name="FreeTrialStartDt" value="03/25/2013 00:00:00" />
+      <Setting name="IsProfileSiteMapEnabled" value="false" />
+      <Setting name="TVEverywherePackageIds" value="80" />
+      <Setting name="CanPlayExcludedPackageIds" value="80" />
+      <Setting name="CanPlayIncludedPackageIds" value="47,48,49,73,74,75,76,87,105,106,107,108,112,113,114" />
+      <Setting name="KapamilyaChatLiveEventEpisodeId" value="355121" />
+      <Setting name="CoverItLiveAltCastCode" value="d957aa1660" />
+      <Setting name="KapamilyaChatUserRegistrationDate" value="05/03/2013 23:59:59" />
+      <Setting name="KapamilyaChatNumberOfWinners" value="25" />
+      <Setting name="KapamilyaChatRelatedVideosMaxCount" value="24" />
+      <Setting name="KapamilyaChatFeatureId" value="69" />
+      <Setting name="IsLiveEventEntitlementCheckEnabled" value="true" />
+      <Setting name="IsMECreditCardEnabled" value="true" />
+      <Setting name="MECountriesAllowedForCreditCard" value="AE,QA" />
+      <Setting name="MiddleEastGomsSubsidiaryId" value="12" />
+      <Setting name="IsFlowHTML5PlayerEnabled" value="true" />
+      <Setting name="IsANCFreeStreamEnabled" value="true" />
+      <Setting name="ANCChannelId" value="19" />
+      <Setting name="ANCFreeStreamStartDt" value="05/07/2013 00:00:00" />
+      <Setting name="ANCFreeStreamEndDt" value="05/10/2013 00:00:00" />
+      <Setting name="ExcludedCountriesFromRegistrationDropDown" value="--,EU,ME" />
+      <Setting name="SpecialElectionCoverageCategoryId" value="1502" />
+      <Setting name="SpecialElectionCoverageEpisodeDisplayCount" value="25" />
+      <Setting name="FreeLiveEventEpisodeIds" value="0" />
+      <Setting name="CoverItLiveCdnId" value="4" />
+      <Setting name="IsKapamilyaChatRedirectToLiveEnabled" value="false" />
+      <Setting name="AkamaiIosTokenKey" value="973A4CC7F0805BC622F3B4CE56738152" />
+      <Setting name="IsTVEIpCheckEnabled" value="true" />
+      <Setting name="IsIosHLSCdnEnabled" value="true" />
+      <Setting name="ExcludedCategoryIdsForDisplay" value="1702,2039,929,2152,2153,716,237,2428,2440,2326" />
+      <Setting name="UseDaysBasedOnCacheDurationForSessionStore" value="true" />
+      <Setting name="WhitelistedLiveStreamEpisodeIdFromMobileCheck" value="41623,41725,41783" />
+      <Setting name="SessionStoreCacheDurationInDays" value="5" />
+      <Setting name="DZMMTVECategoryChannelId" value="1864" />
+      <Setting name="AkamaiBeaconIos" value="http://ma345-r.analytics.edgesuite.net/config/beacon-4513.xml" />
+      <Setting name="AkamaiBeaconAdobeFlash" value="http://ma345-r.analytics.edgesuite.net/config/beacon-4512.xml" />
+      <Setting name="csmaPluginPath" value="http://79423.analytics.edgesuite.net/csma/plugin/csma.swf" />
+      <Setting name="TVEStreamingEpisodeCounterpart" value="1863|41623;1864|41725" />
+      <Setting name="liveCategoryId" value="2098" />
+      <Setting name="paymentTransactionMaximumThreshold" value="50" />
+      <Setting name="reloadTransactionMaximumThreshold" value="5" />
+      <Setting name="UseProgressiveViaAdaptiveTechnology" value="false" />
+      <Setting name="PMDViaAdaptiveHighBitrate" value="800000" />
+      <Setting name="PMDViaAdaptiveLowBitrate" value="500000" />
+      <Setting name="PMDViaAdaptiveHDBitrate" value="1500000" />
+      <Setting name="CheckForEpisodesToMakeUseOfProgessiveViaAdaptiveTechnology" value="false" />
+      <Setting name="EpisodeIdsToMakeUseOfProgressiveViaAdaptiveTechnology" value="" />
+      <Setting name="UAAPTeamsCelebrityIDs" value="295,296,297,298,299,300,301,302" />
+      <Setting name="UAAPTeamsImgPath" value="http://res2.abs-cbnip.tv/images/uaap/" />
+      <Setting name="UAAPGreatnessNeverEndsCategoryId" value="2154" />
+      <Setting name="UAAPLiveStreamEpisodeId" value="41783" />
+      <Setting name="UAAPGamesParentId" value="2180" />
+      <Setting name="UAAPExclusiveFeaturesId" value="83" />
+      <Setting name="UAAPEntitlementPackageID" value="87,47" />
+      <Setting name="UAAPTeamsFeatureId" value="82" />
+      <Setting name="UseGomsSubsidiaryForTVECheck" value="false" />
+      <Setting name="IsSynapseEnabled" value="true" />
+      <Setting name="PackageAndProductCacheDuration" value="720" />
+      <Setting name="UAAPCoverItLiveAltCastCode" value="4675efcbcd" />
+      <Setting name="IsUserEntitlementViewOnPageEnabled" value="false" />
+      <Setting name="UsePayPalIPNLog" value="true" />
+      <Setting name="MenuCacheDuration" value="240" />
+      <Setting name="UseCountryListInMemory" value="false" />
+      <Setting name="MenuMovieBlurbLength" value="280" />
+      <Setting name="MenuShowBlurbLength" value="110" />
+      <Setting name="LiveEventEpisodesWhereVotingIsEnabled" value="41780" />
+      <Setting name="IsPreventionOfMultipleLoginUsingSessionDatabaseEnabled" value="true" />
+      <Setting name="WelcomePageEpisodeID" value="23897" />
+      <Setting name="SynapseGenericCacheDuration" value="240" />
+      <Setting name="PackagesInProductGroup" value="1,5,8" />
+      <Setting name="UrlTokenSalt" value="kRi5eyUYsU80" />
+      <Setting name="UrlTokenPassword" value="I467M9g1rum7" />
+      <Setting name="IsSmartPitReloadEnabled" value="true" />
+      <Setting name="AlaCarteBlurb" value="Pick and watch only the TFC.tv titles you want!" />
+      <Setting name="EventCelebritiesFeatureID" value="82" />
+      <Setting name="TFCkatShowExclusives" value="false" />
+      <Setting name="TFCkatAltCastCode" value="c9b485655a" />
+      <Setting name="UseServiceOfferingWhenCheckingEpisodeParentCategory" value="true" />
+      <Setting name="GetParentCategoriesCacheDuration" value="240" />
+      <Setting name="GetParentShowsForEpisodeCacheDuration" value="240" />
+      <Setting name="GetAllSubCategoryIdsCacheDuration" value="240" />
+      <Setting name="GigyaPromoChallengeID" value="AnnivPromo" />
+      <Setting name="TFCtvFirstYearAnniversaryPromoId" value="1" />
+      <Setting name="IsWelcomePageOn" value="false" />
+      <Setting name="EnableNotifyLoginOnLinkAccount" value="false" />
+      <Setting name="PromoRunDateString" value="18 November 2013 to 28 February 2014" />
+      <Setting name="SocialProvidersList" value="facebook,twitter,googleplus,linkedin,yahoo,microsoft" />
+      <Setting name="IsForceConnectToSNSEnabled" value="true" />
+      <Setting name="BCWMHWeddingLiveEventEpisodeId" value="35511" />
+      <Setting name="BCWMHWeddingSpecialsFeatureId" value="1" />
+      <Setting name="BCWMHWeddingExclusivesFeatureId" value="24" />
+      <Setting name="BCWMHWeddingCategoryId" value="2390" />
+      <Setting name="BCWMHCoverItLiveAltCastCode" value="dc7d35e4d8" />
+      <Setting name="BalitangAmericaSagipKapamilyaEpisodeId" value="50630" />
+      <Setting name="BalitangAmericaSagipKapamilyaSlug" value="magkasama-sa-kwento-ng-pagbangon" />
+      <Setting name="AlertBoxURL" value="//cdnassets.tfc.tv/newsletters/alertbox.html" />
+      <Setting name="IsAlertBoxEnabled" value="true" />
+      <Setting name="AlertBoxEnabledUrlList" value="/,/Category/List/740,/Show/Details/1502/be-careful-with-my-heart,/News,/show/details/2253/got-to-believe,/show/details/382/tv-patrol,/show/details/2086/annaliza,/show/details/2322/maria-mercedes,/show/details/2257/bukas-na-lang-kita-mamahalin,/tfcchannel" />
+      <Setting name="TulongPHConcertEpisodeId" value="50657" />
+      <Setting name="TulongPHConcertSlug" value="tulong-na-tabang-na-tayo-na-an-all-star-benefit-concert" />
+      <Setting name="IsTFCkatVotingEnabled" value="true" />
+      <Setting name="IsTFCtvFanMobPromoEnabled" value="true" />
+      <Setting name="KwentoNgPaskoSpecialsFeatureId" value="100" />
+      <Setting name="KwentoNgPaskoExclusivesFeatureId" value="99" />
+      <Setting name="MopayFormPostAddress" value="https://securepay.mopay.com/onetime/button/sandbox.action" />
+      <Setting name="IsMopayReloadModeEnabled" value="true" />
+      <Setting name="MopayCountryWhitelist" value="AE,HK,DE" />
+      <Setting name="MopayLoadSaltCode" value="o68eh1cz3E" />
+      <Setting name="TfcTvFree2StartDate" value="11/01/2013 00:00:00" />
+      <Setting name="TfcTvFree2EndDate" value="11/30/2013 00:00:00" />
+      <Setting name="TfcTvFree2ProductId" value="654" />
+      <Setting name="TfcTvFree2CountryWhiteList" value="TW,IT" />
+      <Setting name="TfcTvFree1StartDate" value="11/01/2013 00:00:00" />
+      <Setting name="TfcTvFree1EndDate" value="11/30/2013 00:00:00" />
+      <Setting name="AlertBoxForGermanyUrl" value="//cdnassets.tfc.tv/newsletters/alertboxGermany.html" />
+      <Setting name="AlertBoxForItalyTaiwanUrl" value="//cdnassets.tfc.tv/newsletters/alertboxItaly.html" />
+      <Setting name="KapamilyaLoveChatEpisodeId" value="49146" />
+      <Setting name="KapamilyaLoveChatSlug" value="love-problem-ba-kamo-magkuwentuhan-tayo" />
+      <Setting name="TFCkatGrandWinners" value="82" />
+      <Setting name="ChristmasSpecialEpisodeId" value="51893" />
+      <Setting name="ChristmasSpecialSlug" value="kwento-ng-pasko-a-solidarity-concert-filming-" />
+      <Setting name="PaypalAPIUser" value="istarbuxs-facilitator_api1.gmail.com" />
+      <Setting name="PaypalAPIPassword" value="1380866859" />
+      <Setting name="PaypalAPISignature" value="AFcWxV21C7fd0v3bYYYRCpSSRl31Ar9UE8mNWQVTvUY40QHMmKgUtBpF" />
+      <Setting name="PaypalNVPUrl" value="https://api-3t.sandbox.paypal.com/nvp" />
+      <Setting name="PaypalAPIVersion" value="109.0" />
+      <Setting name="PaypalAPIMethod" value="ManageRecurringPaymentsProfileStatus" />
+      <Setting name="PaypalAPIAction" value="Cancel" />
+      <Setting name="ProductIdsExcludedFromRecurringBilling" value="2" />
+      <Setting name="IsPayPalRecurringBillingEnabled" value="true" />
+      <Setting name="ProductIdsIncludedInRecurringBilling" value="1,3,4,5,6,7,8,9" />
+      <Setting name="IsTFCkatMEVotingDisableDate" value="12/21/2013 00:04:00" />
+      <Setting name="ASAPDubai2014EpisodeId" value="53681" />
+      <Setting name="ASAPDubai2014Slug" value="asap-live-in-dubai-press-conference-livestream" />
+      <Setting name="FPJThematicBundleFeatureIds" value="104,105,106,107,108" />
+      <Setting name="FPJCategoryId" value="2553" />
+      <Setting name="FPJProductId" value="715" />
+      <Setting name="FPJShowIDForSubscribeButton" value="1503" />
+      <Setting name="NumberOfItemsInEpisodeList" value="20" />
+      <Setting name="ABSCBNFreeLiveStreamEpisodeId" value="55089" />
+      <Setting name="IsABSCBNFreeLiveStreamFreeOnRegistrationEnabled" value="true" />
+      <Setting name="ABSCBNFreeLiveStreamProductId" value="729" />
+      <Setting name="ABSCBNFreeLiveStreamStartDate" value="11/01/2013 00:00:00" />
+      <Setting name="ABSCBNFreeLiveStreamEndDate" value="11/01/2014 00:00:00" />
+      <Setting name="ABSCBNFreeLiveStreamPackageId" value="114" />
+      <Setting name="EmailsAllowedToBypassIPBlock" value="istarbuxs@hotmail.com,eugenecp@gmail.com,juzzanothakidd@yahoo.com,istarbuxs@gmail.com,johnjeraldtan@gmail.com,amabel_acosta@abs-cbn.com,becca.y.ramirez@gmail.com,wedgeereneta@gmail.com,redge.gatchalian@yahoo.com,nedlegs@yahoo.com,allie.delacruz@ymail.com,fay.pinera@gmail.com,globalprodevt@gmail.com,abspinera4@gmail.com,bonby_manalo@abs-cbn.com,ricardo_azura@abs-cbn.com,roberto_deguzman@abs-cbn.com,arnaldo_pascual@ans-cbn.com,genaro_gamutan@abs-cbn.com,popo@popo.com" />
+      <Setting name="ABSCBNFreeLiveStreamSlug" value="abs-cbn" />
+      <Setting name="MainMenuItems" value="Entertainment,News,Movies,Live" />
+      <Setting name="IsTVERegionBlockingEnabled" value="false" />
+      <Setting name="NumberOfItemsInEpisodeListInEpisodePage" value="5" />
+      <Setting name="MopayBackURL" value="https://tfc.tv/Load/Confirmation" />
+      <Setting name="PBBLiveEventEpisodeId" value="58308" />
+      <Setting name="BayaningFilipinoEpisodeId" value="57638" />
+      <Setting name="BayaningFilipinoSlug" value="galing-ng-pilipino-ituloy-mo" />
+      <Setting name="PBBLiveStreamFeatureId" value="113" />
+      <Setting name="PBBEpisodesFeatureId" value="111" />
+      <Setting name="PBBUberFeatureId" value="112" />
+      <Setting name="PBBCarouselSlideIds" value="2566" />
+      <Setting name="PBBBlockedCountryCodes" value="US,CA,PH,EU,BE,CZ,IT,HU,LI,LU,MT,NL,PL,RO,CH,BY,BA,BV,BG,DK,FO,FI,GE,GL,IS,IE,IM,LV,MK,NO,RU,RS,SI,SK,SJ,SE,UA,GB,AD,AT,CY,EE,FR,GF,GS,DE,GR,GP,IL,MQ,YT,MC,MA,PT,SM,RE,ES,TR" />
+      <Setting name="TFC20DefaultEpisodeId" value="58487" />
+      <Setting name="TFC20BayaningFilipinoCategoryId" value="2696" />
+      <Setting name="TFC20CoverItLiveAltCastCode" value="6205cc448f" />
+      <Setting name="IsMopayListenerEnabled" value="false" />
+      <Setting name="MopayCID" value="5924" />
+      <Setting name="MopayPassword" value="G84NZk1M" />
+      <Setting name="MopayDeliveryConfirmationURL" value="https://api.mopay.com/httpapi/productDeliveryConfirmation/v21" />
+      <Setting name="IsMobilePreviewEnabled" value="true" />
+      <Setting name="FeatureItemsPageSize" value="8" />
+      <Setting name="GenericListContentSize" value="42" />
+      <Setting name="FPJParentCategoryId" value="2334" />
+      <Setting name="ShowsCategoryIds" value="740,2084,746,752,758,755,749,1500,743,761,1482" />
+      <Setting name="NewsCategoryIds" value="764,770,767,2394" />
+      <Setting name="MoviesCategoryIds" value="1962,774,776,777,775,773,778" />
+      <Setting name="LiveCategoryIds" value="2151,2097" />
+      <Setting name="UXHomePageCarouselId" value="8" />
+      <Setting name="PremiumProductIds" value="1,3,4" />
+      <Setting name="LiteProductIds" value="5,6,7" />
+      <Setting name="MovieProductIds" value="8,9" />
+      <Setting name="MenuExCategory" value="755:2681,2682|2151:2693" />
+      <Setting name="UXAlaCarteParentCategoryIds" value="2789,2694,1962,3152" />
+      <Setting name="GigyaSealKey" value="86552218-1C3E-D4A0-2BB4-823F58358F7E" />
+      <Setting name="DefaultProductIdOffering" value="1" />
+      <Setting name="UXAnonymousHomepageCarouselId" value="9" />
+      <Setting name="UXReviewParentCategoryId" value="2852" />
+      <Setting name="BCWMHThanksgivingConcertBlockedCountryCodes" value="PH" />
+      <Setting name="BCWMHThanksgivingConcertSlideIds" value="2788" />
+      <Setting name="IsHDPlaybackEnabled" value="true" />
+      <Setting name="SpecialsCurrentCategoryId" value="750" />
+      <Setting name="PremiumTrialPromoId" value="3" />
+      <Setting name="PremiumTrialPromoProductId" value="1" />
+      <Setting name="LitePromoProductIds" value="811,812,813" />
+      <Setting name="LiteChurnersPromoId" value="2" />
+      <Setting name="TFCtvApiVideoPlaybackUri" value="http://tfctvwebapi.cloudapp.net/api/videoPlaybacks" />
+      <Setting name="Html5CapableDevicesRegex" value="\bAndroid (\d+(?:\.\d+)+);|\bWindows Phone (OS\s)*(\d+(?:\.\d+)+);|(\bMSIE (\d+(?:\.\d+)+);|\bTrident/(\d+(?:\.\d+)+);|Touch)|Version/(\d+(?:\.\d+)+) Safari" />
+      <Setting name="AdultContentCategoryId" value="2900" />
+      <Setting name="FeaturedCelebSlug" value="featured-celebrities" />
+      <Setting name="ProjectAirEpisodeId" value="55089" />
+      <Setting name="ProjectAirDisplayCategoryId" value="2961" />
+      <Setting name="ProjectAirCategoryId" value="2554" />
+      <Setting name="ProjectAirPromoId" value="5" />
+      <Setting name="ProjectAirEmailVerificationBodyTemplateUrl" value="http://cdnassets.tfc.tv/newsletters/email_templates/html/air_verify_email0.html" />
+      <Setting name="ProjectAirProgramScheduleChannelIds" value="57,51,52,53,54,55,56" />
+      <Setting name="USAllowedCarouselIds" value="2807" />
+      <Setting name="Promo201410PromoId" value="6" />
+      <Setting name="Promo2014ProductIds" value="3" />
+      <Setting name="AirRegistrationCompleteTemplateUrl" value="http://cdnassets.tfc.tv/newsletters/email_templates/html/air_welcome_email1.html" />
+      <Setting name="premiumProductGroupIds" value="1,823,799" />
+      <Setting name="Compensation2014PromoId" value="6" />
+      <Setting name="SubscriptionProductIds" value="1,3,4,5,6,7,8,9,811,812,813,833,839,840,845" />
+      <Setting name="SubscriptionProductIds1Month" value="1,5,8,811,833,839,845" />
+      <Setting name="SubscriptionProductIds3Month" value="3,6,9,812,833" />
+      <Setting name="SubscriptionProductIds12Month" value="4,7,813" />
+      <Setting name="Compensation201411ProductId1Month" value="13" />
+      <Setting name="Compensation201411ProductId3and12Month" value="12" />
+      <Setting name="Compensation201411CategoryId3and12Month" value="740" />
+      <Setting name="Compensation201411CategoryId1Month" value="774" />
+      <Setting name="Compensatory3DaysProductId" value="852" />
+      <Setting name="Compensatory7DaysProductId" value="853" />
+      <Setting name="PreBlackPromoProductIds" value="5,6,7" />
+      <Setting name="PreBlackPromoId" value="7" />
+      <Setting name="CAAllowedCarouselIds" value="2834" />
+      <Setting name="EdsaWoolworthPromoId" value="11" />
+      <Setting name="ProjectBlackPromoIds" value="10" />
+      <Setting name="ProjectBlackProductIds" value="851" />
+      <Setting name="PremiumComplimentary1Month" value="613" />
+      <Setting name="SurveyPromoId" value="5" />
+      <Setting name="KapitBisigEpisodeId" value="69041" />
+      <Setting name="KapitBisigSlug" value="be-careful-with-my-heart-finale-global-kapit-bisig-day" />
+      <Setting name="Xoom2PromoId" value="10" />
+      <Setting name="Xoom2FreeProductId" value="13" />
+      <Setting name="UseJWPlayer" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="TFCtvMobileAirEpisodeId" value="55089" />
+      <Setting name="ITEValidateURL" value="http://myapi.ite.net/tfc/validatesubscriber/" />
+      <Setting name="ITEWhitelistedIp" value="221.121.187.253,202.88.65.42,202.88.65.41,202.88.64.46" />
+      <Setting name="ITEPromoId" value="13" />
+      <Setting name="AkamaiIosTokenKey2" value="47EAF074B1DD788120394402E3D41806" />
+      <Setting name="LiveEpisodeIdsToUseIosTokenKey2" value="74835,76616,83018,83745" />
+      <Setting name="PinoyPride30EpisodeId" value="74835" />
+      <Setting name="PinoyPride30Slug" value="tv-patrol-live-simulcast-tfc-in-the-middle-east" />
+      <Setting name="PinoyPride30TakeoverStartDt" value="03/20/2015 00:00:00" />
+      <Setting name="PinoyPride30TakeoverEndDt" value="03/30/2015 08:00:00" />
+      <Setting name="PinoyPride30ProductId" value="206" />
+      <Setting name="PacMayLiveEpisodeId" value="76616" />
+      <Setting name="PacMayVODEpisodeId" value="76611" />
+      <Setting name="PacMaySpecialsFeatureId" value="119" />
+      <Setting name="PacMayLiveConcertShowId" value="3179" />
+      <Setting name="PacMayLatestNewsShowId" value="3181" />
+      <Setting name="PacMayVODShowId" value="3178" />
+      <Setting name="PacMayTrendingVideosCategoryId" value="3181" />
+      <Setting name="PacMayPlugOnTrendingVideosEpisodeId" value="76654" />
+      <Setting name="PacMaySubscribeCategoryId" value="3177" />
+      <Setting name="PacMaySubscribeProductIds" value="884" />
+      <Setting name="MEPacMayCarouselIds" value="2919" />
+      <Setting name="NonMEPacMayCarouselIds" value="2920" />
+      <Setting name="MEPacMayAllowedCountryCodes" value="BH,EG,IQ,JO,KW,LB,LY,OM,QA,SA,TN,YE,AE" />
+      <Setting name="PacMayTVCEpisodeId" value="76654" />
+      <Setting name="PacMayLiveCategoryId" value="3177" />
+      <Setting name="PacMayProductIdsForRedirect" value="883,884" />
+      <Setting name="IsStaticPacMayForMECarouselEnabled" value="false" />
+      <Setting name="Q22015PromoId" value="15" />
+      <Setting name="Q22015ProductId" value="811" />
+      <Setting name="PBB747Cam1EpisodeId" value="41725" />
+      <Setting name="PBB747Cam2EpisodeId" value="41623" />
+      <Setting name="PBBHelpFragment" value="faq3274" />
+      <Setting name="VerificationTemplateUrl" value="http://tfctvassets.blob.core.windows.net/newsletters/email_templates/html/verification_email3.html" />
+      <Setting name="WelcomeTemplateUrl" value="http://tfctvassets.blob.core.windows.net/newsletters/email_templates/html/engage_welcome_email2.html" />
+      <Setting name="ReceiptTemplateUrl" value="http://tfctvassets.blob.core.windows.net/newsletters/email_templates/html/engage_receipt_email2.html" />
+      <Setting name="DaxAllowedParentCategories" value="entertainment,movies,news,live,ppv,online premiere" />
+      <Setting name="SiteUmbrellaCategoryIds" value="736,737,738,2098,1974,2545" />
+      <Setting name="Asap20InLondonEpisodeId" value="83745" />
+      <Setting name="Asap20InLondonAllowedDomains" value="(www\.)*example\.com" />
+      <Setting name="BackgroundTakeoverAllowedCountries" value="PH,HK" />
+      <Setting name="AkamaiIosTokenKey3" value="427871FA0FAFCB1E28A2E96E0F124775" />
+      <Setting name="EpisodeIdsToUseIosTokenKey3" value="83745" />
+      <Setting name="TwitterUriCdnId" value="9" />
+      <Setting name="TwitterWidgetCdnId" value="8" />
+      <Setting name="StreamSenseEnabled" value="false" />
+      <Setting name="UAAPMainCategoryId" value="3350" />
+      <Setting name="hlsProtocol" value="hls://" />
+      <Setting name="httpProtocol" value="http://" />
+      <Setting name="hdsFolder" value="/z/" />
+      <Setting name="hlsFolder" value="/i/" />
+      <Setting name="NetsuiteMaintenancePromoId" value="15" />
+      <Setting name="TfctvRecommendedItemsApi" value="http://tfctvwebapi.cloudapp.net/api/v1/recommendationitems" />
+      <Setting name="Country14DayTrials" value="TW" />
+      <Setting name="AirPlusPackageId" value="158" />
+      <Setting name="TFCtvPaidMobileAirEpisodeId" value="86007" />
+      <Setting name="ListOfAirPlusPackageIds" value="157,158" />
+      <Setting name="AirPlusAdTypeIds" value="2365,3079,2321" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFA550CABA42260202AE372C612AD54363D46C50" thumbprintAlgorithm="sha1" />
+      <Certificate name="Go.Daddy.Secure.Certification.Authority" thumbprint="7C4656C3061F7F4C0D67B319A855F60EBC11FC44" thumbprintAlgorithm="sha1" />
+      <Certificate name="TFC.tv" thumbprint="E27CE22D5DD2B541678C1EB732BC749707CCCD95" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="TFCtv Background Cache  Updater">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="eugenecp" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCECHBlLu9ab+oRiWyRXq/fjMwDQYJKoZIhvcNAQEBBQAEggEAVAc8AWDNezhRZQ388cWGsO+sw22djb6pcHOZQxAV8Xyu0LVtZa0Au1mGKBt2hJzqBl+vOimxRt+rXld6UrXuUZGRRY64Kq5rndgzC5e/CbRki0cCJh149QSoWwVFkjDk0IQdRYUbYQ1OuONAhwLVVYCqA7BuwYaqrFRm7ypNdmoLPW7Qf8gyXLuRCWr38y5QbZywXOBvg5n/dcaJA++vHd271dSU1a7qBnA8iT0q45xnrZhLgZQYRKfZe+DpOeYJD59zbSLyMHCeWaJmDTDKlkB58Zlr11oQGSZa8ttWVGIJgGY1Npfs3n/InkFifaPJz/WcYHZg/OfcWOY07ufEEjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECCuf6U28a1nVgBDche93fcBGbcVUr3RctQ+t" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2017-08-31T23:59:59.0000000+08:00" />
+      <Setting name="FillCacheDurationInMinutes" value="14400" />
+      <Setting name="FillCache" value="true" />
+      <Setting name="LoopWaitDurationInSeconds" value="3600000" />
+      <Setting name="CategoryIdsToCache" value="740,746,752,758,755,749,1500,743,764,770,774,776,777,775,773,778,767,2097,2096,2151,2553,2555,1962" />
+      <Setting name="OfferingId" value="2" />
+      <Setting name="ServiceId" value="46" />
+      <Setting name="NewsMenuIds" value="40,41,67" />
+      <Setting name="MoviesMenuIds" value="72,43,45,46,44,42,47,110" />
+      <Setting name="EntertainmentMenuIds" value="32,78,33,36,38,37,34,61,35,39,94" />
+      <Setting name="MenuNames" value="Entertainment,News,Movies,Live" />
+      <Setting name="LiveMenuIds" value="79,80,81" />
+      <Setting name="Iptv2Entities" value="metadata=res://*/IPTV2Model.csdl|res://*/IPTV2Model.ssdl|res://*/IPTV2Model.msl;provider=System.Data.SqlClient;provider connection string=&amp;quot;data source=(local)\MSSQL2008R2;initial catalog=IPTV2Dev2;integrated security=True;multipleactiveresultsets=True;App=EntityFramework&amp;quot;" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" value="1" />
+      <Setting name="EngagementsEntities" value="metadata=res://*/Engagements.csdl|res://*/Engagements.ssdl|res://*/Engagements.msl;provider=System.Data.SqlClient;provider connection string=&amp;quot;data source=(local)\MSSQL2008R2;initial catalog=EngagementsDev;integrated security=True;multipleactiveresultsets=True;App=EntityFramework&amp;quot;" />
+      <Setting name="SocialComment" value="1" />
+      <Setting name="SocialRating" value="2" />
+      <Setting name="SocialShare" value="3" />
+      <Setting name="SocialLike" value="11" />
+      <Setting name="SocialLove" value="12" />
+      <Setting name="FreeTvCategoryId" value="929" />
+      <Setting name="entertainmentCategoryId" value="736" />
+      <Setting name="AssetsBaseUrl" value="http://cdnassets.tfc.tv" />
+      <Setting name="DefaultCurrency" value="USD" />
+      <Setting name="isGetPackagesFillCacheEnabled" value="false" />
+      <Setting name="IPTV2EntitiesConnectionString" value="data source=(local)\MSSQL2008R2;initial catalog=IPTV2Dev2;integrated security=True;multipleactiveresultsets=True;App=EntityFramework" />
+      <Setting name="EngagementsEntitiesConnectionString" value="data source=(local)\MSSQL2008R2;initial catalog=EngagementsDev;integrated security=True;multipleactiveresultsets=True;App=EntityFramework" />
+      <Setting name="MenuMovieBlurbLength" value="280" />
+      <Setting name="MenuShowBlurbLength" value="110" />
+      <Setting name="EpisodeImgPath" value="http://res2.abs-cbnip.tv/images/episodeimages/" />
+      <Setting name="ShowImgPath" value="http://res2.abs-cbnip.tv/images/categoryimages/" />
+      <Setting name="BlankGif" value="/content/images/blank.gif" />
+      <Setting name="isSynapseFillCacheEnabled" value="true" />
+      <Setting name="CelebrityImgPath" value="http://res2.abs-cbnip.tv/images/celebrityimages/" />
+      <Setting name="LatestShowsFeatureId" value="25" />
+      <Setting name="FeaturedCelebritiesFeatureId" value="26" />
+      <Setting name="CarouselImgPath" value="http://res2.abs-cbnip.tv/images/carouselslides/" />
+      <Setting name="CarouselEntertainmentId" value="4" />
+      <Setting name="isPackageFeatureCacheEnabled" value="true" />
+      <Setting name="isSubscriptionCacheEnabled" value="false" />
+      <Setting name="IsSynapseFillCategoriesWithShowsEnabled" value="false" />
+      <Setting name="IsSynapseFillHomepageEnabled" value="false" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFA550CABA42260202AE372C612AD54363D46C50" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="TfcTvCacheWorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="eugenecp" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCECHBlLu9ab+oRiWyRXq/fjMwDQYJKoZIhvcNAQEBBQAEggEAVAc8AWDNezhRZQ388cWGsO+sw22djb6pcHOZQxAV8Xyu0LVtZa0Au1mGKBt2hJzqBl+vOimxRt+rXld6UrXuUZGRRY64Kq5rndgzC5e/CbRki0cCJh149QSoWwVFkjDk0IQdRYUbYQ1OuONAhwLVVYCqA7BuwYaqrFRm7ypNdmoLPW7Qf8gyXLuRCWr38y5QbZywXOBvg5n/dcaJA++vHd271dSU1a7qBnA8iT0q45xnrZhLgZQYRKfZe+DpOeYJD59zbSLyMHCeWaJmDTDKlkB58Zlr11oQGSZa8ttWVGIJgGY1Npfs3n/InkFifaPJz/WcYHZg/OfcWOY07ufEEjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECCuf6U28a1nVgBDche93fcBGbcVUr3RctQ+t" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2017-08-31T23:59:59.0000000+08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFA550CABA42260202AE372C612AD54363D46C50" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="TfcTvSessionCacheWorkerRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="eugenecp" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCECHBlLu9ab+oRiWyRXq/fjMwDQYJKoZIhvcNAQEBBQAEggEAVAc8AWDNezhRZQ388cWGsO+sw22djb6pcHOZQxAV8Xyu0LVtZa0Au1mGKBt2hJzqBl+vOimxRt+rXld6UrXuUZGRRY64Kq5rndgzC5e/CbRki0cCJh149QSoWwVFkjDk0IQdRYUbYQ1OuONAhwLVVYCqA7BuwYaqrFRm7ypNdmoLPW7Qf8gyXLuRCWr38y5QbZywXOBvg5n/dcaJA++vHd271dSU1a7qBnA8iT0q45xnrZhLgZQYRKfZe+DpOeYJD59zbSLyMHCeWaJmDTDKlkB58Zlr11oQGSZa8ttWVGIJgGY1Npfs3n/InkFifaPJz/WcYHZg/OfcWOY07ufEEjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECCuf6U28a1nVgBDche93fcBGbcVUr3RctQ+t" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2017-08-31T23:59:59.0000000+08:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.NamedCaches" value="{&quot;caches&quot;:[{&quot;name&quot;:&quot;default&quot;,&quot;policy&quot;:{&quot;eviction&quot;:{&quot;type&quot;:0},&quot;expiration&quot;:{&quot;defaultTTL&quot;:10,&quot;isExpirable&quot;:true,&quot;type&quot;:1},&quot;serverNotification&quot;:{&quot;isEnabled&quot;:false}},&quot;secondaries&quot;:0}]}" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.DiagnosticLevel" value="1" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.CacheSizePercentage" value="" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ConfigStoreConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="FFA550CABA42260202AE372C612AD54363D46C50" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>

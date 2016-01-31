@@ -1,0 +1,463 @@
+﻿@using StackExchange.Profiling;
+@{
+    bool isTVEverywhere = false;
+    string CountryCode = String.Empty;
+    if (User.Identity.IsAuthenticated)
+    {
+        var context = new IPTV2_Model.IPTV2Entities();
+        var userId = new Guid(User.Identity.Name);
+        var user = context.Users.FirstOrDefault(u => u.UserId == userId);
+        if (user != null)
+        {
+            CountryCode = user.CountryCode;
+            if (user.IsTVEverywhere == true)
+            {
+                isTVEverywhere = true;
+            }
+        }
+    }
+
+    var AlertBoxStatus = MyUtility.IsAlertBoxEnabledInThisUrl();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>@*    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />*@
+    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />
+    @{if (GlobalConfig.isUAT)
+    {
+        <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+    }
+    }
+    @Html.CssBuilder(Url, "main.9.css")
+    @Html.CssBuilder(Url, "menu.12.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @if (!User.Identity.IsAuthenticated)
+    {
+        @Html.CssBuilder(Url, "login.css")
+
+    }
+    else
+    {
+        @Html.CssBuilder(Url, "payment-3.3.css")
+        @Html.CssBuilder(Url, "tabs-no-images.css")
+
+    }
+    @if (AlertBoxStatus)
+    {
+        @Html.CssBuilder(Url, "alertbox-1.1.css")
+
+    }
+    <link rel="Shortcut Icon" href="@Html.ContentBuilder(Url, "content/images/favicon.ico", removeProtocol: true)" />
+    <link href="//cdn.kendostatic.com/2013.2.716/styles/kendo.common.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="//cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="//cdn.kendostatic.com/2013.2.716/styles/kendo.black.min.css" rel="stylesheet"
+          type="text/css" />
+    <link href="//cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.black.min.css"
+          rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+    @{if (GlobalConfig.isUAT || Request.IsLocal)
+    {
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+    }
+    else
+    {
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    }
+    }
+    <script type="text/javascript" src="//code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//cdn.kendostatic.com/2013.2.716/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="//cdn.kendostatic.com/2013.2.716/js/kendo.aspnetmvc.min.js"></script>
+    @Html.JsBuilder(Url, "jquery.tools/1.2.7/all/jquery.tools.min.js", removeProtocol: true)
+    @Html.JsBuilder(Url, "kendo.modernizr.custom.js", removeProtocol: true)
+    @Html.JsBuilder(Url, "jquery.pnotify.min.js", removeProtocol: true)
+    @Html.CssBuilder(Url, "jquery.pnotify.default.css", removeProtocol: true)
+    @Html.CssBuilder(Url, "jquery-ui-smoothness.css", removeProtocol: true)
+    <link rel="apple-touch-icon" href="@Html.ContentBuilder(Url, "content/images/touch-icon-iphone.png", removeProtocol: true)" />
+    @Html.JsBuilder(Url, "common.3.js", removeProtocol: true)
+    @Html.JsBuilder(Url, "jquery.menu-aim-tfctv.js")
+    @Html.JsBuilder(Url, "menuBuilderN.4.js")
+    @if (IsSectionDefined("Stylesheet"))
+    { @RenderSection("Stylesheet", false)}
+    <!--[if IE 9]>
+    @Html.CssBuilder(Url, "main.ie9.css")
+    <![endif]-->
+    <!--[if lte IE 8]>
+    @Html.CssBuilder(Url, "main.ie8.2.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "main.ie7-1.5.css")
+    <![endif]-->
+    @{if (GlobalConfig.IsXmasSkinEnabled)
+    {
+        @Html.CssBuilder(Url, String.Format("xmas.css?{0}", Guid.NewGuid().ToString()))
+    }
+    }
+    @{if (GlobalConfig.IsThemedSkinEnabled)
+    {
+        @Html.CssBuilder(Url, String.Format("themed.css?{0}", Guid.NewGuid().ToString()))
+    }
+    }
+    <script type="text/javascript">
+        if (!(window.console && console.log)) {
+            console = {
+                log: function () { },
+                debug: function () { },
+                info: function () { },
+                warn: function () { },
+                error: function () { }
+            };
+        }
+    </script>
+    @if (IsSectionDefined("StylesheetSpecial"))
+    { @RenderSection("StylesheetSpecial", false)}
+    @if (IsSectionDefined("JScript"))
+    { @RenderSection("JScript", false)}
+    <script type="text/javascript">
+        var tfc = {};
+        var config = {};
+        var apikey = '@GlobalConfig.GSapikey';
+        var socializeUrl = '//cdns.gigya.com/JS/socialize.js?apikey=' + apikey;
+        var socialPluginUrl = '@Html.ContentBuilder(Url, "scripts/tfc.social.plugin.3.1.annivpromo.js")';
+        var menuAimUrl = '@Html.ContentBuilder(Url, "scripts/jquery.menu-aim-tfctv.js")';
+        var menuBuilderUrl = '@Html.ContentBuilder(Url, "scripts/menuBuilderN.4.js")';
+        var providers = '@GlobalConfig.SocialProvidersList';
+        var chatCategoryId = @GlobalConfig.ChatId;
+        var chatStatus = @GlobalConfig.IsChatEnabled.ToString().ToLower();
+    </script>
+    <script type="text/javascript" src="//cdns.gigya.com/JS/socialize.js?apikey=@GlobalConfig.GSapikey">
+        { connectWithoutLoginBehavior: 'alwaysLogin' }
+    </script>
+    @Html.Partial("_GoogleAnalyticsPartial")
+    @{if (GlobalConfig.IsAdditionalCssEnabled)
+    {
+        @Html.CssBuilder(Url, String.Format("extra.css?{0}", Guid.NewGuid().ToString()))
+    }
+    }
+</head>
+<body>
+    @Html.Partial("_GoogleTagManagerPartial")
+    <div id="bgLeft">
+        <div id="bgRight">
+            @{if (GlobalConfig.IsEffectiveMeasureEnabled)
+            {
+                @Html.Partial("_EffectiveMeasurePartial")
+            }
+            }
+            <div id="page">
+                <!-- start of userStatusBar -->
+                @Html.Action("StatusBar", "Home")
+                <!-- end of userStatusBar -->
+                <div class="clear">
+                </div>
+                <!-- start of menuBar -->
+                <div class="menuBar_container">
+                    <div id="menuBar">
+                        <ul>
+                            <li id="logo">
+                                @{if (isTVEverywhere)
+                                {
+                                    <a href="/TFCChannel">
+                                        @Html.ImageBuilder(Url, "menuBar/menu_logo.png", new { alt = "TFC Everywhere", title = "TFC Everywhere", @class = "iconImage" })
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="/">
+                                        @Html.ImageBuilder(Url, "menuBar/menu_logo.png", new { alt = "TFC.tv", title = "TFC.tv", @class = "iconImage" })
+                                    </a>
+                                }
+                                }
+                            </li>
+                        </ul>
+                        <div id="menuBar_search">
+                            @using (Html.BeginForm("Results", "Search", FormMethod.Get))
+                            {
+                                <input type="text" class="searchField" id="q" name="q" maxlength="256" placeholder="  Search TFC.tv" /><input type="submit" value="" id="submitBtn" />
+                            }
+                        </div>
+                        <div id="menuBar_menu">
+                            @Html.Action("CreateMenu", "Menu")
+                        </div>
+                    </div>
+                </div>
+                <!-- end of menuBar -->
+                <div class="clear">
+                </div>
+                <!-- start of feature -->
+                <div id="featureBody_container">
+                    @if (IsSectionDefined("featureBody"))
+                    { @RenderSection("featureBody", false)}
+                </div>
+                <!-- end of feature -->
+                <div class="clear">
+                </div>
+                <!-- start of mainBody -->
+                <div class="mainBody_container">
+                    @RenderBody()
+                    <div class="clear breakStandard">
+                    </div>
+                </div>
+                <!-- end of mainBody -->
+                <div class="clear">
+                </div>
+                <!-- start of footer -->
+                @Html.Partial("_Footer")
+                <!-- end of of footer -->
+            </div>
+            <div class="clear">
+            </div>
+            <div class="spotlight">
+                &nbsp;
+            </div>
+            <div class="apple_overlay" id="overlay">
+                <div class="contentWrap">
+                </div>
+            </div>
+            <div id="chat-bar">
+                <a href="#" id="chat-link" class="chat-toggle"><span id="gchat">GO CHAT</span> @Html.ImageBuilder(Url, "chat-icon.png")</a>
+            </div>
+            <div id="minimize" class="hideElement">
+                <div class="minimize-container floatRight">
+                    <a href="#" class="chat-toggle">@Html.ImageBuilder(Url, "minimize.png")</a>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div id="chat-container">
+            </div>
+            <div id="go-live-support" class="hideElement">
+                <a href="//c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390"
+                   target="_blank" onclick="this.newWindow = window.open('//c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390', 'Live Chat Software', 'toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=no,resizable=yes,replace=no');this.newWindow.focus();this.newWindow.opener=window;return false;">
+                    <span class="glive-support">CLICK HERE FOR LIVE SUPPORT</span>
+                </a>
+            </div>
+            @Html.JsBuilder(Url, "jquery.unobtrusive-ajax.min.js")
+            @{
+                <text>
+                    <script type="text/javascript">
+                        var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower();
+                    </script>
+                </text>
+            }
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    /***** Gigya *****/
+                    $.getScript(socialPluginUrl).done(function () {
+                        tfc.Social();
+                        var params = { container: 'socialConnections', width: 120, height: 20, style: 'standard', enabledProviders: providers, isLogin: isLogin, addHandler: true };
+                        tfc.Social.Login(params);
+                        if ($.find('#registerSocialConnection').length > 0) {
+                            var params = { container: 'registerSocialConnection', width: 300, height: 150, style: 'fullLogo', enabledProviders: providers, isLogin: isLogin, UIConfig: true, buttonSize: 50 };
+                            tfc.Social.Login(params);
+                        }
+                        if ($.find('#manageSocialConnection').length > 0) {
+                            var params = { container: 'manageSocialConnection', width: 400, height: 240, enabledProviders: providers };
+                            tfc.Social.EditConnectionsUI(params);
+                        }
+
+                        if (chatStatus) {
+                            var chatParam = { containerID: "chat-container", categoryID: chatCategoryId, width: 300, height: 400, cid: "" };
+                            tfc.Social.ChatUI(chatParam);
+                        }
+                        else
+                            $('#chat-bar').hide();
+                    });
+
+                    if ($.find('#myaccount') != undefined) {
+                        $('.acc-menu > li').on({
+                            mouseenter: function () { $(this).find('ul').css('visibility', 'visible'); },
+                            mouseleave: function () { $(this).find('ul').css('visibility', 'hidden'); }
+                        });
+                    }
+
+                    $(document).on('click', '.chat-toggle', function () {
+                        if ($("#chat-container").css('display') != 'none') { $('#chat-container .minimize-container').remove(); $('#go-live-support').hide(); }
+                        else { $('#chat-container').prepend($('#minimize').html()); $('#go-live-support').show(); }
+                        $('#chat-container-txtMsg').css('width', '240px');
+                        $('#chat-container').slideToggle();
+                        return false;
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                function getCookie(name) {
+                    var re = new RegExp(name + "=([^;]+)");
+                    var value = re.exec(document.cookie);
+                    return (value != null) ? unescape(value[1]) : null;
+                }
+                var cookieValue = getCookie("cookiePNotify")
+                if (cookieValue != "closed") {
+                    $.pnotify({
+                        after_close: function () {
+                            setCookieAndExpiration("cookiePNotify", "closed", 1825);
+                        },
+                        title: 'This website uses cookies!',
+                        text: 'You can read more about the cookies that we use and their purposes  @Html.ActionLink("here", "CookiePolicy", "Home").',
+                        icon: false,
+                        styling: 'jqueryui',
+                        hide: false,
+                        closer_hover: false,
+                        sticker: false,
+                        history: false
+                    });
+                }
+
+                @{if (!MyUtility.isUserLoggedIn())
+                   {
+                    <text>
+                $('#signin').on('click', function () {
+                    var windowWidth = 650; var windowHeight = 360;
+                    var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                    var windowTop = parseInt((screen.availHeight / 2) - (windowHeight / 2));
+                    var mywindow = window.open("/User/SignIn?ReturnUrl=" + escape(document.location.href), "tfclgnwdw", "menubar=0,resizable=0,width=" + windowWidth + ",height=" + windowHeight + ",left=" + windowLeft + ",top=" + windowTop + ",location=0,scrollbars=0,directories=0,status=1");
+                    mywindow.focus();
+                    return false;
+                });
+                </text>
+                   }
+                      }
+            </script>
+            <script type="text/javascript">
+                $.getScript(menuAimUrl).done(function () {
+                    $.getScript(menuBuilderUrl).done(function () {
+                        if ($.browser.msie) {
+                            $('html').addClass('ieBrowser');
+                        }
+                        var carouselCount = $.find('#featureBanner .featureBannerItems .wrapper').length;
+                        carouselCount = $.trim($($.find('#featureBanner .featureBannerItems .wrapper')).text()) == "" ? 0 : 1;
+                        $('.menuItem').hoverWithDelay(function () {
+                            var sourceid = $(this).attr('id');
+                            var mainmenu = $('#li' + sourceid).attr('rel');
+                            if ($('.selectedMenu').attr('id') != 'li' + sourceid) {
+                                $('.liAllMenu').removeClass('selectedMenu');
+                                $('.liGenre').removeClass('selectedSubMenu');
+                                $('.dShows').addClass('hideElement');
+                                $('.liShows').removeClass('selectedShowMenu');
+                                $('.dEpisodes').addClass('hideElement');
+                                $('#li' + sourceid).addClass('selectedMenu');
+                                $('#dgenre' + mainmenu).find('.liGenre:first').addClass('selectedSubMenu');
+                                $('#dgenre' + mainmenu).find('.dShows:first').removeClass('hideElement');
+                                $('#dgenre' + mainmenu).find('.liShows:first').addClass('selectedShowMenu');
+                                var episodes = $('#li' + sourceid).find('.dEpisodes:first');
+                                if ($('#li' + sourceid).find('.dEpisodes:first').html().trim().length == 0) {
+                                    var categoryId = episodes.attr('id');
+                                    var showname = $('#li' + sourceid).find('.liShows:first>a').text();
+                                    jQuery.get('/Menu/GetPreviewEpisodes/' + categoryId, function (episodeData) { getEpisodeData(episodeData, sourceid, showname, categoryId) });
+                                }
+                                $('#li' + sourceid).find('.dEpisodes:first').removeClass('hideElement');
+                                attachAIM(sourceid);
+                            }
+                            $('#li' + sourceid).find('.revSubMenu').stop(true, true).slideDown(500);
+
+
+                        }, function () {
+
+                        }, 500);
+                        $('.revSubMenu').hover(function () {
+                            var timer = $(this).data('timer');
+                            if (timer) clearTimeout(timer);
+                        }, function () {
+                            var revSubMenu = $(this);
+                            revSubMenu.data('timer', setTimeout(function () {
+                                if ($('.menuItem:hover').length == 0) {
+                                    revSubMenu.stop(true, true).slideUp(500, function () {
+                                    });
+                                }
+                            }, 700));
+                        });
+                        $('.menuItem').hover(function () {
+                            var mitimer = $(this).data('mitimer');
+                            if (mitimer) clearTimeout(mitimer);
+                        }, function () {
+                            var revSubMenu = $('.selectedMenu > .revSubMenu');
+                            revSubMenu.data('mitimer', setTimeout(function () {
+                                if ($('.revSubMenu:hover').length == 0) {
+                                    revSubMenu.stop(true, true).slideUp(500, function () {
+                                        var sourceid = revSubMenu.attr('id');
+                                    });
+                                }
+                            }, 700));
+                        });
+                    });
+                });
+            </script>
+            <!--[if IE 7]>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    var zIndexNumber = 200;
+                    $('div').each(function () {
+                        $(this).css('zIndex', zIndexNumber);
+                        zIndexNumber -= 5;
+                        if (zIndexNumber < 135)
+                            return false;
+                    });
+                });
+            </script>
+            <![endif]-->
+            @if (IsSectionDefined("JScriptBottom"))
+            { @RenderSection("JScriptBottom", false)}
+            @MiniProfiler.RenderIncludes()
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    /**** Menu *****/
+                    var carouselCount = $.find('#featureBanner .featureBannerItems .wrapper').length;
+                    carouselCount = $.trim($($.find('#featureBanner .featureBannerItems .wrapper')).text()) == "" ? 0 : 1;
+                    $('#menuNavigation .menuItem').each(function (i) {
+                        $(this).click(function (e) {
+                            if (!$('#revSubMenu').is(":animated") && $('#revSubMenu').is(":visible") && $('#revSubMenu').data('menuType') == $(this).attr('id'))
+                                window.location = $(this).find('.catBtn').attr('href');
+                        });
+                    });
+                });
+
+            </script>
+            <div id="floating-help-center">
+                <a href="/Help"></a>
+            </div>
+            <div id="floating-contact-us">
+                <a href="/Home/ContactUs"></a>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_SocialNetworkConnectPartial")
+    <!--- alert box--->
+    @{if (AlertBoxStatus)
+    {
+        <div id="alertbox" class="clear">
+            <div>
+                <h2 class="close-window">
+                    <span class="close">Close this window</span>
+                </h2>
+            </div>
+            <div class="contentWrap">
+                <iframe src="@String.Format("{0}?{1}", MyUtility.GetAlertBoxUrl(CountryCode), Guid.NewGuid().ToString())" scrolling="auto" height="450" width="100%"></iframe>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var windowWidth = 650;
+                var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                $("#alertbox").overlay({
+                    top: 150,
+                    left: windowLeft,
+                    mask: {
+                        color: '#fff',
+                        loadSpeed: 200,
+                        opacity: 0.5
+                    },
+                    closeOnClick: false,
+                    load: true,
+                    onClose: function () {
+                        setCookieAndExpiration("alertbox", "closed", 3);
+                    }
+                });
+            });
+        </script>
+    }
+    }
+    @Html.Partial("SetUIDCookie")
+</body>
+</html>

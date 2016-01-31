@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Movies - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <div id="columnLeft">
+        <div class="clear breakSmall">
+        </div>
+        <!-- Start Latest Movies -->
+        <div class="transparentBg">
+            <div id="featuredShows">
+                <div id="featuredItems_featuredShows" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/latest_movies.png", new { alt = "Latest Movies", title = "Latest Movies" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.LatestMovies, itemPerSlide = 4, containerId = "latestMovies_container", navigationContainerId = "latestMovies_navigation", featureType = "show" })
+                </div>
+            </div>
+        </div>
+        <!-- End Latest Movies -->
+        <div class="clear breakSmall">
+        </div>
+        <!-- Start StaffPicks Movies -->
+        <div class="transparentBg">
+            <div id="StaffPicks">
+                <div id="featuredItems_StaffPicks" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/staff_picks.png", new { alt = "Staff Picks Movies", title = "Staff Picks Movies" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.StaffPicksMovies, itemPerSlide = 4, containerId = "staffPicks_container", navigationContainerId = "staffPicks_navigation", featureType = "show" })
+                </div>
+            </div>
+        </div>
+        <!-- End StaffPicks Movies -->
+        <div class="clear breakSmall">
+        </div>
+        <!-- Start MostPolular Movies -->
+        <div class="transparentBg">
+            <div id="featuredMostPopularMovies">
+                <div id="featuredItems_featuredCelebrities" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/most_popular.png", new { alt = "Most Popular Movies ", title = "Most Popular Movies" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.MostPopularMovies, itemPerSlide = 4, containerId = "mostPopMovies_container", navigationContainerId = "mostPopMovies_navigation", featureType = "show" })
+                </div>
+            </div>
+        </div>
+        <!-- End MostPolular Movies -->
+    </div>
+    <div id="columnRight">
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div class="most-loved" style="padding-top: 5px;">
+                <div class="most-loved-header">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "social/most_loved.png", new { alt = "Most Loved" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+               @Html.Action("GetLovedMovies", "SocialEngagement")
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div class="top-reviewer" style="padding-top: 5px;">
+                <div class="top-reviewer-header">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "social/top_reviewers.png", new { alt = "Top Reviewers" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                @Html.Action("GetReviewers", "SocialEngagement")
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear breakSmall">
+    </div>
+    <div id="areaBottom">
+        <div class="transparentBg">
+            <div class="clear">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ajax-loading" class="hideElement">
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", width = "50", height = "50" })
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "homepage.css")
+    @Html.CssBuilder(Url, "featureditem-1.1.css")
+    @Html.CssBuilder(Url, "movies.css")
+    @Html.CssBuilder(Url, "mostloved-1.0.css")
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $('.itemListing li img[title]').tooltip({ effect: 'fade',
+            onShow: function () {
+                var tip = this.getTip();
+                setTimeout(function () {
+                    tip.hide();
+                }, 10000);
+            }
+        });
+    </script>
+}
+@section featureBody {
+    <div id="featureBody">
+        @Html.Action("BuildCarousel", "Home", new { id = GlobalConfig.CarouselMovieId, itemPerSlide = 15, containerId = "featureBanner" })
+    </div>
+}

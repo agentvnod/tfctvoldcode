@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = String.Format("TFC.tv cPanel - {0}", "Preview Player");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    TFC.tv Preview Player</h2>
+<form id="form1" method="post" action="#">
+<div class="floatLeft">
+    <table>
+        <tr>
+            <th>
+                Episode Id
+            </th>
+            <td>@Html.TextBox("EpisodeId", null, new { placeholder = "Enter Episode Id here..." })
+            </td>
+            <td colspan="3">
+                <a href="#" id="GetAssetUrl">Get Asset Url</a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Asset Url
+            </th>
+            <td colspan="2">@Html.TextBox("AssetUrl")
+            </td>
+            <td>
+                <span id="isvalid" class="hidden">@Html.ImageBuilder(Url, "check.png", new { id = "resimg", width = 25, height = 25 })</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <td colspan="3">
+                <input type="submit" value="Load Video" id="cmdSubmit" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center;">
+                <span id="result" class="hidden">Please wait... @Html.ImageBuilder(Url, "circle-loader.gif", new { width = 15, height = 15 })</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="rightPanel" class="floatLeft">
+    <div id="playerContainer">
+    </div>
+</div>
+<div class="clear">
+</div>
+</form>
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "flowplayer-3.2.11.min.js")
+    <script type="text/javascript">
+        var url;
+        var result = $('#result');
+        $('#GetAssetUrl').click(function () {
+            $('#AssetUrl').val('');
+            $('#isvalid').hide();
+            var eid = $('#EpisodeId').val();
+            result.show();
+            $.get("/Ajax/GetAsset", { id: eid },
+            function (data) {
+                if (data.StatusCode == 0) {
+                    $('#AssetUrl').val(data.data.Url);
+                    $('#isvalid').show();
+                    hideElement(result, true);
+                }
+                else {
+                    hideElement(result, false);
+                    $.pnotify({
+                        text: data.StatusMessage,
+                        type: 'error',
+                        styling: 'jqueryui',
+                        icon: false
+                    }).delay(1500);
+                }
+            });
+            return false;
+        });
+    </script>
+    <script type="text/javascript">
+        var playerContainer = 'playerContainer';
+        var playerJS = '@Url.Content("~/scripts/player.js")';
+        var playerSWF = '@Url.Content("~/swf/flowplayer.swf")';
+        var expressInstallSWF = '@Url.Content("~/swf/expressInstall.swf")';
+        var playButtonURL = '@Url.Content("~/content/images/play-btn.png")';
+        var logoURL = '@Url.Content("~/content/images/player-logo.png")';
+        var controllerSWF = '@Url.Content("~/swf/flowplayer.controls.swf")';
+        var flow = {}; var config = {};
+        $(document).ready(function () {
+            $.getScript(playerJS).done(function () {
+                var akObj = { url: '/swf/AkamaiFlowPlugin.swf' };
+                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, result: result, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, apObj: akObj };
+                flow.Player.Create(config);
+            });
+        });        
+    </script>
+    <script type="text/javascript">
+        var errorText = '';
+        $(document).ready(function () {
+            var validator = $('form#form1').validate({
+                rules: {
+                    AssetUrl: {
+                        required: true
+                    }
+                },
+                messages: {
+                    AssetUrl: { required: 'Asset Url is required.' }
+                },
+                errorPlacement: function (error, element) {
+                    if (errorText != error.text()) {
+                        $.pnotify({
+                            text: error.text(),
+                            type: 'error',
+                            styling: 'jqueryui',
+                            icon: false
+                        }).delay(1500);
+                        errorText = error.text();
+                    }
+
+                }
+            });
+
+            $('#form1').submit(function (event) {
+                event.preventDefault();
+                errorText = '';
+                var form = $(this);
+                var cmdSubmit = $('#cmdSubmit');
+                var result = $('#result');
+                if (validator.numberOfInvalids() == 0) {
+                    disableButton(cmdSubmit);
+                    hideElement(result, true);
+                    var fplayer = $f(playerContainer);
+                    var clip = fplayer.getClip();
+                    var assetURL = $('#AssetUrl').val();
+                    clip.update({
+                        bufferLength: 8,
+                        provider: 'akamai',
+                        scaling: 'fit',
+                        url: assetURL
+                    });
+                    fplayer.play();
+                    enableButton(cmdSubmit, 'Load Video');
+                }
+            });
+
+        });
+    </script>
+}

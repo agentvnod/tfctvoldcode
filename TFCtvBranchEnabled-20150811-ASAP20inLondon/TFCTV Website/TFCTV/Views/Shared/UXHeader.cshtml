@@ -1,0 +1,270 @@
+﻿@{
+    string name = "Kapamilya";
+    string wallet_balance = "USD 0.00";
+    if (ViewBag.FirstName != null)
+    {
+        name = ViewBag.FirstName;
+    }
+
+    bool isUserAuthenticated = User.Identity.IsAuthenticated;
+    bool IsTVEUser = false;
+    if (isUserAuthenticated)
+    {
+        try
+        {
+            var context = new IPTV2_Model.IPTV2Entities();
+            var user = context.Users.FirstOrDefault(u => u.UserId == new Guid(User.Identity.Name));
+            if (user != null)
+            {
+                name = user.FirstName;
+                if (user.IsTVEverywhere != null)
+                {
+                    IsTVEUser = (bool)user.IsTVEverywhere;
+                }
+
+                try
+                {
+                    var wallet = user.UserWallets.FirstOrDefault(w => w.IsActive);
+                    //wallet_balance = String.Format("{0} {1}", wallet.Currency, wallet.Balance.ToString("F"));
+                    wallet_balance = MyUtility.FormatNumberCurrency(wallet.Balance, wallet.WalletCurrency);
+                }
+                catch (Exception) { }
+            }
+        }
+        catch (Exception) { }
+    }
+
+    string ErrorMessage = String.Empty;
+    string HideLoginFormClass = String.Empty;
+    string HideForgotPassFormClass = "hide";
+    string HideResendVerFormClass = "hide";
+    try
+    {
+        if (TempData["LoginErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["LoginErrorMessage"];
+        }
+        else if (TempData["ForgotPasswordErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ForgotPasswordErrorMessage"];
+            HideForgotPassFormClass = String.Empty;
+            HideLoginFormClass = "hide";
+            HideResendVerFormClass = "hide";
+        }
+        else if (TempData["ResendVerificationErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ResendVerificationErrorMessage"];
+            HideResendVerFormClass = String.Empty;
+            HideForgotPassFormClass = "hide";
+            HideLoginFormClass = "hide";
+
+        }
+    }
+    catch (Exception) { }
+
+}
+<section class="topmenusec">
+    <div class="container">
+        <div class="row">
+            <!-- mobile menu button [show only on w<=480px] -->
+            <div class="mobilemenu_button show480">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-colapse">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- end mobile menu button -->
+            <!-- site Logo for desktop -->
+            <div class="site_logo col-md-2 col-sm-2 hidden-xs">
+                <a href="@Url.Action("Index", "Home")">
+                    @Html.ImageBuilder(Url, "ux/logo.png", new { @class = "img-responsive", alt = "TFC.tv" })
+                </a>
+            </div>
+            <!-- end site logo -->
+            <!-- main menu for desktop -->
+            @Html.Partial("UXMenuDesktop")
+            <!-- end main menu -->
+            <!-- site logo for mobile -->
+            <div class="site_logo visible-xs col-xs-4">
+                <a href="@Url.Action("Index", "Home")">
+                    @Html.ImageBuilder(Url, "ux/logo.png", new { @class = "img-responsive", alt = "TFC.tv" })
+                </a>
+            </div>
+            <!-- end site logo -->
+            <!-- search section [top right part] -->
+            <div class="singIn @String.Format("{0}", User.Identity.IsAuthenticated ? "loggedin" : String.Empty) col-md-4 col-sm-5 col-xs-8" id="@String.Format("{0}", User.Identity.IsAuthenticated ? "my_settings_menu" : "my_login_menu")">
+                <div class="search_button" id="search_buttoni">
+                    <span class="glyphicon glyphicon-search"></span>
+                </div>
+                <!-- search icon -->
+                @{if (isUserAuthenticated)
+                {
+                    <p>
+                        <span class="hide480">
+                            @Html.ImageBuilder(Url, "ux/balance_icon.png", new { alt = "balance_icon" })
+                        </span>
+                        <span class="hide480" id="balance"><a href="@Url.Action("Index", "Load")">@wallet_balance</a></span>
+                        <span class="hide480" id="usernamei"><a href="@Url.Action("Index", "Profile")">@name</a></span>
+                        <span id="setting_buttoni" class="glyphicon glyphicon-cog"></span>
+                    </p>
+
+                }
+                else
+                {
+                    <p class="hide480">
+                        @*<span id="login_buttoni">Sign In</span>*@
+                        <a href="@Url.Action("Login", "User")" class="login_link a_login_link">
+                            Sign In
+                        </a>
+                        <span class="register_link">|</span> <a href="@Url.Action("Register", "User")" class="register_link a_register_link">
+                            Register for Free Trial
+                        </a>
+                    </p>
+                    <p class="show480">
+                        <a href="@Url.Action("MobileSignIn", "User")" title="Sign In">
+                            <span class="glyphicon glyphicon-user"
+                                  id="setting_buttoni"></span>
+                        </a>
+                    </p>
+                }
+                }
+            </div>
+            <!-- search box for above search icon -->
+            <div class="search_box">
+                <form action="@Url.Action("Results", "Search")" method="get">
+                    <input type="text" name="q" id="q" placeholder="Click here to search your show">
+                    <input type="hidden">
+                </form>
+            </div>
+            <!-- end search box -->
+            @{if (!isUserAuthenticated)
+            {
+                <!-- popup login box -->
+                @*<div class="login_box">
+                    <div class="login_top clearfix">
+                        <div class="top_arrow">
+                        </div>
+                        <!-- top white arrow -->
+                        <!-- Login via social section -->
+                        <div class="login_social">
+                            <span class="login_type_label">Sign in using your Social Network</span>
+                            <div class="clearfix"></div>
+                            <div id="loginPanel">
+                            </div>
+                        </div>
+                        <!-- end Login via social -->
+                        <!-- TFC login -->
+                        <div class="login_tfc">
+                            <span class="login_tfcH">Or sign in using your TFC.tv credentials </span>
+                            <br />
+                            <br />
+                            @{if (!String.IsNullOrEmpty(ErrorMessage))
+                            {
+                                <div class="alert alert-danger" id="login_err">
+                                    <a class="close" data-dismiss="alert">×</a> @ErrorMessage
+                                </div>
+                            }
+                            }
+                            <!-- Login Form-->
+                            <form id="loginForm" class="@HideLoginFormClass" role="form" action="@Url.Action("_Login", "User", null, "https")" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label for="login_email">
+                                        Email Address
+                                    </label>
+                                    <input type="email" class="form-control" id="login_email" name="login_email" placeholder="Email Address"
+                                           required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login_pass">
+                                        Password
+                                    </label>
+                                    <input type="password" class="form-control" id="login_pass" name="login_pass" placeholder="Password"
+                                           required>
+                                </div>
+                                <input type="submit" class="btn btn-default" value="Submit"><br />
+                                <span><a class="forgotPasswordLink" href="#">Forgot your password?</a></span><br />
+                                <span><a class="accountNotVerifiedLink" href="#">Account not verified? </a></span>
+                            </form>
+                            <!-- Forgot Password Form-->
+                            <form id="forgotPasswordForm" class="@HideForgotPassFormClass" role="form" action="@Url.Action("ForgotPassword", "User")" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label for="forgotpassword_email">
+                                        Email Address
+                                    </label>
+                                    <input type="email" class="form-control" id="forgotpassword_email" name="forgotpassword_email"
+                                           placeholder="Email Address" required>
+                                </div>
+                                <input type="submit" class="btn btn-default" value="Send"><br />
+                                <span>
+                                    <a class="default_link signinf" onclick="" href="#" id="signinlink">
+                                        Go back to
+                                        sign in.
+                                    </a>
+                                </span><br />
+                            </form>
+                            <!-- Resend Verification Form-->
+                            <form id="resendVerificationForm" class="@HideResendVerFormClass" role="form" action="@Url.Action("ResendVerification", "User")" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label for="login_email">
+                                        Email Address
+                                    </label>
+                                    <input type="email" class="form-control" id="resendverification_email" name="resendverification_email"
+                                           placeholder="Email Address" required>
+                                </div>
+                                <input type="submit" class="btn btn-default" value="Resend"><br />
+                                <span>
+                                    <a class="default_link signinf" onclick="" href="#" id="signinlinkver">
+                                        Go back
+                                        to sign in.
+                                    </a>
+                                </span><br />
+                                <br />
+                            </form>
+                        </div>
+                        <!-- end TFC login -->
+                    </div>
+                    <div class="login_bottom register_link">
+                        No TFC.tv account yet? <a href="@Url.Action("Register", "User")" class="a_register_link">
+                            Register here
+                        </a>
+                    </div>
+                </div>*@
+                <!-- end login box -->
+            }
+            else
+            {
+                <!-- popup setting box -->
+                <div class="setting_box">
+                    <div class="top_arrow">
+                    </div>
+                    <ul>
+                        <li><a href="@Url.Action("Index", "Profile")">My Profile</a></li>
+                        <li><a href="@Url.Action("Entitlements", "User")">My Subscriptions</a></li>
+                        <li><a href="@Url.Action("Transactions", "User")">My Transactions</a></li>
+                        <li><a href="@Url.Action("Index", "Ppc")">Prepaid Card/ePIN</a></li>
+                        <li><a href="@Url.Action("Index", "Load")">Load E-Wallet</a></li>
+                        @{ if (MyUtility.IsTVEAllowedInCurrentCountry())
+                         {
+                             if (!IsTVEUser)
+                             {
+                                <li><a href="@Url.Action("RegisterToTFCEverywhere", "User")">Activate TFC Everywhere</a></li>
+                             }
+
+                         }
+                        }
+                        <li><a href="@Url.Action("Index", "Help")">Help Center</a></li>
+                        <li><a href="@Url.Action("LogOut", "User")">Sign Out</a></li>
+                    </ul>
+                </div> <!-- end setting box -->
+            }
+            }
+        </div>
+        <div class="row">
+            <!-- main menu for mobile -->
+            @Html.Partial("UXMenuMobile")
+            <!-- end main menu mobile -->
+        </div>
+    </div>
+</section>

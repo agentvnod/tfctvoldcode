@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets">
+      <s:element name="AddTicketNote">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ticketNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="notetext" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTicketNoteResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="CloseTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ticketNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CloseTicketResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTicketStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ticketNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTicketStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTicket">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="departmentID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="fromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="body" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isHtml" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="sendAutoResponder" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTicketResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateTicketResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTicketCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetTicketCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupTicketInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agentUsername" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupTicketInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGroupTicketInfoResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddTicketNoteSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTicketNote" />
+  </wsdl:message>
+  <wsdl:message name="AddTicketNoteSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTicketNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="CloseTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:CloseTicket" />
+  </wsdl:message>
+  <wsdl:message name="CloseTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:CloseTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTicketStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTicketStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateTicketSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateTicket" />
+  </wsdl:message>
+  <wsdl:message name="CreateTicketSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketCountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTicketCount" />
+  </wsdl:message>
+  <wsdl:message name="GetTicketCountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTicketCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupTicketInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGroupTicketInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupTicketInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGroupTicketInfoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="svcTicketsSoap">
+    <wsdl:operation name="AddTicketNote">
+      <wsdl:input message="tns:AddTicketNoteSoapIn" />
+      <wsdl:output message="tns:AddTicketNoteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseTicket">
+      <wsdl:input message="tns:CloseTicketSoapIn" />
+      <wsdl:output message="tns:CloseTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketStatus">
+      <wsdl:input message="tns:GetTicketStatusSoapIn" />
+      <wsdl:output message="tns:GetTicketStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTicket">
+      <wsdl:input message="tns:CreateTicketSoapIn" />
+      <wsdl:output message="tns:CreateTicketSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketCount">
+      <wsdl:input message="tns:GetTicketCountSoapIn" />
+      <wsdl:output message="tns:GetTicketCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupTicketInfo">
+      <wsdl:input message="tns:GetGroupTicketInfoSoapIn" />
+      <wsdl:output message="tns:GetGroupTicketInfoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="svcTicketsSoap" type="tns:svcTicketsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddTicketNote">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/AddTicketNote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseTicket">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/CloseTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketStatus">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetTicketStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTicket">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/CreateTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketCount">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetTicketCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupTicketInfo">
+      <soap:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetGroupTicketInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="svcTicketsSoap12" type="tns:svcTicketsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddTicketNote">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/AddTicketNote" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseTicket">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/CloseTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketStatus">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetTicketStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTicket">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/CreateTicket" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTicketCount">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetTicketCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupTicketInfo">
+      <soap12:operation soapAction="http://www.smartertools.com/Products/SmarterTicket/Services/svcTickets/GetGroupTicketInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="svcTickets">
+    <wsdl:port name="svcTicketsSoap" binding="tns:svcTicketsSoap">
+      <soap:address location="http://servicedesk.abs-cbnglobal.com/Services/svcTickets.asmx" />
+    </wsdl:port>
+    <wsdl:port name="svcTicketsSoap12" binding="tns:svcTicketsSoap12">
+      <soap12:address location="http://servicedesk.abs-cbnglobal.com/Services/svcTickets.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,323 @@
+﻿@using Telerik.Web.Mvc
+@{
+    ViewBag.Title = "Free TV - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div id="playlistinfo" playId= "@ViewBag.FeaturedId" episodeId="@ViewBag.EpisodeId">
+    </div>
+    <div class="transparentBg">
+        <div id="showNavigation">
+            <ul>
+                <li><a class="anchorLink" href="/FreeTV/@GlobalConfig.FreeTVPlayListId">FreeTV</a></li>
+                @*<li><a class="anchorLink" href="/FreeTV/@GlobalConfig.FreeTV">Top Videos</a></li>
+                <li><a class="anchorLink" href="/FreeTV/@GlobalConfig.NewsFreeTV">TV Clips</a></li>
+                <li><a class="anchorLink" href="/FreeTV/@GlobalConfig.LatestMovies">Headlines</a></li>
+                <li><a class="anchorLink" href="/FreeTV/@GlobalConfig.LatestMovies">Trailers</a></li>*@
+            </ul>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="player-container">
+            <div id="player-container-left" class="left">
+                <div id="playerContainer">
+                </div>
+                <div id="viewingproblem">
+                    If you are having problems viewing this video, please visit our @Html.ActionLink("Help Center", "Question", "Help", new { id = 1060 }, null).</div>
+                <div class="clear breakSmall">
+                </div>
+                <div id="playerDetail" class="show-details">
+                </div>
+            </div>
+            <div class="" id="player-container-right">
+                <div id="related-videos">
+                    <ul class="featuredItems" id="playListsContainer">
+                        @Html.Action("GetPlayList", "FreeTV", new { id = ViewBag.FeaturedId })
+                    </ul>
+                </div>
+                <div id="freetv-ads" style="width: 180px; height: 150px">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <br />
+    <div class="transparentBg">
+        <br />
+        <div id="charts">
+            <!-- Start Most Viewed -->
+            <div id="MostViewed" class="chart padded">
+                <div class="basic-header">
+                    <div class="basic-section-header-title left">
+                        Most Viewed</div>
+                    @*<div class="see-all-button">
+                        <a href="http://www.tfc.tv/freetv/mostviewed/0">
+                            <img src="/Content/images/freetv/seeall.png" border="0" alt="" /></a>
+                    </div>*@
+                </div>
+                <div class="clear">
+                </div>
+                <br />
+                <div class="featuredItems">
+                </div>
+            </div>
+            <!-- End Most Viewed -->
+            <!-- Start Most Shared -->
+            <div id="MostShared" class="chart padded">
+                <div class="basic-header">
+                    <div class="basic-section-header-title left">
+                        Most Shared</div>
+                    @*<div class="see-all-button">
+                        <a href="http://www.tfc.tv/freetv/mostshared/0">
+                            <img src="/Content/images/freetv/seeall.png" border="0"></a>
+                    </div>*@
+                </div>
+                <div class="clear">
+                </div>
+                <br />
+                <div class="featuredItems scrollable">
+                </div>
+            </div>
+            <!-- End Most Shared -->
+            <!-- Start Top Liked -->
+            <div id="TopLiked" class="chart">
+                <div class="basic-header">
+                    <div class="basic-section-header-title left">
+                        Most Loved</div>
+                    @*<div class="see-all-button">
+                        <a href="http://www.tfc.tv/freetv/mostliked/0">
+                            <img src="/Content/images/freetv/seeall.png" border="0"></a>
+                    </div>*@
+                </div>
+                <div class="clear">
+                </div>
+                <br />
+                <div class="featuredItems scrollable">
+                </div>
+            </div>
+            <!-- End Top Liked -->
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <br />
+    <ul id="freetv-tabs">
+        <li id="comedy-tab"><a href="#comedy">Comedy</a></li>
+        <li id="drama-tab"><a href="#drama">Drama</a></li>
+        <li id="sports-tab"><a href="#news">News</a></li>
+    </ul>
+    @* <div id="comedy">*@
+    <div id="comedy-container">
+        <ul class="featuredItemsTab freetv-contents">
+        </ul>
+    </div>
+    @* </div>*@
+    <div class="clear">
+    </div>
+    @* <div id="drama">*@
+    <div id="drama-container">
+        <ul class="featuredItemsTab freetv-contents">
+        </ul>
+    </div>
+    @* </div>*@
+    <div class="clear">
+    </div>
+    @*<div id="news">*@
+    <div id="sports-container">
+        <ul class="featuredItemsTab freetv-contents">
+        </ul>
+    </div>
+    @* </div>*@
+    <div class="clear">
+    </div>
+    <br />
+    <div id="lighstout">
+    </div>
+    <div id="getFlash" class="hideElement">
+        <div id="playerFail">
+            @Html.ImageBuilder(Url, "flashplayer_100x100.jpg")
+            <h3>
+                Get Adobe Flash Player</h3>
+            <p>
+                You must have the latest Flash player installed. You can <a id="goGetFlash" href="http://get.adobe.com/flashplayer/"
+                    target="_blank">download it here</a>.
+            </p>
+            <br clear="all" />
+        </div>
+    </div>
+    <div id="subscribePromptcontainer" class="hideElement">
+        <div id="subscribePrompt">
+            <div>
+                <a href="#" id="clickToSubscribe">@Html.ImageBuilder(Url, "buttons/subscribe-now.jpg")</a></div>
+        </div>
+    </div>
+</div>
+<div id="ajax-loading" class="hideElement">
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", width = "50", height = "50" })
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "freetv.css")
+    @Html.CssBuilder(Url, "jquery.jscrollpane.css")
+}
+@section JScript {
+    <script type="text/javascript">        var flow = {}; var config = {}; var fplayer = '@Html.ContentBuilder(Url, "scripts/player.js")';
+        var flowjs = '@Html.ContentBuilder(Url, "scripts/flowplayer-3.2.6.min.js")'; var flowipad = '@Html.ContentBuilder(Url, "scripts/flowplayer.ipad-3.2.8.js")';</script>
+    @*@Html.JsBuilder(Url, "/freetv/freetv.js")*@
+    @Html.JsBuilder(Url, "freetv/FreeTvfeatureItemsGen.js")
+    @Html.JsBuilder(Url, "jscrollpane/jquery.jscrollpane.min.js")
+    @Html.JsBuilder(Url, "jscrollpane/jquery.mousewheel.js")
+    @Html.JsBuilder(Url, "jquery.cookie.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var features = [
+                        { url: "/Ajax/GetListing/@GlobalConfig.FreeTVMostViewedId", itemperslide: 4, type: "show", container: "MostViewed", playlistId: "@GlobalConfig.FreeTVMostViewedId" },
+                        { url: "/Ajax/GetListing/@GlobalConfig.FreeTVMostSharedId", itemperslide: 4, type: "show", container: "MostShared", playlistId: "@GlobalConfig.FreeTVMostSharedId" },
+                        { url: "/Ajax/GetListing/@GlobalConfig.FreeTVTopLikedId", itemperslide: 4, type: "show", container: "TopLiked", playlistId: "@GlobalConfig.FreeTVTopLikedId" }
+                       ];
+            $.each(features, function (x, item) {
+                jQuery.get(item.url, function (data) {
+                    var list = new FreeTvfeatureItem({
+                        json_str: data, itemperslide: item.itemperslide, type: item.type, container: item.container, playlistId: item.playlistId
+                    }).listing();
+                    $('[title]').tooltip({ effect: 'fade' });
+                }, 'json');
+            });
+
+            //scrollplane
+            $('.featuredItems').jScrollPane();
+
+            $('#lighstout').css('height', ($(window).height() * 2.2));
+            $(window).live('resize', function () { $('#lighstout').css('height', ($(window).height() * 2.2)); });
+
+            //initial episodeId
+            var initialId = $('#playlistinfo').eq(0).attr('episodeId') == undefined || $('#playlistinfo').eq(0).attr('episodeId') == '' ? $('#playListsContainer li').eq(0).attr('epId') : $('#playlistinfo').eq(0).attr('episodeId');
+
+            ShowTabContainer(undefined);
+
+            $.ajax({
+                url: '/Episode/_checkvideo/' + initialId,
+                success: function (data) {
+                    if (data.errorCode == 0) {
+                        $.getScript(flowjs, function () {
+                            $.getScript(fplayer, function () {
+                                $.getScript(flowipad, function () {
+                                    var akObj = { url: '@Html.ContentBuilder(Url, "player/AkamaiFlowPlugin.swf")' };
+                                    var time = true;
+                                    var isClip = false;
+                                    var categoryType = 'free';
+                                    if (data.data.SubClip != null) {
+                                        var subClip = { clipBegin: data.data.SubClip.Start, clipEnd: data.data.SubClip.End };
+                                        akObj = { url: '@Html.ContentBuilder(Url, "player/AkamaiFlowPlugin.swf")', subClip: subClip };
+                                        time = false;
+                                        isClip = true;
+                                    }
+                                    var config = { container: 'playerContainer', url: '/Episode/_CheckVideo/' + initialId, scaling: 'fit', swf: '@Html.ContentBuilder(Url, "player/flowplayer.tfc.tv.swf")', apObj: akObj, epId: data.data.EpisodeId, time: time, subscribe: data.data.PromptToSubscribe, ipad: data.data.Url, isClip: isClip, categoryType: categoryType };
+                                    flow.Player.Create(config);
+                                });
+                            });
+                        });
+                    }
+                    else if (data.errorCode == -704) {
+                        $('#featureBanner').append($('#subscribePromptcontainer').html());
+                    }
+                    else {
+                        $('#featureBanner').html('@Html.ImageBuilder(Url, "no-video-found.jpg")');
+                    }
+                }
+            });
+            //Tab Genre
+            $('#freetv-tabs li').click(function (e) {
+                ShowTabContainer($(this).find("a").attr("href"));
+            });
+
+            //Episode Information
+            $.ajax({
+                url: '/Episode/GetEpisodeInfo/' + initialId,
+                success: function (data) {
+                    $('#playerDetail').html(
+                  '<h4 id="now-playing-title">' + data.ShowDescription + '</h4><p id="now-playing-info">' + data.EpisodeAirDate + '</p>'
+                );
+                }
+            });
+
+        });
+
+        function loadTabContents(param_url, param_item_count, param_container, param_playlistId) {
+
+            var item = { url: param_url, itemperslide: param_item_count, type: "category", container: param_container, playlistId: param_playlistId };
+            $.ajax({
+                url: item.url
+                                , dataType: 'json'
+                                , beforeSend: function () {
+                                    $('#spanner').addClass('feature_spanner');
+                                    $('#' + item.container + ' ul').html($('#ajax-loading').html());
+                                }
+                                , success: function (data) {
+                                    var list = new FreeTvfeatureItem({
+                                        json_str: data, itemperslide: item.itemperslide, type: item.type, container: item.container, playlistId: item.playlistId
+                                    }).listing();
+                                    $('[title]').tooltip({ effect: 'fade' });
+                                }
+            });
+        }
+
+        function ShowTabContainer(param) {
+            //Show Tabs Via Hash
+            var cat = (param != undefined ? param : "");
+            if (param == undefined) {
+                if (window.location.hash != null || window.location.hash != "") {
+                    cat = window.location.hash;
+                }
+                else {
+                    cat = $.cookie("freetv-cat") == null || $.cookie("freetv-cat") == "" ? "#comedy" : $.cookie("freetv-cat");
+                }
+            }
+            //alert(cat);
+
+            switch (cat) {
+                case "#comedy":
+                    $("ul#freetv-tabs li").removeClass("current");
+                    $("#comedy-tab").addClass("current");
+
+                    $('.freetv-contents').hide();
+                    $('#comedy-container ul').show();
+                    loadTabContents("/Ajax/GetListing/@GlobalConfig.FreeTVComedyId", 5, "comedy-container", "@GlobalConfig.FreeTVComedyId");
+                    break;
+                case "#drama":
+                    $("ul#freetv-tabs li").removeClass("current");
+                    $("#drama-tab").addClass("current");
+
+                    $('.freetv-contents').hide();
+                    $('#drama-container ul').show();
+                    loadTabContents("/Ajax/GetListing/@GlobalConfig.FreeTVDramaId", 5, "drama-container", "@GlobalConfig.FreeTVDramaId");
+                    break;
+                case "#news":
+                    $("ul#freetv-tabs li").removeClass("current");
+                    $("#sports-tab").addClass("current");
+
+                    $('.freetv-contents').hide();
+                    $('#sports-container ul').show();
+                    loadTabContents("/Ajax/GetListing/@GlobalConfig.FreeTVSportsId", 5, "sports-container", "@GlobalConfig.FreeTVSportsId");
+                    break;
+                default:
+                    $("ul#freetv-tabs li").removeClass("current");
+                    $("#comedy-tab").addClass("current");
+
+                    $('.freetv-contents').hide();
+                    $('#comedy-container ul').show();
+                    loadTabContents("/Ajax/GetListing/@GlobalConfig.FreeTVComedyId", 5, "comedy-container", "@GlobalConfig.FreeTVComedyId");
+                    break;
+            }
+        }
+    </script>
+}

@@ -1,0 +1,94 @@
+﻿@model FeedObj
+@{
+    string startTS = String.Empty;
+    string endTS = String.Empty;
+    int size = 5;
+}
+@{if (Model != null)
+  {
+      if (Model.everyone != null)
+      {
+          if (Model.everyone.items != null)
+          {
+              if (Model.everyone.items.Count() > 0)
+              {
+                  int count = 0;
+                  foreach (var item in Model.everyone.items.Skip(page).Take(size))
+                  {
+                      if (count == 0)
+                      {
+                          startTS = item.timestamp;
+                      }
+                      else if (count == size - 1)
+                      {
+                          endTS = item.timestamp;
+                      }
+                      count++;
+                      string photoUrl = String.Empty;
+                      string name = String.Empty;
+                      string mediaItem = String.Empty;
+
+                      if (item.sender != null)
+                      {
+                          photoUrl = item.sender.photoURL;
+                          name = item.sender.name;
+                      }
+
+                      if (item.action.mediaItems != null)
+                      {
+                          if (item.action.mediaItems.Count() > 0)
+                          {
+                              mediaItem = item.action.mediaItems[0].src;
+                          }
+
+                      }
+    <div class="feed_item clearfix">
+        <!-- feeds box -->
+        <div class="col-xs-3 small_avater">
+            @if (!String.IsNullOrEmpty(photoUrl))
+            {
+                <img src="@photoUrl" alt="" />
+            }
+        </div>
+        <div class="col-xs-9">
+            <h3>
+                <a href="#">@Html.Raw(name)</a></h3>
+            <span class="date">@item.timestamp.TimeStampStringToDateTime().ToString("ddd, dd MMM yyyy HH':'mm':'ss")</span>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="feed_itemi clearfix">
+            <div class="col-sm-4  col-xs-3">
+                @if (!String.IsNullOrEmpty(mediaItem))
+                { 
+                    <img src="@mediaItem" alt="" />
+                }
+            </div>
+            <div class="col-sm-8  col-xs-9">
+                <h3>
+                    @Html.Raw(item.action.userMessage)</h3>
+                <h3>
+                    <a href="#">@Html.Raw(item.action.description)</a></h3>
+            </div>
+        </div>
+    </div>
+                  }
+              }
+          }
+    <!-- end feeds box -->
+    <div class="sec_footer">
+        <!-- section of Load more -->
+        <a href="#">load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+    </div>    
+      }
+  }
+  else
+  { 
+    <div class="sec_empty">
+        <!-- section of Load more -->
+        <p>
+            Feed is empty.</p>
+    </div>    
+  }       
+}

@@ -1,0 +1,901 @@
+﻿@model List<SubscriptionProductA>
+@{
+    ViewBag.Title = "Subscribe - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    List<TFCTV.Helpers.CreditCard> CreditCardList = null;
+    System.Collections.ArrayList MonthList = null;
+    System.Collections.ArrayList YearList = null;
+    bool CreditCardAvailability = true;
+    bool InsufficientWalletBalance = false;
+    var listOfIncludedProductIds = MyUtility.StringToIntList(GlobalConfig.ProductIdsIncludedInRecurringBilling);
+    TransactionReturnType ErrorMessage = null;
+    bool IsFirstTimeSubscriber = false;
+    try
+    {
+        if (ViewBag.CreditCardList != null)
+        {
+            CreditCardList = ViewBag.CreditCardList;
+        }
+        if (ViewBag.CreditCardAvailability != null)
+        {
+            CreditCardAvailability = ViewBag.CreditCardAvailability;
+        }
+
+        if (ViewBag.Months != null)
+        {
+            MonthList = ViewBag.Months;
+        }
+        if (ViewBag.Years != null)
+        {
+            YearList = ViewBag.Years;
+        }
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+        if (ViewBag.InsufficientWalletBalance != null)
+        {
+            InsufficientWalletBalance = ViewBag.InsufficientWalletBalance;
+        }
+        if (ViewBag.IsFirstTimeSubscriber != null)
+        {
+            IsFirstTimeSubscriber = ViewBag.IsFirstTimeSubscriber;
+        }
+    }
+    catch (Exception) { }
+
+    //promo 2014
+    bool IsPromo2014 = false;
+    IPTV2_Model.ProductPrice Premium1MonthPrice = null;
+    //Project Black
+    bool isProjectBlack = false;
+    IPTV2_Model.ProductPrice Premium3MonthPrice = null;
+    try
+    {
+        if (ViewBag.IsPromo2014 != null)
+        {
+            IsPromo2014 = ViewBag.IsPromo2014;
+        }
+        if (ViewBag.Premium1MonthPrice != null)
+        {
+            Premium1MonthPrice = ViewBag.Premium1MonthPrice;
+        }
+        if (ViewBag.isProjectBlack != null)
+        {
+            isProjectBlack = ViewBag.isProjectBlack;
+        }
+        if (ViewBag.Premium3MonthPrice != null)
+        {
+            Premium3MonthPrice = ViewBag.Premium3MonthPrice;
+        }
+
+    }
+    catch (Exception) { }
+    
+
+
+}
+<section class="page_pagebody page_registration page_sub page_subscription">
+    <!--  subscription page body -->
+    <div class="container">
+        <!-- subscription page top -->
+        <div class="row">
+            <div class="reg_hleft col-md-9 col-sm-8 col-xs-12">
+                <h1 class="page_title_black">
+                    Start your subscription today!</h1>
+            </div>
+            <div class="reg_hright col-md-3 col-sm-4 hidden-xs">
+                <span class="siteseal">
+                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                </span>
+            </div>
+            <div class="col-xs-12 page_description">
+                Be part of the official online community of The Filipino Channel (TFC) and enjoy
+                the largest, most up-to-date source on the web for free and premium Kapamilya videos.
+            </div>
+        </div>
+        <!-- end top -->
+        <!-- offer boxes -->
+        <div class="row offerboxs active">
+            <div class="col-xs-12">
+                <!-- sub title -->
+                <h2 class="graw_subtitle">
+                    <span class="glyphicon glyphicon-chevron-right bgi"></span>Select a plan that works
+                    for you:</h2>
+            </div>
+            <!-- END sub title -->
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      int ctr = 0;
+                      foreach (var item in Model)
+                      {
+                          string custom = String.Format("{0}&{1}&{2}&{3}&{4}", item.product.ProductId, ContextHelper.GetProductType(item.product).ToString(), ViewBag.WishlistId, ViewBag.CurrentProductId, User.Identity.Name);
+                          string amount = item.productPrice.Amount.ToString("F");
+                          string id = String.Format("offbox{0}", item.product.ProductId);
+                          /* regular product*/
+                          string p3 = String.Empty;
+                          string t3 = String.Empty;
+                          string a3 = String.Empty;
+
+                          /* free/discounted product */
+                          string p1 = String.Empty;
+                          string t1 = String.Empty;
+                          string a1 = String.Empty;
+
+                          bool IsSubscriptionProduct = false;
+
+                          //for Paypal                              
+                          bool IsPayPalSupported = true;
+                          string paypal_amount = amount;
+                          string a1_paypal_amount = amount;
+                          string paypal_currency_code = item.productPrice.CurrencyCode;
+                          try
+                          {
+                              if (item.product is IPTV2_Model.SubscriptionProduct)
+                              {
+                                  var subscriptionProduct = (IPTV2_Model.SubscriptionProduct)item.product;
+                                  if (item.regularProduct != null)
+                                  {
+                                      p1 = subscriptionProduct.Duration.ToString();
+                                      t1 = subscriptionProduct.DurationType.ToUpper();
+                                      a1 = amount;
+                                      a1_paypal_amount = amount;
+
+                                      p3 = item.regularProduct.Duration.ToString();
+                                      t3 = item.regularProduct.DurationType.ToUpper();
+                                      a3 = item.regularProductPrice.Amount.ToString("F");
+                                      paypal_amount = a3;
+                                      custom = String.Format("{0}&{1}&{2}&{3}&{4}&{5}", item.product.ProductId, ContextHelper.GetProductType(item.product).ToString(), ViewBag.WishlistId, ViewBag.CurrentProductId, User.Identity.Name, item.regularProduct.ProductId);
+                                  }
+                                  else
+                                  {
+                                      p3 = subscriptionProduct.Duration.ToString();
+                                      t3 = subscriptionProduct.DurationType.ToUpper();
+                                      a3 = amount;
+                                  }
+                                  var litepromo = MyUtility.StringToIntList(GlobalConfig.LitePromoProductIds);
+                                  try
+                                  {
+                                      IsSubscriptionProduct = Convert.ToBoolean(item.product.IsRecurring);
+                                  }
+                                  catch (Exception)
+                                  {
+                                      if (item.product is IPTV2_Model.PackageSubscriptionProduct && !litepromo.Contains(item.product.ProductId))
+                                      {
+                                          if (((IPTV2_Model.PackageSubscriptionProduct)item.product).ProductGroup.ProductSubscriptionTypeId == null)
+                                          {
+                                              IsSubscriptionProduct = true;
+                                          }
+                                      }
+                                  }
+                              }
+
+                              if (!item.productPrice.Currency.IsPayPalSupported)
+                              {
+                                  var product_default_currency = item.product.ProductPrices.FirstOrDefault(p => String.Compare(p.CurrencyCode, GlobalConfig.DefaultCurrency, true) == 0);
+                                  paypal_amount = product_default_currency.Amount.ToString("F");
+                                  paypal_currency_code = product_default_currency.CurrencyCode;
+                                  IsPayPalSupported = false;
+                              }
+
+                              if (!item.regularProductPrice.Currency.IsPayPalSupported)
+                              {
+                                  var product_default_currency = item.regularProduct.ProductPrices.FirstOrDefault(p => String.Compare(p.CurrencyCode, GlobalConfig.DefaultCurrency, true) == 0);
+                                  a1_paypal_amount = product_default_currency.Amount.ToString("F");
+                                  paypal_currency_code = product_default_currency.CurrencyCode;
+                                  IsPayPalSupported = false;
+                              }
+
+                          }
+                          catch (Exception) { }                                                    
+                <input type="radio" name="offbox" class="offbox hide" id="@id" required />
+                <label class="col-sm-4 col-xs-12 offerbox" for="@id" data-pid="@item.product.ProductId" data-custom="@Html.Raw(custom)" data-item_name="@item.product.Description" data-amount="@String.Format("{0}", IsPayPalSupported ? amount : paypal_amount)" data-currency_code="@String.Format("{0}", IsPayPalSupported ? item.productPrice.CurrencyCode : paypal_currency_code)" data-p3="@p3" data-t3="@t3" data-a3="@String.Format("{0}", IsPayPalSupported ? a3 : paypal_amount)" data-cmd="@String.Format("{0}", IsSubscriptionProduct ? "_xclick-subscriptions" : "_xclick")" data-recur="@String.Format("{0}", IsSubscriptionProduct ? "true" : "false")" data-p1="@p1" data-t1="@t1" data-a1="@String.Format("{0}", IsPayPalSupported ? a1 : a1_paypal_amount)" data-allowed="@String.Format("{0}", item.IsUserEnrolledToSameRecurringPackage ? "true" : "false")">
+                    <!-- box 1 -->
+                    <div class="inner">
+                        <h3 class="box_title">
+                            @Html.Raw(item.product.Description)</h3>
+                        @{if (IsPromo2014)
+                          {
+                            <p class="promo_highlight">
+                                Enjoy <em>unlimited</em><br />
+                                ABS-CBN<br />
+                                shows ALL DAY,<br />
+                                EVERYDAY!
+                            </p>
+                          }
+                          else if (isProjectBlack)
+                          {
+                            <p>
+                                <span class="promo_f20 strike">@String.Format("{0} {1} for {2}", Premium1MonthPrice.CurrencyCode, (Premium1MonthPrice.Amount * 3).ToString("F"), MyUtility.FormatDuration(item.product.DurationType, item.product.Duration))</span>
+                                <br />
+                                <span class="promo_amount_text">@String.Format("ONLY {0} {1}", item.productPrice.CurrencyCode, amount)</span>
+                                <br />
+                                <span class="promo_highlight fs_24px">@String.Format("(Save {0} {1})", item.productPrice.CurrencyCode, item.productPrice.DiscountAmount.ToString("F"), (item.productPrice.DiscountPercentage * 100).ToString("0"))</span>
+                            </p>
+                            <span class="ib_off">@String.Format("{0}% OFF", (item.productPrice.DiscountPercentage * 100).ToString("0"))</span>
+                          }
+                          else
+                          {
+                            <p>
+                                @{if (!String.IsNullOrEmpty(item.contentDescription))
+                                  { 
+                                    @String.Format("{0} Titles", item.contentDescription)
+                                      if (item.ListOfDescription != null)
+                                      {
+                                          if (item.ListOfDescription.Count() > 0)
+                                          {
+                                              foreach (var lItem in item.ListOfDescription.Take(item.ListOfDescription.Count() - 1))
+                                              {                                    
+                                    <text>
+                                    <p class="sub_p">
+                                        - @Html.Raw(lItem)</p>
+                                    </text>
+                                              }
+                                          }
+                                      }
+                                  }
+                                  else if (!String.IsNullOrEmpty(item.ShowDescription))
+                                  {
+                                    @String.Format("{0}", item.show.Description)
+                                  }
+                                }
+                            </p>
+                          }
+                        }
+                        <div class="box_border">
+                        </div>
+                        @{if (IsPromo2014)
+                          {
+                            <p>
+                                <span class="promo_f24">For a limited time only!</span>
+                                <br />
+                                <span class="promo_f20 strike">@String.Format("{0} {1} for {2}", Premium1MonthPrice.CurrencyCode, (Premium1MonthPrice.Amount * 3).ToString("F"), MyUtility.FormatDuration(item.product.DurationType, item.product.Duration))</span>
+                                <br />
+                                <span class="promo_amount_text">@String.Format("ONLY {0} {1}", item.productPrice.CurrencyCode, amount)</span>
+                                <br />
+                                <span class="promo_f24">@String.Format("for {0}.*", MyUtility.FormatDuration(item.product.DurationType, item.product.Duration))</span><br />
+                                @String.Format("(Save {0} {1})", item.productPrice.CurrencyCode, item.productPrice.DiscountAmount.ToString("F"), (item.productPrice.DiscountPercentage * 100).ToString("0"))
+                            </p>
+                            <span class="ib_off">@String.Format("{0}% OFF", (item.productPrice.DiscountPercentage * 100).ToString("0"))</span>
+                          }
+                          else if (isProjectBlack)
+                          {
+                            <p class="promo_f24">
+                                Enjoy <em>unlimited</em><br />
+                                ABS-CBN<br />
+                                shows ALL DAY,<br />
+                                EVERYDAY!<br />
+                                <br />
+                                Limited time offer!
+                            </p>
+                          }
+                          else
+                          {
+                            <p>
+                                @String.Format("ONLY {0} {1} for {2}", item.productPrice.CurrencyCode, amount, MyUtility.FormatDuration(item.product.DurationType, item.product.Duration))</p>
+                              if (item.productPrice.DiscountAmount > 0)
+                              { 
+                            <p class="highlight">
+                                @String.Format("Save {0} {1}!", item.productPrice.CurrencyCode, item.productPrice.DiscountAmount.ToString("F"), (item.productPrice.DiscountPercentage * 100).ToString("0"))
+                            </p>
+                            <span class="ib_off">@String.Format("{0}% OFF", (item.productPrice.DiscountPercentage * 100).ToString("0"))</span>
+                              }
+                              else
+                              { 
+                            <p class="highlight">
+                                &nbsp;
+                            </p>
+                              }
+                          }
+                        }
+                        @Html.ImageBuilder(Url, "ux/checked.jpg", new { @class = "Ib_checked", alt = "checked" })
+                        <!-- red checked img -->
+                    </div>
+                </label>
+                          ctr = ctr + 1;
+                      }
+                  }
+              }
+            }
+        </div>
+        <!-- end offer boxes container -->
+        <!-- Accordion container for payment methods -->
+        <div class="panel-group payment_panel" id="accordion">
+            @{if (CreditCardList != null && GlobalConfig.IsCreditCardPaymentModeEnabled)
+              { 
+                <div class="row panel panel-default credit_card">
+                    <!-- Credit card section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 1 heading -->
+                        <a id="credit_card_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#creditcard_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Credit Card
+                                @{foreach (var item in CreditCardList)
+                                  {
+                                    @Html.ImageBuilder(Url, String.Format("cclogos/{0}.png", item.value), new { @class = "cclogo-nopos" })
+                                  }
+                                }
+                            </h2>
+                        </a>
+                    </div>
+                    <!-- END panel 1 heading -->
+                    <!-- panel 1 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="creditcard_body">
+                        @{if (ErrorMessage != null)
+                          {
+                              if (String.Compare(ErrorMessage.info, "CreditCard", true) == 0)
+                              { 
+                            <div class="alert alert-danger">
+                                <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                            </div>                    
+                              }
+                          }
+                        }
+                        <form method="post" name="form_credit_card" id="form_credit_card" action="@Url.Action("_CreditCard", "Subscribe", null, "https")">
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="first_name">
+                                        Type of Credit Card</label>
+                                    <select class="form-control" name="CreditCard" id="CreditCard" required>
+                                        @{if (CreditCardList != null)
+                                          {
+                                              foreach (var item in CreditCardList)
+                                              {
+                                            @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.value, item.text))
+                                              }
+                                          }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="card_name">
+                                        Cardholder's Name</label>
+                                    <input type="text" class="form-control" name="cardholdername" id="cardholdername"
+                                        maxlength="150" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="last_name">
+                                        Card Number</label>
+                                    <input type="text" class="form-control" name="cardnumber" id="cardnumber" maxlength="16"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="expiration_date">
+                                        Expiration Date</label>
+                                    <select class="form-control" name="ExpiryMonth" id="ExpiryMonth" required>
+                                        @{if (MonthList != null)
+                                          {
+                                              foreach (SelectListItem item in MonthList)
+                                              {
+                                            @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text))
+                                              }
+                                          }
+                                        }
+                                    </select><span class="desh"></span><select class="form-control" name="ExpiryYear"
+                                        id="ExpiryYear" required>
+                                        @{if (YearList != null)
+                                          {
+                                              foreach (SelectListItem item in YearList)
+                                              {
+                                            @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text))
+                                              }
+                                          }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-3">
+                                <div class="form-group security_codec">
+                                    <label for="security_code">
+                                        Security Code</label>
+                                    <input type="password" class="form-control" name="securitycode" id="securitycode"
+                                        required maxlength="4"><a href="#"><span class="glyphicon glyphicon-question-sign tooltipH"
+                                            data-placement="left" data-toggle="tooltip" data-original-title="The card security code (CSC) is a 3- or 4-digit number (not part of the credit card number) that appears on the credit card. On most cards, the CSC appears on the back of the card (usually in the signature field)."></span></a>
+                                    <span class="glyphicon glyphicon-lock bgi"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="card_name">
+                                        Street Address</label>
+                                    <input type="text" class="form-control" name="address" id="address" maxlength="255"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label for="last_name">
+                                        City</label>
+                                    <input type="text" class="form-control" name="city" id="city" maxlength="50" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="card_name">
+                                        Postal Code</label>
+                                    <input type="text" class="form-control" name="zip" id="zip" maxlength="16" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                        </div>
+                        <div class="row options">
+                            <!-- options [check boxs] -->
+                            <div class="col-xs-12">
+                                <p>
+                                    <b>Service Agreement. Please place a check mark on each box below by clicking on the
+                                        box to signify your agreement to our service terms.</b></p>
+                                <p>
+                                    <input type="checkbox" class="css-checkbox" name="agree1" id="agree1" required>
+                                    <label for="agree1" class="css-label klaus">
+                                    </label>
+                                    <label for="agree1">
+                                        I hereby certify that my computer meets the system requirements and I can view the
+                                        free videos.</label></p>
+                                <p>
+                                    <input type="checkbox" class="css-checkbox" name="agree2" id="agree2" required>
+                                    <label for="agree2" class="css-label klaus">
+                                    </label>
+                                    <label for="agree2">
+                                        I hereby certify that the above information is correct.</label></p>
+                                <p>
+                                    <input type="checkbox" class="css-checkbox" name="agree3" id="agree3" required>
+                                    <label for="agree3" class="css-label klaus">
+                                    </label>
+                                    <label for="agree3">
+                                        I hereby authorize @MyUtility.GetABSCBNSubsidiary() to deduct payments in connection
+                                        with my subscription to TFC.tv. I also agree that said payments are non-refundable.</label></p>
+                                @{if (GlobalConfig.IsRecurringBillingEnabled)
+                                  {
+                                      var RecurringDescription = "I want to automatically renew my subscription when it expires using the same credit card information used in this transaction. I understand that I need to opt out at least three (3) days prior to the expiration of my current subscription to discontinue the automatic renewal for the next subscription duration. To opt-out I can visit Edit Your Profile page.";
+                                      if ((bool)ViewBag.HasCreditCardEnrolled)
+                                      {
+                                          if (ViewBag.UserCreditCard != null)
+                                          {
+                                              var UserCreditCard = (IPTV2_Model.CreditCard)ViewBag.UserCreditCard;
+                                              RecurringDescription = String.Format("I want to automatically renew my subscription when it expires using my enrolled credit card (XXXX XXXX XXXX {0}). I understand that I need to opt out at least three (3) days prior to the expiration of my current subscription to discontinue the automatic renewal for the next subscription duration. To opt-out I can visit Edit Your Profile page.", UserCreditCard.LastDigits);
+                                          }
+                                      }
+                                    <p id="recur_area">
+                                        <input type="checkbox" class="css-checkbox" name="recur" id="recur" checked>
+                                        <label for="recur" class="css-label klaus">
+                                        </label>
+                                        <label for="recur">
+                                            <strong>Automatic Renewal</strong>. @Html.Raw(RecurringDescription)</label></p>
+                                      
+                                  }
+                                }
+                                <input type="submit" value="SUBSCRIBE  Now!" class="btn btn-primary blue_button sub_pro_msgb">
+                                <!-- popup box trigger && submit button -->
+                                <p>
+                                    <span class="siteseal">
+                                        <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- END options [check boxs] -->
+                        <input name="pid" value="" type="hidden" />
+                        </form>
+                    </div>
+                    <!-- END panel 1 body -->
+                </div>  <!-- END Credit card section -->
+              }
+            }
+            @{if (GlobalConfig.IsPaypalPaymentModeEnabled)
+              {
+                <div class="row panel panel-default pay_pal">
+                    <!-- Pay pal section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 2 heading -->
+                        <a id="paypal_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#paypal_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Pay Pal
+                                @Html.ImageBuilder(Url, "ux/paypal.jpg", new { alt = "Paypal" })</h2>
+                        </a>
+                    </div>
+                    <!-- END panel 2 heading -->
+                    <!-- panel 2 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="paypal_body">
+                        <form id="paypal_form" name="paypal_form" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+                        <p>
+                            <b>To proceed with the purchase, click on the "Continue to PayPal" button and log on
+                                using your PayPal email and password.</b></p>
+                        <input type="submit" value="Continue to PayPal" class="btn btn-primary blue_button sub_pro_msgb"><!-- popup box trigger && submit button -->
+                        <p>
+                            <span class="siteseal">
+                                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                            </span>
+                        </p>
+                        <p class="note pp_note">
+                            By purchasing this subscription, your PayPal account shall be enrolled to Automatic
+                            Renewal. For more information about Automatic<br>
+                            Renewal, please check our help center. To cancel Automatic Renewal, please visit
+                            Edit My Profile Page.
+                        </p>
+                        <input name="pid" value="" type="hidden" />
+                        <input type="hidden" name="cmd" value="_xclick" />
+                        <input type="hidden" name="a1" value="" />
+                        <input type="hidden" name="p1" value="" />
+                        <input type="hidden" name="t1" value="" />
+                        <input type="hidden" name="a3" value="" />
+                        <input type="hidden" name="p3" value="" />
+                        <input type="hidden" name="t3" value="" />
+                        <input type="hidden" name="src" value="1" />
+                        <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+                        <input type="hidden" name="item_name" value="" />
+                        <input type="hidden" name="amount" value="" />
+                        <input type="hidden" name="currency_code" value="" />
+                        <input type="hidden" name="return" value="@GlobalConfig.PayPalReturnUrl" />
+                        <input type="hidden" name="custom" value="" />
+                        <input type="hidden" name="no_shipping" value="1" />
+                        </form>
+                    </div>
+                    <!-- END panel 2 body -->
+                </div>
+                <!-- END Pay pal section -->
+              }
+            }
+            @{if (GlobalConfig.IsPpcPaymentModeEnabled)
+              {
+                <div class="row panel panel-default prepaid_card">
+                    <!-- Prepaid card section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 3 heading -->
+                        <a id="prepaid_card_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#prepaidcard_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Prepaid Card</h2>
+                        </a>
+                    </div>
+                    <!-- END panel 3 heading -->
+                    <!-- panel 3 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="prepaidcard_body">
+                        @{if (ErrorMessage != null)
+                          {
+                              if (String.Compare(ErrorMessage.info, "PrepaidCard", true) == 0)
+                              { 
+                            <div class="alert alert-danger">
+                                <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                            </div>                    
+                              }
+                          }
+                        }
+                        <form method="post" name="form_prepaid_Card" id="form_prepaid_Card" action="@Url.Action("_PrepaidCard", "Subscribe", null, "https")">
+                        @Html.AntiForgeryToken()
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="serial_number">
+                                    Serial Number</label>
+                                <input type="text" class="form-control" id="serial" name="serial" maxlength="20"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-4">
+                                <label for="pin">
+                                    PIN</label>
+                                <input type="text" class="form-control" id="pin" name="pin" maxlength="20" required>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-12">
+                                <input type="submit" value="SUBSCRIBE  Now!" class="btn btn-primary blue_button sub_pro_msgb">
+                                <!-- popup box trigger && submit button -->
+                                <p>
+                                    <span class="siteseal">
+                                        <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <input name="pid" value="" type="hidden" />
+                        </form>
+                    </div>
+                    <!-- END panel 3 body -->
+                </div>
+                <!-- END Prepaid card section -->
+              }
+            }
+            @{if (GlobalConfig.IsEWalletPaymentModeEnabled)
+              {
+                <div class="row panel panel-default ewallet">
+                    <!-- EWallet section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 4 heading -->
+                        <a id="ewallet_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#ewallet_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>E-Wallet
+                            </h2>
+                        </a>
+                    </div>
+                    <!-- END panel 4 heading -->
+                    <!-- panel 4 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="ewallet_body">
+                        @{if (ErrorMessage != null)
+                          {
+                              if (String.Compare(ErrorMessage.info, "EWallet", true) == 0)
+                              { 
+                            <div class="alert alert-danger">
+                                <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                            </div>                    
+                              }
+                          }
+                        }
+                        <form id="ewallet_form" name="ewallet_form" method="post" action="@Url.Action(String.Format("{0}", InsufficientWalletBalance ? "Index" : "_EWallet"), String.Format("{0}", InsufficientWalletBalance ? "Load" : "Subscribe"), null, "https")">
+                        @Html.AntiForgeryToken()
+                        @{if (InsufficientWalletBalance)
+                          { 
+                            <p>
+                                <b class="ewallet_note">You don't have enough credits to purchase this product, click
+                                    on the "Purchase Credits" button to load up your E-Wallet.</b>
+                            </p>
+                            <a href="@Url.Action("Index", "Load")" class="btn btn-primary blue_button sub_pro_msgb ewallet_abutton blue_btn_a">
+                                Purchase Credits</a>
+                            <input type="submit" value="Purchase using E-Wallet" class="btn btn-primary blue_button ewallet_sbutton sub_pro_msgb hide" />
+                            <!-- popup box trigger && submit button -->
+                            
+                          }
+                          else
+                          { 
+                            <p>
+                                <b class="ewallet_note">To proceed with the purchase, click on the "Purchase using E-Wallet"
+                                    button.</b>
+                            </p>
+                            <a href="@Url.Action("Index", "Load")" class="btn btn-primary blue_button sub_pro_msgb blue_btn_a ewallet_abutton hide">
+                                Purchase Credits</a>
+                            <input type="submit" value="Purchase using E-Wallet" class="btn btn-primary blue_button ewallet_sbutton sub_pro_msgb" /><!-- popup box trigger && submit button -->
+                          }
+                        }
+                        <p>
+                            <span class="siteseal">
+                                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                            </span>
+                        </p>
+                        <input name="pid" value="" type="hidden" />
+                        </form>
+                    </div>
+                    <!-- END panel 4 body -->
+                </div>
+              }
+            }
+        </div>
+        <!-- END Accordion container for payment methods -->
+        <div class="panel-group payment_panel_error" id="payment_panel_error">
+            <div class="alert alert-danger">
+                <p class="fs_20px">
+                    You are already enrolled to a similar subscription product through Automatic Payment
+                    Renewal via Paypal/Credit Card.</p>
+            </div>
+        </div>
+    </div>
+    <!-- END Container -->
+</section>
+<!-- end page body section -->
+<!-- popup processing message -->
+<div class="modal fade" id="subProMsg" tabindex="-1" role="dialog" aria-labelledby="subProMsgLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <p class="boxHead boxSmaller">
+                    Please do not close your browser. We are currently processing your transaction.</p>
+            </div>
+            <!-- END box body -->
+        </div>
+    </div>
+</div>
+<!-- END popup successful message -->
+@section JScriptBottom {
+    @{if (GlobalConfig.IsPaypalPaymentModeEnabled)
+      {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#paypal_form').submit(function (event) {
+                    var form = $(this);
+                    window.open('', 'paypalwindow');
+                    this.target = 'paypalwindow';
+                });
+            });
+        </script>
+      }
+    }
+    <script type="text/javascript">
+        function checkbalance(pid) {
+            $.post('/Subscribe/CheckBalance', { pid: pid }, function (data) {
+                if (data.StatusCode == 0) {
+                    $('.ewallet_note').text('To proceed with the purchase, click on the "Purchase using E-Wallet" button.');
+                    $('.ewallet_sbutton').val('Purchase using E-Wallet');
+                    $('.ewallet_sbutton').removeClass('hide').show();
+                    $('.ewallet_abutton').hide();
+                }
+                else {
+                    $('.ewallet_note').text('You don\'t have enough credits to purchase this product, click on the "Purchase Credits" button to load up your E-Wallet.');
+                    $('.ewallet_sbutton').val('Purchase Credits');
+                    $('.ewallet_sbutton').hide();
+                    $('.ewallet_abutton').removeClass('hide').show();
+                }
+                $('#ewallet_form').attr('action', data.HtmlUri);
+            });
+        }
+        function update_recur(visible) {
+            if (visible) {
+                $('#recur_area').show();
+                $('.pp_note').show();
+            }
+            else {
+                $('#recur_area').hide();
+                $('.pp_note').hide();
+            }
+            $('#recur').prop('checked', visible);
+        }
+
+        function is_enrolled(enrolled) {
+            if (enrolled) {
+                $('.payment_panel').hide();
+                $('.payment_panel_error').show();
+            }
+            else {
+                $('.payment_panel').show();
+                $('.payment_panel_error').hide();
+            }
+        }
+
+        $(document).ready(function () {
+            if ($('.offerbox').size() > 1) {
+                $('.offerbox').eq(1).addClass('active');
+                update_recur($('.offerbox').eq(1).data('recur'));
+                checkbalance($('.offerbox').eq(1).data('pid'));
+                is_enrolled($('.offerbox').eq(1).data('allowed'));
+                $.each($('.offerbox').eq(1).data(), function (x, y) {
+                    $("input[name='" + x + "']").val(y);
+                });
+            }
+            else {
+                $('.offerbox').first().addClass('active');
+                update_recur($('.offerbox').first().data('recur'));
+                checkbalance($('.offerbox').first().data('pid'));
+                is_enrolled($('.offerbox').first().data('allowed'));
+                $.each($('.offerbox').first().data(), function (x, y) {
+                    $("input[name='" + x + "']").val(y);
+                });
+            }
+            $('.offerbox').click(function (e) {
+                e.preventDefault();
+                $('.offerbox').removeClass('active');
+                $(this).addClass('active');
+                update_recur($(this).data('recur'));
+                is_enrolled($(this).data('allowed'));
+                $.each($(this).data(), function (x, y) {
+                    $("input[name='" + x + "']").val(y);
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        /* warn page reloading */
+        /*if (needConfirm || $('#subProMsg').is(':visible')) */
+        var needConfirm = false;
+        function askConfirm() {
+            if (needConfirm) {
+                return 'The system is currently processing your request. Leaving this page might cause some problems.';
+            }
+        }
+        $("select, input, textarea").change(function () {
+            needConfirm = true;
+        });
+
+        $(document).ready(function () {
+            window.onbeforeunload = askConfirm;
+        });
+
+        $("form").submit(function () {
+            needConfirm = false;
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.offerboxs .offerbox').click(function () {
+                checkbalance($(this).data('pid'));
+                return false;
+            });
+        });        
+    </script>
+    @{if (ErrorMessage != null)
+      {
+          if (String.Compare(ErrorMessage.info, "PrepaidCard", true) == 0)
+          { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#prepaidcard_body').addClass('in');
+                $('html, body').animate({ scrollTop: $('#prepaid_card_anchor').offset().top }, 'slow');
+                return false;
+            });
+        </script>  
+          }
+          else if (String.Compare(ErrorMessage.info, "CreditCard", true) == 0)
+          { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#creditcard_body').addClass('in');
+                $('html, body').animate({ scrollTop: $('#credit_card_anchor').offset().top }, 'slow');
+                return false;
+            });
+        </script>          
+          }
+          else if (String.Compare(ErrorMessage.info, "EWallet", true) == 0)
+          {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#ewallet_body').addClass('in');
+                $('html, body').animate({ scrollTop: $('#ewallet_anchor').offset().top }, 'slow');
+                return false;
+            });
+        </script>  
+          }
+      }
+    }
+    <script type="text/javascript">
+        // on page script only for this page
+        $(document).ready(function () {
+            // whow bootstrap tooltip
+            $("[data-toggle=tooltip]").tooltip();
+
+            // for form light box
+            $('form').submit(function (e) {
+                var form = this;
+                e.preventDefault();
+                $('#subProMsg').modal({
+                    keyboard: false,
+                    backdrop: "static"
+                });
+                setTimeout(function () {
+                    form.submit();
+                }, 2000); // in milliseconds
+            });
+        });
+    </script>
+    @{
+        if (IsFirstTimeSubscriber)
+        { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                dataLayer.push({ 'pageview': '/user/subscribenewstart', 'pagetitle': 'New Subscription Start', 'event': 'vpv' });
+            });            
+        </script>
+        }
+        else
+        { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                dataLayer.push({ 'pageview': '/user/subscriberenewalstart', 'pagetitle': 'Renewal Subscription Start', 'event': 'vpv' });
+            });            
+        </script>
+        }
+    }
+}

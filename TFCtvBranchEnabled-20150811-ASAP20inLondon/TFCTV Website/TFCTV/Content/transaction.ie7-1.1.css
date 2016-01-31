@@ -1,0 +1,26 @@
+.btn-container {
+margin-left: 10px;
+}
+
+.btn-container15 {
+margin-left: 15px;
+}
+
+#LoginPanel {
+height: 360px;
+}
+
+.errstatus {
+text-indent: 5px;
+}
+
+.btn-margin-ie7 {
+margin-left: 0 !important;
+}
+
+.btn-margin-ie7-rel {
+position: relative;
+left: 5px;
+}
+
+.wallet-box { position: relative; left: -343px; top: -8px;}

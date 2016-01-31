@@ -1,0 +1,105 @@
+﻿@model List<IPTV2_Model.StoreFront>
+@{
+    ViewBag.Title = "Find A Dealer - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:find-a-dealer";
+    Maxmind.Location location = null;
+    try
+    {
+        location = ViewBag.Location;
+    }
+    catch (Exception) { }
+}
+<!--  Find a Dealer page body -->
+<section class="page_pagebody dealer_pagebody">
+    <div class="container">
+        <h1 class="page_title">
+            Find A Dealer</h1>
+        <div class="row">
+            <!-- right side [map] -->
+            <div class="col-xs-12 dright">
+                <div id="map" class="embed-container">
+                </div>
+            </div>
+            <!-- END right side -->
+        </div>
+        <div class="row col_cont">
+            @{foreach (var item in Model)
+              {                                         
+                <div class="col-md-3 col-sm-6 col-xs-6 dleft">
+                    <div class="inner">
+                        <div id="s-@item.StoreFrontId" class="storediv">
+                            <a id="store-@item.StoreFrontId" class="store" title="@item.BusinessName" href="#" data-latitude="@item.Latitude" data-longitude="@item.Longitude">@item.BusinessName</a><br />
+                            <span>@item.Address1</span><br />
+                            <span>@item.City, @item.State @item.ZipCode</span>
+                            <div id="storeinfo-@item.StoreFrontId" class="fade">
+                                <div class="sinfo">
+                                    <span class="boldText">@item.BusinessName</span></div>
+                                <span>@item.Address1</span><br />
+                                <span>@item.City, @item.State @item.ZipCode</span><br />
+                                <span>@item.BusinessPhone</span>
+                                @{if (!String.IsNullOrEmpty(item.ContactPerson))
+                                  {                                    
+                                    <span>@item.ContactPerson</span>
+                                  }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>                                
+              }
+            }
+            @{if (Model.Count() == 0)
+              { 
+                <div class="col-md-3 col-sm-6 col-xs-6 dleft">
+                    <div class="inner">
+                        <p>
+                            There are currently no stores near you.</p>
+                    </div>
+                </div>                
+              }
+            }
+        </div>
+    </div>
+</section>
+<!-- END Find a Dealer page body -->
+@section JScriptBottom {
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    @Html.JsBuilder(Url, "jquery.gomap-1.3.2.min.js")
+    <script type="text/javascript">
+    var latitude = @location.latitude;
+    var longitude = @location.longitude;
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#map").goMap({
+                latitude: latitude,
+                longitude: longitude,
+                zoom: 12,
+                maptype: 'ROADMAP',
+                mapTypeControl: false
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.store').click(function () {
+            var parent = $(this).parent().attr('id');
+            var storeinfoid = $('#' + parent + ' > div').attr('id');
+            $.goMap.createMarker({
+                latitude: $(this).attr('data-latitude')
+                , longitude: $(this).attr('data-longitude')
+                , id: this.id
+                , html: {
+                    content: '<div style="width: 260px;">' + $('#' + storeinfoid).html() + '</div>'
+                }
+
+                , title: $(this).attr('title')
+            });
+            google.maps.event.trigger($($.goMap.mapId).data(this.id), 'click')
+            var position = $($.goMap.mapId).data(this.id).position;
+            $.goMap.map.panTo(position);
+
+            return false;
+        });
+    </script>
+}

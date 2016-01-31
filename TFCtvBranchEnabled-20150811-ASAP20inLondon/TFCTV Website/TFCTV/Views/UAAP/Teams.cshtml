@@ -1,0 +1,113 @@
+﻿@model List<IPTV2_Model.Celebrity>
+@{
+
+    ViewBag.Title = "UAAP Season 76 - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    //int ctr = 1;
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    bool Loved = false;
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+
+
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+
+
+    }
+    
+}
+<br />
+<br />
+<div id="mainBody">
+    <div style="width: 940px; display: table; margin: 0 auto;">
+        <div style="width: 940px; height: 141px; background-color: #fff;">
+            <img src="http://res2.abs-cbnip.tv/images/episodeimages/41783/UAAP 76 960x141 UPDATED.png"
+                style="z-index: -11;" width="940" height="141" title="UAAP Season 76" alt="UAAP Season 76" />
+        </div>
+        <div class="transparentBg">
+            <div id="dTopLinks" style="display: table; margin: 0 auto;">
+                @Html.ActionLink("MAIN PAGE", "Index", "UAAP") | @Html.ActionLink("LIVE STREAM", "Live", "UAAP")
+                | @Html.ActionLink("THE TEAMS", "TEAMS", "UAAP")</div>
+            <div id="sort_container">
+                Sort by: <a href="#" rel="desc" rel2="asc" id="srank" class="sort-option">Rank</a>
+                | <a rel="asc" rel2="desc" href="#" id="sname" class="sort-option">Name</a> | <a
+                    rel="desc" rel2="asc" href="#" id="slove" class="sort-option">Most Loved</a>
+                | <a rel="desc" rel2="asc" href="#" id="scomment" class="sort-option">Most Commented</a>
+            </div>
+            <div class="dTeamsList">
+                @foreach (IPTV2_Model.Celebrity item in Model)
+                {
+
+                    if (item.Birthplace != null)
+                    {
+                        if (item.Birthplace == "True" || item.Birthplace == "true")
+                        { Loved = true; }
+                    }
+                    string[] social = item.Birthday.Split('-');
+                    <div class="showItem_preview" id="@item.CelebrityId" srank="@item.Height.Substring(0, 2)" slove="@social[0]" scomment="@social[1]" sname="@item.FullName" >
+                        <div class="imgShowThumbBg_1">
+                            <a href="/UAAP/TeamDetails/@item.CelebrityId">
+                                <img src="@item.ImageUrl"/></a></div>
+                        <a href="/UAAP/TeamDetails/@item.CelebrityId">@item.FullName</a><br />
+                        @item.Height<br />
+                    </div>
+
+                }
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "uaap.3.css")
+}
+@section JScript{
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.2.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+    @Html.JsBuilder(Url, "jquery.tinysort.min.js")
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type='text/javascript'>
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_Leaderboard_728x90");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+    <!-- End of Google Ads -->
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        //        $('#sort_selection').change(function () {
+        //            var selected = $(this).find("option:selected").val()
+        //            if (selected == "love" || selected == "likes" || selected == "rated") {
+        //                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: $(this).find("option:selected").val(), order: 'desc' });
+        //            }
+        //            else {
+        //                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: $(this).find("option:selected").val() });
+        //            }
+        //        });
+
+        var sortopt = ["slove", "scomment", "srank", "sname"];
+        $('.sort-option').click(function () {
+            var isFound = $.inArray(this.id, sortopt);
+            if (isFound >= 0)
+                $('.dTeamsList>div.showItem_preview').tsort({ attr: this.id, order: $(this).attr('rel') });
+            else
+                $('.dTeamsList>div.showItem_preview').tsort({ attr: this.id, order: $(this).attr('rel2') });
+            return false;
+        });
+    </script>
+}

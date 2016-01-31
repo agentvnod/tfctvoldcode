@@ -1,0 +1,258 @@
+﻿@{
+    List<TFCTV.Helpers.CreditCard> creditCardList = ViewBag.CreditCardList;
+    string sslUrl = String.Empty;
+    if (GlobalConfig.IsSSLEnabled)
+    {
+        Uri url = Request.Url;
+        sslUrl = url.GetLeftPart(UriPartial.Authority).Replace("http://", "https://");
+    }
+}
+<div id="CreditCardContainer" class="padLeftStandard">
+    <div class="paymentSubHeaders">
+        Before entering your payment information, please make sure that your computer meets
+        our system requirements, as indicated in our <a href="/Help" style="color: #E95D0A;">
+            Help Center</a>. The subscription fee is non-refundable.
+    </div>
+    <div class="breakStandard">
+    </div>
+    <div id="presult">
+    </div>
+    <div id="enterPin">
+        <form id="rprepaidform" method="post" action="@sslUrl/Reload/ReloadViaCreditCard">
+        <div class="edit-row vert-spacing">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Amount</div>
+            <div class="padLeftStandard">
+                @ViewBag.Currency
+                <input id="amount" name="amount" maxlength="3" class="ppinput inputmleft" style="width: 50px;" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row vert-spacing">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Type of Credit Card</div>
+            <div class="padLeftStandard">
+                @Html.DropDownList("CreditCard", new SelectList(creditCardList, "value", "text"), new { style = "z-index: 1000; height: 20px; width: 150px;" })
+                @*@(Html.Telerik().DropDownList()
+                        .Name("CreditCard")
+                        .HtmlAttributes(new { @class = "t-selector", style = "z-index: 20; height: 20px; width: 150px;" })
+                        .BindTo(new SelectList(creditCardList, "value", "text"))
+                        .HiddenInputHtmlAttributes(new { style = "display: none;" })
+                )*@
+            </div>
+        </div>
+        <div class="edit-row vert-spacing">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Cardholder Name</div>
+            <div class="padLeftStandard">
+                <input id="cardholdername" name="cardholdername" maxlength="150" class="ppinput inputmleft" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Card Number</div>
+            <div class="padLeftStandard">
+                <input id="cardnumber" name="cardnumber" maxlength="16" class="ppinput inputmleft" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Card Security Code</div>
+            <div class="padLeftStandard">
+                <input id="securitycode" name="securitycode" maxlength="4" type="password" class="ppinput inputmleft"
+                    style="width: 50px;" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="edit-row">
+            <div style="font-size: 11px;">
+                The card security code (CSC) is a 3- or 4-digit number (not part of the credit card
+                number) that appears on the credit card. On most cards, the CSC appears on the back
+                of the card (usually in the signature field).
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+            </div>
+            <div style="font-size: 11px;">
+                @Html.ImageBuilder(Url, "ccard-back2.jpg")
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Expiration Date</div>
+            <div class="padLeftStandard">
+                @Html.DropDownList("ExpiryMonth", new SelectList(ViewBag.Months, "Value", "Text"))&nbsp;
+                @Html.DropDownList("ExpiryYear", new SelectList(ViewBag.Years, "Value", "Text"))
+                @* @(Html.Telerik().DropDownList()
+                        .Name("ExpiryMonth")
+                        .HtmlAttributes(new { @class = "t-selector", style = "z-index: 20; height: 20px; width: 100px;" })
+                        .BindTo(new SelectList(ViewBag.Months, "Value", "Text"))
+                        .HiddenInputHtmlAttributes(new { style = "display: none;" })
+                )&nbsp;
+                @(Html.Telerik().DropDownList()
+                        .Name("ExpiryYear")
+                        .BindTo(new SelectList(ViewBag.Years, "Value", "Text"))
+                        .HtmlAttributes(new { @class = "t-selector", style = "z-index: 20; height: 20px; width: 80px;" })
+                        .HiddenInputHtmlAttributes(new { style = "display: none;" })
+                )*@
+            </div>
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Street Address</div>
+            <div class="padLeftStandard">
+                <input id="address" name="address" class="ppinput inputmleft" style="width: 320px;" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                City</div>
+            <div class="padLeftStandard">
+                <input id="city" name="city" maxlength="255" class="ppinput inputmleft" style="width: 120px;" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+                Postal Code</div>
+            <div class="padLeftStandard">
+                <input id="zip" name="zip" maxlength="16" class="ppinput inputmleft" style="width: 100px;" />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="edit-row">
+            <div>
+                <strong>Service Agreement.</strong> Please place a check mark on each box below
+                by clicking on the box to signify your agreement to our service terms:
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="edit-row">
+            <div style="font-size: 11px;">
+                <input id="agree1" type="checkbox" name="agree1" />I hereby certify that my computer
+                meets the system requirements and I can view the free videos. <span class="perrstatus">
+                </span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div style="font-size: 11px;">
+                <input id="agree2" type="checkbox" name="agree2" />I hereby certify that the above
+                information is correct. <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="edit-row">
+            <div style="font-size: 11px;">
+                <input id="agree3" type="checkbox" name="agree3" />I hereby authorize @MyUtility.GetABSCBNSubsidiary()
+                to deduct payments in connection with my subscription to TFC.tv. I also agree that
+                said payments are non-refundable. <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div class="edit-row">
+            <div class="floatLeft" style="padding-top: 3px; padding-right: 10px; width: 120px;">
+            </div>
+            <div class="padLeftStandard">
+                <input type="submit" id="cmdSubmit" class="btnimage submitbtn floatLeft" value="submit"
+                    name="submit" /><div id="rsb-load" style="top: 0px; height: 30px;" class="side-button-loader padLeftStandard hideElement">
+                    </div>
+            </div>
+        </div>
+        </form>
+        <div class="clear">
+        </div>
+        <div id="rsb-msg" class="edit-row hideElement">
+            <div class="breakSmall">
+            </div>
+            <div class="padLeftStandard">
+                Transaction may take a few minutes. Please do not close this window.
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+</div>
+@*<script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.list.min.js"></script>
+@(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+                         .OutputScriptFiles(false))*@ @*@Html.JsBuilder(Url, "jquery.validate.min.js")*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $.getScript('@Html.ContentBuilder(Url, "scripts/jquery.validate.min.js")').done(function () {
+            var ppcvalidator = $('form#rprepaidform').validate({
+                rules: {
+                    amount: { required: true, number: true }
+                , cardholdername: { required: true }
+                , cardnumber: { required: true, number: true }
+                , securitycode: { required: true, number: true }
+                , address: { required: true }
+                , city: { required: true }
+                , zip: { required: true }
+                , agree1: { required: true }
+                , agree2: { required: true }
+                , agree3: { required: true }
+
+                },
+                messages: {
+                    amount: { required: 'This field is required', number: 'Must be numeric' }
+                , cardholdername: { required: 'This field is required' }
+                , cardnumber: { required: 'This field is required', number: 'Must be numeric' }
+                , securitycode: { required: 'This field is required', number: 'Must be numeric' }
+                , address: { required: 'This field is required' }
+                , city: { required: 'This field is required' }
+                , zip: { required: 'This field is required' }
+                , agree1: { required: 'required' }
+                , agree2: { required: 'required' }
+                , agree3: { required: 'required' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.perrstatus'));
+                }
+            });
+
+            $('form#rprepaidform').submit(function (event) {
+                event.preventDefault();
+                $('#cmdSubmit').attr('disabled', 'disabled');
+                if (ppcvalidator.numberOfInvalids() == 0) {
+                    $('#presult').empty();
+                    var form = $(this);
+                    //$('#rsb-load').css('top', '4px');
+                    $('#rsb-load').show();
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading..." })');
+                    $('#rsb-msg').show();
+                    $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('.ppinput').val('');
+                            $('#presult').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty(); $('#rsb-msg').hide();
+                            getUserBalance();
+                            $('#cmdSubmit').removeAttr('disabled');
+                        }
+                        else {
+                            $('#presult').html(createError(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty(); $('#rsb-msg').hide();
+                            $('#cmdSubmit').removeAttr('disabled');
+                        }
+
+                    }).done(function () {
+                        $('#rsb-load').hide();
+                    });
+                }
+            });
+        });
+    });
+</script>

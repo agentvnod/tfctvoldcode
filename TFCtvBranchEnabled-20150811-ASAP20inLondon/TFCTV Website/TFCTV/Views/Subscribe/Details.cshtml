@@ -1,0 +1,480 @@
+﻿@using TFCTV.Helpers
+@model List<SubscriptionProductA>
+@{
+    ViewBag.Title = "Subscribe - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    var csId = Url.RequestContext.RouteData.Values["id"];
+    if (Url.RequestContext.RouteData.Values["id"] == null)
+    {
+        csId = "null";
+    }
+    var ReturnUrl = HttpUtility.UrlEncode(ViewContext.HttpContext.Request["ReturnUrl"]);
+    string ReturnUrlStr = String.Empty;
+    if (!String.IsNullOrEmpty(ReturnUrl))
+    {
+        ReturnUrlStr = String.Format("?ReturnUrl={0}", ReturnUrl);
+    }
+    var isLoggedIn = MyUtility.isUserLoggedIn().ToString().ToLower();
+
+    bool ProductPriceNotFound = false;
+    var metaDesc = "Subscribe to PREMIUM! Have access to premium TFC content with budget-friendly subscription packages and products. Choose your own affordable way to match your viewing needs.";
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                HOME &raquo; SUBSCRIBE
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div id="prd-selectors" class="hideElement">
+            </div>
+            <div class="clear">
+            </div>
+            <div id="subscribe-body">
+                @{
+                    int ctr = 0;
+                    foreach (var item in Model.Select(p => p.productGroup).Distinct())
+                    {
+                        bool isShow = false;
+                        SubscriptionProductA modelItem = null;
+                        modelItem = Model.Where(p => p.productGroup == item).FirstOrDefault(p => p.product.ProductId == item.DefaultProductId);
+                        if (modelItem == null)
+                        {
+                            try { modelItem = Model.Where(p => p.productGroup == item).OrderBy(p => p.productPrice.Amount).First(); }
+                            catch (Exception) { ProductPriceNotFound = true; }
+                        }
+
+                        IPTV2_Model.SubscriptionProduct subscP = null;
+                        IPTV2_Model.ProductPrice lowestProductPrice = null;
+                        if (modelItem != null)
+                        {
+                            lowestProductPrice = modelItem.productPrice;
+                            subscP = (IPTV2_Model.SubscriptionProduct)modelItem.product;
+                        }
+                        var itemName = @item.Name.Replace("TFC.tv ", "").ToUpper();
+                        if (System.Text.RegularExpressions.Regex.IsMatch(itemName, "^PAY PER.+", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                        {
+                            itemName = "ALA CARTE";
+                            isShow = true;
+                        }
+                        if (item.ProductSubscriptionTypeId != null)
+                        {
+                            itemName = "ALA CARTE";
+                        }
+                        var itemClassName = System.Text.RegularExpressions.Regex.Replace(itemName.ToLower(), "[^A-Za-z0-9-_]", "");
+                        //Content count
+                        var mItem = @Model.FirstOrDefault(p => p.productGroup == item);
+                        var contentCount = mItem.contentCount;
+                        var contentDesc = mItem.contentDescription;
+                        var ListOfDescription = mItem.ListOfDescription;
+                        var ShowDescription = mItem.ShowDescription;
+                        string contentDescription = String.Format("{0} {1}", contentDesc, (isShow ? "Show" : "Title"));
+                        string itemBlurb = isShow ? GlobalConfig.AlaCarteBlurb : item.Blurb;
+                        if (item.ProductSubscriptionTypeId != null)
+                        {
+                            itemBlurb = GlobalConfig.AlaCarteBlurb;
+                        }
+                        if (!String.IsNullOrEmpty(ViewBag.ShowName))
+                        {
+                            contentDescription = String.Format("{0} & {1} Titles", ViewBag.ShowName, contentDesc);
+                            if (isShow || item.ProductSubscriptionTypeId != null)
+                            {
+                                contentDescription = ViewBag.ShowName;
+                            }
+                        }
+                            
+                    <div @Html.Raw(ctr == 0 ? String.Format("class=\"prd-selections hideElement c-{0} c-hovered\"", itemClassName) : String.Format("class=\"prd-selections hideElement c-{0}\"", itemClassName)) data-body="@String.Format("#prd-body-{0}", item.ProductGroupId)" data-group="@String.Format("#pgi{0}", item.ProductGroupId)" data-package="@string.Join(",", item.GetPackageIds())" data-show="@string.Join(",", item.GetShowIds())" data-type="@Convert.ToInt32(isShow)" data-img-left="@String.Format("#psd-prd-left-{0}", item.ProductGroupId)" data-img-right="@String.Format("#psd-prd-right-{0}", item.ProductGroupId)">@itemName</div>
+                    
+                    <div id="@String.Format("prd-body-{0}", item.ProductGroupId)" @Html.Raw(ctr == 0 ? "class=\"pr-subscribe-details\"" : "class=\"pr-subscribe-details hideElement\"") data-group="@String.Format("#pgi{0}", item.ProductGroupId)" data-package="@string.Join(",", item.GetPackageIds())" data-show="@string.Join(",", item.GetShowIds())" data-type="@Convert.ToInt32(isShow)" data-img-left="@String.Format("#psd-prd-left-{0}", item.ProductGroupId)" data-img-right="@String.Format("#psd-prd-right-{0}", item.ProductGroupId)">
+                        <div class="psd-leftBlock">
+                            <div class="psd-title">
+                                @Html.Raw(itemName)</div>
+                            <div class="psd-desc">
+                                @Html.Raw(itemBlurb)</div>
+                            <div class="clear breakLarge">
+                            </div>
+                            <div class="psd-bar">
+                            </div>
+                            <div class="clear breakSmall">
+                            </div>
+                            <div class="psd-details">
+                                @{if (ProductPriceNotFound)
+                                  {
+                                    <div class="psd-prd">
+                                        <div class="breakStandard">
+                                        </div>
+                                        <div>
+                                            This product is currently not available in your country.</div>
+                                    </div>
+                                  }
+                                  else
+                                  { 
+                                    <div class="psd-prd">
+                                        <div class="breakSmall">
+                                        </div>
+                                        <span class="amt">@String.Format("{1} {0}", lowestProductPrice.Amount.ToString("F"), lowestProductPrice.CurrencyCode)</span><span
+                                            class="dur">&nbsp;/ @MyUtility.FormatDuration(subscP.DurationType, subscP.Duration, true)</span>
+                                        <div class="clear breakLarge">
+                                        </div>
+                                        <div>
+                                            <div class="psd-prd-select floatLeft psd-other-opts hideElement" id="@String.Format("pgi{0}", item.ProductGroupId)">
+                                                @foreach (var p in Model.Where(m => m.productGroup == item).OrderBy(m => m.productPrice.Amount))
+                                                {
+                                                    <text>
+                                                    <div id="@String.Format("pg-body-{0}", item.ProductGroupId)">
+                                                        @{if (item.DefaultProductId == null)
+                                                          {
+                                                            <text>
+                                                            <input @Html.Raw(lowestProductPrice.ProductId == p.product.ProductId ? "checked" : "") type="radio" name="@String.Format("product-selections-{0}", item.ProductGroupId)" class="product-selections" value="@p.product.ProductId" data-amount="@String.Format("{0} {1}", p.productPrice.CurrencyCode, p.productPrice.Amount.ToString("F"))" data-duration="@String.Format(" / {0}", MyUtility.FormatDuration(p.product.DurationType, p.product.Duration, true))" />
+                                                            @p.productPrice.CurrencyCode @p.productPrice.Amount.ToString("F") for @MyUtility.FormatDuration(p.product.DurationType, p.product.Duration)
+                                                            </text>
+                                                          }
+                                                          else
+                                                          {
+                                                            <text>
+                                                            <input @Html.Raw(item.DefaultProductId == p.product.ProductId || item.DefaultProductId == null ? "checked" : "") type="radio" name="@String.Format("product-selections-{0}", item.ProductGroupId)" class="product-selections" value="@p.product.ProductId" data-amount="@String.Format("{0} {1}", p.productPrice.CurrencyCode, p.productPrice.Amount.ToString("F"))" data-duration="@String.Format(" / {0}", MyUtility.FormatDuration(p.product.DurationType, p.product.Duration, true))" />
+                                                            @p.productPrice.CurrencyCode @p.productPrice.Amount.ToString("F") for @MyUtility.FormatDuration(p.product.DurationType, p.product.Duration)
+                                                            </text>
+                                                          }
+                                                        }
+                                                    </div>
+                                                    </text>
+                                                }
+                                            </div>
+                                            <div class="floatLeft">
+                                                <div class="psd-sub-btn">
+                                                    <a href="/" class="nbutton nbutton-anchor pad20 s20 subscribeBtn">Subscribe</a></div>
+                                                <div class="choose-options">
+                                                    or <a href="#" class="show-other-opts" data-radio="@String.Format("#pgi{0}", item.ProductGroupId)">
+                                                        choose other options</a></div>
+                                            </div>
+                                            <div class="clear breakSmall">
+                                            </div>
+                                        </div>
+                                    </div>
+                                  }
+                                }
+                                <div class="psd-divide">
+                                </div>
+                                <div class="psd-prd-breakdown">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <div>
+                                        @{if (ListOfDescription != null && item.ProductSubscriptionTypeId == null)
+                                          {
+                                            <div class="highlight-red">
+                                                @Html.Raw(ListOfDescription.Last())
+                                            </div>
+                                            <div class="breakStandard">
+                                            </div>
+                                              
+                                              foreach (var lItem in ListOfDescription.Take(ListOfDescription.Count() - 1))
+                                              {                                    
+                                            <text>- @Html.Raw(lItem)
+                                            <div class="breakSmall">
+                                            </div>
+                                            </text>
+                                              }
+                                          }
+                                          else
+                                          {
+                                              if (!String.IsNullOrEmpty(ShowDescription))
+                                              {
+                                                  metaDesc = String.Format("Subscribe to {0}. {1}", contentDescription, ShowDescription);
+                                            <div class="highlight-red">
+                                                @Html.Raw(MyUtility.Ellipsis(contentDescription, 15))
+                                            </div>
+                                            <div class="breakStandard">
+                                            </div>
+                                            <div>@Html.Raw(MyUtility.Ellipsis(ShowDescription, 120))</div>
+                                              }
+                                          }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear breakLarge">
+                            </div>
+                        </div>
+                        <div class="psd-bdivider">
+                        </div>
+                        <div class="psd-rightBlock">
+                            <div id="psd-prd-content">
+                                <div class="psd-prd-img">
+                                    <div class="psd-prd-img-inner">
+                                        <div id="@String.Format("psd-prd-left-{0}", item.ProductGroupId)" class="psd-prd-left psd-prd-img-co">
+                                            @Html.ImageBuilder(Url, "blank.gif", new { title = "", alt = "", width = 146, height = 200 })
+                                        </div>
+                                        <div id="@String.Format("psd-prd-right-{0}", item.ProductGroupId)" class="psd-prd-right psd-prd-img-co">
+                                            @Html.ImageBuilder(Url, "blank.gif", new { title = "", alt = "", width = 146, height = 200 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear breakStandard">
+                        </div>
+                    </div>                                        
+                                          ctr++;
+                    }
+                }
+            </div>
+            <div class="clear">
+            </div>
+            <div class="clear">
+            </div>
+            <div id="slist-container">
+                <div id="slist-header">
+                    <div class="slist-selection">
+                        <span class="list-s"><a href="#" class="grid-link scont-selection" data-link="slist-list">
+                            Grid</a><a href="#" class="list-link scont-selection" data-link="slist-tlist">List</a></span></div>
+                    <div id="ddselection">
+                        <span class="list-s"><span class="white">Filter by</span>&nbsp;&nbsp; @Html.DropDownList("FilterBy", new SelectList(new List<JsonFeatureItem>()), new { @class = "textbox-medium" })</span></div>
+                </div>
+                <div class="breakSmall">
+                </div>
+                <div id="slist-list" class="scont">
+                </div>
+                <div class="clear">
+                </div>
+                <div id="slist-tlist" class="scont hideElement">
+                </div>
+                <div class="clear">
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="plswait" class="hideElement">
+    <p>@Html.ImageBuilder(Url, "3.gif", new { style = "position: relative; top: 5px;" })
+        Please wait while we process your request...</p>
+</div>
+<div id="flip-data" class="hideElement">
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "subscription-1.9.css")
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    @Html.CssBuilder(Url, "subscription.ie7.css")
+    <![endif]-->
+    @{if (ViewBag.id != null)
+      { 
+        <link rel="canonical" href="@String.Format("{0}/Subscribe/Details/{1}", GlobalConfig.baseUrl, ViewBag.id)" />
+      }
+      else
+      { 
+        <link rel="canonical" href="@String.Format("{0}/Subscribe/Details", GlobalConfig.baseUrl)" />
+      }
+    }
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDesc)" />
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "helpers.js")
+    @Html.JsBuilder(Url, "underscore-min.js")
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    <script type="text/javascript">
+    var yStatus = @isLoggedIn;
+    var uriExt = '@ReturnUrlStr';
+    var csId = @csId;
+    var dSelectedIndex = $($('.pr-subscribe-details:visible').attr('data-group') + ' input[class^=product-selections]:checked').val();
+    </script>
+    <script type="text/javascript">
+        var currentSelectedId = 0;
+
+        function GetShows(sIndex, type, imgLeft, imgRight) {
+            $.ajax({
+                url: '/Subscribe/GetShows',
+                data: { id: sIndex, type: type, currentCategoryId: csId },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.scont').html($('#plswait').html());
+                }
+            }).done(function (data) {
+                $('#slist-list').empty();
+                $(imgLeft).empty();
+                $(imgRight).empty();
+                //fill grid
+                $.each(data, function (x, y) {
+                    var html = '<div class="sitem-container"><a href="/Show/Details/' + y.CategoryId + '"><img src="' + y.ImgUrl + '" title="' + y.Name + '" alt="" /></a><div class="sitem-name"><a href="/Show/Details/' + y.CategoryId + '">' + y.Name + '</a></div></div>'
+                    $('#slist-list').append(html);
+                    if (x > 2) {
+                        if (x % 2 && x != 0) {
+                            if (imgLeft) {
+                                var fhtml = '<img src="' + y.ImgUrl + '" title="' + y.Name + '" alt="" width="146" height="200" />';
+                                $(imgLeft).append(fhtml);
+                            }
+                        }
+                        else {
+                            if (imgRight) {
+                                var fhtml = '<img src="' + y.ImgUrl + '" title="' + y.Name + '" alt="" width="146" height="200" />';
+                                $(imgRight).append(fhtml);
+                            }
+                        }
+                    }
+                    else if (data.length <= 1) {
+                        if (imgLeft) {
+                            var fhtml = '<img src="' + y.ImgUrl + '" title="' + y.Name + '" alt="" width="146" height="200" />';
+                            $(imgLeft).addClass('center-img').html(fhtml);
+                            if (imgRight)
+                                $(imgRight).remove();
+                        }
+                    }
+                });
+
+                //fill text
+                var groupData = _.groupBy(data, function (obj) {
+                    return obj.ParentCategoryName;
+                });
+
+                var optGroups = [];
+                var html = '';
+
+                for (var key in groupData) {
+                    if (groupData.hasOwnProperty(key)) {
+                        html += '<div class="tlist-container">';
+                        html += '<div class="t-title">' + key + '</div>';
+                        var currentGroup = groupData[key];
+                        html += '<ul class="t-ul">';
+                        for (var i = 0; i < currentGroup.length; i++) {
+                            html += '<li><a href="/Show/Details/' + currentGroup[i].CategoryId + '">' + currentGroup[i].Name + '</a></li>';
+                        }
+                        html += '</ul>';
+                        html += '<div class="breakStandard"></div>';
+                        html += '</div>';
+                    }
+                }
+                var $container = $('#slist-tlist');
+                $('#slist-tlist').empty();
+                $(html).appendTo('#slist-tlist');
+
+                //cycle                
+                if (data.length > 1) {
+                    $(imgLeft).cycle({
+                        fx: 'fade'
+                    });
+                    $(imgRight).cycle({
+                        fx: 'fade',
+                        delay: -8000
+                    });
+                }
+            });
+        }
+
+        function fillDropdown(list, type, init, imgLeft, imgRight) {
+            var dd = $('#FilterBy');
+            if (init) {
+                dd.find('option').remove().end();
+                $.getJSON('/Subscribe/GetCategories', { list: list, type: type }, function (data) {
+                    $.each(data, function (x, y) {
+                        if (x == 0 && init) {
+                            currentSelectedId = y.Value;
+                            if (y.Text == '--')
+                                $('.list-s').hide();
+                            else
+                                $('.list-s').show();
+                            var yText = (y.Text == '--' ? 2 : 0);
+                            setTimeout(function () { GetShows(y.Value, yText, imgLeft, imgRight) }, 500);
+                        }
+                        dd.append($('<option>').val(y.Value).text(y.Text));
+                    });
+                });
+                $('.scont-selection').removeClass('link-selected').first().addClass('link-selected');
+            }
+        }
+
+        function initView() {
+            var lStart = $('.pr-subscribe-details:visible');
+            var type = lStart.attr('data-type');
+            if (type == 0)
+                fillDropdown(lStart.attr('data-package'), type, true, lStart.attr('data-img-left'), lStart.attr('data-img-right'));
+            else
+                fillDropdown(lStart.attr('data-show'), type, true, lStart.attr('data-img-left'), lStart.attr('data-img-right'));
+        }
+        $(document).ready(function () {
+            //initialize
+            initView();
+
+            $(document).on('click', '.prd-selections', function () {
+                var tmp = $(this).hasClass('c-hovered');
+                $('.prd-selections').removeClass('c-hovered'); $(this).addClass('c-hovered');
+                var elementId = $(this).attr('data-group');
+                dSelectedIndex = $(elementId + ' input[class^=product-selections]:checked').val();
+                $('.pr-subscribe-details').hide();
+                $($(this).attr('data-body')).show();
+                var type = $(this).attr('data-type');
+                if (type == 0)
+                    fillDropdown($(this).attr('data-package'), type, !tmp, $(this).attr('data-img-left'), $(this).attr('data-img-right'));
+                else
+                    fillDropdown($(this).attr('data-show'), type, !tmp, $(this).attr('data-img-left'), $(this).attr('data-img-right'));
+                return false;
+            });
+            //radio button
+            $('.subscribeBtn').on('click', function () {
+                if (yStatus) {
+                    var url = '/Payment/Select/' + dSelectedIndex + uriExt;
+                    $(this).attr('href', url);
+                }
+                else {
+                    $('#signin').click();
+                    $('html, body').animate({
+                        scrollTop: $('#entertainmentBtn').offset().top
+                    }, 800);
+                    return false;
+                }
+            });
+            //selection on dropdown            
+            $('#FilterBy').selected(function (data) {
+                var sIndex = data.options[data.selectedIndex];
+                if (currentSelectedId != sIndex.value) {
+                    $('#slist-list').empty();
+                    var sIx = 1;
+                    if (sIndex.text == 'ALL')
+                        sIx = 0;
+                    else if (sIndex.text == '--')
+                        sIx = 2;
+                    GetShows(sIndex.value, sIx);
+                    currentSelectedId = sIndex.value;
+                }
+            });
+            $('.scont-selection').click(function () {
+                $('.scont-selection').removeClass('link-selected');
+                $('.scont').hide();
+                var elementId = '#' + $(this).attr('data-link');
+                $(this).addClass('link-selected');
+                $(elementId).show();
+                return false;
+            });
+
+            $(document).on('change', 'input[class^=product-selections]', function () { dSelectedIndex = $(this).val(); });
+
+            $(document).on('click', '.show-other-opts', function () {
+                $('.psd-prd-select').show();
+                $('#prd-selectors').slideDown('slow');
+                $('.choose-options').hide();
+                return false;
+            });
+
+            $(document).on('change', 'input[class^=product-selections]', function () {
+                $('.amt').html($(this).attr('data-amount'));
+                $('.dur').html($(this).attr('data-duration'));
+            });
+
+            $('.prd-selections').appendTo('#prd-selectors').show();
+            $(document).on('click', '.prd-selections', function () {
+                $('.pr-subscribe-details').hide();
+                $('.prd-selections').removeClass('c-hovered');
+                $(this).addClass('c-hovered');
+                $($(this).attr('data-body')).show();
+                return false;
+            });
+        });         
+    </script>
+}

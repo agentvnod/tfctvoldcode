@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "FPJ: Idolo ng Pilipino - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<!--  FPJ Movie Library packages body -->
+<section class="page_pagebody page_fpj">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header img -->
+            @Html.ImageBuilder(Url, "ux/fpj_main_head.jpg", new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header img -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li><a href="@Url.Action("Index", "FPJ")">MAIN PAGE</a></li>
+                <li class="active"><a href="@Url.Action("Library", "FPJ")">MOVIE LIBRARY</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="row">
+            <!-- right [sort by] -->
+            <div class="col-xs-12 shorby_box_outer">
+                <div class="clearfix">
+                    <div class="shorby_box">
+                        <label for="sortby">
+                            View by :</label>
+                        <div class="select_bg">
+                            <ul>
+                                <li><a href="@Url.Action("Library", "FPJ")">Bundle</a></li>
+                                <li class="active"><a href="@Url.Action("LibraryA", "FPJ")">Title</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END right [sort by] -->
+        <!-- block 1 [Hari ng Aksyon] -->
+        @Html.Action("GetFPJContent", "FPJ", new { partialViewName = "GetFPJContent", pageSize = GlobalConfig.FeatureItemsPageSize, id = "fpj_allmovies", isOrdered = true })
+        <!-- END movies -->
+        <!-- END block 1 [Hari ng Aksyon] -->
+    </div>
+    <!-- end container -->
+</section>
+<!--  END FPJ Movie Library packages body -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    @Html.JsBuilder(Url, "jquery.bxslider.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer gray jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+}

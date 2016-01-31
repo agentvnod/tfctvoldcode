@@ -1,0 +1,88 @@
+﻿@model IPTV2_Model.User
+<div id="profileInfo">
+    <div id="profileName" userCompleName="@(Model.FirstName + " " + Model.LastName)" >@Model.LastName,
+        <b>@Model.FirstName</b></div>
+    <div id="balloontip" class="left">
+    </div>
+    <div id="newPost" class="no-display">
+    </div>
+    <div id="recentPost">
+        <div id="postmessage">
+        </div>
+    </div>
+</div>
+<div id="moreInfo" class="left">
+    <div class="left">
+        <div class="left">
+            Living in &nbsp;</div>
+        @{if (ViewBag.userCity != null)
+          {
+            <div class="left bold" style="color: #49a4ff;">@ViewBag.userCity, @ViewBag.userCountry</div>
+          }
+          else
+          {
+            <div class="left bold" style="color: #49a4ff;">@ViewBag.userCountry</div>
+          } 
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var viewedUserUserId = '@ViewBag.viewedUserUserId';
+        var isSameUser = true;
+        var prevStatusContent = "";
+        if (viewedUserUserId != '@User.Identity.Name') {
+            isSameUser = false;
+        }
+
+        // Call GetUserProfileInfo
+        jQuery.get('/SocialEngagement/GetUserProfileInfo', { id: '@ViewBag.viewedUserUserId' }, function (response) {
+            if (response.errorCode == 0)
+                if ("data" in response && "status" in response.data && response.data.status.length > 0)
+                    $("#postmessage").html(response.data.status);
+                else
+                    $("#postmessage").html("Welcome to TFC.tv");
+        });
+
+
+        $("#recentPost").click(function () {
+            if (isSameUser == true) {
+                var textArea = '<textarea id="recentPostTextArea" rows="2" cols="44" onkeypress="textCounter(140)" onKeyDown="textCounter(140)" onKeyUp="textCounter(140)"></textarea>';
+                textArea += '<div class="post-button-area"><span id="post-status"><b>Submit</b></span>';
+                textArea += '<br /><input name ="message-counter" id="message-counter" readOnly type="text" value="0/140" /></div>';
+                prevStatusContent = $("#postmessage").html();
+                $("#newPost").removeClass("no-display");
+                $("#newPost").html(textArea);
+                $("#recentPost").hide();
+                $("#recentPostTextArea").html(prevStatusContent);
+                $("#message-counter").val($("#recentPostTextArea").val().length + '/140');
+            }
+        });
+
+
+        $("#post-status").live("click", function () {
+            var recentPostContent = $("#recentPostTextArea").val();
+
+            $("#recentPost").show();
+            $("#newPost").addClass("no-display");
+            $("#postmessage").html(recentPostContent);
+            // Call SetUserStatus method
+            if (prevStatusContent != recentPostContent && recentPostContent.length > 0) {
+                jQuery.post('/SocialEngagement/SetUserStatus', { id: '@ViewBag.viewedUserUserId', userStatus: recentPostContent, userName: '@ViewBag.userName' }, function (response) {
+                    if (response.errorCode == 0) {
+                        $("#profileTabButton").click();
+                    }
+                });
+            }
+        });
+    });
+
+    function textCounter(maxlimit) {
+        if ($("#recentPostTextArea").val().length > maxlimit) {
+            $("#recentPostTextArea").val($("#recentPostTextArea").val().substring(0, maxlimit));
+        }
+        else {
+            $("#message-counter").val($("#recentPostTextArea").val().length + '/140');
+        }
+    }
+</script> 

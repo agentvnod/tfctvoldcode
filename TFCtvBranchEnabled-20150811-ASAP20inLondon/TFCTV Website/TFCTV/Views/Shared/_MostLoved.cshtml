@@ -1,0 +1,29 @@
+﻿<div style="display: inline-block; width: 100%;">
+    <ul id="most-loved-navigation">
+        <li id="showstab" class="ml-tab current"><a href="#"><strong>Shows</strong></a></li>
+        <li id="episodestab" class="ml-tab"><a href="#"><b>Episodes</b></a></li>
+        <li id="celebstab" class="ml-tab"><a href="#"><b>Celebs</b></a></li>
+    </ul>
+</div>
+<div class="clear">
+</div>
+<div id="most-loved-shows" class="ml-body">
+    @Html.Action("GetLovedShows", "SocialEngagement")
+</div>
+<div id="most-loved-episodes" class="ml-body display-none">
+    @Html.Action("GetLovedEpisodes", "SocialEngagement")
+</div>
+<div id="most-loved-celebrities" class="ml-body display-none">
+    @Html.Action("GetLovedCelebrities", "SocialEngagement")
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ml-tab').click(function () {
+            $('.ml-tab').removeClass("current");
+            $(this).addClass("current");
+            $('.ml-body').addClass("display-none");
+            $(".ml-body:eq(" + $(this).index() + ")").removeClass("display-none");
+            return false;
+        });
+    });    
+</script>

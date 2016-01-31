@@ -1,0 +1,66 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    int pageSize = ViewBag.pageSize;
+}
+<div class="container movie_sec">
+    <h1 class="page_title clearfix">
+        VIDEO LIST
+    </h1>
+    <!-- end header -->
+    <!-- section body -->
+    <div class="row v_list">
+        @{if (Model != null)
+          {
+
+              if (Model.Count() > 0)
+              {
+                  foreach (var item in Model)
+                  { 
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 movie">
+                <!-- video  -->
+                <div class="row">
+                    <div class="col-xs-6 left">
+                        <div class="video_cover">
+                            <!-- play button cover -->
+                            <a href="@Url.Action("Video", "HaloHalo", new { id = item.id, slug = item.slug })">
+                                <img class="img100" src="@item.imgurl" alt="halohaloclicks_video.jpg">
+                                <div class="video_play_button">
+                                </div>
+                                <!-- play button -->
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 right">
+                        <h3>
+                            @item.name</h3>
+                        <span class="small">@item.airdate</span>
+                        <p>
+                            @Html.Raw(MyUtility.FormatUrls(item.blurb))</p>
+                    </div>
+                </div>
+            </div>  
+                  }
+              }
+              else
+              { 
+            <p>
+                No videos found.</p>
+              }
+          }
+          else
+          { 
+            <p>
+                No videos found.</p>
+          }      
+        }
+    </div>
+    <!-- end section body -->
+    <div class="col-xs-12">
+        <div class="sec_footer">
+            <!-- load more -->
+            <a href="@Url.Action("LoadMoreContent", "HaloHalo", new { page = 1, pageSize = pageSize })" class="loadMore">
+                load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more videos" })</a>
+        </div>
+    </div>
+</div>

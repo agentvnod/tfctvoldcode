@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Click Tayo Worldwide - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <iframe id="tfcmap" src="@GlobalConfig.HeatMapUrl" style="width:940px; height:876px; border: 0px;" scrolling="no">
+        </iframe>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "episode.css")
+
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="TFC.tv Click Tayo Heatmap"/>
+    <meta property="og:description" content="San ka man sa mundo, click tayo! Parami ng parami ang mga Kapamilya natin all over the world. Sali na!"/>
+    <meta property="og:type" content="Map" />
+    <meta property="og:image" content="@Html.ContentBuilder(Url,"content/images/clicktayo/ct-poster.jpg")" />
+    <meta property="og:site_name" content="TFC.tv" />
+}

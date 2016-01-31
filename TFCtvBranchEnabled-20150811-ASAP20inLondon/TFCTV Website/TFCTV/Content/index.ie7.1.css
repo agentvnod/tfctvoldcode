@@ -1,0 +1,36 @@
+﻿#signIn
+{
+    top: -40px;
+}
+#or
+{
+    top: 25px;
+}
+#State
+{
+    margin-left: 5px;
+}
+#regsubmit
+{
+    text-align: center;
+    line-height: 20px !important;
+}
+select *
+{
+    padding: 5px !important;
+}
+
+.textbox
+{
+    line-height: 30px;
+}
+
+.breakSmall
+{
+    height: 10px;
+    line-height: 10px;
+}
+.errstatus
+{
+    clear: both;
+}

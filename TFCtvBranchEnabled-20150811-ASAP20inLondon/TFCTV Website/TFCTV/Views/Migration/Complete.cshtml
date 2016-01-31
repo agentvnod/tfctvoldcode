@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Migrate TFCnow Licenses - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    List<IPTV2_Model.PackageEntitlement> entitlements = null;
+    List<IPTV2_Model.ShowEntitlement> showentitlements = null;
+    if (ViewBag.Entitlements != null)
+    {
+        entitlements = (List<IPTV2_Model.PackageEntitlement>)ViewBag.Entitlements;
+    }
+    if (ViewBag.ShowEntitlements != null)
+    {
+        showentitlements = (List<IPTV2_Model.ShowEntitlement>)ViewBag.ShowEntitlements;
+    }
+
+    IPTV2_Model.UserWallet wallet = null;
+    if (ViewBag.Wallet != null)
+    {
+        wallet = (IPTV2_Model.UserWallet)ViewBag.Wallet;
+    }
+
+    var ProductShows = (IQueryable<IPTV2_Model.ProductShow>)ViewBag.ProductShows;
+
+    string ALaCarteSubscriptionType = String.Empty;
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Subscription Migration Complete</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                <div class="breakStandard">
+                </div>
+                <div class="rheader" style="padding-left: 15px; padding-right: 15px;">
+                    Congratulations! Your TFCnow Account has been successfully migrated to TFC.tv.
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div class="rheader" style="padding-left: 15px; padding-right: 15px;">
+                    You now have the following subscription on your TFC.tv account:
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div>
+                    @{
+                        if (entitlements != null)
+                        {
+                            foreach (var item in entitlements)
+                            {
+                        <div class="blue-big">
+                            @item.Package.Description subscription, valid until @item.EndDate.ToString("MMMM dd, yyyy")
+                            @if (item.PackageId == GlobalConfig.premiumId)
+                            {
+                                <text>*</text>
+                            }
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                            }
+                        }
+                        if (showentitlements != null)
+                        {
+                            foreach (var item in showentitlements)
+                            {
+                                bool PPS = false;
+                                switch (ProductShows.FirstOrDefault(s => s.CategoryId == @item.CategoryId).Product.ALaCarteSubscriptionTypeId)
+                                {
+                                    case 1: ALaCarteSubscriptionType = "Pay Per Show"; break;
+                                    case 2: ALaCarteSubscriptionType = "Pay Per Serye"; PPS = true; break;
+                                    case 3: ALaCarteSubscriptionType = "Pay Per Special"; break;
+                                    case 4: ALaCarteSubscriptionType = "Pay Per Movie"; break;
+                                    case 5: ALaCarteSubscriptionType = "Pay Per Sports"; break;
+                                    case 6: ALaCarteSubscriptionType = "Pay Per Stream"; break;
+                                    default: ALaCarteSubscriptionType = "Pay Per Show"; break;
+
+                                }
+                        <div class="blue-big">
+                            @ALaCarteSubscriptionType - @item.Show.Description,
+                            @{if (PPS)
+                              {
+                                <text> valid until 15 days after the airing of the last episode</text>
+                              }
+                              else
+                              {
+                                <text> valid until @item.EndDate.ToString("MMMM dd, yyyy")
+                                </text>
+                              }
+                            }
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                            }
+                        }
+                    }
+                    <div class="breakLarge">
+                    </div>
+                    <div class="rheader" style="padding-left: 15px; padding-right: 15px;">
+                        You also have the following wallet balance:
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    @{if (wallet != null)
+                      {
+                        <div class="blue-big">
+                            @wallet.Currency @wallet.Balance.ToString("F")
+                        </div>
+                      }}
+                    <div class="breakLarge">
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div>
+                        <a href="@Url.Action("Index", "Home")">@Html.ImageBuilder(Url, "register/visit_homepage.png")</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="@Url.Action("Index", "Profile")">@Html.ImageBuilder(Url, "register/visit_profile.png")</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="@Url.Action("Entitlements", "User")">@Html.ImageBuilder(Url, "register/visit_entitlements.png")</a>
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="floatLeft" style="padding-left: 5px; font-size: 10px;">
+                        * May already include the additional 7-Day free trial
+                    </div>
+                    <div class="breakSmall">
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}

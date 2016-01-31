@@ -1,0 +1,14 @@
+﻿.cast_container
+{
+    width:380px;
+    text-wrap: normal;    
+}
+.castTitle a {
+    color: #49A4FF;
+    font-size: 12px;   
+    text-decoration: none;
+}
+.castTitle a:hover 
+{
+    text-decoration:underline;
+}

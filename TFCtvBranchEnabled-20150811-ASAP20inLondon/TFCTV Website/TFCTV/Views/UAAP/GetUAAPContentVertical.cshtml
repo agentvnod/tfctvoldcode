@@ -1,0 +1,48 @@
+﻿@model List<IPTV2_Model.Episode>
+@{
+    string id = ViewBag.id;
+    bool IsActive = ViewBag.IsActive;
+}
+<div class="tab-pane fade in movie_sec uaap_side_listing @String.Format("{0}", IsActive ? "active" : String.Empty)" id="@id">
+    <!-- body part -->
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+              foreach (var item in Model)
+              {
+                  string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, item.EpisodeId, item.ImageAssets.ImageVideo);
+        <div class="row vp_video uaap_ep_list">
+            <!-- video -->
+            <div class="col-xs-4">
+                <div class="video_cover">
+                    <!-- play button cover -->
+                    <a href="@Url.Action("OnDemand", "UAAP", new { id = item.EpisodeId })">
+                        <img src="@img" alt="@item.EpisodeName" title="@item.EpisodeName" class="img100" /><div
+                            class="video_play_button">
+                        </div>
+                        <!-- play button -->
+                    </a>
+                    <!-- play button -->
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <h3>
+                    <a href="@Url.Action("OnDemand", "UAAP", new { id = item.EpisodeId })">@item.EpisodeName</a></h3>
+                <p>
+                    Date Aired: @item.DateAired.Value.ToString("MMMM d, yyyy")</p>
+            </div>
+        </div>               
+              }
+          }
+      }
+    }
+    <!-- END video -->
+    <div class="sec_footer gray">
+        <!-- section of Load more -->
+        <a href="@Url.Action("GetMoreUAAPContent", "UAAP", new { page = 1, pageSize = 10 })" class="loadMore">
+            load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more episodes" })
+        </a>
+    </div>
+</div>

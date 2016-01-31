@@ -1,0 +1,989 @@
+.about-me
+{
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.post-button-area
+{
+	float: right;
+}
+
+#message-counter
+{
+    border: medium none;
+    color: gray;
+    font-size: 10px;
+    height: 20px;
+    margin-top: 5px;
+    width: 40px;
+}
+
+#postmessage
+{
+	word-wrap: break-word;
+}
+
+#EveryoneActivityFeeds
+{
+	width: 260px; /*margin: 20px 0 10px;*/
+}
+#EveryoneActivityFeeds .viewport
+{
+	width: 242px;
+	height: 400px;
+	overflow: hidden;
+	position: relative;
+}
+#EveryoneActivityFeeds .overview
+{
+	list-style: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 0;
+	margin: 0;
+}
+#EveryoneActivityFeeds .scrollbar
+{
+	background: transparent url('images/userprofile/bg-scrollbar-track-y.png') repeat 0 100%;
+	position: relative; /*background-position: 0 0;*/
+	float: right;
+	width: 15px;
+}
+#EveryoneActivityFeeds .track
+{
+	/*background: transparent url(/Content/images/userprofile/bg-scrollbar-trackend-y.png) no-repeat 0 100%;*/
+	height: 100%;
+	width: 13px;
+	position: relative;
+	padding: 0 1px;
+}
+#EveryoneActivityFeeds .thumb
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 100%;
+	height: 20px;
+	width: 25px;
+	cursor: pointer;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: -5px;
+}
+#EveryoneActivityFeeds .thumb .end
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 0;
+	overflow: hidden;
+	height: 5px;
+	width: 25px;
+}
+#EveryoneActivityFeeds .disable
+{
+	display: none;
+}
+
+/****/
+#UserActivityFeeds
+{
+	width: 468px; /*margin: 20px 0 10px;*/
+}
+#UserActivityFeeds .viewport
+{
+	width: 450px;
+	height: 700px;
+	overflow: hidden;
+	position: relative;
+}
+#UserActivityFeeds .overview
+{
+	list-style: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 0;
+	margin: 0;
+}
+#UserActivityFeeds .scrollbar
+{
+	background: transparent url('images/userprofile/bg-scrollbar-track-y.png') repeat 0 100%;
+	position: relative; /*background-position: 0 0;*/
+	float: right;
+	width: 15px;
+}
+#UserActivityFeeds .track
+{
+	/*background: transparent url(/Content/images/userprofile/bg-scrollbar-trackend-y.png) no-repeat 0 100%;*/
+	height: 100%;
+	width: 13px;
+	position: relative;
+	padding: 0 1px;
+}
+#UserActivityFeeds .thumb
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 100%;
+	height: 20px;
+	width: 25px;
+	cursor: pointer;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: -5px;
+}
+#UserActivityFeeds .thumb .end
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 0;
+	overflow: hidden;
+	height: 5px;
+	width: 25px;
+}
+#UserActivityFeeds .disable
+{
+	display: none;
+}
+
+/****/
+#UserFriendsActivityFeeds
+{
+	width: 468px; /*margin: 20px 0 10px;*/
+}
+#UserFriendsActivityFeeds .viewport
+{
+	width: 450px;
+	height: 700px;
+	overflow: hidden;
+	position: relative;
+}
+#UserFriendsActivityFeeds .overview
+{
+	list-style: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 0;
+	margin: 0;
+}
+#UserFriendsActivityFeeds .scrollbar
+{
+	background: transparent url('images/userprofile/bg-scrollbar-track-y.png') repeat 0 100%;
+	position: relative; /*background-position: 0 0;*/
+	float: right;
+	width: 15px;
+}
+#UserFriendsActivityFeeds .track
+{
+	/*background: transparent url(/Content/images/userprofile/bg-scrollbar-trackend-y.png) no-repeat 0 100%;*/
+	height: 100%;
+	width: 13px;
+	position: relative;
+	padding: 0 1px;
+}
+#UserFriendsActivityFeeds .thumb
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 100%;
+	height: 20px;
+	width: 25px;
+	cursor: pointer;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: -5px;
+}
+#UserFriendsActivityFeeds .thumb .end
+{
+	background: transparent url('images/userprofile/bg-scrollbar-thumb-y.png') no-repeat 50% 0;
+	overflow: hidden;
+	height: 5px;
+	width: 25px;
+}
+#UserFriendsActivityFeeds .disable
+{
+	display: none;
+}
+/****/
+#social-network
+{
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+#social-network ul
+{
+	list-style: none outside none;
+}
+
+#social-network a
+{
+	color: #49A4FF;
+	font-size: 11px;
+}
+
+.datetime
+{
+	font-size: 10px;
+	color: Gray;
+}
+
+.loader-left-profile
+{
+	margin-left: 80px;
+}
+
+.loader-left-profile-about-me
+{
+	margin-left: 90px;
+}
+
+.loader-left-profile-loved-celebrities
+{
+	margin-left: 80px;
+	text-align: center;
+}
+
+.loader-left-profile-loved-shows
+{
+	margin-left: 80px;
+	text-align: center;
+}
+
+#loader-UserActivityFeeds
+{
+	width: 468px;
+	text-align: center;
+	margin-top: 40px;
+}
+
+#loader-WishListFeeds
+{
+	width: 468px;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#loader-AllUserActivityFeeds
+{
+	width: 260px;
+	text-align: center;
+	margin-top: 40px;
+}
+
+.action-choices
+{
+	float: right;
+	margin-right: 10px;
+}
+
+.user-action
+{
+	color: #5D5D5D;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+
+#UserActivityFeeds
+{
+	/*	overflow-y: auto; 	width: 468px; 	height: 800px;*/
+}
+
+#EveryoneActivityFeeds
+{
+	/*	overflow-y: auto; 	width: 260px; 	height: 400px;*/
+}
+
+#UserFriendsActivityFeeds
+{
+	/*	overflow-y: auto; 	width: 468px; 	height: 800px;*/
+}
+
+.separator
+{
+	height: 1px;
+	overflow: hidden;
+	background-color: #000000;
+	width: 100%;
+}
+
+body
+{
+	font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+#main_container
+{
+	position: relative;
+	background: #00162e url('images/userprofile/default-bg.jpg') no-repeat top center;
+}
+
+#userProfileContainer
+{
+	position: relative;
+	margin: 0 auto;
+	padding: 25px 0;
+	height: auto;
+	width: 973px; /*text-align: left;*/
+}
+
+.clearfix, .clear
+{
+	clear: both;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+.left
+{
+	float: left;
+}
+
+.right
+{
+	float: right;
+}
+
+.bold
+{
+	font-weight: bold;
+}
+
+ul
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* ----- TOP Content Styles ----- */
+#userProfileTopContainer
+{
+	display: inline-block;
+	background: url('images/userprofile/header-bg.png') repeat-x;
+	width: 973px;
+	height: 195px;
+}
+
+#profilePic
+{
+	display: inline-block;
+	border: #393b3e 2px solid;
+	width: 150px;
+	height: 150px;
+	margin: 25px;
+}
+
+#infoContainer
+{
+	display: inline-block;
+	width: 480px;
+	height: 195px;
+}
+
+#profileInfo
+{
+	display: inline-block;
+	width: 480px;
+	margin-top: 25px;
+}
+
+#profileName
+{
+	color: #FFFFFF;
+	font-size: 20px;
+	padding-left: 14px;
+}
+
+#balloontip
+{
+	display: inline-block;
+	margin-top: 20px;
+	background: url('images/userprofile/balloon-tip.png') repeat-x;
+	width: 14px;
+	height: 20px;
+}
+
+#recentPost
+{
+	background-color: #FFFFFF;
+	color: #393939;
+	font-size: 14px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: 6px 12px;
+	margin: 5px 14px;
+	height: 55px;
+}
+
+#newPost
+{
+	background-color: #FFFFFF;
+	color: #393939;
+	font-size: 11px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: 6px 12px;
+	margin: 5px 14px;
+	height: 55px;
+}
+
+#moreInfo
+{
+	display: inline-block;
+	color: #FFFFFF;
+	font-size: 11px;
+	width: 400px;
+	padding-left: 14px;
+}
+
+#profileNotifications
+{
+	display: inline-block;
+	border-left: #FFFFFF 2px solid;
+	margin: 25px;
+	padding-left: 25px;
+	width: 180px;
+	height: 144px;
+}
+
+.edit-profile-button
+{
+	text-decoration: none;
+}
+
+.messages, .newmessage, .friendrequests, .gifts, .welcome, .edit-profile-button a
+{
+	color: #49a4ff;
+	font-size: 11px;
+	vertical-align: center;
+}
+/* ----- TOP Content Styles ----- */
+
+#userProfileBottomContainer
+{
+	background-color: #dde6ef;
+	display: inline-block;
+	width: 973px;
+}
+
+/* ----- BOTTOM Left Styles ----- */
+#leftPane
+{
+	/*background-color: #87CEEB;*/
+	display: inline-block;
+	width: 220px;
+	padding: 15px 8px;
+}
+
+.titleContainer
+{
+	border-bottom: #737373 1px solid;
+	height: 25px;
+}
+
+.videoTitleContainer
+{
+	border-bottom: #737373 1px solid;
+	height: 25px;
+	width: 240px;
+}
+
+#aboutMeContainer, #myFriendsContainer, #likedShowsContainer, #likedCelebsContainer, #followedCelebsContainer
+{
+	display: inline-block;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+#aboutMeTitle, #myFriendsTitle, #likedShowsTitle, #likedCelebsTitle, #followedCelebsTitle
+{
+	font-size: 19px;
+	color: #343434;
+}
+
+#aboutMeContent, #myFriendsContent, #likedShowsContent, #likedCelebsContent, #followedCelebsContent
+{
+	display: inline-block;
+	margin: 10px 0;
+	font-size: 11px;
+}
+
+#aboutMeEdit
+{
+	font-size: 11px;
+	color: #185695;
+	padding: 5px 5px 0;
+	cursor: pointer;
+}
+
+#post-status
+{
+	font-size: 12px;
+	color: #185695;
+	cursor: pointer;
+}
+
+#post-about-me
+{
+	font-size: 12px;
+	color: #2A2A2B;
+	cursor: pointer;
+}
+
+textarea
+{
+	resize: none;
+	float: left; /*border: none;*/
+}
+
+
+#myFriendsShowAll
+{
+	font-size: 11px;
+	color: #185695;
+	padding: 5px 5px 0;
+}
+
+#myFriendsCount
+{
+	font-size: 11px;
+	color: #727172;
+	display: inline-block;
+	padding: 0 5px;
+}
+
+li.friends_thumbnail
+{
+	float: left;
+	margin: 2px;
+	border: #737373 1px solid;
+	width: 45px;
+	height: 45px;
+}
+
+li.shows_thumbnail
+{
+	float: left;
+	margin: 2px;
+	border: #737373 1px solid;
+	width: 65px;
+	height: 65px;
+}
+/* ----- BOTTOM Left Styles ----- */
+
+/* ----- BOTTOM Middle Styles ----- */
+#middlePane
+{
+	display: inline-block;
+	background-color: #FFFFFF;
+	border: #979797 1px solid;
+	margin: 10px 0;
+}
+
+#tabsContainer
+{
+	width: 468px;
+	display: inline-block;
+}
+
+li.welcomeTab, .profileTab, .activitywallTab, .playlistTab, .wishlistTab
+{
+	display: inline-block;
+	float: left;
+	width: 156px;
+	color: #2a2a2b;
+	background-color: #7cbdfd;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 8px 0;
+}
+
+li.current
+{
+	background-color: #2a2a2b;
+	color: #7cbdfd;
+}
+
+.no-display
+{
+	display: none;
+}
+
+.idle
+{
+	cursor: pointer;
+}
+
+.welcomeContent
+{
+	width: 470px;
+}
+
+.contentSep
+{
+	display: inline-block;
+	border-bottom: #cecece 1px solid;
+	margin: 15px;
+	padding-bottom: 20px;
+	width: 440px;
+}
+
+.welcomeContentContainer
+{
+	width: 360px;
+	display: inline-block;
+}
+
+#number
+{
+	color: #0a4c8f;
+	font-size: 25px;
+	font-weight: bold;
+	display: inline-block;
+	padding: 10px 20px;
+	margin-right: 12px;
+	background-color: #dde6ef;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+/* ----- BOTTOM Middle Styles ----- */
+
+/* ----- BOTTOM Right Styles ----- */
+#rightPane
+{
+	display: inline-block;
+	width: 265px;
+	padding: 15px 0px;
+}
+
+#peopleHolder
+{
+	margin: 0 auto;
+	padding: 0 8px;
+}
+
+#friendsFeedsHolder
+{
+	margin: 0 auto;
+	padding: 0 0px;
+}
+
+#userFeedsHolder
+{
+	margin: 0 auto;
+	padding: 0 8px;
+}
+
+#peopleContainer
+{
+	display: inline-block;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+#peopleTitle
+{
+	font-size: 19px;
+	color: #343434;
+}
+
+.peopleContent
+{
+	display: inline-block;
+	margin: 5px 0 0;
+	font-size: 11px;
+	width: 100%;
+}
+
+.people_thumbnail
+{
+	margin: 5px; /*border: #737373 1px solid;*/ /*width: 45px; 	height: 45px;*/
+}
+
+.peopleInfo
+{
+	display: inline-block;
+	padding: 0px 5px 0px 5px;
+	width: 360px;
+}
+
+.peopleName
+{
+	display: inline-block;
+	color: #0a4c8f;
+	font-weight: bold;
+	width: 290px;
+}
+
+.addFriendIcon
+{
+	display: inline-block;
+}
+
+.addFriend
+{
+	display: inline-block;
+	color: #0a4c8f;
+}
+
+#videosContainer
+{
+	display: inline-block;
+	margin-bottom: 15px;
+	width: 100%;
+	margin-left: 5px;
+}
+
+#videosTitle
+{
+	font-size: 19px;
+	color: #343434;
+	margin-left: 5px;
+}
+
+#videosShowAll
+{
+	font-size: 11px;
+	color: #185695;
+	padding: 5px 5px 0;
+}
+
+#videosHolder
+{
+	margin: 0 auto;
+	width: 240px; /*padding: 0 8px;*/
+}
+
+#everyonesFeedsHolder
+{
+	margin: 0 auto;
+	width: 240px; /*padding: 0 8px;*/
+}
+
+.videosContent
+{
+	display: inline-block;
+	margin: 5px 0 0;
+	font-size: 11px;
+	width: 239px;
+}
+
+.videos_thumbnail
+{
+	margin: 5px;
+	border: #737373 1px solid;
+	width: 85px;
+	height: 56px;
+}
+
+.videosInfo
+{
+	display: inline-block;
+	padding: 5px;
+	width: 174px;
+}
+
+.videosName
+{
+	width: 182px;
+	display: inline-block;
+	color: #0a4c8f;
+	font-weight: bold;
+}
+
+.videos-name
+{
+	width: 103px;
+	display: inline-block;
+	color: #0a4c8f;
+	font-weight: bold;
+}
+
+.videosAirdate
+{
+	display: inline-block;
+	color: #0a4c8f;
+	font-size: 10px;
+}
+
+.watchNowIcon
+{
+	display: inline-block;
+}
+
+.watchNow
+{
+	display: inline-block;
+	color: #0a4c8f;
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+/**Most LOVED Items**/
+.itemListBody
+{
+	/*background-color: #87CEEB;*/
+	padding: 5px;
+}
+.imgShowThumbBg img
+{
+	margin-left: -2px;
+	margin-top: -2px;
+}
+.featuredItems .showTitle
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #0A4C8F;
+	text-decoration: none;
+}
+.showTitle a
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #0A4C8F;
+	text-decoration: none;
+}
+.showTitle a:hover
+{
+	font-size: 12px;
+	font-weight: bold;
+	color: #49a4ff;
+	text-decoration: underline;
+}
+.white
+{
+	color: #fff;
+}
+.itemListBody .navigation
+{
+	color: #fff;
+}
+
+.navigation a
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+.navigation a:hover
+{
+	text-decoration: underline;
+}
+
+#featuredItems_freeTV
+{
+	/*padding-top: 5px;*/
+}
+
+.featuredItems
+{
+	padding-top: 5px;
+}
+
+.fullHeaderFull
+{
+	margin: 5px 0 0 5px;
+	line-height: 28px;
+	height: 24px;
+	width: 930px;
+	border-bottom: 1px solid #A1A1A1;
+}
+
+/**User Loved Items**/
+.itemListing li
+{
+	float: left;
+	padding-right: 5px;
+}
+
+.imgShowThumbBg_1
+{
+	width: 65px;
+	height: 65px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	padding-bottom: 5px;
+}
+
+.imgShowThumbBg_1 img
+{
+	width: 65px;
+	height: 65px;
+}
+
+.imgFriendsThumbBg_1
+{
+	width: 45px;
+	height: 45px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	padding-bottom: 5px;
+}
+
+.imgFriendsThumbBg_1 img
+{
+	width: 45px;
+	height: 45px;
+}
+
+.wrapper
+{
+	width: 210px;
+}
+
+.featuredItems .itemInfo_1
+{
+	width: 65px;
+}
+
+.navigation
+{
+	text-align: center;
+}
+
+.itemListBody .navigation .prev
+{
+	background: url('images/features/prev_arrow_profile.png') no-repeat;
+	width: 10px;
+	height: 19px;
+	display: inline-block;
+	position: relative;
+	margin-right: 5px;
+}
+
+.itemListBody .navigation .next
+{
+	background: url('images/features/next_arrow_profile.png') no-repeat;
+	width: 10px;
+	height: 19px;
+	text-indent: -1000px;
+	display: inline-block;
+	position: relative;
+	margin-left: 5px;
+}
+
+.itemListBody .navigation .bullet
+{
+	background: url('images/features/grey_dot.png') no-repeat;
+	width: 9px;
+	height: 9px;
+	display: inline-block;
+	position: relative;
+	top: -5px;
+	margin: 0 3px 0 3px;
+}
+
+.itemListBody .navigation .selected
+{
+	background: url('images/features/blue_dot.png') no-repeat;
+}
+
+.itemListBody .navigation .activeSlide
+{
+	background: url('images/features/blue_dot.png') no-repeat;
+}

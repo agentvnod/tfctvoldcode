@@ -1,0 +1,53 @@
+﻿@model List<IPTV2_Model.CategoryClass>          
+@{if (Model != null)
+  {
+      if (Model.Count() > 0 && Model.Count() >= 5)
+      {
+          int ctr = 0;
+          var bigItem = Model.FirstOrDefault();
+          string img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, bigItem.CategoryId, bigItem.ImageSocialNetwork);
+          string href = String.Format("/Show/Details/{0}/{1}", bigItem.CategoryId, MyUtility.GetSlug(bigItem.Description));
+    <!-- row two -->
+    <div class="row row2">
+        <div class="col-xs-12">
+            <h2 class="section_title clearfix">
+                We recommend these shows for you!</h2>
+        </div>
+        <div class="col-sm-6 left">
+            <a href="@href">
+                <img src="@img" alt="@HttpUtility.HtmlEncode(bigItem.Description)" title="@HttpUtility.HtmlEncode(bigItem.Description)" class="img100" /></a>
+            <div class="caption">
+                <span>Available on PREMIUM!</span> @Html.ActionLink("BUY NOW", "Details", "Subscribe", null, new { @class = "pull-right" })
+            </div>
+        </div>
+        <div class="col-sm-6 right">
+            <div class="row top">
+                @{foreach (var item in Model.Skip(1).Take(2))
+                  {
+                      img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, item.CategoryId, item.ImageMobileLandscape);
+                      href = String.Format("/Show/Details/{0}/{1}", item.CategoryId, MyUtility.GetSlug(item.Description));
+                    <div class="col-xs-6">
+                        <a href="@href">
+                            <img src="@img" alt="@HttpUtility.HtmlEncode(item.Description)" title="@HttpUtility.HtmlEncode(item.Description)" class="img100 p260" /></a>
+                    </div>
+                  }
+                }
+            </div>
+            <div class="row bottom">
+                @{foreach (var item in Model.Skip(3).Take(2))
+                  {
+                      img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, item.CategoryId, item.ImageMobileLandscape);
+                      href = String.Format("/Show/Details/{0}/{1}", item.CategoryId, MyUtility.GetSlug(item.Description));
+                    <div class="col-xs-6">
+                        <a href="@href">
+                            <img src="@img" alt="@HttpUtility.HtmlEncode(item.Description)" title="@HttpUtility.HtmlEncode(item.Description)" class="img100 p260" /></a>
+                    </div>
+                  }
+                }
+            </div>
+        </div>
+    </div>
+    <!-- /row two -->
+      }
+  }
+}

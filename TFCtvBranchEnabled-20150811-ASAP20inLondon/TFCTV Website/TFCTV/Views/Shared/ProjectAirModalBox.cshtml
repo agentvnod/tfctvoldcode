@@ -1,0 +1,119 @@
+﻿@{
+    TransactionReturnType ErrorMessage = null;
+    string CountryCode = GlobalConfig.DefaultCountry;
+    string City = String.Empty;
+    string State = String.Empty;
+    string uid = String.Empty;
+    string provider = String.Empty;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+    }
+    catch (Exception) { }
+}
+<!-- popup signup  box -->
+<div class="modal fade ib_signup normal" id="ib_signup_copy" tabindex="-1" role="dialog"
+    aria-labelledby="subsignup" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X</button>
+                <p class="boxHead">
+                    TRY FOR FREE!<br>
+                    No credit card required.</p>
+                <div class="left">
+                    <form role="form" id="form_create_account" autocomplete="off" action="@Url.Action("_Register", "User", new { source = "air" }, "https")" method="post">
+                    @Html.AntiForgeryToken()
+                    @{if (ErrorMessage != null)
+                      {
+                          if (String.Compare(ErrorMessage.TransactionType, "Registration", true) == 0 && ErrorMessage.StatusCode != (int)ErrorCodes.Success)
+                          {                                  
+                        <div class="alert alert-danger">
+                            <a class="alert_close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                        </div>
+                          }
+                      }                  
+                    }
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Full Name" id="full_name" name="full_name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email Address" id="login_email"
+                            name="login_email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Choose a password" class="form-control" id="login_pass"
+                            name="login_pass" required>
+                    </div>
+                    <div class="form-group row for_confirm">
+                        <div class="col-xs-2">
+                            <input type="checkbox" class="form-control css-checkbox" id="confirm" required>
+                            <label for="confirm" class="css-label klaus">
+                            </label>
+                        </div>
+                        <div class="col-xs-10">
+                            <label for="confirm">
+                                I confirm that I have read and fully understand and accept the <a href="@Url.Action("TermsAndConditions", "Home")" target="_blank">
+                                    Terms and Conditions of the Subscription and/or Use</a> of TFC.tv</label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="first_name" name="first_name" value="" />
+                    <input type="hidden" id="last_name" name="last_name" value="" />
+                    <input type="hidden" name="city" id="city" value="@String.Format("{0}", String.IsNullOrEmpty(City) ? CountryCode : City)" />
+                    <input type="hidden" name="country" id="country" value="@CountryCode" />
+                    <input type="hidden" name="state" id="state" value="@String.Format("{0}", String.IsNullOrEmpty(State) ? CountryCode : State)" />
+                    <input type="hidden" name="provider" id="provider" value="@provider" />
+                    <input type="hidden" name="uid" id="uid" value="@uid" />
+                    <input type="submit" id="submit_create_account" class="btn btn-primary blue_button"
+                        value="Register Now!">
+                    </form>
+                    <div class="clearfix">
+                        <div class="center">
+                            <b>OR</b></div>
+                    </div>
+                    <div class="clearfix bottom_row">
+                        <div class="col-sm-12 social">
+                            <div id="modalRegistrationPanel" class="registerpane">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <a class="no_br sign_in_footer_link a_member" href="#">Already a member?</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end left -->
+                <div class="clearfix">
+                    <p>
+                        <span class="siteseal pull-right">
+                            <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- end modal body -->
+        </div>
+    </div>
+</div>
+<!-- END popup signup -->
+@{if (Request.Cookies.AllKeys.Contains("air"))
+  { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.a_register_link').click(function (e) {
+                e.preventDefault();
+                $('#ib_signup_copy').modal({
+                    keyboard: true,
+                    backdrop: "static"
+                });
+                $('.login_box').hide(300);
+            });
+
+        });
+    </script>
+  }
+}

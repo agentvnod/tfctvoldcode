@@ -1,0 +1,373 @@
+.main-container
+{
+    background-color: #fff;
+    min-height: 400px;
+    width: 940px;
+}
+
+.main-banner-img
+{
+    height: 141px;
+    width: 100%;
+    background-color: #000;
+}
+
+.main-container-links
+{
+    text-align: center;
+    font-size: 22px;
+    padding: 5px 0 5px 0;
+    border-bottom: 1px solid #000;
+}
+
+.main-container-links a
+{
+    color: #6b9729;
+    text-decoration: none;
+}
+.main-container-links a:hover
+{
+    text-decoration: underline;
+}
+
+.main-container-title
+{
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.main-indent
+{
+    text-indent: 10px;
+}
+
+.main-leftPanel
+{
+    width: 440px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.no-decor
+{
+    text-decoration: none;
+}
+
+.mpadbottom
+{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+}
+
+.main-container-subtitle
+{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.main-top-users
+{
+    padding: 15px 5px 15px 10px;
+    background-color: #000;
+    width: 920px;
+    margin: 0 auto;
+}
+
+.list-top-users
+{
+    width: 100%;
+    margin: 0 auto;
+    padding-right: 5px;
+    color: #fff;
+}
+.list-top-users li
+{
+    float: left;
+    width: 184px;
+    text-align: center;
+}
+
+.tp-name
+{
+    margin-top: 5px;
+}
+
+.tp-rank
+{
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.tp-points
+{
+    color: #6b9729;
+}
+
+.list-top-users img
+{
+    width: 48px;
+    height: 48px;
+    border: 0;
+}
+
+.tp-name-link
+{
+    text-decoration: none;
+    color: #49a4ff;
+}
+
+.tp-name-link:hover
+{
+    text-decoration: underline;
+}
+
+.mp-name
+{
+    font-size: 22px;
+    font-weight: bold;
+}
+.mp-img
+{
+    width: 130px;
+    float: left;
+}
+
+.mp-currentpoints
+{
+    float: left;
+    width: 200px;
+    min-height: 130px;
+    margin-right: 10px;
+}
+
+.mp-leftPanel
+{
+    width: 500px !important;
+}
+
+.mp-stitle
+{
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #031b35;
+    color: #fff;
+}
+
+.mp-cpbody
+{
+    background-color: #1e67b3;
+    text-align: center;
+    height: 100px;
+    color: #fff;
+}
+
+.mp-cpoints
+{
+    font-size: 30px;
+    color: #f7941d;
+    font-weight: bold;
+}
+.mp-lPanel
+{
+    width: 640px;
+    min-height: 400px;
+    margin-right: 5px;
+    margin-left: 10px;
+    border-right: 1px solid #aaa;
+}
+
+.mp-activities
+{
+    background-color: #000;
+    width: 630px;
+    min-height: 370px;
+}
+
+.mp-activities-menu li
+{
+    float: left;
+    color: #fff;
+    padding: 10px 10px 5px 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.mp-activities-menu li:hover
+{
+    color: #49a4ff;
+}
+
+.mp-activities-menu li.selected
+{
+    border-bottom: 2px solid #49a4ff;
+    color: #49a4ff;
+}
+
+.mp-activities-menu li a
+{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+.mp-activities-menu li a:hover
+{
+    color: #49a4ff;
+}
+
+.mp-tab-summary
+{
+    background-color: #fff;
+    min-height: 330px;
+    width: 600px;
+    margin: 0 auto;
+    padding: 0 10px 0 10px;
+}
+
+.mp-cpoints-small
+{
+    color: #f7941d;
+    font-weight: bold;
+}
+.mp-activities-menu-container
+{
+    margin-left: 5px;
+    height: 33px;
+}
+
+.mechanics-center-image
+{
+    height: 209px;
+    width: 720px;
+    background-color: #000;
+    margin-left: auto;
+    margin-right: auto;
+}
+.mechanics-text
+{
+    margin-left: 10px;
+}
+.mechanicsTable
+{
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid;
+    margin-bottom: 20px;
+}
+
+#featuredItems_TopUsers .itemListBody
+{
+    margin: 0;
+    width: 100%;
+}
+
+.mp-leaderboard
+{
+    width: 280px;
+}
+
+.top-users-list-vertical
+{
+    color: #fff;
+}
+
+.top-users-list-vertical li
+{
+    width: 250px;
+    margin-bottom: 5px;
+}
+.tp-rank-vertical
+{
+    float: left;
+    width: 50px;
+    margin-right: 5px;
+    font-size: 42px;
+}
+
+.tp-img-vertical
+{
+    float: left;
+    margin-right: 15px;
+}
+
+.tp-img-vertical img
+{
+    width: 48px;
+    height: 48px;
+    border: 0;
+}
+
+.main-top-users-vertical
+{
+    padding: 15px 5px 15px 10px;
+    background-color: #000;
+    width: 255px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 350px;
+}
+.nbutton
+{
+    background-color: #6b9729;
+    border: 1px solid #6b9729;
+    font-size: 18px;
+}
+
+.nbutton:hover
+{
+    background-color: #5a8729;
+}
+.fanMobMedium
+{
+    border: 1px solid #000;
+    width: 470px;
+    height: 353px;
+}
+.enter-text-steps
+{
+    font-size: 18px;
+}
+.mechanics-text-content p
+{
+    margin: 0px;
+}
+.stepComplete
+{
+    font-size: 11px;
+    color: #ff8888;
+}
+.smallfont
+{
+    font-size: 11px;
+}
+#notificationMsg
+{
+    width: 200px;
+    height: 110px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    border: 2px solid #6b9729;
+    font-size: 16px;
+    top: -250px;
+    z-index: 99999;
+}
+.mp-activitylist li a, .prf-link a
+{
+    text-decoration: none;
+    color: #49a4ff;
+}
+.mp-activitylist li a:hover, .prf-link a:hover
+{
+    text-decoration: underline;
+}

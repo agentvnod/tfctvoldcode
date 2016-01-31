@@ -1,0 +1,6 @@
+﻿.signinbtn  {
+	width: 100px;
+    height: 35px;
+    background: url('images/buttons/signin.png') no-repeat;
+	margin-left: -230px;
+}

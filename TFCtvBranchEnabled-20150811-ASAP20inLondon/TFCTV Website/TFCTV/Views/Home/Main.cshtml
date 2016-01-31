@@ -1,0 +1,525 @@
+﻿@model TFCTV.Models.SignUpModel
+@{
+    ViewBag.Title = "TFC.tv - Digital Tambayan of the Global Pinoy! - ABS-CBN Entertainment";
+    Layout = "~/Views/Shared/_TFCTVWhite.cshtml";
+    IEnumerable<IPTV2_Model.Country> cList = ViewBag.ListOfCountries;
+    string cState = "";
+    var cCity = "";
+    string userCountry = GlobalConfig.DefaultCountry;
+    var cCode = userCountry;
+    var stateCount = 0;
+
+    IPTV2_Model.Country cCountry = null;
+    IEnumerable<IPTV2_Model.State> listOfStates = null;
+    var context = new IPTV2_Model.IPTV2Entities();
+    var userHostAddress = Request.GetUserHostAddressFromCloudflare();
+
+    int copy = 0; //default
+
+    try
+    {
+        cCode = MyUtility.getCountry(userHostAddress).getCode();
+        var location = MyUtility.getLocation(userHostAddress);
+
+        cCountry = ViewBag.UserCountry;
+        stateCount = cCountry != null ? cCountry.States.Count() : 0;
+        int stateCount1 = (int)ViewBag.StateCount;
+
+        if (location != null)
+        {
+            if (stateCount1 > 0)
+            {
+                if (cCountry.States.Count(s => String.Compare(s.StateCode, location.region, true) == 0) > 0)
+                {
+                    cState = location.region;
+                }
+                else if (cCountry.States.Count(s => s.Name.Contains(location.regionName)) > 0)
+                {
+                    var theState = cCountry.States.FirstOrDefault(s => s.Name.Contains(location.regionName));
+                    if (theState != null)
+                    {
+                        cState = theState.StateCode;
+                    }
+                    else
+                    {
+                        cState = location.regionName;
+                    }
+                }
+                else
+                {
+                    if (stateCount > 0)
+                    {
+                        cState = cCountry.States.First().StateCode;
+                    }
+                }
+            }
+            else
+            {
+                cState = location.regionName;
+            }
+            cCity = location.city;
+        }
+
+        if (stateCount > 0)
+        {
+            listOfStates = cCountry.States.OrderBy(s => s.Name).ToList();
+        }
+
+        userCountry = cCode == "--" ? GlobalConfig.DefaultCountry : cCode;
+
+        if (stateCount == 0 && userCountry == GlobalConfig.DefaultCountry)
+        {
+            listOfStates = context.States.Where(s => String.Compare(s.CountryCode, GlobalConfig.DefaultCountry, true) == 0).OrderBy(s => s.Name).ToList();
+            stateCount = listOfStates.Count();
+        }
+
+        try
+        {
+            var registDt = DateTime.Now;
+
+            // checks for country and switch the copy
+            if (String.Compare(cCode, "DE", true) == 0)
+            {
+                if (GlobalConfig.TfcTvFree1StartDate < registDt && GlobalConfig.TfcTvFree1EndDate > registDt)
+                {
+                    copy = 1; //germany
+                }
+            }
+            else
+            {
+                if (GlobalConfig.TfcTvFree2StartDate < registDt && GlobalConfig.TfcTvFree2EndDate > registDt)
+                {
+                    var countryList = GlobalConfig.TfcTvFree2CountryWhiteList.Split(',');
+                    if (countryList.Contains(cCode))
+                    {
+                        copy = 2; //italy & taiwan
+                    }
+                }
+            }
+        }
+        catch (Exception) { }
+    }
+    catch (Exception e)
+    {
+        if (stateCount > 0)
+        {
+            listOfStates = context.States.Where(s => String.Compare(s.CountryCode, GlobalConfig.DefaultCountry, true) == 0).OrderBy(s => s.Name).ToList();
+            stateCount = listOfStates.Count();
+        }
+        else
+        {
+            if (userCountry == GlobalConfig.DefaultCountry)
+            {
+                listOfStates = context.States.Where(s => String.Compare(s.CountryCode, GlobalConfig.DefaultCountry, true) == 0).OrderBy(s => s.Name).ToList();
+                stateCount = listOfStates.Count();
+            }
+        }
+    }
+}
+<div id="mainBody">
+    <div class="breakStandard">
+    </div>
+    <div id="columnLeft">
+        @{
+            if (copy == 1)
+            { 
+            <p class="hello">
+                Hello, Kapamilya!</p>
+            <p class="unliPinoyEntertainment">
+                Pinakabagong Kapamilya shows, for only €3.99/month!</p>
+            <p class="pDesc">
+                Subscribe to TFC.tv Lite until @GlobalConfig.TfcTvFree1EndDate.ToString("MMMM d, yyyy")
+                and get up to 40% savings. Register here to subscribe now!
+            </p>
+            }
+            else if (copy == 2)
+            { 
+            <p class="hello">
+                Hello, Kapamilya!</p>
+            <p class="unliPinoyEntertainment">
+                Pinakabagong Kapamilya shows, Libre dito!</p>
+            <p class="pDesc">
+                Watch the freshest Kapamilya shows on TFC.tv for FREE until December 15, 2013 only.
+                Register here to start watching!
+            </p>
+            }
+            else
+            {
+            <p class="hello">
+                Hello, Kapamilya!</p>
+            <p class="unliPinoyEntertainment">
+                Unlimited Pinoy Entertainment, Anytime.</p>
+            <p class="pDesc">
+                Dito ka na manood ng latest full episodes ng mga paborito mong Filipino TV Shows,
+                Movies, Behind the Scenes Exclusives and more on-demand.</p>
+            }
+        }
+        <div id="playVideo">
+            <a id="imagesContainer">@Html.ImageBuilder(Url, "welcome/Video-Player.png", new { @id = "coverImage" })@Html.ImageBuilder(Url, "welcome/Play-Video-Button.png", new { @id = "playButton" })</a>
+            <div id="playerContainer" class="hidden">
+            </div>
+        </div>
+        <p class="topMargin20">
+            @{if (GlobalConfig.IsTVERegistrationEnabled && MyUtility.IsTVEAllowedInCurrentCountry())
+              {
+                <text>Go to @Html.ActionLink("Homepage", "Index", "Home", null, new { @class = "indexlink" })
+                or activate your @Html.ActionLink("TFC Everywhere", "TVEverywhereMain", "User", null, new { @class = "indexlink" }).</text>
+              }
+              else
+              {
+                <text>Go to @Html.ActionLink("Homepage", "Index", "Home", null, new { @class = "indexlink" }).</text>
+              }
+            }
+        </p>
+    </div>
+    <div id="columnRight">
+        <p class="mediumBold">
+            Register &amp; Watch Free for 7-Days!</p>
+        <div id="registerSocialConnection">
+        </div>
+        <div id="or">
+            Or</div>
+        <form id="regform" method="post" action="/User/_RegisterUser">
+        @Html.AntiForgeryToken()
+        <div id="cc-main">
+            <div id="errorSummary" class="hidden errstatus">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.Email)
+                </div>
+                <div class="cc-rows">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "textbox remove-uppercase", maxlength = 64 })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+                <div class="cc-rows">
+                    @Html.PasswordFor(m => m.Password, new { @class = "textbox remove-uppercase" })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                </div>
+                <div class="cc-rows">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "textbox remove-uppercase" })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+                &nbsp;
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.FirstName)
+                </div>
+                <div class="cc-rows">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "textbox remove-uppercase", maxlength = 32 })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.LastName)
+                </div>
+                <div class="cc-rows">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "textbox remove-uppercase", maxlength = 32 })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.City)
+                </div>
+                <div class="cc-rows">
+                    @Html.TextBox("City", cCity, new { @class = "textbox remove-uppercase", maxlength = 50 })<div
+                        class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.State)
+                </div>
+                <div class="cc-rows">
+                    @{if (stateCount > 0)
+                      {
+                        @(Html.DropDownList("StateDD", new SelectList(listOfStates, "StateCode", "Name", cState), new { @class = "textbox StateDD t-dropdown" }))
+                      }
+                      else
+                      {
+                        <select id="StateDD" class="textbox StateDD t-dropdown">
+                        </select>
+                      }
+                    }
+                    @Html.TextBox("State", cState, new { @class = "textbox remove-uppercase", maxlength = 30 })
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="editor-row">
+                <div class="copy">
+                    @Html.LabelFor(m => m.CountryCode)
+                </div>
+                <div class="cc-rows">
+                    @(Html.DropDownList("CountryCode", new SelectList(cList, "Code", "Description", cCode), new { @class = "textbox t-dropdown" }))
+                    <div class="errstatus eps">
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+            <div class="clear breakStandard">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="registerBodyLow">
+            <div>
+                <div id="tnc">
+                    <input type="checkbox" id="terms" name="terms" value="0" />
+                    I confirm that I have read and fully understand and accept the @Html.ActionLink("Terms and Conditions of the Subscription and/or Use", "TermsAndConditions", "Home", null, new { @class = "indexlink" })
+                    of TFC.tv<br />
+                    <div class="clear breakSmall">
+                    </div>
+                    <span class="errstatus"></span>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div>
+                <input type="submit" class="btnimage1 registerbtn" id="regsubmit" value="Register" /><div
+                    id="rsb-load" class="side-button-loader padLeftStandard">
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div class="breakStandard">
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="breakLarge clear">
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "mostloved-1.0.css")
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+}
+@section JScriptBottom {
+    @Html.Partial("FlowPlayerPartialWelcome", false)
+    <script type="text/javascript">
+        var userActionURL = '@HttpContext.Current.Request.Url.AbsoluteUri';
+        var playerContainer = 'playerContainer';
+        var label = '';
+        var eid = null;
+        var sid = null;
+        var playbackId = @GlobalConfig.WelcomePageEpisodeID;
+        var playbackType = 1; // Episode
+        var flow = {}; var config = {};
+        var categoryType = 'episode';
+        var time = true;
+        var isClip = false;
+    </script>
+    <script type="text/javascript">
+        //CreatePlayer()
+        function CreatePlayer(uri) {
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            $.getScript(playerJS).done(function () {
+                                var akObj = { url: Afp };
+                                var config = { container: playerContainer, playerSWF: playerSWF, controllerSWF: controllerSWF, expressInstallSWF: expressInstallSWF, playButtonURL: playButtonURL, logoURL: logoURL, csmaPluginSWF: csmaPluginSWF, csmaConfig: csmaConfig, apObj: akObj, scaling: 'fit', url: data.data.Url, categoryType: categoryType, label: label, sid: sid, eid: eid, isClip: isClip, trackerSWF: trackerSWF, trackerID: trackerID, userActionURL: userActionURL, uri: uri, time: time, ipadUrl: data.data.Url, allowShare: true, playbackType: playbackType, playbackId: playbackId, analyticsSWF: analyticsSWF, subscribe: data.data.PromptToSubscribe };
+                                flow.Player.Create(config);
+                            });
+                        }
+                        else
+                            $('#playerContainer').remove();
+
+                    }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '/Ajax/GetMedia/' + playbackId;
+            CreatePlayer(uri);
+            $('#playButton, #coverImage').click(function () {
+                if ($f() != undefined) {
+                    $f().play();
+                    $('#imagesContainer').fadeOut(800).promise().done(function () { $('#playerContainer').removeClass('hidden'); });
+                }
+            });
+            setTimeout(function () {
+                if ($f() != undefined) {
+                    $f().play();
+                    $('#imagesContainer').fadeOut(800).promise().done(function () { $('#playerContainer').removeClass('hidden'); });
+                }
+            }, 5000);
+        });
+    </script>
+    @*@Html.JsBuilder(Url, "jquery.validate.min.js")*@
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        function redirectToHome() {
+            window.location = "/";
+        }
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 8
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: '#Password'
+                    },
+                    FirstName: { required: true },
+                    LastName: { required: true },
+                    CountryCode: { required: true },
+                    terms: { required: true }
+                },
+                messages: {
+                    Email: {
+                        required: 'Email address is required.',
+                        email: 'Invalid email address',
+                        minlength: 'Invalid email address.'
+                    },
+                    FirstName: {
+                        required: 'First name is required.'
+                    },
+                    LastName: {
+                        required: 'Last name is required.'
+                    },
+                    Password: {
+                        required: 'Please provide a password.',
+                        minlength: $.format('Enter at least {0} characters.')
+                    },
+                    ConfirmPassword: {
+                        required: 'Please confirm password.',
+                        minlength: $.format('Enter at least {0} characters.'),
+                        equalTo: 'Password mismatch!'
+                    },
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                $('#errorSummary').addClass('hidden');
+                if (validator.numberOfInvalids() == 0) {
+                    $('#message').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait. while we process your request...');
+                    $.post('/User/_Registration', form.find('input,select').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#message').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('.register-spanner-text').css('margin-left', '-102px');
+                            $('#registerContainer').addClass('register-container-center-span');
+                            $('#registerContainer').html($('#ajaxloading').html());
+                            window.location.href = data.href;
+                            $('#cmsg').html(data.errorMessage);
+//                            _gaq.push(['t2._trackEvent', 'User', 'Register', data.info.toString()]);
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('#rsb-load').empty();
+                            $('#errorSummary').removeClass('hidden');
+                            $('#errorSummary').html(data.errorMessage);
+                        }
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+
+            $('#CountryCode').change(function () {
+                var cId = $("#CountryCode option:selected").val();
+                $('#City').val('');
+                jQuery.get('/Ajax/GetCountryState', { id: cId }, function (data) {
+
+                }).done(function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        $('#StateDD').empty();
+                        $.each(data, function () {
+                            $('#StateDD').append($("<option />").val(this.Value).text(this.Text));
+                        });
+                        $('#StateDD').show();
+                        $('#State').val($('#StateDD').val());
+                    }
+                });
+            });
+
+            $('#StateDD').on('change', function () {
+                $('#State').val($('#StateDD').val());
+            })
+        });
+    </script>
+    <script type="text/javascript">
+        function toggleState(stateCount) {            
+            if (stateCount > 0) {
+                $('.StateDD').show();
+                $('#State').hide();
+            }
+            else {
+                if($('#State').is(':hidden'))
+                    $('#State').val('');
+                $('.StateDD').hide();
+                $('#State').show();
+            }
+        }
+        $(document).ready(function () {
+            toggleState(@stateCount);
+        });
+    </script>
+    <script type="text/javascript">toggleState(@stateCount);</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#StateDD').val() != '') {
+                $('#State').val($('#StateDD').val());
+            }
+        });
+    </script>
+}
+@section JScript {
+    <meta name="description" content=" We bring together on one digital platform the social interaction of Filipinos worldwide and the advanced viewing experience of homegrown content. As the official platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium videos from ABS-CBN Global." />
+}

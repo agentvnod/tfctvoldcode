@@ -1,0 +1,237 @@
+﻿@{
+    ViewBag.Title = "Reload via Prepaid Card - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    bool HasError = ViewBag.HasError;
+
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                E-WALLET &raquo; RELOAD TYPE &raquo; PREPAID CARD
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("ReloadSelection", new { pselection = "PrepaidCard" })
+                </div>
+                <div id="payment-main-container-2">
+                    <div id="payment-main">
+                        @{if (!HasError)
+                          {
+                              using (Html.BeginForm("_PrepaidCard", "Load", FormMethod.Post, new { enctype = "multipart/form-data", id = "form1" }))
+                              { 
+                            <div id="load-summary">
+                                <div class="breakSmall">
+                                    @Html.AntiForgeryToken()
+                                </div>
+                                <div id="ppc-purchase-instructions">
+                                    <p>
+                                        Please enter the Serial Number and PIN found at the back of the prepaid card. Click
+                                        <a href="/Find-A-Dealer">here</a> to locate TFC.tv dealers available in your area.</p>
+                                </div>
+                                <div class="breakStandard">
+                                </div>
+                                <div id="ppc-main">
+                                    <div class="copy">
+                                        Serial Number:</div>
+                                    <div>
+                                        <input type="text" class="textbox" name="serialnumber" id="serialnumber" placeholder="Serial Number"
+                                            maxlength="16" />
+                                        <div class="errstatus">
+                                        </div>
+                                    </div>
+                                    <div class="clear breakSmall">
+                                    </div>
+                                    <div class="copy">
+                                        PIN</div>
+                                    <div>
+                                        <input type="text" class="textbox" placeholder="PIN" name="pin" class="pin" id="pin"
+                                            maxlength="16" /><div class="errstatus">
+                                            </div>
+                                    </div>
+                                    <div class="clear breakSmall">
+                                    </div>
+                                    <div class="copy">
+                                        &nbsp;
+                                    </div>
+                                    <div class="btn-container btn-margin-ie7-rel">
+                                        <input type="submit" value="Submit" class="nbutton" /></div>
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                                <div class="clear breakLarge">
+                                </div>
+                                <div id="summary-body">
+                                    <div class="purchase-summary fold-top">
+                                        <div class="breakStandard">
+                                        </div>
+                                        <div class="title">
+                                            How to Use</div>
+                                        <div>
+                                            <ol>
+                                                <li>Lightly scratch off the protective covering of your PIN at the back of the TFC.tv
+                                                    Prepaid Card.<br />
+                                                    <br />
+                                                </li>
+                                                <li>Simply enter the Serial Number and PIN on the fields above and click "Submit"</li>
+                                            </ol>
+                                        </div>
+                                        <div class="breakStandard">
+                                        </div>
+                                        <div class="title thelp">
+                                            Need Help?</div>
+                                        <div>
+                                            <p class="thelp2 help">
+                                                Visit our Customer <a href="/Help">Help Center</a><br />
+                                                <br />
+                                                <br />
+                                                Email our Customer Service at <a href="mailto:support@tfc.tv">support@tfc.tv</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              }
+                          }
+                          else
+                          {
+                            @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                          }
+                        }
+                        <div id="wait-time">
+                            <div class="breakSmall">
+                                <a id="wait-anchor"></a>
+                            </div>
+                            <div class="purchase-instructions">
+                                <p>
+                                    @Html.ImageBuilder(Url, "3.gif", new { style = "position: relative; top: 5px;" })
+                                    Please wait while we process your request...
+                                </p>
+                            </div>
+                        </div>
+                        <div id="tcomplete" class="hideElement">
+                            <div class="breakSmall">
+                            </div>
+                            <div class="purchase-instructions">
+                                <p>
+                                    Congratulations! You have successfully completed this transaction.</p>
+                            </div>
+                        </div>
+                        <div id="errorContainer" class="hideElement">
+                            <div class="msgbox-header">
+                                <p>
+                                    Oops! Something went wrong with your transaction.</p>
+                            </div>
+                            <div class="breakStandard">
+                            </div>
+                            <div id="msgbox-content" class="msgbox-content ui-state-error">
+                            </div>
+                            <div class="breakStandard">
+                            </div>
+                            <div>
+                                <input type="button" id="try-again" value="Click here to try again" class="nbutton try-again btn-container15" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 8]>
+    @Html.CssBuilder(Url, "transaction.ie8.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var jQueryValidateUrl = '//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js';
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getScript(jQueryValidateUrl).done(function () {
+                var checker = $('form#form1').validate({
+                    rules: {
+                        serialnumber: {
+                            required: true
+                        },
+                        pin: { required: true }
+                    },
+                    messages: {
+                        serialnumber: {
+                            required: 'This field is required.'
+                        }
+                    },
+                    errorPlacement: function (error, element) {
+                        error.appendTo(element.parent().find('.errstatus'));
+                    }
+                });
+                $('form#form1').submit(function (event) {
+                    event.preventDefault();
+                    if (checker.numberOfInvalids() == 0) {
+                        $('#errorContainer').hide();
+                        $('#load-summary').fadeOut(500, function () {
+                            $('#wait-time').fadeIn();
+                            $('html, body').animate({
+                                scrollTop: $('#entertainmentBtn').offset().top
+                            }, 800);
+                        });
+                        var form = $(this);
+                        $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                            if (data.StatusCode == 0)
+                                setTimeout(function () { $('#wait-time').hide(); $('#tcomplete').show(); document.location = data.HtmlUri; }, 800);
+                            else {
+                                setTimeout(function () {
+                                    $('#msgbox-content').html(data.StatusMessage);
+                                    $('#wait-time').fadeOut(500, function () {
+                                        $('#errorContainer').fadeIn();
+                                        $('html, body').animate({
+                                            scrollTop: $('#entertainmentBtn').offset().top
+                                        }, 800);
+                                    });
+                                }, 800);
+                            }
+                        }).fail(function () {
+                            setTimeout(function () {
+                                $('#msgbox-content').html("Error requesting page: " + form.attr('action'));
+                                $('#wait-time').fadeOut(500, function () {
+                                    $('#errorContainer').fadeIn();
+                                    $('html, body').animate({
+                                        scrollTop: $('#entertainmentBtn').offset().top
+                                    }, 800);
+                                });
+                            }, 800);
+                        });
+                    }
+                });
+
+            });
+        });    
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#try-again').click(function () {
+                location.reload();
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        //onbeforeunload
+        window.onbeforeunload = function () {
+            var msg = '';
+            if ($('#wait-time').is(':visible'))
+                msg = 'The system is currently processing your request. Leaving this page might cause some problems.';
+            if (msg != '')
+                return msg;
+        };
+    </script>
+}

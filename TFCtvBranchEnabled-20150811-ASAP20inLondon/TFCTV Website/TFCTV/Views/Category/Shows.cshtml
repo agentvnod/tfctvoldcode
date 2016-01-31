@@ -1,0 +1,39 @@
+﻿@{    
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var listofCategoryIds = MyUtility.StringToIntList(GlobalConfig.ShowsCategoryIds);
+    string href = String.Format("{0}/Category/Shows", GlobalConfig.baseUrl);
+    string title = "Movies and Shows from ABS-CBN on TFC.tv";
+    ViewBag.Title = title;
+    ViewBag.DaxName = "tfc-tv:entertainment:home";
+}
+<section class="page_pagebody home480">
+    <div class="container category_section">
+        <!-- page top -->
+        <h1 class="page_title">
+            SHOWS</h1>
+        <div class="page_description">
+            Experience non-stop entertainment from the best Philippine TV shows with your favorite
+            Kapamilya stars. Catch the latest episode of your most loved ABS-CBN programs made
+            available every day after Philippine airing.
+        </div>
+        @{foreach (var i in listofCategoryIds)
+          { 
+            @Html.Action("BuildSectionCategory", new { id = i, featureType = "show", pageSize = 12, containerId = String.Format("bseccat_{0}", i) })  
+          }
+        }
+    </div>
+    <br />
+    <br />
+</section><!-- end page body section -->
+@section MetaTags{
+    <meta name="description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

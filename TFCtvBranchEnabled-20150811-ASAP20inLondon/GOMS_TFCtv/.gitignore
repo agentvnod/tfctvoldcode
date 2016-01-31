@@ -1,0 +1,9 @@
+# git ignore file
+*.zip
+*.bak
+*.orig
+*.pdb
+
+# Build Folders
+obj
+bin

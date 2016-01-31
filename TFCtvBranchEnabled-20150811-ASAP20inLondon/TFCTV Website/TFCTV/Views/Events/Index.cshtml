@@ -1,0 +1,239 @@
+﻿@{
+    Layout = "~/Views/Shared/_UXEvents.cshtml";
+    bool IsAllowed = false;
+    bool IsOver = false;
+    bool NotExist = false;
+    bool IsLoggedIn = User.Identity.IsAuthenticated;
+    bool IsRegistered = false;
+    string EndDate = string.Empty;
+    string key = string.Empty;
+    string pageTitle = "Events";
+    ViewBag.Title = String.Format("{0} - TFC.tv", pageTitle);
+    string metaDescription = String.Empty;
+    string href = String.Empty;
+    try
+    {
+        if (ViewBag.Key != null)
+        {
+            key = ViewBag.Key;
+        }
+        if (ViewBag.IsAllowed != null)
+        {
+            IsAllowed = ViewBag.IsAllowed;
+        }
+        if (ViewBag.IsOver != null)
+        {
+            IsOver = ViewBag.IsOver;
+        }
+
+        if (ViewBag.NotExist != null)
+        {
+            NotExist = ViewBag.NotExist;
+        }
+
+        if (ViewBag.IsRegistered != null)
+        {
+            IsRegistered = ViewBag.IsRegistered;
+        }
+        if (ViewBag.EndDate != null)
+        {
+            EndDate = ViewBag.EndDate;
+        }
+        if (ViewBag.PageTitle != null)
+        {
+            pageTitle = ViewBag.PageTitle;
+        }
+        if (ViewBag.MetaDescription != null)
+        {
+            metaDescription = ViewBag.MetaDescription;
+        }
+        href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    }
+    catch (Exception) { }
+
+}
+<!-- Header Section [logo, main menu, search ] common in all pages -->
+<header class="ind_header">
+    <div class="container">
+
+        <a href="/" class="logo">
+            @Html.ImageBuilder(Url, "events/tfc_logo_615.png", new { alt = "TFC.tv" })
+        </a>
+        @if (!IsAllowed)
+        {
+            if (!IsLoggedIn)
+            {
+                @Html.ActionLink("Sign in", "Login", "User", "https", null, null, null, new { @class = "signin", id = "event_signin" });
+            }
+        }
+    </div>
+</header>
+<!-- end header section -->
+<section class="main">
+    <div class="container">
+        <div class="row row1">
+            <div class="slider_part">
+                <div id="rotating-item-wrapper" class="img_part">
+                    @Html.ImageBuilder(Url, "events/01.jpg", new { @class = "rotating-item" })
+                    @Html.ImageBuilder(Url, "events/02.jpg", new { @class = "rotating-item" })
+                    @Html.ImageBuilder(Url, "events/03.jpg", new { @class = "rotating-item" })
+                    @Html.ImageBuilder(Url, "events/04.jpg", new { @class = "rotating-item" })
+                    @Html.ImageBuilder(Url, "events/04.jpg", new { @class = "invisible" })
+                </div>
+                <div class="txt_part">
+                    @if (IsAllowed)
+                    {<h3 class="text1">Thank you for attending our TFC event! </h3>
+                        <h1 class="text2">You are one step away from enjoying your special 14-day free trial.*</h1>
+                        <div class="reg_bar">
+                            @Html.ActionLink("Register Now!", "Register", "User", null, new { @class = "orange_but event_register", id = "event_top_register" })
+                            @if (!String.IsNullOrEmpty(EndDate))
+                            {<small>*This offer is valid only until @EndDate</small>}
+                        </div>
+                    }
+                    else if (NotExist)
+                    {
+                        <h1 class="text2">Whoops! The page you were looking for does not exist.</h1>
+                        <h3 class="text1"></h3>
+                        <div class="reg_bar">
+                            <a href="/" class="blue_but">Return to TFC.tv</a>
+                        </div>
+                    }
+                    else if (IsRegistered || IsLoggedIn)
+                    {
+                        <text>
+                            <h1 class="text2">Whoops! Our records show that you're already a registered user of TFC.tv.</h1>
+                            <h3 class="text1">This offer is only valid for new users.</h3>
+                            @{if (IsLoggedIn)
+                            {
+                                <div class="reg_bar">
+                                    <a href="/" class="blue_but event_return" id="event_top_return">Continue to TFC.tv</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="reg_bar">
+                                    <a href="/" class="blue_but event_return" id="event_top_return">Return to TFC.tv</a>
+                                </div>
+                            }
+                            }
+                        </text>
+                    }
+                    else if (IsOver)
+                    {
+                        <text>
+                            <h1 class="text2">This offer has expired. Sign-up now at TFC.tv to get instant access to your favorite ABS-CBN shows anytime, anywhere!</h1>
+                            <h3 class="text1">@String.Format("The offer you were looking for ended last {0}.", EndDate)</h3>
+                            @{if (IsLoggedIn)
+                            {
+                                <div class="reg_bar">
+                                    <a href="/" class="blue_but event_return" id="event_top_return">Return to TFC.tv</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="reg_bar">
+                                    <a href="@Url.Action("Register","User")" class="blue_but event_return blue_but_380" id="event_try_register">Try TFC.tv FREE for 7 days</a>
+                                </div>
+                            }
+                            }
+                        </text>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row row2 ind_widget">
+            <div class="col-sm-4">
+                @Html.ImageBuilder(Url, "events/box1_615.png", new { alt = "WATCH" })
+                <h3>WATCH</h3>
+                <strong>high quality TFC videos</strong>
+                <p>Your favorite ABS-CBN shows are just a click away! Ngayon, hawak mo na ang oras mo - watch the latest shows anytime, anywhere!</p>
+            </div>
+            <div class="col-sm-4">
+                @Html.ImageBuilder(Url, "events/box2_615.png", new { alt = "SOCIALIZE" })
+                <h3>SOCIALIZE</h3>
+                <strong>with TFC users worldwide</strong>
+                <p>Always feel close to family and friends. Dito na kumonek, mag-comment at makipag-kulitan tungkol sa paborito ninyong episodes with other TFC subscribers worldwide!</p>
+            </div>
+            <div class="col-sm-4">
+                @Html.ImageBuilder(Url, "events/box3_615.png", new { alt = "GO DIGITAL" })
+                <h3>GO DIGITAL</h3>
+                <strong>with your TFC experience</strong>
+                <p>No more troublesome installation requirements. Basta may Internet connection ka, makakapanuod ka na ng official TFC videos sa computer, tablet o mobile device mo!</p>
+            </div>
+        </div>
+        <div class="row row3">
+            <div class="col-xs-12 reg_bar">
+                @if (IsAllowed)
+                {
+                    <div class="reg_bar">
+                        @Html.ActionLink("Register Now!", "Register", "User", null, new { @class = "orange_but event_register", id = "event_bottom_register" })
+                        @if (!String.IsNullOrEmpty(EndDate))
+                        {<small>*This offer is valid only until @EndDate</small>}
+                    </div>
+                }
+                else //if (IsRegistered)
+                {
+                    if (IsLoggedIn)
+                    {
+                        <div class="col-xs-12 reg_bar">
+                            <a href="/" class="blue_but event_return" id="event_bottom_continue">Continue to TFC.tv</a>
+                        </div>
+                    }
+                    else if (IsOver)
+                    {
+                        <div class="col-xs-12 reg_bar">
+                            <a href="@Url.Action("Register","User")" class="blue_but event_return blue_but_380" id="event_bottom_register">
+                                Try TFC.tv FREE for 7 days
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 reg_bar">
+                            <a href="/" class="blue_but event_return" id="event_bottom_return">Return to TFC.tv</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@if (IsAllowed)
+{<footer class="ind_footer">
+        <div class="container">
+            @Html.ImageBuilder(Url, "events/tfc_logo_615_2.png", new { alt = "TFCtv" })
+            <br>
+            All Rights Reserved - &copy; 2015 <span class="br">Powered by ABS-CBN International</span><br>
+            @Html.ActionLink("Terms and Conditions", "TermsAndConditions", "Home")
+        </div>
+    </footer>
+}
+else
+{
+    @Html.Partial("UXFooterTop")
+    @Html.Partial("UXFooterBottom")  }
+
+<!-- end page body section -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        $('.signin').click(function () {
+            createCookie('vntysicook', '@key', 0); return true;
+        });
+    </script>
+}
+
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta name="keywords" content="tfc, events, barrio fiesta, artist, abs-cbn, filipino, ofw, philippines, prizes, party" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="">
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@pageTitle" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="" />
+}

@@ -1,0 +1,13 @@
+﻿@model SortedSet<IPTV2_Model.PackageSubscriptionProduct>
+
+@if (Model != null)
+{
+    foreach (var item in Model.ToList().OrderByDescending(s => s.Duration))
+    {
+        <div class="packageproduct_container">
+            <a href="/subscribe/episode/@item.ProductId">
+            @item.Name
+            </a>
+        </div>
+    }
+}

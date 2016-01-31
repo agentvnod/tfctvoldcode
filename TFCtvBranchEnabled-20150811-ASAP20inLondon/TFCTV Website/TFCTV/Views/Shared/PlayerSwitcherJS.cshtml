@@ -1,0 +1,18 @@
+﻿@{if (GlobalConfig.UseJWPlayer)
+  {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".hplayer_swap").click(function () {
+                if (readCookie("hplayer") != null || readCookie("hplayer") != undefined)
+                    eraseCookie("hplayer");
+                else
+                    createCookie("hplayer", 1, 1);
+
+                $(".h_player").html("Please wait while we process your request...");
+                setTimeout(function () { window.location.reload(); }, 2000);
+                return false;
+            });
+        });
+    </script>      
+  }
+}

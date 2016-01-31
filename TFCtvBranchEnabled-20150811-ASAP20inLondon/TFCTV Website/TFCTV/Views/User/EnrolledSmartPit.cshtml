@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Enroll Your Smart Pit Card - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Your SmartPit Card Number</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                <div class="rheader">
+                    Maari na kayong magbayad at magload sa pinakamalapit na SmartPit Payment Terminals.
+                    Sa ilalim ang SmartPit Card number na naka-assign sa TFC.tv account mo.
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div>
+                    <div class="rheader">
+                        Your Smart Pit Card Number is</div>
+                    <div>
+                        <span class="orange boldText" style="font-size: 28px;">@ViewBag.SmartPitId</span></div>
+                    <div class="clear breakStandard">
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="registerBodyLow">
+                        <div class="breakLarge">
+                        </div>
+                    </div>
+                    <div class="breakStandard clear">
+                    </div>
+                    <div style="text-align: left;" class="padLeftLarge rheader">
+                        <div class="formSubHeaders">
+                           Paano gamitin:</div>
+                        <ul>
+                            <li>1. Isulat ang Smart Pit number na ito at dalhin sa pinakamalapit na Lawson o Familymart.</li>
+                            <li>2. I-enter and number na ito sa Smart Pit Payment Terminal ng Lawson o Familymart.</li>
+                            <li>3. Piliin ang load amount na ¥1,150 at i-print ang resibo.</li>
+                            <li>4. Dalhin ang resibo at magbayad sa counter.</li>
+                            <li>5. Sa susunod na log-in mo sa TFC.tv, makikita mo na ang credits na binayaran mo.
+                                Maaari ka nang bumili ng kahit anong show na nais mong panoorin.</li>
+                        </ul>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}

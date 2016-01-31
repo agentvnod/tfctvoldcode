@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "Reload via Paypal - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    var id = Url.RequestContext.RouteData.Values["id"];
+    IPTV2_Model.UserWallet Wallet = ViewBag.UserWallet;
+    bool HasError = ViewBag.HasError;
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                E-WALLET &raquo; RELOAD TYPE &raquo; PAYPAL
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("ReloadSelection", new { pselection = "PayPal" })
+                </div>
+                <div id="payment-main">
+                    @{if (!HasError)
+                      {
+                        <div class="breakLarge">
+                        </div>
+                        <form id="form1" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+                        <div id="reload-area">
+                            <div id="reload-main">
+                                <div>
+                                    Please enter a desired amount to be loaded in your E-Wallet.</div>
+                                <div class="breakLarge clear">
+                                </div>
+                                <div class="copy copy-align">
+                                    Load Amount:</div>
+                                <div>
+                                    <span class="currencyText">@Wallet.Currency</span>&nbsp;&nbsp;<input type="text"
+                                        class="textbox-small" name="pamount" id="pamount" placeholder="Amount" maxlength="5" />
+                                    <div class="errstatus">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="breakLarge clear">
+                            </div>
+                            <div class="linebreak">
+                            </div>
+                            <div class="breakLarge clear">
+                            </div>
+                        </div>
+                        <div class="purchase-summary fold-top">
+                            <div class="breakStandard">
+                            </div>
+                            <div class="title">
+                                You are about to buy this product using a PayPal account</div>
+                            <div class="breakLarge">
+                            </div>
+                            <div>
+                                <p>
+                                    Should you choose to continue, please take note of the reminders below</p>
+                                <ol>
+                                    <li>Do not close this browser.</li>
+                                    <li>On the PayPal page, follow the instructions carefully.</li>
+                                    <li>Upon completion of payment, please wait for the Paypal window to auto-close.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="clear breakSmall">
+                            <input type="hidden" name="cmd" value="_xclick" />
+                            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+                            <input type="hidden" id="item_name" name="item_name" />
+                            <input type="hidden" id="amount" name="amount" />
+                            <input type="hidden" id="currency_code" name="currency_code" value="@Wallet.Currency" />
+                            <input type="hidden" name="return" value="@GlobalConfig.PayPalReloadReturnUrl" />
+                            <input type="hidden" id="custom" name="custom" />
+                        </div>
+                        <div class="btn-container">
+                            <input type="submit" value="Proceed to PayPal" class="nbutton" /></div>
+                        </form>
+                        <div class="clear breakLarge">
+                        </div>
+                      }
+                      else
+                      {
+                        @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                      }
+                    }
+                </div>
+                @{if (!HasError)
+                  {
+                    <div id="payment-summary">
+                        <div class="breakLarge">
+                        </div>
+                        <div id="summary-body">
+                            <div class="ml10 boldText">
+                                Click on the images to know more about PayPal</div>
+                            <div class="clear breakStandard">
+                            </div>
+                            <div class="paypal-logo-1">
+                                <!--PayPal Logo-->
+                                <a href="https://www.paypal.com/webapps/mpp/paypal-popup" title="How PayPal Works"
+                                    onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                    <img src="//www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg"
+                                        border="0" alt="PayPal Logo" /></a>
+                            </div>
+                            <div class="paypal-logo-3">
+                                <!--Secure Payments by PayPal-->
+                                <a href="https://www.paypal.com/webapps/mpp/paypal-popup" title="How PayPal Works"
+                                    onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                    <img src="//www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg"
+                                        border="0" alt="PayPal Acceptance Mark" width="240" style="margin-top: 5px; margin-left: 10px;" /></a></div>
+                            <div class="clear breakStandard">
+                            </div>
+                        </div>
+                    </div>
+                  }
+                }
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 8]>
+    @Html.CssBuilder(Url, "transaction.ie8.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var jQueryValidateUrl = '//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js';
+    </script>
+    <script type="text/javascript">
+        function roundNumber(num, dec) {
+            var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+            return result;
+        }
+
+        $(document).ready(function () {
+            $.getScript(jQueryValidateUrl).done(function () {
+                var checker = $('form#form1').validate({
+                    rules: {
+                        pamount: {
+                            required: true,
+                            number: true
+                        }
+                    },
+                    messages: {
+                        pamount: { required: 'This field is required.', number: 'Must be numeric' }
+                    },
+                    errorPlacement: function (error, element) {
+                        error.appendTo(element.parent().find('.errstatus'));
+                    }
+                });
+
+                $('form#form1').submit(function (event) {
+                    event.preventDefault();
+                    if (checker.numberOfInvalids() == 0) {
+                        var form = $(this);
+                        var amount = roundNumber($('#pamount').val(), 2).toFixed(2);
+                        var item_name = 'TFC.tv Credits (' + $('#currency_code').val() + ' ' + amount + ')';
+                        var custom = amount + '&@User.Identity.Name';
+                        $('#amount').val(amount);
+                        $('#item_name').val(item_name);
+                        $('#custom').val(custom);                        
+                        this.submit();
+                        window.open('', 'paypalwindow');
+                        this.target = 'paypalwindow';
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.try-again').click(function () {
+                location.reload();
+                return false;
+            });
+        });
+    </script>
+}

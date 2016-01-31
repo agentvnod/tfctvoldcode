@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Contact Us - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Get in touch with TFC.tv</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="contactusContainer">
+            <div class="breakStandard">
+            </div>
+            <div>
+                <div class="padLeftLarge">
+                    <div id="contactUsBody">
+                        We would like to hear from you! Reach us from any of the options below.
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="c-item">
+                        <div class="bheader">
+                            Send us your customer concerns
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="floatLeft pad-right">
+                            <a id="help_email" class="mailers" href="@Url.Action("SubmitTicket", "Help")" rel="#overlay">@Html.ImageBuilder(Url, "cs_btn.png", new { width = 128, height = 89, title = "Contact our customer service" })</a>
+                        </div>
+                        <div class="white pad-bottom">
+                            Do you have questions or<br />
+                            clarifications about TFC.tv?<br />
+                            We are here to respond to<br />
+                            your needs.</div>
+                        <div class="button-click">
+                            <a id="help_email_btn" class="mailers" href="@Url.Action("SubmitTicket", "Help")" rel="#overlay">@Html.ImageBuilder(Url, "cu_click_here.png", new { width = 79, height = 22 })</a>
+                        </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="c-item">
+                        <div class="bheader">
+                            Chat live with customer service agents
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="floatLeft pad-right">
+                            <a href="http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390"
+                                target="_blank" onclick="this.newWindow = window.open('http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390', 'Live Chat Software', 'toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=no,resizable=yes,replace=no');this.newWindow.focus();this.newWindow.opener=window;return false;">
+                                <img alt="Live Chat Software" src="http://c.velaro.com/visitor/check.aspx?siteid=8395&showwhen=inqueue&deptid=15390"
+                                    border="0" width="128" height="89"></a>
+                        </div>
+                        <div class="white pad-bottom">
+                            Do you need direct<br />
+                            assistance or guidance in<br />
+                            using TFC.tv? Our agents<br />
+                            are here to help.</div>
+                        <div class="button-click">
+                            <a href="http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390"
+                                target="_blank" onclick="this.newWindow = window.open('http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390', 'Live Chat Software', 'toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=no,resizable=yes,replace=no');this.newWindow.focus();this.newWindow.opener=window;return false;">@Html.ImageBuilder(Url, "cu_click_here.png", new { width = 79, height = 22 })</a>
+                        </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="c-item">
+                        <div class="bheader">
+                            Send us your feedback about the site
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="floatLeft pad-right">
+                            <a id="send_feedback" class="mailers" href="@Url.Action("SendFeedback", "Home")" rel="#overlay">@Html.ImageBuilder(Url, "fb_btn.png", new { width = 128, height = 89, title = "Send us your feedback" })</a>
+                        </div>
+                        <div class="white pad-bottom">
+                            Do you have comments<br />
+                            and suggestions on how to<br />
+                            improve TFC.tv? Let us<br />
+                            know your thoughts.</div>
+                        <div class="button-click">
+                            <a id="send_feedback_btn" class="mailers" href="@Url.Action("SendFeedback", "Home")" rel="#overlay">@Html.ImageBuilder(Url, "cu_click_here.png", new { width = 79, height = 22 })</a>
+                        </div>
+                    </div>
+                    <div class="breakLarge clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "contactus.css")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.mailers').overlay({
+                mask: 'black',
+                fixed: false,
+                closeOnClick: false,
+                onBeforeLoad: function () {
+                    $("#overlay").width(400);
+                    $('#overlay .contentWrap').html('');
+                    var wrap = this.getOverlay().find(".contentWrap");
+                    wrap.load(this.getTrigger().attr("href"));
+                },
+                onClose: function () {
+                    $('#overlay .contentWrap').empty();
+                }
+            });
+        });
+
+    </script>
+}

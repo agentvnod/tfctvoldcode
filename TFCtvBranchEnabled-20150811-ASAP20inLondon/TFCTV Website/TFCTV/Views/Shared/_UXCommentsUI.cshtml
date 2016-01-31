@@ -1,0 +1,69 @@
+﻿@model GigyaWidgetUIObj
+@{
+    string categoryID = Model.categoryID;
+    string streamID = Model.streamID;
+    var noCommentText = String.Format("There are no comments available for {0}", Model.ShareObj.title);
+}
+<!-- CommentUI -->
+@{if (!Model.IsAjaxCrawlable)
+  { 
+    <script type="text/javascript">
+        var _COMMENT = 1;
+        function onSiteLoginHandler(event) {
+            if ($('.search_box').is(':visible'))
+                $('.search_box').toggle(300);
+            $('.login_box').show(300);
+            $('html,body').animate({ scrollTop: 0 }, 'slow');
+        }
+
+        function onCommentSubmitHandler(event) {
+            // on comment
+            //publish useraction
+            var publishUserAction_params = {
+                userAction: act,
+                scope: 'internal',
+                privacy: 'public',
+                feedID: 'UserAction'
+            };
+            gigya.socialize.publishUserAction(publishUserAction_params);
+            //log action
+            $.post('/Ajax/CreateInteraction', { reactionId: _COMMENT, type: type, id: id }, function (data) { });
+        }
+
+        var commentsParams = {
+            containerID: '@Model.containerId',
+            categoryID: '@categoryID',
+            streamID: '@streamID',
+            version: 2,
+            deviceType: 'auto',
+            useSiteLogin: true,
+            width: '100%',
+            onSiteLoginClicked: onSiteLoginHandler,
+            onCommentSubmitted: onCommentSubmitHandler
+        }
+        gigya.comments.showCommentsUI(commentsParams);
+    </script> 
+  }
+  else
+  {
+      try
+      {
+          var responseData = GigyaMethods.GetComments(categoryID, streamID);
+          if (responseData != null)
+          {
+              if (responseData.errorCode == 0)
+              {
+                  if (responseData.commentCount > 0)
+                  {
+    @Html.Raw(responseData.comments)
+                  }
+                  else
+                  { 
+    <span>@noCommentText</span>
+                  }
+              }
+          }
+      }
+      catch (Exception) { }
+  }
+}

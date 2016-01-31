@@ -1,0 +1,105 @@
+﻿@model FeedObj
+@{
+    string startTS = String.Empty;
+    string endTS = String.Empty;
+
+    string group = "friends";
+    if (ViewBag.group != null)
+    {
+        group = ViewBag.group;
+    }
+    string section_name = String.Format("sec_tab_{0}", group);
+
+    FeedObjFeedItem obj = null;
+    try
+    {
+        if (String.Compare(group, "friends", true) == 0)
+        {
+            obj = Model.friends;
+        }
+        else if (String.Compare(group, "me", true) == 0)
+        {
+            obj = Model.me;
+        }
+    }
+    catch (Exception) { }    
+}
+<div class="widget gray @Html.Raw(section_name)">
+    @{if (Model != null)
+      {
+          if (obj != null)
+          {
+              if (obj.items != null)
+              {
+                  if (obj.items.Count() > 0)
+                  {
+                      int count = 0;
+                      foreach (var item in obj.items)
+                      {
+                          string photoUrl = String.Empty;
+                          string name = String.Empty;
+                          string mediaItem = String.Empty;
+
+                          if (item.sender != null)
+                          {
+                              photoUrl = item.sender.photoURL;
+                              name = item.sender.name;
+                          }
+
+                          if (item.action.mediaItems != null)
+                          {
+                              if (item.action.mediaItems.Count() > 0)
+                              {
+                                  mediaItem = item.action.mediaItems[0].src;
+                              }
+
+                          }
+                      
+        <div class="row feed_item">
+            <div class="col-sm-2 col-xs-2 small_avater">
+                @if (!String.IsNullOrEmpty(photoUrl))
+                {
+                    <img src="@photoUrl" alt="" />
+                }
+            </div>
+            <div class="col-sm-10  col-xs-10">
+                <h3>
+                    <a href="#">@Html.Raw(name)</a></h3>
+                <span class="date">@item.timestamp.TimeStampStringToDateTime().ToString("ddd, dd MMM yyyy HH':'mm':'ss")</span>
+                <div class="row feed_itemi">
+                    @if (!String.IsNullOrEmpty(mediaItem))
+                    { 
+                        <div class="col-sm-3  col-xs-3">
+                            <img src="@mediaItem" alt="" />
+                        </div>
+                    }
+                    <div class="col-sm-9  col-xs-9">
+                        <h3>
+                            @Html.Raw(item.action.description)</h3>
+                        <h3>
+                            <a href="#">@Html.Raw(item.action.title)</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>                      
+                      }                                                
+        <div class="sec_footer">
+            <!-- section of Load more -->
+            <a href="#" class="loadMore">load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+        </div>                       
+                  }
+                  else
+                  {
+        <div class="sec_empty">
+            <!-- section of Load more -->
+            <p>
+                There are no new updates.</p>
+        </div>
+                  }
+              }
+          }
+      }
+
+    }
+</div>

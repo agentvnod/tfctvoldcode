@@ -1,0 +1,112 @@
+﻿@model TFCTV.Models.PlayerControlBarModel
+@{  //if (Model.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Request.Browser.IsMobileDevice)
+    if (Model.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Akamai.IsIos(Request))
+    {
+    <text>
+    <!-- Menu --->
+    <div class="clear">
+    </div>
+    <div class="player-menu-container">
+        <div class="player-menu-subcontainer">
+            <a href="/Ajax/GetMedia/@Model.EpisodeId" class="player-adapt white player-mode" rel="0">
+                ADAPT</a> <a href="/Ajax/GetMedia/@Model.EpisodeId?p=2"
+                    class="player-high white player-mode" rel="2">HIGH</a> <a href="/Ajax/GetMedia/@Model.EpisodeId?p=1" class="player-low white player-mode" rel="1">
+                        LOW</a>
+            @{if (GlobalConfig.IsDownloadPlayerEnabled)
+              {
+                <a href="@Model.TFCTvDownloadPlayerFullUrl" class="player-download white" rel="3">DLOAD</a>  
+              }
+            }
+            <a href="#" class="player-learn white" rel="1">LEARN</a>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="playerFAQ" class="hideElement apple_overlay clear">
+        <div class="contentWrap">
+            <div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        Choose your video playing option</div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>
+            <p>
+                In our commitment to provide you with the best viewing experience you deserve, we
+                have expanded our video playing options to suit your online needs. Get to know your
+                options and choose the right one for you!</p>
+            <div>
+                @Html.ImageBuilder(Url, "watch-adapt-black.png")
+            </div>
+            <p>
+                <span class="hl">1. WATCH NOW.</span> For users with reliable internet connection
+                (recommended speed is 2Mbps and minimum requirement is 512Kbps), TFC.tv has <span
+                    class="hl">adaptive streaming</span> that adjusts automatically the quality
+                of the video you are watching to match the speed of your internet.
+            </p>
+            <p>
+                Click <span class="hl">WATCH NOW</span> and stream the video instantly.</p>
+            <div>
+                @Html.ImageBuilder(Url, "watch-high-black3.png")&nbsp;&nbsp;@Html.ImageBuilder(Url,
+            "watch-low-black3.png")
+            </div>
+            <p>
+                <span class="hl">2. PLAY HIGH/LOW.</span> For users with less than the recommended
+                internet connection, TFC.tv offers <span class="hl">progressive download</span>
+                that lets you choose between a high quality (Bit rate: 800Kbps) and low quality
+                (Bit rate: 500Kbps) version of the video and preloads the video for you.</p>
+            <p>
+                Click <span class="hl">PLAY HIGH/LOW</span> and watch the video in consistent quality.</p>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    </text>
+    }
+}
+<script type="text/javascript">
+    var isSelectedMode = 0;
+</script>
+@{if (Model.IsUsingSmallPlayer != null)
+  { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.player-learn').click(function () { $('#playerFAQ').overlay().load(); return false; });
+            $("#playerFAQ").overlay({
+                fixed: false, mask: 'black', closeOnClick: false, load: false, top: '0px', left: 210
+            });
+        });
+    </script>
+  }
+  else
+  { 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.player-learn').click(function () { $('#playerFAQ').overlay().load(); return false; });
+            $("#playerFAQ").overlay({
+                fixed: false, mask: 'black', closeOnClick: false, load: false
+            });
+        });
+    </script>
+  }
+}
+@{//if (Model.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Request.Browser.IsMobileDevice)
+    if (Model.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Akamai.IsIos(Request))
+    {      
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.player-mode').live('click', function () {
+                //clear attribute
+                $('.player-mode').removeClass('mode-selected');
+                $(this).addClass('mode-selected');
+                isSelectedMode = $(this).attr('rel');
+                CreatePlayer($(this).attr('href'));
+                setTimeout('$f(playerContainer).play();', 3800);
+                return false;
+            });
+        });
+    </script>
+      
+    }
+}

@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Reload via mopay - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    var id = Url.RequestContext.RouteData.Values["id"];
+    IPTV2_Model.UserWallet Wallet = ViewBag.UserWallet;
+    bool HasError = ViewBag.HasError;
+    List<IPTV2_Model.MopayButton> buttonIds = (List<IPTV2_Model.MopayButton>)ViewBag.MopayButtonIds;
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                E-WALLET &raquo; RELOAD TYPE &raquo; MOPAY
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("ReloadSelection", new { pselection = "mopay" })
+                </div>
+                <div id="payment-main">
+                    @{if (!HasError)
+                      {
+                        <div class="breakLarge">
+                        </div>
+                        <div id="reload-area">
+                            <div id="reload-main">
+                                <div>
+                                    Please click the desired amount to be loaded in your E-Wallet.</div>
+                                <div class="breakLarge clear">
+                                </div>
+                                <div>
+                                    <form action="@GlobalConfig.MopayFormPostAddress" method="post"
+                        name="buttonForm1" id="buttonForm1" target="ftarget">
+                                    <!-- BY BUTTON ID  -->
+                                    <input type="hidden" name="buttonid" value="" />
+                                    @*<input type="hidden" name="country" value="@user.CountryCode" />*@
+                                    <input type="hidden" name="country" value="" />
+                                    <!-- BY BUTTON ID END-->
+                                    <!-- IFRAME-->
+                                    <input type="hidden" name="backurltarget" value="_top" />
+                                    <!-- IFRAME-->
+                                    <!-- Merchant: Add e.g. your shoping cart identifier for the buyer (max. 255 chars) -->
+                                    <input type="hidden" name="myid" value="@ViewBag.UserId" />
+                                    <!-- Merchant: Set the back url to your shop (max. 2000 chars) -->
+                                    <input type="hidden" name="backurl" value="@GlobalConfig.MopayBackURL" />
+                                    <!-- Merchant: Add purchased product(s) name (max. 20 chars) -->
+                                    <input type="hidden" name="productname" value="Reload" />
+                                    <!-- Merchant: Add your service name here, the parameter is optional (max. 40 chars) -->
+                                    <input type="hidden" name="servicename" value="" />
+                                    <!-- Merchant: Build a MD5 check sum -->
+                                    <input type="hidden" name="token" value="@ViewBag.TokenCheckSum" />
+                                    </form>
+                                    <!--
+The next link is a sample (!) how to use the mopay image and post the above form, we added 50 pixels for the browser frame. -->
+                                    @foreach (IPTV2_Model.MopayButton buttonId in buttonIds)
+                                    {
+                                        <a class="nbutton buttonFormSubmit" href="#" data-token="@MyUtility.HashMD5(String.Format("{0}{1}{2}Reload", buttonId.ButtonId, ViewBag.UserId, GlobalConfig.MopayBackURL), GlobalConfig.MopayLoadSaltCode)" data-country="@buttonId.CountryCode" id="@buttonId.ButtonId" onclick="" style="margin: 20px; vertical-align: middle; color: White;">
+                                            @String.Format("{0} {1}", buttonId.Amount.ToString("0.00"), buttonId.Currency)
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                            <div class="breakLarge clear">
+                            </div>
+                            <div class="linebreak">
+                            </div>
+                            <div class="breakLarge clear">
+                            </div>
+                        </div>
+                        <div class="purchase-summary fold-top">
+                            <div class="breakStandard">
+                            </div>
+                            <div class="title">
+                                You are about to buy this product using mopay</div>
+                            <div class="breakLarge">
+                            </div>
+                            <div>
+                                <p>
+                                    Should you choose to continue, please take note of the reminders below</p>
+                                <ol>
+                                    <li>Simply click on your desired load amount. The mopay window will popup.</li>
+                                    <li>On the mopay popup page, follow the instructions carefully.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="clear breakLarge">
+                        </div>
+                      }
+                      else
+                      {
+                        @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                      }
+                    }
+                </div>
+                @{if (!HasError)
+                  {
+                    <div id="payment-summary">
+                        <div class="breakLarge">
+                        </div>
+                        <div id="summary-body">
+                            <div class="ml10 boldText">
+                                Click on the image to know more about mopay</div>
+                            <div class="clear breakStandard">
+                            </div>
+                            <div class="mopay-logo-1">
+                                <!--PayPal Logo-->
+                                <a href="http://www.mopay.com/en/consumers/" title="How mopay Works" onclick="javascript:window.open('http://www.mopay.com/webapps/mpp/paypal-popup','mopayw','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                    @Html.ImageBuilder(Url, "logo/mopay.jpg")</a>
+                            </div>
+                        </div>
+                    </div>
+                  }
+                }
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    @Html.CssBuilder(Url, "mopay.css")
+    <!--[if IE 8]>
+    @Html.CssBuilder(Url, "transaction.ie8.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.buttonFormSubmit').on('click', function () {
+                var windowWidth = 600; var windowHeight = 450;
+                var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                var windowTop = parseInt((screen.availHeight / 2) - (windowHeight / 2));
+                var mywindow = window.open("", "ftarget", "menubar=0,resizable=0,width=" + windowWidth + ",height=" + windowHeight + ",left=" + windowLeft + ",top=" + windowTop + ",modal=yes,location=0,scrollbars=0,menubar=no,status=1");
+                var idstr = this.id;
+                $('input[name=buttonid]').val(idstr);
+                $('input[name=token]').val($(this).attr('data-token'));
+                $('input[name=country]').val($(this).attr('data-country'));
+                document.getElementById('buttonForm1').submit();
+                mywindow.focus();
+                return false;
+            });
+        });
+    </script>
+}

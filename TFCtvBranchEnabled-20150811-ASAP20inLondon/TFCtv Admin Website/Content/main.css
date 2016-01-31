@@ -1,0 +1,114 @@
+﻿/* File Created: July 30, 2012 */
+
+.hidden
+{
+    display: none;
+}
+
+.red
+{
+    color: #ff0000;
+}
+
+.floatLeft
+{
+    float: left;
+}
+
+.floatRight
+{
+    float: right;
+}
+
+.clear
+{
+    clear: both;
+}
+
+#rightPanel
+{
+    margin-left: 30px;
+}
+
+
+#playerContainer
+{
+    width: 640px;
+    height: 390px;
+}
+
+blockquote
+{
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-style: italic;
+    margin: 0.25em 0;
+    padding: 0.25em 40px;
+    line-height: 1.45;
+    position: relative;
+    color: #383838;
+}
+
+blockquote:before
+{
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    left: -5px;
+    top: -20px;
+    color: #7a7a7a;
+}
+
+.poison-option
+{
+    width: 30px;
+}
+
+
+.player-adapt
+{
+    width: 50px;
+    height: 50px;
+    background: url('images/player/adapt.png') bottom;
+    display: block;
+    text-indent: -99999px;
+}
+.player-high
+{
+    width: 50px;
+    height: 50px;
+    background: url('images/player/high.png') bottom;
+    display: block;
+    text-indent: -99999px;
+}
+
+.player-low
+{
+    width: 50px;
+    height: 50px;
+    background: url('images/player/low.png') bottom;
+    display: block;
+    text-indent: -99999px;
+}
+
+.player-hd
+{
+    width: 50px;
+    height: 50px;
+    background: url('images/player/hd.png') bottom;
+    display: block;
+    text-indent: -99999px;
+}
+
+.player-option:hover
+{
+    background-position: 0 0;
+}
+
+
+#play-options a
+{
+    float: left;
+    margin-left: 2px;
+}

@@ -1,0 +1,52 @@
+﻿@model IPTV2_Model.Celebrity
+@{
+    ViewBag.Title = "TFC.tv - Celebrities";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Celebrities
+                </div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="featuredCelebrities">
+            <div id="featuredItems_featuredCelebrities" class="featuredItems">
+                <div class="itemListBody">
+                    <div class="wrapper">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "featureditem.css")
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var features = [{ url: "/celebrity/GetCelebrities", type: "person", itemperslide: 10, container: "featuredItems_featuredCelebrities" }];
+            $.each(features, function (x, item) {
+                jQuery.get(item.url, function (data) {
+                    var list = new featureItem({
+                        json_str: data, type: item.type, itemperslide: item.itemperslide, container: item.container
+                    }).listing();
+                }, 'json');
+            });
+        });
+    </script>
+}

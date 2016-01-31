@@ -1,0 +1,38 @@
+﻿<div id="aboutEpisodes">
+    <div class="genericHeader">
+        <div class="genericHeader_header">
+            <div id="epSubHeaderTitle" class="sectionHeaderTitle">
+                Episodes @ViewBag.ShowId</div>
+            <div id="epSubHeaderCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div id="episodesContainer">
+        <br />
+        @(Html.Telerik().Grid<EpisodeDisplay>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(t => t.EpisodeNumber).Width(182).Title("Episode Number").HtmlAttributes(new { style = "width: 182px;" });
+            //columns.Bound(t => t.Description)
+            //    .Width(140)
+            //    .Title("Title");
+            //columns.Bound(t => t.DateAired).Format("{0:MMM. dd, yyyy}").Width(363).Title("Date Aired").HtmlAttributes(new { style = "width: 363px;" });
+            columns.Bound(t => t.DateAiredStr).Width(363).Title("Name/Date Aired").HtmlAttributes(new { style = "width: 363px;" });
+            columns.Bound(t => t.EpLength).Width(241).Title("Duration").HtmlAttributes(new { style = "width: 241px;" });
+            columns.Bound(t => t.EpisodeId).ClientTemplate("<a href=\"" + Url.Action("Details", "Episode", new { id = "<#= EpisodeId #>" }) + "\">" + @Html.ImageBuilder(Url, "logo/play-button.png", new { width = 20, height = 20, alt = "Watch now!" }) + " </a>").Title("").Width(90).HtmlAttributes(new { style = "width: 90px;" });
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_ShowEpisodes", "Show", new RouteValueDictionary { { "sid", ViewBag.ShowId } }))
+             .Pageable(paging =>
+                 paging.PageSize(20))
+        .Sortable()
+        .Scrollable(c => c.Height("420px"))
+        .HtmlAttributes(new { style = "width:100%;" })
+        )
+    </div>
+</div>
+@(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+    )

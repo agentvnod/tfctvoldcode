@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="TFCtv_Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
+  <WebRole name="TFCTV" vmsize="Medium">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="Endpoint2" endpointName="SSL" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="SSL" protocol="https" port="443" certificate="TFC.tv" />
+    </Endpoints>
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="5120" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <Setting name="TfcTvInternalStorage" />
+      <Setting name="MaxMindContainer" />
+      <Setting name="MaxMindDatabase" />
+      <Setting name="offeringId" />
+      <Setting name="serviceId" />
+      <Setting name="entertainmentCategoryId" />
+      <Setting name="moviesCategoryId" />
+      <Setting name="newsCategoryId" />
+      <Setting name="LatestFullEpisodesFeatureId" />
+      <Setting name="FreeTVFeatureId" />
+      <Setting name="MostViewedFeatureId" />
+      <Setting name="LatestShowsFeatureId" />
+      <Setting name="FeaturedCelebritiesFeatureId" />
+      <Setting name="CarouselEntertainmentId" />
+      <Setting name="CarouselMovieId" />
+      <Setting name="CarouselNewsId" />
+      <Setting name="pinEncryption" />
+      <Setting name="DefaultCurrency" />
+      <Setting name="DefaultCountry" />
+      <Setting name="TrialCurrency" />
+      <Setting name="BlankGif" />
+      <Setting name="LatestNewsFullEpisodesFeatureId" />
+      <Setting name="NewsFreeTVFeatureId" />
+      <Setting name="FeaturedCurrentAffairs" />
+      <Setting name="FeaturedJournalistsFeatureId" />
+      <Setting name="FeaturedRegionalNewsFeatureId" />
+      <Setting name="LatestMovieFeatureId" />
+      <Setting name="FeaturedPersonMovieFeatureId" />
+      <Setting name="StaffPicksFeatureId" />
+      <Setting name="MostPopularMovieseFeatureId" />
+      <Setting name="PDTToken" />
+      <Setting name="PayPalSubmitUrl" />
+      <Setting name="PayPalBusiness" />
+      <Setting name="PayPalReturnUrl" />
+      <Setting name="PayPalReloadReturnUrl" />
+      <Setting name="GSapikey" />
+      <Setting name="GSsecretkey" />
+      <Setting name="GeoIpPath" />
+      <Setting name="AkamaiTokenKey" />
+      <Setting name="AnonymousDefaultPackageId" />
+      <Setting name="LoggedInDefaultPackageId" />
+      <Setting name="CarouselImgPath" />
+      <Setting name="ShowImgPath" />
+      <Setting name="EpisodeImgPath" />
+      <Setting name="CelebrityImgPath" />
+      <Setting name="EntertainmentMenuIds" />
+      <Setting name="NewsMenuIds" />
+      <Setting name="MoviesMenuIds" />
+      <Setting name="LatestEpisodeDropdownListIds" />
+      <Setting name="FreeTVPlayListId" />
+      <Setting name="FreeTVMostViewedId" />
+      <Setting name="FreeTVMostSharedId" />
+      <Setting name="FreeTVTopLikedId" />
+      <Setting name="FreeTVComedyId" />
+      <Setting name="FreeTVDramaId" />
+      <Setting name="FreeTVSportsId" />
+      <Setting name="premiumPackageId" />
+      <Setting name="litePackageId" />
+      <Setting name="moviePackageId" />
+      <Setting name="IpWhitelist" />
+      <Setting name="GomsTfcTvUserId" />
+      <Setting name="GomsTfcTvPassword" />
+      <Setting name="GomsTfcTvServiceUserId" />
+      <Setting name="GomsTfcTvServicePassword" />
+      <Setting name="GomsTfcTvServiceUrl" />
+      <Setting name="baseUrl" />
+      <Setting name="FAQId" />
+      <Setting name="FAQTop5" />
+      <Setting name="SocialComment" />
+      <Setting name="SocialRating" />
+      <Setting name="SocialShare" />
+      <Setting name="SocialLike" />
+      <Setting name="SocialLove" />
+      <Setting name="maximumDistance" />
+      <Setting name="hlsPrefixPattern" />
+      <Setting name="hlsSuffixPattern" />
+      <Setting name="zeriPrefixPattern" />
+      <Setting name="zeriSuffixPattern" />
+      <Setting name="httpPrefixPatternMobile" />
+      <Setting name="BingJsonApiUrl" />
+      <Setting name="BingApiKey" />
+      <Setting name="BingSiteQueryPiece" />
+      <Setting name="BingSiteSearchCount" />
+      <Setting name="MSIEqid" />
+      <Setting name="Chromeqid" />
+      <Setting name="Firefoxqid" />
+      <Setting name="Operaqid" />
+      <Setting name="Safariqid" />
+      <Setting name="ChatId" />
+      <Setting name="CustomSearchJsonApiUrl" />
+      <Setting name="CustomSearchApiKey" />
+      <Setting name="CustomSearchCX" />
+      <Setting name="CustomSearchFilter" />
+      <Setting name="CustomSearchCount" />
+      <Setting name="CustomSearchFormat" />
+      <Setting name="CustomSearchStartIndex" />
+      <Setting name="CustomSearchResultCount" />
+      <Setting name="useGoogleCustomSiteSearch" />
+      <Setting name="useBingSiteSearch" />
+      <Setting name="moviesPremiumCategoryId" />
+      <Setting name="FormsAuthenticationTimeout" />
+      <Setting name="FreeTrial14ProductId" />
+      <Setting name="IsFreeTrialEnabled" />
+      <Setting name="IsEWalletPaymentModeEnabled" />
+      <Setting name="IsPpcPaymentModeEnabled" />
+      <Setting name="IsCreditCardPaymentModeEnabled" />
+      <Setting name="IsPaypalPaymentModeEnabled" />
+      <Setting name="IsPpcReloadModeEnabled" />
+      <Setting name="IsCreditCardReloadModeEnabled" />
+      <Setting name="IsPaypalReloadModeEnabled" />
+      <Setting name="ServiceDeskUsername" />
+      <Setting name="ServiceDeskPassword" />
+      <Setting name="ServiceDeskDepartmentId" />
+      <Setting name="FeedbackEmail" />
+      <Setting name="SupportEmail" />
+      <Setting name="SmtpHost" />
+      <Setting name="SmtpPort" />
+      <Setting name="AllowedCountries" />
+      <Setting name="GomsTfcTvServiceId" />
+      <Setting name="SendGridUsername" />
+      <Setting name="SendGridPassword" />
+      <Setting name="SendGridSmtpHost" />
+      <Setting name="SendGridSmtpPort" />
+      <Setting name="RegistrationConfirmPage" />
+      <Setting name="IsCreateSupportTicketForLoggedInUsersEnabled" />
+      <Setting name="IsProfilingEnabled" />
+      <Setting name="TFCnowPackageIds" />
+      <Setting name="NoReplyEmail" />
+      <Setting name="FreeTrial7ProductId" />
+      <Setting name="FreeTrial30ProductId" />
+      <Setting name="TFCnowPremium" />
+      <Setting name="TFCnowPlus" />
+      <Setting name="TFCnowBasic1" />
+      <Setting name="TFCnowBasic2" />
+      <Setting name="TFCnowMovieChannel" />
+      <Setting name="JapanCountryCode" />
+      <Setting name="FreeTrialProductIds" />
+      <Setting name="TFCnowLite" />
+      <Setting name="EmailVerificationBody" />
+      <Setting name="snippetEnd" />
+      <Setting name="TFCnowBasePackageIds" />
+      <Setting name="LiveMenuIds" />
+      <Setting name="TFCnowLiveStream" />
+      <Setting name="TFCnowMoviePPV" />
+      <Setting name="FreeTvCategoryId" />
+      <Setting name="EmailVerificationBodyTextOnly" />
+      <Setting name="ResetPasswordBodyTextOnly" />
+      <Setting name="SubscribeToProductBodyTextOnly" />
+      <Setting name="ExtendSubscriptionBodyTextOnly" />
+      <Setting name="CustomSearchQueryPiece" />
+      <Setting name="PaypalBuyIPNUrl" />
+      <Setting name="PaypalReloadIPNUrl" />
+      <Setting name="PaypalDefaultIPNUrl" />
+      <Setting name="IsCDNEnabled" />
+      <Setting name="LogEmail" />
+      <Setting name="HeatMapIpWhiteList" />
+      <Setting name="GiftingSenderBodyTextOnly" />
+      <Setting name="GiftingRecipientBodyTextOnly" />
+      <Setting name="OnlinePremierePreviewCategoryIds" />
+      <Setting name="OnlinePremiereFullCategoryIds" />
+      <Setting name="CDNBaseUrl" />
+      <Setting name="AssetsBaseUrl" />
+      <Setting name="IsAssetsEnabled" />
+      <Setting name="HeatMapUrl" />
+      <Setting name="ClickTayoMVEpisodeId" />
+      <Setting name="ClickTayoMVCategoryId" />
+      <Setting name="OkGoChannelId" />
+      <Setting name="DigitalShortsCategoryId" />
+      <Setting name="OkGoCarouselSlideId" />
+      <Setting name="IsPDTEnabled" />
+      <Setting name="DBMGetUserUrl" />
+      <Setting name="YoutubeAPIVideoFeedUrl" />
+      <Setting name="YoutubeAPIVideoFeedUser" />
+      <Setting name="YoutubeAPIVideoFeedMaxResults" />
+      <Setting name="YoutubeAPIVideoFeedStartIndex" />
+      <Setting name="YoutubeAPISingleVideoUrl" />
+      <Setting name="MultipleLoginRedirectedUrl" />
+      <Setting name="YoutubeAPIPlaylistFeedUrl" />
+      <Setting name="YoutubeAPIPlaylistID" />
+      <Setting name="IsPreventionOfMultipleLoginEnabled" />
+      <Setting name="BCWMHChannelId" />
+      <Setting name="LiveStreamRestrictedCountries" />
+      <Setting name="LiveStreamSpecialChannelId" />
+      <Setting name="LiveStreamSpecialBannerImageUrl" />
+      <Setting name="IsLiveStreamRestrictionCheckEnabled" />
+      <Setting name="AkamaiAddSeconds" />
+      <Setting name="RegistrationCompleteTemplateUrl" />
+      <Setting name="RegistrationCompleteSubject" />
+      <Setting name="IsCheckForEntitlementsForLiveSpecialsEnabled" />
+      <Setting name="LiveSpecialsPackageIdsRestriction" />
+      <Setting name="LiveSpecialsCategoryIdsRestriction" />
+      <Setting name="CategoryIdsInCache" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+      <Setting name="SSLbaseUrl" />
+      <Setting name="isSSLEnabled" />
+      <Setting name="IsEffectiveMeasureEnabled" />
+      <Setting name="IsChatEnabled" />
+      <Setting name="KwentoNgPaskoCategoryId" />
+      <Setting name="KwentoNgPaskoBannerImageUrl" />
+      <Setting name="FreeTrialPackageId1" />
+      <Setting name="FreeTrialPackageId2" />
+      <Setting name="FreeTrialPackageId3" />
+      <Setting name="FreeTrialPackageId4" />
+      <Setting name="FreeTrialPackageIds" />
+      <Setting name="IsXmasSkinEnabled" />
+      <Setting name="DolphyCelebrityId" />
+      <Setting name="FreeTrialEarlyBirdProductId" />
+      <Setting name="FreeTrialProductIdsNEW" />
+      <Setting name="TFCTVPackageIds" />
+      <Setting name="FreeTrialAlaCarteSubscriptionTypes" />
+      <Setting name="zeriProgressivePrefixPattern" />
+      <Setting name="zeriProgressiveSuffixPattern" />
+      <Setting name="httpProgressivePrefixPatternMobile" />
+      <Setting name="PMDSalt" />
+      <Setting name="hlsProgressiveSuffixPattern" />
+      <Setting name="hlsProgressivePrefixPattern" />
+      <Setting name="AkamaiPMDAddSeconds" />
+      <Setting name="IsPMDPlayerEnabled" />
+      <Setting name="TFCTVPlayerDownloadSalt" />
+      <Setting name="PMDHighBitrate" />
+      <Setting name="PMDLowBitrate" />
+      <Setting name="TFCTvDownloadPlayerUrl" />
+      <Setting name="IsDownloadPlayerEnabled" />
+      <Setting name="HimigHandogCategoryId" />
+      <Setting name="IsThemedSkinEnabled" />
+      <Setting name="PMDHDBitrate" />
+      <Setting name="JDCEpisodeId" />
+      <Setting name="IsTVERegistrationEnabled" />
+      <Setting name="TVERegistrationPage" />
+      <Setting name="RegistrationCompleteTVE" />
+      <Setting name="ConcertsCategoryId" />
+      <Setting name="IsEarlyBirdEnabled" />
+      <Setting name="RestrictedAdsCategoryIds" />
+      <Setting name="TFCEverywhereParentCategoryId" />
+      <Setting name="StreamingTVECategoryIds" />
+      <Setting name="TVEStreamingChannelCounterpart" />
+      <Setting name="UseResponseBufferOutput" />
+      <Setting name="UseResponseRedirectOnPreventionOfMultipleLogin" />
+      <Setting name="IsAdditionalCssEnabled" />
+      <Setting name="TFCkatCategoryId" />
+      <Setting name="TVEMenuIds" />
+      <Setting name="OnlinePremiereCategoryId" />
+      <Setting name="hlsLiveStreamPrefixPattern" />
+      <Setting name="hlsLiveStreamSuffixPattern" />
+      <Setting name="zeriLiveStreamPrefixPattern" />
+      <Setting name="zeriLiveStreamSuffixPattern" />
+      <Setting name="httpLiveStreamPrefixPatternMobile" />
+      <Setting name="TFCkatExclusivesCategoryId" />
+      <Setting name="PackageIdsWithChannelAccess" />
+      <Setting name="HalalanChannelIds" />
+      <Setting name="HalalanParentCategoryId" />
+      <Setting name="HalalanOrderedListIds" />
+      <Setting name="HalalanNewsAlertsParentCategoryId" />
+      <Setting name="HalalanAdvisoriesParentCategoryId" />
+      <Setting name="HalalanLatestEpisodesFeatureId" />
+      <Setting name="HalalanNewsAlertsFeatureId" />
+      <Setting name="HalalanAdvisoriesFeatureId" />
+      <Setting name="ElmahAllowedEmails" />
+      <Setting name="ElmahTableName" />
+      <Setting name="IsRecurringBillingEnabled" />
+      <Setting name="isUAT" />
+      <Setting name="TVECountryWhiteList" />
+      <Setting name="SubscribeToProductBodyWithAutoRenewTextOnly" />
+      <Setting name="ExtendSubscriptionBodyWithAutoRenewTextOnly" />
+      <Setting name="FreeTrialStartDt" />
+      <Setting name="IsProfileSiteMapEnabled" />
+      <Setting name="TVEverywherePackageIds" />
+      <Setting name="CanPlayExcludedPackageIds" />
+      <Setting name="CanPlayIncludedPackageIds" />
+      <Setting name="KapamilyaChatLiveEventEpisodeId" />
+      <Setting name="CoverItLiveAltCastCode" />
+      <Setting name="KapamilyaChatUserRegistrationDate" />
+      <Setting name="KapamilyaChatNumberOfWinners" />
+      <Setting name="KapamilyaChatRelatedVideosMaxCount" />
+      <Setting name="KapamilyaChatFeatureId" />
+      <Setting name="IsLiveEventEntitlementCheckEnabled" />
+      <Setting name="IsMECreditCardEnabled" />
+      <Setting name="MECountriesAllowedForCreditCard" />
+      <Setting name="MiddleEastGomsSubsidiaryId" />
+      <Setting name="IsFlowHTML5PlayerEnabled" />
+      <Setting name="IsANCFreeStreamEnabled" />
+      <Setting name="ANCChannelId" />
+      <Setting name="ANCFreeStreamStartDt" />
+      <Setting name="ANCFreeStreamEndDt" />
+      <Setting name="ExcludedCountriesFromRegistrationDropDown" />
+      <Setting name="SpecialElectionCoverageCategoryId" />
+      <Setting name="SpecialElectionCoverageEpisodeDisplayCount" />
+      <Setting name="FreeLiveEventEpisodeIds" />
+      <Setting name="CoverItLiveCdnId" />
+      <Setting name="IsKapamilyaChatRedirectToLiveEnabled" />
+      <Setting name="AkamaiIosTokenKey" />
+      <Setting name="IsTVEIpCheckEnabled" />
+      <Setting name="IsIosHLSCdnEnabled" />
+      <Setting name="ExcludedCategoryIdsForDisplay" />
+      <Setting name="UseDaysBasedOnCacheDurationForSessionStore" />
+      <Setting name="WhitelistedLiveStreamEpisodeIdFromMobileCheck" />
+      <Setting name="SessionStoreCacheDurationInDays" />
+      <Setting name="DZMMTVECategoryChannelId" />
+      <Setting name="AkamaiBeaconIos" />
+      <Setting name="AkamaiBeaconAdobeFlash" />
+      <Setting name="csmaPluginPath" />
+      <Setting name="TVEStreamingEpisodeCounterpart" />
+      <Setting name="liveCategoryId" />
+      <Setting name="paymentTransactionMaximumThreshold" />
+      <Setting name="reloadTransactionMaximumThreshold" />
+      <Setting name="UseProgressiveViaAdaptiveTechnology" />
+      <Setting name="PMDViaAdaptiveHighBitrate" />
+      <Setting name="PMDViaAdaptiveLowBitrate" />
+      <Setting name="PMDViaAdaptiveHDBitrate" />
+      <Setting name="CheckForEpisodesToMakeUseOfProgessiveViaAdaptiveTechnology" />
+      <Setting name="EpisodeIdsToMakeUseOfProgressiveViaAdaptiveTechnology" />
+      <Setting name="UAAPTeamsCelebrityIDs" />
+      <Setting name="UAAPTeamsImgPath" />
+      <Setting name="UAAPGreatnessNeverEndsCategoryId" />
+      <Setting name="UAAPLiveStreamEpisodeId" />
+      <Setting name="UAAPGamesParentId" />
+      <Setting name="UAAPExclusiveFeaturesId" />
+      <Setting name="UAAPEntitlementPackageID" />
+      <Setting name="UAAPTeamsFeatureId" />
+      <Setting name="UseGomsSubsidiaryForTVECheck" />
+      <Setting name="IsSynapseEnabled" />
+      <Setting name="PackageAndProductCacheDuration" />
+      <Setting name="UAAPCoverItLiveAltCastCode" />
+      <Setting name="IsUserEntitlementViewOnPageEnabled" />
+      <Setting name="UsePayPalIPNLog" />
+      <Setting name="MenuCacheDuration" />
+      <Setting name="UseCountryListInMemory" />
+      <Setting name="MenuMovieBlurbLength" />
+      <Setting name="MenuShowBlurbLength" />
+      <Setting name="LiveEventEpisodesWhereVotingIsEnabled" />
+      <Setting name="IsPreventionOfMultipleLoginUsingSessionDatabaseEnabled" />
+      <Setting name="WelcomePageEpisodeID" />
+      <Setting name="SynapseGenericCacheDuration" />
+      <Setting name="PackagesInProductGroup" />
+      <Setting name="UrlTokenSalt" />
+      <Setting name="UrlTokenPassword" />
+      <Setting name="IsSmartPitReloadEnabled" />
+      <Setting name="AlaCarteBlurb" />
+      <Setting name="EventCelebritiesFeatureID" />
+      <Setting name="TFCkatShowExclusives" />
+      <Setting name="TFCkatAltCastCode" />
+      <Setting name="UseServiceOfferingWhenCheckingEpisodeParentCategory" />
+      <Setting name="GetParentCategoriesCacheDuration" />
+      <Setting name="GetParentShowsForEpisodeCacheDuration" />
+      <Setting name="GetAllSubCategoryIdsCacheDuration" />
+      <Setting name="GigyaPromoChallengeID" />
+      <Setting name="TFCtvFirstYearAnniversaryPromoId" />
+      <Setting name="IsWelcomePageOn" />
+      <Setting name="EnableNotifyLoginOnLinkAccount" />
+      <Setting name="PromoRunDateString" />
+      <Setting name="SocialProvidersList" />
+      <Setting name="IsForceConnectToSNSEnabled" />
+      <Setting name="BCWMHWeddingLiveEventEpisodeId" />
+      <Setting name="BCWMHWeddingSpecialsFeatureId" />
+      <Setting name="BCWMHWeddingExclusivesFeatureId" />
+      <Setting name="BCWMHWeddingCategoryId" />
+      <Setting name="BCWMHCoverItLiveAltCastCode" />
+      <Setting name="BalitangAmericaSagipKapamilyaEpisodeId" />
+      <Setting name="BalitangAmericaSagipKapamilyaSlug" />
+      <Setting name="AlertBoxURL" />
+      <Setting name="IsAlertBoxEnabled" />
+      <Setting name="AlertBoxEnabledUrlList" />
+      <Setting name="TulongPHConcertEpisodeId" />
+      <Setting name="TulongPHConcertSlug" />
+      <Setting name="IsTFCkatVotingEnabled" />
+      <Setting name="IsTFCtvFanMobPromoEnabled" />
+      <Setting name="KwentoNgPaskoSpecialsFeatureId" />
+      <Setting name="KwentoNgPaskoExclusivesFeatureId" />
+      <Setting name="MopayFormPostAddress" />
+      <Setting name="IsMopayReloadModeEnabled" />
+      <Setting name="MopayCountryWhitelist" />
+      <Setting name="MopayLoadSaltCode" />
+      <Setting name="TfcTvFree2StartDate" />
+      <Setting name="TfcTvFree2EndDate" />
+      <Setting name="TfcTvFree2ProductId" />
+      <Setting name="TfcTvFree2CountryWhiteList" />
+      <Setting name="TfcTvFree1StartDate" />
+      <Setting name="TfcTvFree1EndDate" />
+      <Setting name="AlertBoxForGermanyUrl" />
+      <Setting name="AlertBoxForItalyTaiwanUrl" />
+      <Setting name="KapamilyaLoveChatEpisodeId" />
+      <Setting name="KapamilyaLoveChatSlug" />
+      <Setting name="TFCkatGrandWinners" />
+      <Setting name="ChristmasSpecialEpisodeId" />
+      <Setting name="ChristmasSpecialSlug" />
+      <Setting name="PaypalAPIUser" />
+      <Setting name="PaypalAPIPassword" />
+      <Setting name="PaypalAPISignature" />
+      <Setting name="PaypalNVPUrl" />
+      <Setting name="PaypalAPIVersion" />
+      <Setting name="PaypalAPIMethod" />
+      <Setting name="PaypalAPIAction" />
+      <Setting name="ProductIdsExcludedFromRecurringBilling" />
+      <Setting name="IsPayPalRecurringBillingEnabled" />
+      <Setting name="ProductIdsIncludedInRecurringBilling" />
+      <Setting name="IsTFCkatMEVotingDisableDate" />
+      <Setting name="ASAPDubai2014EpisodeId" />
+      <Setting name="ASAPDubai2014Slug" />
+      <Setting name="FPJThematicBundleFeatureIds" />
+      <Setting name="FPJCategoryId" />
+      <Setting name="FPJProductId" />
+      <Setting name="FPJShowIDForSubscribeButton" />
+      <Setting name="NumberOfItemsInEpisodeList" />
+      <Setting name="ABSCBNFreeLiveStreamEpisodeId" />
+      <Setting name="IsABSCBNFreeLiveStreamFreeOnRegistrationEnabled" />
+      <Setting name="ABSCBNFreeLiveStreamProductId" />
+      <Setting name="ABSCBNFreeLiveStreamStartDate" />
+      <Setting name="ABSCBNFreeLiveStreamEndDate" />
+      <Setting name="ABSCBNFreeLiveStreamPackageId" />
+      <Setting name="EmailsAllowedToBypassIPBlock" />
+      <Setting name="ABSCBNFreeLiveStreamSlug" />
+      <Setting name="MainMenuItems" />
+      <Setting name="IsTVERegionBlockingEnabled" />
+      <Setting name="NumberOfItemsInEpisodeListInEpisodePage" />
+      <Setting name="MopayBackURL" />
+      <Setting name="PBBLiveEventEpisodeId" />
+      <Setting name="BayaningFilipinoEpisodeId" />
+      <Setting name="BayaningFilipinoSlug" />
+      <Setting name="PBBLiveStreamFeatureId" />
+      <Setting name="PBBEpisodesFeatureId" />
+      <Setting name="PBBUberFeatureId" />
+      <Setting name="PBBCarouselSlideIds" />
+      <Setting name="PBBBlockedCountryCodes" />
+      <Setting name="TFC20DefaultEpisodeId" />
+      <Setting name="TFC20BayaningFilipinoCategoryId" />
+      <Setting name="TFC20CoverItLiveAltCastCode" />
+      <Setting name="IsMopayListenerEnabled" />
+      <Setting name="MopayCID" />
+      <Setting name="MopayPassword" />
+      <Setting name="MopayDeliveryConfirmationURL" />
+      <Setting name="IsMobilePreviewEnabled" />
+      <Setting name="FeatureItemsPageSize" />
+      <Setting name="GenericListContentSize" />
+      <Setting name="FPJParentCategoryId" />
+      <Setting name="ShowsCategoryIds" />
+      <Setting name="NewsCategoryIds" />
+      <Setting name="MoviesCategoryIds" />
+      <Setting name="LiveCategoryIds" />
+      <Setting name="UXHomePageCarouselId" />
+      <Setting name="PremiumProductIds" />
+      <Setting name="LiteProductIds" />
+      <Setting name="MovieProductIds" />
+      <Setting name="MenuExCategory" />
+      <Setting name="UXAlaCarteParentCategoryIds" />
+      <Setting name="GigyaSealKey" />
+      <Setting name="DefaultProductIdOffering" />
+      <Setting name="UXAnonymousHomepageCarouselId" />
+      <Setting name="UXReviewParentCategoryId" />
+      <Setting name="BCWMHThanksgivingConcertBlockedCountryCodes" />
+      <Setting name="BCWMHThanksgivingConcertSlideIds" />
+      <Setting name="IsHDPlaybackEnabled" />
+      <Setting name="SpecialsCurrentCategoryId" />
+      <Setting name="PremiumTrialPromoId" />
+      <Setting name="PremiumTrialPromoProductId" />
+      <Setting name="LitePromoProductIds" />
+      <Setting name="LiteChurnersPromoId" />
+      <Setting name="TFCtvApiVideoPlaybackUri" />
+      <Setting name="Html5CapableDevicesRegex" />
+      <Setting name="AdultContentCategoryId" />
+      <Setting name="FeaturedCelebSlug" />
+      <Setting name="ProjectAirEpisodeId" />
+      <Setting name="ProjectAirDisplayCategoryId" />
+      <Setting name="ProjectAirCategoryId" />
+      <Setting name="ProjectAirPromoId" />
+      <Setting name="ProjectAirEmailVerificationBodyTemplateUrl" />
+      <Setting name="ProjectAirProgramScheduleChannelIds" />
+      <Setting name="USAllowedCarouselIds" />
+      <Setting name="Promo201410PromoId" />
+      <Setting name="Promo2014ProductIds" />
+      <Setting name="AirRegistrationCompleteTemplateUrl" />
+      <Setting name="premiumProductGroupIds" />
+      <Setting name="Compensation2014PromoId" />
+      <Setting name="SubscriptionProductIds" />
+      <Setting name="SubscriptionProductIds1Month" />
+      <Setting name="SubscriptionProductIds3Month" />
+      <Setting name="SubscriptionProductIds12Month" />
+      <Setting name="Compensation201411ProductId1Month" />
+      <Setting name="Compensation201411ProductId3and12Month" />
+      <Setting name="Compensation201411CategoryId3and12Month" />
+      <Setting name="Compensation201411CategoryId1Month" />
+      <Setting name="Compensatory3DaysProductId" />
+      <Setting name="Compensatory7DaysProductId" />
+      <Setting name="PreBlackPromoProductIds" />
+      <Setting name="PreBlackPromoId" />
+      <Setting name="CAAllowedCarouselIds" />
+      <Setting name="EdsaWoolworthPromoId" />
+      <Setting name="ProjectBlackPromoIds" />
+      <Setting name="ProjectBlackProductIds" />
+      <Setting name="PremiumComplimentary1Month" />
+      <Setting name="SurveyPromoId" />
+      <Setting name="KapitBisigEpisodeId" />
+      <Setting name="KapitBisigSlug" />
+      <Setting name="Xoom2PromoId" />
+      <Setting name="Xoom2FreeProductId" />
+      <Setting name="UseJWPlayer" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Go.Daddy.Secure.Certification.Authority" storeLocation="LocalMachine" storeName="Trust" />
+      <Certificate name="TFC.tv" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+    <Startup priority="-2">
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+    </Startup>
+  </WebRole>
+  <WorkerRole name="TFCtv Background Cache  Updater" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+    </Imports>
+    <LocalResources>
+      <LocalStorage name="Microsoft.WindowsAzure.Plugins.Caching.FileStore" sizeInMB="1000" cleanOnRoleRecycle="false" />
+      <LocalStorage name="DiagnosticStore" sizeInMB="5120" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <Setting name="FillCacheDurationInMinutes" />
+      <Setting name="FillCache" />
+      <Setting name="LoopWaitDurationInSeconds" />
+      <Setting name="CategoryIdsToCache" />
+      <Setting name="OfferingId" />
+      <Setting name="ServiceId" />
+      <Setting name="NewsMenuIds" />
+      <Setting name="MoviesMenuIds" />
+      <Setting name="EntertainmentMenuIds" />
+      <Setting name="MenuNames" />
+      <Setting name="LiveMenuIds" />
+      <Setting name="Iptv2Entities" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+      <Setting name="EngagementsEntities" />
+      <Setting name="SocialComment" />
+      <Setting name="SocialRating" />
+      <Setting name="SocialShare" />
+      <Setting name="SocialLike" />
+      <Setting name="SocialLove" />
+      <Setting name="FreeTvCategoryId" />
+      <Setting name="entertainmentCategoryId" />
+      <Setting name="AssetsBaseUrl" />
+      <Setting name="DefaultCurrency" />
+      <Setting name="isGetPackagesFillCacheEnabled" />
+      <Setting name="IPTV2EntitiesConnectionString" />
+      <Setting name="EngagementsEntitiesConnectionString" />
+      <Setting name="MenuMovieBlurbLength" />
+      <Setting name="MenuShowBlurbLength" />
+      <Setting name="EpisodeImgPath" />
+      <Setting name="ShowImgPath" />
+      <Setting name="BlankGif" />
+      <Setting name="isSynapseFillCacheEnabled" />
+      <Setting name="CelebrityImgPath" />
+      <Setting name="LatestShowsFeatureId" />
+      <Setting name="FeaturedCelebritiesFeatureId" />
+      <Setting name="CarouselImgPath" />
+      <Setting name="CarouselEntertainmentId" />
+      <Setting name="isPackageFeatureCacheEnabled" />
+      <Setting name="isSubscriptionCacheEnabled" />
+      <Setting name="IsSynapseFillCategoriesWithShowsEnabled" />
+      <Setting name="IsSynapseFillHomepageEnabled" />
+    </ConfigurationSettings>
+    <Startup priority="-2">
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+    </Startup>
+  </WorkerRole>
+  <WorkerRole name="TfcTvCacheWorkerRole" vmsize="Medium">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="Caching" />
+    </Imports>
+    <LocalResources>
+      <LocalStorage name="Microsoft.WindowsAzure.Plugins.Caching.FileStore" sizeInMB="1000" cleanOnRoleRecycle="false" />
+      <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <Startup priority="-2">
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+      <Task commandLine="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe install" executionContext="elevated" taskType="simple" />
+    </Startup>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Caching.ClientDiagnosticLevel" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="DataCache" protocol="tcp" port="10200" localPort="10201" />
+    </Endpoints>
+  </WorkerRole>
+  <WorkerRole name="TfcTvSessionCacheWorkerRole" vmsize="Medium">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="Caching" />
+    </Imports>
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <Endpoints>
+      <InputEndpoint name="SessionCache" protocol="tcp" port="10100" localPort="10101" />
+    </Endpoints>
+  </WorkerRole>
+</ServiceDefinition>

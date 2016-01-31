@@ -1,0 +1,76 @@
+﻿@model List<MyMainMenu>
+<div class="menuImg">
+    <ul id="menuNavigation">
+        @{
+            foreach (MyMainMenu mainmenu in Model)
+            {
+                var id = String.Format("{0}Btn", mainmenu.name.ToLower());
+                var menuName = mainmenu.name.ToUpper();
+            <li id="@String.Format("menu{0}", mainmenu.name)" class="menuItem">
+                @if (!Request.Browser.IsMobileDevice)
+                {
+                    <a href="@String.Format("/{0}", mainmenu.name.Replace("Entertainment", ""))" class="catBtn" id="@id">
+                        @menuName</a>
+                }
+                else
+                { 
+                    <a class="catBtn" id="@id">
+                        @menuName</a>
+                }
+            </li>
+            }
+        }
+    </ul>
+    <div id="invisibleMenuTree">
+        <ul class="ulAllMenu">
+            @{
+                foreach (MyMainMenu mainmenu in Model)
+                {
+                <li id="@String.Format("limenu{0}", mainmenu.name)" class="liAllMenu hideElement" rel="@mainmenu.name">
+                    <div id="@String.Format("dgenre{0}", mainmenu.name)" class="revSubMenu hideElement" >
+                        <div class="menuListHeader">
+                            <h3>
+                                GENRE</h3>
+                        </div>
+                        <ul class="ulGenre" id="@String.Format("ulGenremenu{0}", mainmenu.name)">
+                            @foreach (MyMenu menu in mainmenu.menu)
+                            {
+                                <li class="liGenre" id ="@menu.id"><a href="@String.Format("/Category/List/{0}", menu.id)" class="catBtn" >
+                                    @menu.name</a>
+                                    <div class="dShows hideElement">
+                                        <div class="menuListHeader menuListheaderPixelbar">
+                                            <h3>
+                                                FEATURED SHOWS</h3>
+                                        </div>
+                                        <ul class="ulShows" id="@String.Format("ulShows{0}", menu.id)">
+                                            @foreach (MyMenuShows show in menu.shows)
+                                            {
+                                                <li rel="@show.id" class="liShows"><a href="@String.Format("/Show/Details/{0}/{1}", show.id, MyUtility.GetSlug(show.name))" class="catBtn" >
+                                                    <span>@show.name</span></a>
+                                                    <div id = "@show.id" class="dEpisodes hideElement">
+                                                    </div>
+                                                </li>
+                                            }
+                                            @{
+                                            var linkText = "All " + menu.name;
+                                            switch (mainmenu.name)
+                                            {
+                                                case "Entertainment":
+                                                case "News": linkText = linkText + "Shows"; break;
+                                                case "Movies": linkText = linkText + "Movies"; break;
+                                            }
+                                                <div class="moreLink">
+                                                    <a href="/Category/List/@menu.id" class="more">@linkText &raquo;</a></div>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

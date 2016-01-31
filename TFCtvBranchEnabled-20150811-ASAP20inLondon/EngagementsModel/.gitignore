@@ -1,0 +1,7 @@
+# git ignore file
+*.dll
+*.pdb
+
+# Build Folders
+bin
+obj

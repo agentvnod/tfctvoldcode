@@ -1,0 +1,42 @@
+﻿@{    
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var listofCategoryIds = MyUtility.StringToIntList(GlobalConfig.LiveCategoryIds);
+    string href = String.Format("{0}/Category/Live", GlobalConfig.baseUrl);
+    string title = "Live - TFC.tv";
+    ViewBag.Title = title;
+    ViewBag.DaxName = "tfc-tv:live:home";
+}
+<section class="page_pagebody home480">
+    <div class="container category_section">
+        <!-- page top -->
+        <h1 class="page_title">
+            LIVE</h1>
+        <div class="page_description">
+            Perfect for those who wish to stay informed at the very moment newsworthy events
+            happen. Catch the latest news in Filipino or English through live video streaming
+            of the Philippines' top news channels, DZMM Teleradyo and ANC. And get to chat live
+            with other Kapamilyas and share your views and opinion through these special programs
+            streamed live every week especially for you.
+        </div>
+        @{foreach (var i in listofCategoryIds)
+          { 
+            @Html.Action("BuildSectionCategory", new { id = i, featureType = "show", pageSize = 12 })  
+          }
+        }
+    </div>
+</section>
+<br />
+<br />
+<!-- end page body section -->
+@section MetaTags{
+    <meta name="description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

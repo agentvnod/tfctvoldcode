@@ -1,0 +1,219 @@
+﻿@model List<HomepageFeatureItem>
+@{    
+    string containerId = ViewBag.containerId;
+    string featureType = ViewBag.FeatureType;
+    string sectionTitle = ViewBag.SectionTitle;
+    string linkSlug = String.Empty;
+    int id = ViewBag.id;
+    int pageSize = ViewBag.pageSize;
+    bool removeShowAll = false;
+    bool isFeature = false;
+    if (ViewBag.RemoveShowAll != null)
+    {
+        removeShowAll = ViewBag.RemoveShowAll;
+    }
+    if (ViewBag.IsFeature != null)
+    {
+        isFeature = ViewBag.IsFeature;
+    }
+    if (ViewBag.LinkSlug != null)
+    {
+        linkSlug = ViewBag.LinkSlug;
+    }
+    CelebrityContentType contentType = CelebrityContentType.SHOWS;
+    if (ViewBag.ContentType != null)
+    {
+        contentType = ViewBag.ContentType;
+    }
+    IPTV2_Model.CategoryClass category = null;
+    if (ViewBag.CategoryClass != null)
+    {
+        category = ViewBag.CategoryClass;
+    }
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {
+          if (String.Compare(featureType, "episode", true) == 0)
+          {   
+    <!-- 4 column section -->
+    <div class="row movie_sec episode_sec @containerId" id="@containerId">
+        <div class="sec_header">
+            <!-- head -->
+            @{if (!removeShowAll)
+              {
+                  string href = isFeature ? String.Format("/Episode/List/{0}/{1}", id, linkSlug) : "#";
+                <h2 class="section_title show_all hide480">
+                    <a href="@href">Show All</a></h2>
+              }
+            }
+            <h2 class="section_title clearfix">
+                @ViewBag.SectionTitle</h2>
+        </div>
+        <!-- end head -->
+        <!-- section body -->
+        <div class="row sec_body">
+            @{foreach (var item in Model)
+              {
+                  string href = String.Format("/Episode/Details/{0}/{1}", item.id, item.slug);
+                  string title = String.Format("{0}, {1}", item.show_name, item.airdate);
+                <!-- video with poster & name -->
+                <div class="movie col-md-3 col-sm-4 col-xs-6">
+                    <div class="video_cover">
+                        <!-- play button cover -->
+                        <a href="@href" title="@title">
+                            <img src="@Html.Raw(item.imgurl)" class="feature_thumb" height="152" width="270" title="@Html.Raw(item.blurb.Ellipsis(80))" alt="@title"/>
+                            <div class="video_play_button">
+                            </div>
+                        </a>
+                        <!-- play button -->
+                    </div>
+                    <!-- END play button cover -->
+                    <a href="@href" title="@title">
+                        <h3 class="small_header">
+                            @Html.Raw(item.show_name)
+                        </h3>
+                        <p class="date">
+                            <span class="glyphicon glyphicon-time hide480"></span>&nbsp;@Html.Raw(item.airdate)</p>
+                    </a>
+                </div>
+                <!-- end video poster -->                 
+              }
+            }
+            <!-- load more for mobile -->
+            <div class="movie_m col-md-3 col-sm-4 col-xs-6 show480">
+                <a href="#" class="loadMore">
+                    @Html.ImageBuilder(Url, "ux/mobile_loadmore.jpg", new { alt = "Load more episodes" })
+                </a>
+            </div>
+            <!-- end load more for mobile -->
+        </div>
+        <!-- end section body -->
+        <div class="sec_footer hide480" id="@String.Format("{0}-loadmore", containerId)">
+            <!-- load more -->
+            <a href="#" class="loadMore">load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more episodes" })
+            </a>
+        </div>
+    </div>
+          }
+          else if (String.Compare(featureType, "show", true) == 0)
+          { 
+    <!-- 6 column section -->
+    <div class="row movie_sec @containerId" id="@containerId">
+        <div class="sec_header">
+            <!-- section head -->
+            @{if (!removeShowAll)
+              {
+                  string href = isFeature ? String.Format("/Show/List/{0}/{1}", id, linkSlug) : String.Format("/Category/List/{0}/{1}", category.CategoryId, MyUtility.GetSlug(category.Description));
+                <h2 class="section_title show_all hide480">
+                    <a href="@href">Show All</a></h2>
+              }
+            }
+            <h2 class="section_title clearfix">
+                @ViewBag.SectionTitle</h2>
+        </div>
+        <!-- end head -->
+        <!-- section body -->
+        <div class="row sec_body">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      foreach (var item in Model)
+                      {
+                          string href = String.Format("/Show/Details/{0}/{1}", item.id, item.slug);
+                          string item_name = item.name;
+                          if (contentType == CelebrityContentType.EPISODES)
+                          {
+                              href = String.Format("/Episode/Details/{0}/{1}", item.id, item.slug);
+                              item_name = String.Format("{0}, {1}", item.name, item.airdate);
+                          }
+                <!-- video with poster & name -->
+                <div class="movie col-md-2 col-sm-3 col-xs-6">
+                    <a href="@href" title="@item_name">
+                        <img src="@Html.Raw(item.imgurl)" alt="@Html.Raw(item_name)"></a>
+                    <h3 class="small_header">
+                        <a href="@href" title="@item_name">@Html.Raw(item_name)</a>
+                    </h3>
+                </div>
+                <!-- end video poster -->
+                      }
+                  }
+              }
+            }
+            <!-- load more for mobile -->
+            <div class="movie_m col-md-3 col-sm-4 col-xs-6 show480">
+                <a href="#" class="loadMore">
+                    @Html.ImageBuilder(Url, "ux/mobile_loadmoreP.jpg", new { alt = "Load more episodes" })
+                </a>
+            </div>
+        </div>
+        <!-- end section body -->
+        <div class="sec_footer hide480">
+            <!-- load more -->
+            <a href="#" class="loadMore">load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = String.Format("Load more {0}", featureType) })
+            </a>
+        </div>
+    </div>  <!-- end 6 column section -->
+          }
+          else if (String.Compare(featureType, "celebrity", true) == 0)
+          {   
+    <!-- 6 column section -->
+    <div class="row movie_sec @containerId">
+        <div class="sec_header">
+            <!-- section head -->
+            @{if (!removeShowAll)
+              {
+                  string href = isFeature ? String.Format("featured-celebrities") : "#";
+                <h2 class="section_title show_all hide480">
+                    <a href="@href">Show All</a></h2>
+              }
+            }
+            <h2 class="section_title clearfix">
+                @ViewBag.SectionTitle</h2>
+        </div>
+        <!-- end head -->
+        <!-- section body -->
+        <div class="row sec_body">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      foreach (var item in Model)
+                      {
+                          string href = String.Format("/Celebrity/Profile/{0}/{1}", item.id, item.slug);
+                <!-- video with poster & name -->
+                <div class="movie col-md-2 col-sm-3 col-xs-6">
+                    <a href="@href" title="@item.name">
+                        <img src="@Html.Raw(item.imgurl)" alt="@Html.Raw(item.name)"></a>
+                    <h3 class="small_header">
+                        <a href="@href" title="@item.name">@Html.Raw(item.name)</a>
+                    </h3>
+                </div>
+                <!-- end video poster -->
+                      }
+                  }
+              }
+            }
+            <!-- load more for mobile -->
+            <div class="movie_m col-md-3 col-sm-4 col-xs-6 show480">
+                <a href="#" class="loadMore">
+                    @Html.ImageBuilder(Url, "ux/mobile_loadmoreP.jpg", new { alt = "Load more episodes" })
+                </a>
+            </div>
+        </div>
+        <!-- end section body -->
+        <div class="sec_footer hide480">
+            <!-- load more -->
+            <a href="#" class="loadMore">load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = String.Format("Load more {0}", featureType) })
+            </a>
+        </div>
+    </div>  <!-- end 6 column section -->
+          }
+      }
+  }
+}

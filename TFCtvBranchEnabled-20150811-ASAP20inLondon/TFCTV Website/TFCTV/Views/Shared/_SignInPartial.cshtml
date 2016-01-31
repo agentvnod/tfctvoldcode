@@ -1,0 +1,238 @@
+﻿@model TFCTV.Models.SignInModel
+@{    
+    string sslUrl = String.Empty;
+    if (GlobalConfig.IsSSLEnabled)
+    {
+        Uri url = Request.Url;
+        sslUrl = url.GetLeftPart(UriPartial.Authority).Replace("http://", "https://");
+        if (Request.IsLocal)
+        {
+            sslUrl = String.Format("https://{0}", url.Host);
+        }
+    }            
+}
+<div id="loginPanel">
+    <div class="leftPanel floatLeft">
+        <div class="breakStandard">
+        </div>
+        <div class="loginHeader">
+            Sign in using your Social Network:
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div id="socializePanel">
+        </div>
+    </div>
+    <div id="sipanel" class="rightPanel">
+        <div class="loginHeader">
+            Or sign in using your TFC.tv credentials
+        </div>
+        <div class="breakSmall">
+        </div>
+        <div id="result" class="errors">
+        </div>
+        <div id="credentials">
+            <form id="signinform" method="post" action="@Url.Action("_Login", "User")">
+            <div class="editor-row-label">
+                <div class="editor-label floatLeft">
+                    @Html.LabelFor(m => m.EmailAddress)
+                </div>
+            </div>
+            <div>
+                <div class="editor-row">
+                    @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email Address...", @class = "tbox" })
+                    <span class="errstatus"></span>
+                </div>
+            </div>
+            <div class="editor-row-label">
+                <div class="editor-label floatLeft">
+                    @Html.LabelFor(m => m.Password)
+                </div>
+            </div>
+            <div class="editor-row">
+                <div>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password...", @class = "tbox" })
+                    <br />
+                    <span class="errstatus"></span>
+                </div>
+            </div>
+            <div class="editor-row">
+                <div>
+                    @Html.ActionLink("Forgot your password? Click here.", "ForgotPassword", null, new { id = "forgotpassword", @class = "default_link" })</div>
+                <div>
+                    @Html.ActionLink("Account not verified? Click here.", "ResendVerification", null, new { id = "forgotpassword", @class = "default_link" })</div>
+            </div>
+            <div class="editor-row2 tve-row">
+                <div class="breakStandard">
+                </div>
+                <input id="submit" class="btnimage signinbtn floatLeft" type="submit" value="Login" />
+                <div id="sb-load" class="side-button-loader padLeftStandard">
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="fppanel" class="rightPanel hideElement">
+        <div class="loginHeader">
+            Enter your email address
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div id="fresult" class="errors">
+        </div>
+        <div id="fcredentials">
+            <form id="forgotpasswordform" method="post" action="@Url.Action("_ForgotPassword", "User")">
+            <div class="editor-row-label">
+                <div class="editor-label floatLeft">
+                    @Html.LabelFor(m => m.EmailAddress)
+                </div>
+            </div>
+            <div>
+                <div class="editor-row">
+                    @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email Address...", @class = "tbox" })
+                    <span class="errstatus"></span>
+                </div>
+            </div>
+            <div class="editor-row">
+                <div class="breakSmall">
+                </div>
+                <input id="fsubmit" class="btnimage submitbtn floatLeft" type="submit" value="Login" />
+                <div id="fsb-load" class="side-button-loader padLeftStandard">
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="ajax-loading-signin" class="hideElement">
+    <div id="spanner-signin">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "20", height = "20" })
+        <span id="spanner-text-signin" class="spanner-text-valign"></span>
+    </div>
+</div>
+<script type="text/javascript">
+    function redirectToH() {
+        window.location.reload();
+    }
+
+    $(document).ready(function () {
+        $.ajaxSetup({ async: false });
+        $.getScript('@Html.ContentBuilder(Url, "scripts/jquery.validate.min.js")').done(function () {
+            var signinvalidator = $('form#signinform').validate({
+                rules: {
+                    EmailAddress: {
+                        required: true,
+                        email: true
+                        //,remote: '/Users/IsEmailTaken'
+                    },
+                    Password: { required: true }
+                },
+                messages: {
+                    EmailAddress: {
+                        required: 'Please fill in the mandatory fields.',
+                        minlength: 'Please enter a valid email address.'
+                        //, remote: $.format('{0} already exists')
+                    },
+                    Password: { required: 'Please fill up the mandatory fields.' }
+                },
+                errorPlacement: function (error, element) {
+                    $('#result').empty();
+                    error.appendTo($.find('#result'));
+                }
+            });
+
+            $('form#signinform').submit(function (event) {
+                event.preventDefault();
+                if (signinvalidator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $('#sb-load').html($('#ajax-loading-signin').html());
+                    $('#result').empty();
+                    $.post('@sslUrl/User/_Login', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#result').empty();
+                            $('#loginPanel').empty();
+                            $('#ajax-loading-signin #spanner-text-signin').html('<div class="breakStandard"></div>Login successful. Please wait while we redirect you...');
+                            $('#spanner-text-signin').removeClass('spanner-text-valign');
+                            $('#spanner-signin img').addClass('spanner-img-center');
+                            $('#loginPanel').addClass('spanner-center');
+                            $('#loginPanel').html($('#ajax-loading-signin').html());
+//                            _gaq.push(['t2._trackEvent', 'User', 'Login', data.info.toString()]);
+                            if(data.href != null)                                
+                                window.location.href = data.href;                                
+                            else
+                                setTimeout('reloadPage()', 1000);
+                        }
+                        else {
+                            $('#result').html(data.errorMessage);
+                            $('#sb-load').empty();
+                        }
+                    });
+                }
+            });
+
+            $('#forgotpassword').click(function () {
+                $('#sipanel').hide();
+                $('#fppanel').show();
+                var fpvalidator = $('form#forgotpasswordform').validate({
+                    rules: {
+                        EmailAddress: {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        EmailAddress: {
+                            required: 'Please fill in the mandatory fields.',
+                            minlength: 'Please enter a valid email address.'
+                        }
+                    },
+                    errorPlacement: function (error, element) {
+                        $('#fresult').empty();
+                        error.appendTo($.find('#fresult'));
+                    }
+                });
+
+                $('form#forgotpasswordform').submit(function (event) {
+                    event.preventDefault();
+                    if (fpvalidator.numberOfInvalids() == 0) {
+                        $('#fresult').empty();
+                        var form = $(this);
+                        $('#fsb-load').html($('#ajax-loading-signin').html());
+                        $.post('@sslUrl/User/_ForgotPassword', form.find('input').serialize(), function (data) {
+                            if (data.errorCode == 0) {                            
+                                $('#loginPanel').empty();
+                                $('#ajax-loading-signin #spanner-text-signin').html('<div class="breakStandard"></div>' + data.errorMessage + ' Please wait while we redirect you...');
+                                $('#spanner-text-signin').removeClass('spanner-text-valign');
+                                $('#spanner-signin img').addClass('spanner-img-center');
+                                $('#loginPanel').addClass('spanner-center');
+                                $('#loginPanel').html($('#ajax-loading-signin').html());
+                                @{
+                                    if (GlobalConfig.IsTVERegistrationEnabled)
+                                    {
+                                        if (MyUtility.IsTVEAllowedInCurrentCountry())
+                                        {
+                                            if (MyUtility.isTVECookieValid())
+                                            {
+                                <text>
+                                window.location.href = '@GlobalConfig.TVERegistrationPage';
+                                </text>
+                                            }
+                                        }
+                                    }
+                                }
+                                setTimeout('reloadPage()', 1000);
+                            }
+                            else {
+                                $('#fresult').html(data.errorMessage);
+                                $('#fsb-load').empty();
+                            }
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+        var params = { container: 'socializePanel', width: 200, height: 80, style: 'fullLogo', enabledProviders: providers, lastLoginIndication: 'welcome', isLogin: isLogin };
+        tfc.Social.Login(params);
+    });
+</script>

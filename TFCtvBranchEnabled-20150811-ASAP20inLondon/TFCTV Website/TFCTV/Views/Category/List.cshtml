@@ -1,0 +1,139 @@
+﻿@model List<CategoryShowListDisplay>
+@{
+
+    ViewBag.Title = String.Format("{0} - TFC.tv", ViewBag.Category);
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    int ctr = 1;
+
+    IPTV2_Model.Category model = ViewBag.CategoryModel;
+
+    string parentCategories = ContextHelper.GetShowParentCategories(model.CategoryId);
+    if (String.IsNullOrEmpty(parentCategories)) { parentCategories = model.CategoryId.ToString(); }
+    else { parentCategories = String.Format("{0},{1}", parentCategories, model.CategoryId); }
+    
+    
+}
+<div id="mainBody">
+    <div id="LeaderAdBlock" class="floatRight" style="margin-top: 20px; margin-bottom: 10px;">
+        <!-- TFCtv_Leaderboard_728x90 -->
+        <script type='text/javascript'>
+            GA_googleFillSlot("TFCtv_Leaderboard_728x90");
+        </script>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="left sectionHeaderTitle">
+                    @ViewBag.Category</div>
+                <div id="sort_container">
+                    Sort by: <a href="#" id="stitle" class="sort-option">Title</a> | <a href="#" id="sloved"
+                        class="sort-option">Most Loved</a> | <a href="#" id="sairdate" class="sort-option">Most
+                            Recent</a> | <a href="#" id="srated" class="sort-option">Highest Rating</a>
+                    | <a href="#" id="scommented" class="sort-option">Most Commented</a> @*<label>
+                        Sort By:
+                    </label>
+                    <select id="sort_selection" name="Select Option">
+                        <option value="title">Title</option>
+                        <option value="year">Airing Date</option>
+                        <option value="love">Most Loved</option>
+                        <option value="likes">Most Commented</option>
+                        <option value="rated">Most Rated</option>
+                    </select>*@
+                </div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="latestShows_bodyContainer">
+            @foreach (CategoryShowListDisplay item in Model)
+            {
+                <div class="showItem_preview ht_265" stitle="@item.Description" sloved="@item.TotalLoves" scommented="@item.TotalLikes" srated="@item.Ratings" sairdate="@item.AiredDate.Value.ToString("yyyy")">
+                    <div class="showItem_image">
+                        <a href="/Show/Details/@item.CategoryId">
+                            @{if (!String.IsNullOrEmpty(item.ImagePoster))
+                              {
+                                <img src="@String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, item.CategoryId, item.ImagePoster)" alt="" width="150" height="200" />
+                              }
+                              else
+                              {
+                                <img src="@String.Format("{0}{1}", GlobalConfig.AssetsBaseUrl, GlobalConfig.BlankGif)" alt="" width="150" height="200" />
+                              }
+                            }
+                        </a>
+                    </div>
+                    <div class="showItem_info">
+                        <span class="showTitle"><a href="/Show/Details/@item.CategoryId">@item.Description</a></span>
+                        <br />
+                        <span class="showAirdate">Year: @item.AiredDate.Value.ToString("yyyy")</span>
+                        <br />
+                        @*<span class="showCast">Cast: <a href="#"></a>
+                            <br />
+                        </span>*@
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+@*                  if (ctr % 5 == 0)
+                              {
+                <div class="clear">
+                </div>
+                <br />
+
+                              }
+                              { ctr++; }*@
+            }
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+    <link rel="canonical" href="@String.Format("{2}/Category/List/{0}/{1}", model.CategoryId, ViewBag.dbSlug, GlobalConfig.baseUrl)" />
+}
+@section JScript{
+    @Html.JsBuilder(Url, "jquery.tinysort.min.js")
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type="text/javascript">
+        GA_googleAddAttr("Category", "@parentCategories");
+    </script>
+    <script type='text/javascript'>
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_Leaderboard_728x90");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+    <!-- End of Google Ads -->
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        //        $('#sort_selection').change(function () {
+        //            var selected = $(this).find("option:selected").val()
+        //            if (selected == "love" || selected == "likes" || selected == "rated") {
+        //                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: $(this).find("option:selected").val(), order: 'desc' });
+        //            }
+        //            else {
+        //                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: $(this).find("option:selected").val() });
+        //            }
+        //        });
+
+        var sortopt = ["sloved", "scommented", "srated", "sairdate"];
+        $('.sort-option').click(function () {
+            var isFound = $.inArray(this.id, sortopt);
+            if (isFound >= 0)
+                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: this.id, order: 'desc' });
+            else
+                $('#latestShows_bodyContainer>div.showItem_preview').tsort({ attr: this.id });
+            return false;
+        });
+    </script>
+}

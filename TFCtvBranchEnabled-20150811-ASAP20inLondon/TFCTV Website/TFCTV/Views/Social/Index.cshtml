@@ -1,0 +1,152 @@
+﻿@model TFCTV.Models.SignInModel
+@{
+    ViewBag.Title = "Link Your Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="breakLarge">
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div id="socialPanel">
+            <div class="leftPanel floatLeft">
+                <div class="sheader">
+                    Link to an existing account
+                </div>
+                <div class="subtext">
+                    I have an existing TFC.tv account. Please link my account on TFC.tv with my social
+                    networking<br />
+                    account for an easy, quick and secure access.
+                </div>
+                <div id="signUpContainer">
+                    <div class="breakLarge">
+                    </div>
+                    <div id="lresult">
+                    </div>
+                    <form id="linkform" method="post" action="/Social/_Link">
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.EmailAddress)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email Address...", @class = "textbox" })
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { placeholder = "Password...", @class = "textbox" })
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            &nbsp;
+                        </div>
+                        <div>
+                            <input id="SignUpSubmit" class="btnimage1 linkbtn" type="submit" value="" />
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="or-bar floatLeft" style="position: relative; top: -15px;">@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE---LINKING-CONFIRMATION---Copy_03.png")
+            </div>
+            <div class="rightPanel floatLeft" style="position: relative; left: 40px; margin-left: -50px;">
+                <div class="sheader">
+                    Create a new account
+                </div>
+                <div class="subtext">
+                    I do not have an existing TFC.tv account.<br />
+                    I would like to create a new TFC.tv account with<br />
+                    information from my social networking account.
+                </div>
+                <div>
+                    <div id="registrationContainer" style="padding-left: 40px;">
+                        <a href="/User/RegisterViaTFC">@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE---LINKING-CONFIRMATION---Copy_23.png")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="linkloading" class="hideElement">
+        <div id="lspanner">
+            @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", width = "18", height = "18" })
+            <span id="lspannertext" class="spannertextvalign">linking account...</span>
+        </div>
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "social.css")}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+
+        function redirectToProfile() {
+            window.location = '/';
+        }
+        $(document).ready(function () {
+            var err = '';
+            var linkvalidator = $('form#linkform').validate({
+                rules: {
+                    EmailAddress: {
+                        required: true,
+                        email: true
+                    },
+                    Password: { required: true }
+                },
+                messages: {
+                    EmailAddress: {
+                        required: 'Please enter a valid email address.',
+                        minlength: 'Please enter a valid email address.'
+                    },
+                    Password: { required: 'Please fill up the mandatory fields.' }
+                },
+                errorPlacement: function (error, element) {
+                    $('#lresult').empty();
+                    error.appendTo($.find('#lresult'));
+                    err = $('#lresult').text();
+                    var result = $.find('#lresult');
+                    $(result).append('<div class="breakStandard"></div>');
+                }
+            });
+
+            $('form#linkform').submit(function (event) {
+                event.preventDefault();
+                if (linkvalidator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $('#lresult').html($('#ajaxloading').html());
+                    $.post('/User/_Link', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#linkloading #lspannertext').html('<div class="breakStandard"></div>' + data.errorMessage + ' Please wait while we redirect you...');
+                            $('#lspannertext').removeClass('spannertextvalign');
+                            $('#lspanner img').addClass('centerspannerimg');
+                            $('#socialPanel').addClass('centerspanner');
+                            $('#socialPanel').html($('#linkloading').html());
+                            if (data.href != null)
+                                window.location.href = href;
+                            else
+                                setTimeout('redirectToProfile()', 5000);
+                        }
+                        else
+                            $('#lresult').html(data.errorMessage + '<div class="breakStandard"></div>');
+                    });
+                }
+                else {
+                    if (err == '')
+                        $('#lresult').html(data.errorMessage + '<div class="breakStandard"></div>');
+                }
+            });
+        });        
+    </script>
+}

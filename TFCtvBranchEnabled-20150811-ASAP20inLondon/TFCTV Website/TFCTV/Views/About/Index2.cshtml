@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "About Us - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    ViewBag.DaxName = "tfc-tv:about-us";
+}
+<!--  About page body -->
+<section class="page_pagebody termsCond_pagebody">
+    <div class="container">
+        <h1 class="page_title clearfix">
+            ABOUT TFC.TV</h1>
+        <p>
+            TFC.tv is an internet-based video-on-demand and live broadcast service featuring
+            television programs and video content from the Philippines' leading channel ABS-CBN.
+            It provides exclusive access to ABS-CBN's latest news, entertainment & movies that
+            can be viewed using your laptop, personal computer or mobile devices.
+        </p>
+        <p>
+            TFC.tv serves Filipinos worldwide by making movies, news and entertainment programs
+            available on demand whenever and wherever they want it.
+        </p>
+        <h2>
+            WHY GO TFC.TV?</h2>
+        <p>
+            <b>EASY</b> - You need only two things: a laptop or computer and a broadband connection!
+            Watching popular ABS-CBN Shows is just a click away!
+        </p>
+        <p>
+            <b>ON DEMAND</b> – All shows are archived so no need to worry about missing your
+            favorite shows or teleserye episode.</p>
+        <p>
+            <b>CONVENIENT</b> – TFC.TV's online content is available anytime, everyday. Schedule
+            your ABS-CBN binge-watching whenever you feel like it.
+        </p>
+        <p>
+            <b>AUTHENTIC QUALITY</b> – You are assured of 100% original program uploads with
+            excellent audio/ video quality.</p>
+        <div class="corporate_logos ib_center">
+            @Html.ImageBuilder(Url, "ux/tvTFC.png", new { alt = "TFC" })
+            @Html.ImageBuilder(Url, "ux/tvLN.png", new { alt = "Lifestyle Network" })
+            @Html.ImageBuilder(Url, "ux/tvCOG.png", new { alt = "Cinema One Global" })
+            @Html.ImageBuilder(Url, "ux/tvBRO.png", new { alt = "Bro" })
+            @Html.ImageBuilder(Url, "ux/tvANC.png", new { alt = "ANC" })
+            @Html.ImageBuilder(Url, "ux/tvDZMMteleradyo.png", new { alt = "DZMM Teleradyo" })            
+        </div>
+    </div>
+    <!-- END container -->
+</section>
+<!-- END About page body -->
+@section MetaTags{
+    <meta name="description" content="TFC.tv is an internet-based video-on-demand and live broadcast service featuring television programs and video content from the Philippines' leading channel ABS-CBN. It provides exclusive access to ABS-CBN’s latest news, entertainment & movies that can be viewed using their laptop or personal computer." />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="TFC.tv" />
+    <meta property="og:description" content="TFC.tv is an internet-based video-on-demand and live broadcast service featuring television programs and video content from the Philippines' leading channel ABS-CBN. It provides exclusive access to ABS-CBN’s latest news, entertainment & movies that can be viewed using their laptop or personal computer." />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

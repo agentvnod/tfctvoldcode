@@ -1,0 +1,87 @@
+﻿@model List<HomepageFeatureItem>
+@{    
+    int ctr = 1;
+    int active = 1;
+    int itemPerSlide = ViewBag.itemPerSlide;
+    string divId = ViewBag.containerId;
+    string featureType = ViewBag.featureType;
+    bool isContainerActive = ViewBag.isContainerActive;
+    bool targetSameWindow = ViewBag.targetSameWindow;
+    string customLink = ViewBag.customLink;
+    bool useDescription = ViewBag.useDescription;
+}
+<div id="@divId" class="@String.Format("dsFeatureItems{0}", isContainerActive ? String.Empty : " hideElement")">
+    <div class="itemListBody">
+        <div class="wrapper">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      foreach (var item in Model)
+                      {
+                          if (ctr == 1)
+                          {
+                <text>@Html.Raw(String.Format("<ul class=\"dsitemListing{0}\">", active == 1 ? String.Empty : " slideHidden"))</text>
+                              active = 0;
+                          }                  
+                <text>
+                @Html.Raw("<li>")
+                @if (String.Compare(featureType, "episode") == 0)
+                {
+                    string href = String.Format("/Episode/Details/{0}/{1}", item.id, item.slug);
+                    <div class="imgShowThumbBg"> <a href="@href"> <img src="@Html.Raw(item.imgurl)"
+                    height="98" width="151" title="@Html.Raw(item.blurb.Ellipsis(80))" alt="@Html.Raw(String.Format("{0}, {1}", item.show_name, item.airdate))"/></a>
+                    </div>
+                    <div class="itemInfo"> <span class="showTitle"><a href="@href" title="@String.Format("{0}, {1}", item.show_name, item.airdate)">@Html.Raw(item.show_name.Ellipsis(20))<br
+                    /> <span class="white-norm">@Html.Raw(item.airdate)</span></a></span></div>
+                }
+                else if (String.Compare(featureType, "show") == 0)
+                {
+                    string href = String.Format("/Show/Details/{0}/{1}", item.id, item.slug);
+                    <div class="imgShowThumbBg_1"> <a href="@href"><img src="@Html.Raw(item.imgurl)"
+                    width="178" height="246" title="@Html.Raw(item.blurb.Ellipsis(80))" alt="@Html.Raw(item.name)"
+                    /></a> </div><div class="itemInfo_1"> <span class="showTitle"><a href="@href" title="@item.name">@Html.Raw(item.name.Ellipsis(20))</a></span><br
+                    /> <span class="white"></span></div>                
+                }
+                else if (String.Compare(featureType, "person") == 0)
+                {
+                    string href = String.Format("/Celebrity/Profile/{0}/{1}", item.id, item.slug);
+                    <div class="imgShowThumbBg_1"> <a href="@href"><img src="@Html.Raw(item.imgurl)"
+                    width= "178" height="246" title="@Html.Raw(item.blurb.Ellipsis(80))" alt="@Html.Raw(item.name)"/></a>
+                    </div><div> <span class="showTitle"><a href="@href" title="@item.name">@Html.Raw(item.name)</a></span><br
+                    /> <span class="white"></span></div>
+                }
+                else if (String.Compare(featureType, "video") == 0)
+                {
+                    string href = String.Format("/Episode/Details/{0}/{1}", item.id, item.slug);
+                    if (!String.IsNullOrEmpty(customLink))
+                    {
+                        href = String.Format("/{2}/{0}/{1}", item.id, item.slug, customLink);
+                    }                    
+                    <div class="chartItem"><div class="chartImage"> <div class="chartImageHolder"><a
+                    href="@href" @Html.Raw(String.Format("{0}", targetSameWindow ? String.Empty : "target=\"_blank\""))><img
+                    src="@Html.Raw(item.imgurl)" height="98" width="151" title="@Html.Raw(item.blurb.Ellipsis(80))"
+                    alt=""/></a></div> </div><div class="chartInfo"> <div class="chartInfoTitle"> <a
+                    href="@href" @Html.Raw(String.Format("{0}", targetSameWindow ? String.Empty : "target=\"_blank\""))>
+                    @(useDescription ? Html.Raw(item.description) : Html.Raw(String.Format("{0}<br/>{1}", item.show_name, item.airdate)))
+                    </a></div> <div class="chartInfoDetails">@Html.Raw(item.blurb.Ellipsis(80))</div>
+                </div><div class="clear"></div></div><div class="clear"></div>
+                
+                }
+                @Html.Raw("</li>")
+                </text>                                  
+                if (ctr == itemPerSlide)
+                {
+                <text>@Html.Raw("</ul>")</text>
+                    ctr = 0;
+                }
+                ctr++;
+                      }
+                  }
+              }                                     
+            }
+        </div>
+        <div class="clear breakStandard">
+        </div>
+    </div>
+</div>

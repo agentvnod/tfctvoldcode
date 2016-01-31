@@ -1,0 +1,27 @@
+﻿@model List<JsonFeatureItem>
+@{ 
+    int PlaylistId = ViewBag.FeaturedId;
+}
+@if (Model != null)
+{
+    foreach (JsonFeatureItem item in Model)
+    {
+    
+    <li epId="@item.EpisodeId" @*show="@item.ShowDescription" episode="@item.EpisodeDescription" *@>
+    <div class="playlistClip">
+        <a href="/freetv/@PlaylistId/@item.EpisodeId" class="clip" epId="@item.EpisodeId">
+            <div class="related-clip" id="@item.EpisodeId">
+                <img src="@item.EpisodeImageUrl" title="@item.Blurb" border="0" height="68" width="101"/>
+                @*<span class="now-playing"></span>*@
+            </div>
+            <div class="playlist-box-text">
+                <span class="text-info-title blue">@item.ShowName </span>
+                <br />
+                <span class="white">@item.EpisodeAirDate </span>
+            </div>
+        </a>
+    </div>
+    </li>
+  
+    }
+}

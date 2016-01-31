@@ -1,0 +1,273 @@
+﻿@{
+    ViewBag.Title = "Payment Confirmation - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IPTV2_Model.SubscriptionProduct product = null;
+    int productId = 0;
+    if (ViewBag.Product != null)
+    {
+        product = (IPTV2_Model.SubscriptionProduct)ViewBag.Product;
+        productId = product.ProductId;
+    }
+
+
+    IPTV2_Model.PaymentTransaction transaction = null;
+    if (ViewBag.Transaction != null)
+    {
+        transaction = (IPTV2_Model.PaymentTransaction)ViewBag.Transaction;
+    }
+
+    DateTime EntitlementEndDate = DateTime.Now;
+    if (ViewBag.EntitlementEndDate != null)
+    {
+        EntitlementEndDate = ViewBag.EntitlementEndDate;
+    }
+
+    var ReturnUrl = "/";
+    if (!String.IsNullOrEmpty(ViewContext.HttpContext.Request["ReturnUrl"]))
+    {
+        ReturnUrl = HttpUtility.UrlDecode(ViewContext.HttpContext.Request["ReturnUrl"]);
+    }
+    
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                SUBSCRIPTION &raquo; PAYMENT &raquo; CONFIRMATION
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("PaymentSelection", new { pselection = ViewBag.PaymentMode, id = productId })
+                </div>
+                <div id="confirm-main">
+                    <div class="breakLarge">
+                    </div>
+                    <div class="purchase-summary fold-top">
+                        <div class="breakStandard">
+                        </div>
+                        <div class="title">
+                            Thank you for subscribing!</div>
+                        <div class="breakLarge">
+                        </div>
+                        <div class="breakSmall">
+                        </div>
+                        <div class="breakdown">
+                            @{if (productId > 0)
+                              {
+                                <div class="highlight">
+                                    @Html.Raw(product.Name)</div>
+                                <div class="small-text description">
+                                    <p>
+                                        Congratulations! You have just bought @Html.Raw(product.Name).<br />
+                                        <br />
+                                        Please see the details of your transaction below</p>
+                                </div>
+                              }
+                              else
+                              { 
+                                <div class="small-text description">
+                                    <p>
+                                        Congratulations! You have just bought a product from TFC.tv.<br />
+                                        <br />
+                                    </p>
+                                </div>
+                              }
+                            }
+                            <div class="white-bg">
+                                <div class="small-text description">
+                                    @{if (productId > 0)
+                                      { 
+                                        <div>
+                                            <div class="left-row">
+                                                Transaction id</div>
+                                            <div>
+                                                @transaction.TransactionId
+                                            </div>
+                                        </div>
+                                        <div class="breakSmall clear">
+                                        </div>
+                                        <div>
+                                            <div class="left-row">
+                                                Transaction date</div>
+                                            <div>
+                                                @transaction.Date.ToLongDateString()
+                                            </div>
+                                        </div>
+                                        <div class="breakSmall clear">
+                                        </div>
+                                        <div>
+                                            <div class="left-row">
+                                                Amount</div>
+                                            <div>
+                                                @String.Format("{0} {1}", transaction.Currency, transaction.Amount.ToString("F"))
+                                            </div>
+                                        </div>
+                                        <div class="breakSmall clear">
+                                        </div>
+                                        <div>
+                                            <div class="left-row">
+                                                Payment mode</div>
+                                            <div>
+                                                @ContextHelper.GetTransactionType(transaction)
+                                            </div>
+                                        </div>
+                                        <div class="breakSmall clear">
+                                        </div>
+                                        <div>
+                                            <div class="left-row">
+                                                Reference</div>
+                                            <div>
+                                                @transaction.Reference
+                                            </div>
+                                        </div>
+                                      }
+                                      else
+                                      { 
+                                        <div>
+                                            To see the details of your transaction, kindly visit your @Html.ActionLink("Transaction page", "Transactions", new { controller = "User" }, new { @class = "oalink" }).
+                                        </div>
+                                      }
+                                    }
+                                    <div class="breakSmall clear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear breakStandard">
+                            </div>
+                            <div class="clear breakStandard">
+                            </div>
+                            @{if (productId > 0)
+                              { 
+                                <div class="small-text">
+                                    Your @ViewBag.PackageName will now expire on <span class="underline">@EntitlementEndDate.ToString("MMMM dd, yyyy")</span>.</div>
+                              }                              
+                            }
+                            <div class="breakStandard">
+                            </div>
+                            @*<div>
+                                <a href="#">Read more about the package</a></div>*@
+                            <div class="clear breakLarge">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="btn-container">
+                        <a href="@Html.Raw(ReturnUrl)" class="nbutton nbutton-anchor">Return to watch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $('#payment-type a').removeAttr('href');
+    </script>
+    <!-- Google Code for Purchase Conversion Page -->
+    <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 981607038;
+var google_conversion_language = "en";
+var google_conversion_format = "2";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "1hXkCPqU_wYQ_sSI1AM";
+var google_conversion_value = 0;
+var google_remarketing_only = false;
+/* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: none;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/981607038/?value=0&amp;label=1hXkCPqU_wYQ_sSI1AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- Google Code for TFC.tv Germany Price-Drop Test - Successful Purchase E3.99 Conversion Page -->
+    <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1015737467;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "CiIhCI2x_gcQ-9ir5AM";
+var google_conversion_value = 0;
+var google_remarketing_only = false;
+/* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=CiIhCI2x_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- Google Code for TFC.tv Italy Free Test - Successful Purchase Conversion Page -->
+    <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1015737467;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "V7kTCP2y_gcQ-9ir5AM";
+var google_conversion_value = 0;
+var google_remarketing_only = false;
+/* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=V7kTCP2y_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- Google Code for TFC.tv Taiwan Free Test - Successful Purchase Conversion Page -->
+    <script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1015737467;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "xkTJCO20_gcQ-9ir5AM";
+var google_conversion_value = 0;
+var google_remarketing_only = false;
+/* ]]> */
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=xkTJCO20_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6008907869710';
+        fb_param.value = '0.00';
+        fb_param.currency = 'USD';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6008907869710&amp;value=0&amp;currency=USD" /></noscript>
+    <script type="text/javascript">
+        $(document).ready(function () { $('iframe').css('position', 'absolute'); }); 
+    </script>
+}

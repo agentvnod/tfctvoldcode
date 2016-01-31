@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VideoEngagementsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="VideoEngagementsModelStoreContainer">
+          <EntitySet Name="ChannelPlay" EntityType="VideoEngagementsModel.Store.ChannelPlay" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EpisodePlay" EntityType="VideoEngagementsModel.Store.EpisodePlay" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="YouTubePlay" EntityType="VideoEngagementsModel.Store.YouTubePlay" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="ChannelPlay">
+          <Key>
+            <PropertyRef Name="ChannelPlayId" />
+          </Key>
+          <Property Name="ChannelPlayId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="int" Nullable="false" />
+          <Property Name="ChannelId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodePlay">
+          <Key>
+            <PropertyRef Name="EpisodePlayId" />
+          </Key>
+          <Property Name="EpisodePlayId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="int" Nullable="false" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+          <Property Name="AssetId" Type="int" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Length" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="StartPosition" Type="int" Nullable="false" />
+          <Property Name="IsPreview" Type="bit" Nullable="false" />
+          <Property Name="StreamType" Type="int" />
+        </EntityType>
+        <EntityType Name="YouTubePlay">
+          <Key>
+            <PropertyRef Name="YouTubePlayId" />
+          </Key>
+          <Property Name="YouTubePlayId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="int" Nullable="false" />
+          <Property Name="YouTubeId" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VideoEngagementsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="VideoEngagementsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChannelPlays" EntityType="VideoEngagementsModel.ChannelPlay" />
+          <EntitySet Name="EpisodePlays" EntityType="VideoEngagementsModel.EpisodePlay" />
+          <EntitySet Name="YouTubePlays" EntityType="VideoEngagementsModel.YouTubePlay" />
+        </EntityContainer>
+        <EntityType Name="ChannelPlay">
+          <Key>
+            <PropertyRef Name="ChannelPlayId" />
+          </Key>
+          <Property Name="ChannelPlayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ChannelId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodePlay">
+          <Key>
+            <PropertyRef Name="EpisodePlayId" />
+          </Key>
+          <Property Name="EpisodePlayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="Int32" Nullable="false" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="AssetId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Type="Int32" Name="StartPosition" Nullable="false" />
+          <Property Type="Boolean" Name="IsPreview" Nullable="false" />
+          <Property Type="Int32" Name="StreamType" />
+        </EntityType>
+        <EntityType Name="YouTubePlay">
+          <Key>
+            <PropertyRef Name="YouTubePlayId" />
+          </Key>
+          <Property Name="YouTubePlayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayTypeId" Type="Int32" Nullable="false" />
+          <Property Name="YouTubeId" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Duration" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VideoEngagementsModelStoreContainer" CdmEntityContainer="VideoEngagementsEntities">
+          <EntitySetMapping Name="ChannelPlays"><EntityTypeMapping TypeName="VideoEngagementsModel.ChannelPlay"><MappingFragment StoreEntitySet="ChannelPlay">
+            <ScalarProperty Name="ChannelPlayId" ColumnName="ChannelPlayId" />
+            <ScalarProperty Name="PlayTypeId" ColumnName="PlayTypeId" />
+            <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+            <ScalarProperty Name="Duration" ColumnName="Duration" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="EpisodePlays"><EntityTypeMapping TypeName="VideoEngagementsModel.EpisodePlay"><MappingFragment StoreEntitySet="EpisodePlay">
+            <ScalarProperty Name="StreamType" ColumnName="StreamType" />
+                <ScalarProperty Name="IsPreview" ColumnName="IsPreview" />
+                <ScalarProperty Name="StartPosition" ColumnName="StartPosition" />
+                <ScalarProperty Name="EpisodePlayId" ColumnName="EpisodePlayId" />
+            <ScalarProperty Name="PlayTypeId" ColumnName="PlayTypeId" />
+            <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+            <ScalarProperty Name="Duration" ColumnName="Duration" />
+            <ScalarProperty Name="Length" ColumnName="Length" />
+            <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+            <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="YouTubePlays"><EntityTypeMapping TypeName="VideoEngagementsModel.YouTubePlay"><MappingFragment StoreEntitySet="YouTubePlay">
+            <ScalarProperty Name="YouTubePlayId" ColumnName="YouTubePlayId" />
+            <ScalarProperty Name="PlayTypeId" ColumnName="PlayTypeId" />
+            <ScalarProperty Name="YouTubeId" ColumnName="YouTubeId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+            <ScalarProperty Name="Duration" ColumnName="Duration" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="VideoEngagementsModel">
+        <EntityTypeShape EntityType="VideoEngagementsModel.ChannelPlay" Width="1.5" PointX="0.75" PointY="0.75" Height="2.172587890625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoEngagementsModel.EpisodePlay" Width="1.5" PointX="2.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoEngagementsModel.YouTubePlay" Width="1.5" PointX="4.875" PointY="1" Height="2.1725878906249996" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

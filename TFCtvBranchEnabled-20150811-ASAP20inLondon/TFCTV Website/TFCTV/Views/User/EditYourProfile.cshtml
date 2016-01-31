@@ -1,0 +1,401 @@
+﻿@model IPTV2_Model.User
+@{
+    ViewBag.Title = "Edit Your Profile - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:edit-profile";
+
+    List<IPTV2_Model.Country> cList = null;
+    if (ViewBag.ListOfCountries != null)
+    {
+        cList = ViewBag.ListOfCountries;
+    }
+
+    List<IPTV2_Model.State> cState = null;
+    if (ViewBag.ListOfStates != null)
+    {
+        cState = ViewBag.ListOfStates;
+    }
+
+    string login_email = String.Empty;
+    string first_name = String.Empty;
+    string last_name = String.Empty;
+    string CountryCode = GlobalConfig.DefaultCountry;
+    string City = String.Empty;
+    string State = String.Empty;
+    string uid = String.Empty;
+    string provider = String.Empty;
+    Maxmind.Location location = null;
+    if (ViewBag.location != null)
+    {
+        location = ViewBag.location;
+        CountryCode = location.countryCode;
+        City = location.city;
+        State = location.regionName;
+    }
+
+    if (Model != null)
+    {
+        login_email = Model.EMail;
+        first_name = Model.FirstName;
+        last_name = Model.LastName;
+        City = Model.City;
+        State = Model.State;
+        CountryCode = Model.CountryCode;
+    }
+
+    TransactionReturnType ErrorMessage = null;
+    TFCTV.Helpers.UserData userData = new TFCTV.Helpers.UserData() { IsExternalSharingEnabled = "true,false", IsInternalSharingEnabled = "true,false", IsProfilePrivate = "false" };
+    bool IsExternalSharingEnabled = false;
+    bool IsInternalSharingEnabled = false;
+    bool IsProfilePrivate = false;
+    List<RecurringBillingDisplay> recurringBilling = null;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+        if (ViewBag.RecurringBilling != null)
+        {
+            recurringBilling = ViewBag.RecurringBilling;
+        }
+        if (ViewBag.UserData != null)
+        {
+            userData = ViewBag.UserData;
+            if (!String.IsNullOrEmpty(userData.IsExternalSharingEnabled))
+            {
+                if (userData.IsExternalSharingEnabled.Contains("true") || userData.IsExternalSharingEnabled.Contains("on"))
+                {
+                    IsExternalSharingEnabled = true;
+                }
+            }
+            else
+            {
+                IsExternalSharingEnabled = true;
+            }
+            if (!String.IsNullOrEmpty(userData.IsInternalSharingEnabled))
+            {
+                if (userData.IsInternalSharingEnabled.Contains("true") || userData.IsInternalSharingEnabled.Contains("on"))
+                {
+                    IsInternalSharingEnabled = true;
+                }
+            }
+            else
+            {
+                IsInternalSharingEnabled = true;
+
+            }
+            if (!String.IsNullOrEmpty(userData.IsProfilePrivate))
+            {
+                if (userData.IsProfilePrivate.Contains("true") || userData.IsProfilePrivate.Contains("on"))
+                {
+                    IsProfilePrivate = true;
+                }
+            }
+            else { IsProfilePrivate = false; }
+        }
+        else
+        {
+            IsExternalSharingEnabled = true;
+            IsInternalSharingEnabled = true;
+            IsProfilePrivate = false;
+        }
+    }
+    catch (Exception) { }
+
+        
+}
+<!--  EDIT PROFILE page body -->
+<section class="page_pagebody editProfile_pagebody">
+    <div class="container">
+        <h1 class="page_title">
+            EDIT YOUR PROFILE</h1>
+        <form method="post" role="form" action="@Url.Action("_EditUserProfile", "User", null, "http")">
+        <!-- form  -->
+        <!-- account info -->
+        @Html.AntiForgeryToken()
+        <div class="account_info changepass_pagebody">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-12">
+                    <h3 class="subtitle">
+                        Account Information</h3>
+                    <!-- page subtitle -->
+                </div>
+            </div>
+            @{if (ErrorMessage != null)
+              {                     
+                <div class="row">
+                    <!-- Error msg / row -->
+                    <div class="col-md-7 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+                        <div class="alert alert-danger">
+                            <a class="close" data-dismiss="alert">x</a> @ErrorMessage.StatusMessage
+                        </div>
+                    </div>
+                </div>  <!-- END  Error msg / row -->              
+              }                  
+            }
+            <div class="row form-group">
+                <!-- 1st line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="email">
+                        Email Address</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <input class="form-control" type="email" value="@Model.EMail" disabled>
+                </div>
+            </div>
+            <!-- END line / row -->
+            <div class="row form-group">
+                <!-- 2nd line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="currentPass">
+                        Password</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    &nbsp;&nbsp; <a href="@Url.Action("ChangePassword", "User")">Change Password</a></div>
+            </div>
+            <!-- END 2nd line / row -->
+            <div class="row form-group">
+                <!-- 3rd line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="fname">
+                        First Name</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <input class="form-control" type="text" name="first_name" value="@first_name">
+                </div>
+            </div>
+            <!-- END 3rd line / row -->
+            <div class="row form-group">
+                <!-- 4th line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="lname">
+                        Last Name</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <input class="form-control" type="text" name="last_name" value="@last_name">
+                </div>
+            </div>
+            <!-- END 4th line / row -->
+            <div class="row form-group">
+                <!-- 5th line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="city">
+                        City</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <input class="form-control" type="text" name="city" value="@Html.Raw(City)">
+                </div>
+            </div>
+            <div class="row form-group">
+                <!-- 6th line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="state">
+                        State</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12" id="stateCont">
+                </div>
+            </div>
+            <!-- END 6th line / row -->
+            <div class="row form-group">
+                <!-- 7th line / row -->
+                <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1 col-xs-12">
+                    <label for="country">
+                        Country</label></div>
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <select class="form-control" id="country" type="password" name="country">
+                        @{if (cList != null)
+                          {
+                              if (cList.Count() > 0)
+                              {
+                                  foreach (var item in cList)
+                                  { 
+                            <option value="@item.Code"@String.Format("{0}", String.Compare(CountryCode, item.Code, true) == 0 ? " selected" : String.Empty)>@item.Description
+                            </option>
+                                  }
+                              }
+                          }
+                        }
+                    </select>
+                </div>
+            </div>
+            <!-- END 6th line / row -->
+            <div class="border">
+                &nbsp
+            </div>
+            <!-- border -->
+        </div>
+        <!-- END account info -->
+        <!-- Social manage and privacy -->
+        <div class="social_privacy">
+            <div class="row">
+                <!-- left part -->
+                <div class="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-xs-12 sleft">
+                    <h3 class="subtitle">
+                        Manage Social & Privacy</h3>
+                    <!-- page subtitle -->
+                    <p>
+                        Manage your connections! Add a Social network to your current profile.</p>
+                    <div id="addConnectionsPanel">
+                    </div>
+                    <!-- end select social  -->
+                </div>
+                <!-- end left part -->
+                <div class="col-md-5 col-sm-6 col-xs-12 sright">
+                    <!-- right part -->
+                    <h3 class="subtitle">
+                        Default Privacy Settings</h3>
+                    <!-- page subtitle -->
+                    <p>
+                        Manage how your activities on TFC.tv are shared publicly. Select from below the
+                        options you are comfortable using:</p>
+                    <div class="privacy_select">
+                        <!-- select privacy  -->
+                        <p>
+                            @Html.CheckBox("internal_share", IsExternalSharingEnabled)<label for="privacy1">I want
+                                to automatically share my TFC.tv activities on TFC.tv page.</label></p>
+                        <p>
+                            @Html.CheckBox("external_share", IsExternalSharingEnabled)<label for="privacy2">I want
+                                to automatically share my TFC.tv activities on the social networking accounts I
+                                have linked to my TFC.tv account.</label></p>
+                        <p>
+                            @Html.CheckBox("private_profile", IsProfilePrivate)<label for="privacy3">I want to keep
+                                my TFC.tv Profile page private.</label></p>
+                    </div>
+                    <!-- end select privacy  -->
+                </div>
+                <!-- END right part -->
+            </div>
+            <!-- END row -->
+            <div class="border">
+                &nbsp
+            </div>
+            <!-- border -->
+        </div>
+        <!-- END Social and privacy -->
+        <!-- Manage Subscription -->
+        <div class="subscription_pagebody manage_subscription">
+            <h3 class="subtitle">
+                Manage Subscription Automatic Renewal</h3>
+            <!-- page subtitle -->
+            <!-- Responsive table for Manage Subscriptions -->
+            <div class="table_cont renewal_subscription_table">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <!-- table header -->
+                            <tr>
+                                <th>
+                                    PRODUCT NAME
+                                </th>
+                                <th>
+                                    EXPIRATION DATE
+                                </th>
+                                <th>
+                                    START OF RENEWAL PROCESSING
+                                </th>
+                                <th>
+                                    PAYMENT TYPE
+                                </th>
+                                <th>
+                                    ENABLED
+                                </th>
+                            </tr>
+                        </thead>
+                        <!-- END table header -->
+                        <tbody>
+                            @{if (recurringBilling != null)
+                              {
+                                  if (recurringBilling.Count() > 0)
+                                  {
+                                      foreach (var item in recurringBilling)
+                                      {                                          
+                                <tr>
+                                    <td>
+                                        @item.ProductName
+                                    </td>
+                                    <td>
+                                        @item.EndDate.ToString("MMMM dd, yyyy")
+                                    </td>
+                                    <td>
+                                        @item.NextRun.ToString("MMMM dd, yyyy")
+                                    </td>
+                                    <td>
+                                        @item.PaymentType
+                                    </td>
+                                    <td>
+                                        <input id="@String.Format("rs{0}", item.RecurringBillingId)" type="checkbox" class="rb_status" name="recurring_status" @String.Format("{0}", item.StatusId == GlobalConfig.Visible ? "checked" : String.Empty) />
+                                    </td>
+                                </tr>         
+                                      }
+                                  }
+                              }
+                              else
+                              {
+                                <tr>
+                                    <td colspan="5">
+                                        You do not have any enrolled subscription
+                                    </td>
+                                </tr>
+                              }
+                            }
+                            <!-- table body -->
+                        </tbody>
+                        <!-- END table body -->
+                    </table>
+                    <!-- End table -->
+                </div>
+                <!-- end .table-responsive [responsive table container]-->
+                <div class="sec_footer">
+                    <!-- load more -->
+                    <a href="#" class="loadMore">load more<br>
+                        @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+                </div>
+            </div>
+            <input name="disabled_list" id="disabled_list" type="hidden" />
+            <input name="enabled_list" id="enabled_list" type="hidden" />
+            <!-- end table container -->
+            <div class="submit_sec">
+                <!-- bottom submit section   -->
+                <p>
+                    Click Submit to confirm the change/s made. You may opt to automatically renew your
+                    subscription again on your next transaction.</p>
+                <input class="red_button" type="submit" value="SUBMIT">
+            </div>
+            <!-- END bottom submit section   -->
+        </div>
+        <!-- END Manage Subscription -->
+        </form>
+        <!-- END form -->
+    </div>
+    <!-- END container -->
+</section>
+<!-- END EDIT PROFILE page body -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        var sns_params =
+            {
+                width: 300
+                , height: 250
+                , containerID: 'addConnectionsPanel'
+                , facepilePosition: 'none'
+                , hideGigyaLink: true
+                , showTermsLink: false
+            }
+        gigya.socialize.showEditConnectionsUI(sns_params);
+    </script>
+    <script type="text/javascript">
+        $(document.body).on('change', '.rb_status', function () {
+            disabledObj = []; enabledObj = [];
+            $('.rb_status').map(function () {
+                this.checked ? enabledObj.push(this.id) : disabledObj.push(this.id);
+            });
+            $('#disabled_list').val(disabledObj);
+            $('#enabled_list').val(enabledObj);
+            return false;
+        });
+    </script>
+    @{if (!String.IsNullOrEmpty(State))
+      { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () { $('#state').val("@Html.Raw(State)"); }, 1500);
+            });
+        </script>
+      }
+    }
+}

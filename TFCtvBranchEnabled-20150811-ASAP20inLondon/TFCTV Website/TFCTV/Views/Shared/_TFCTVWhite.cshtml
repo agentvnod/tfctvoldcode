@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />
+    @{if (GlobalConfig.isUAT)
+      {
+        <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+      }
+    }
+    @Html.CssBuilder(Url, "main.9.css")
+    @Html.CssBuilder(Url, "login.css")
+    @Html.CssBuilder(Url, "index.8.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    <script src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+    @{if (GlobalConfig.isUAT || Request.IsLocal)
+      {
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+      }
+      else
+      { 
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+      }
+    }
+    <script type="text/javascript" src="//code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+    @Html.JsBuilder(Url, "jquery.tools/1.2.7/all/jquery.tools.min.js", removeProtocol: true)
+    @Html.JsBuilder(Url, "jquery.pnotify.min.js")
+    @Html.JsBuilder(Url, "helpers.js")
+    @Html.CssBuilder(Url, "jquery.pnotify.default.css")
+    @Html.CssBuilder(Url, "jquery-ui-smoothness.css")
+    @Html.JsBuilder(Url, "common.3.js")
+    <link rel="apple-touch-icon" href="@Html.ContentBuilder(Url, "content/images/touch-icon-iphone.png")"/>
+    @if (IsSectionDefined("Stylesheet"))
+    { @RenderSection("Stylesheet", false)}
+    <!--[if IE 9]>
+    @Html.CssBuilder(Url, "main.ie9.css")
+    <![endif]-->
+    <!--[if lte IE 8]>
+    @Html.CssBuilder(Url, "main.ie8.2.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "main.ie7-1.5.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "index.ie7.1.css")
+    <![endif]-->
+    <!--[if IE 8]>
+    @Html.CssBuilder(Url, "index.ie8.css")
+    <![endif]-->
+    <script type="text/javascript">
+        var tfc = {};
+        var config = {};
+        var apikey = '@GlobalConfig.GSapikey';
+        var providers = '@GlobalConfig.SocialProvidersList';
+        var socializeUrl = '//cdns.gigya.com/JS/socialize.js?apikey=' + apikey;
+        var socialPluginUrl = '@Html.ContentBuilder(Url, "scripts/tfc.social.plugin.3.1.annivpromo.js")';
+    </script>
+    <script type="text/javascript" src="//cdns.gigya.com/JS/socialize.js?apikey=@GlobalConfig.GSapikey">
+        { connectWithoutLoginBehavior: 'alwaysLogin' }
+    </script>
+    @Html.Partial("_GoogleAnalyticsPartial")
+    @{if (GlobalConfig.IsAdditionalCssEnabled)
+      { 
+        @Html.CssBuilder(Url, String.Format("extra.css?{0}", Guid.NewGuid().ToString()))    
+      }
+    }
+    @if (IsSectionDefined("JScript"))
+    { @RenderSection("JScript", false)}
+</head>
+<body>
+    @Html.Partial("_GoogleTagManagerPartial")
+    <div id="bgLeft">
+        <div id="bgRight">
+            @{if (GlobalConfig.IsEffectiveMeasureEnabled)
+              {
+                @Html.Partial("_EffectiveMeasurePartial")
+              }
+            }
+            <div id="page">
+                <div id="topBarContainer">
+                    <div id="topBar">
+                        <a href="/">
+                            @Html.ImageBuilder(Url, "menuBar/menu_logo.png", new { alt = "TFC.tv", title = "TFC.tv", @class = "iconImage" })
+                        </a>
+                        <div id="signIn">
+                            Already have an account? <a class="indexlink" id="signin" href="#">Sign in here</a>.</div>
+                    </div>
+                </div>
+                <div class="mainBody_container">
+                    @RenderBody()
+                    <div class="clear breakStandard">
+                    </div>
+                </div>
+                <!-- end of mainBody -->
+                <div class="clear">
+                </div>
+            </div>
+            @Html.JsBuilder(Url, "jquery.unobtrusive-ajax.min.js")
+            @if (IsSectionDefined("JScriptBottom"))
+            { @RenderSection("JScriptBottom", false)}
+        </div>
+        @{
+            <text>
+            <script type="text/javascript">
+            var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower();
+            </script>
+            </text>
+        }
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.getScript(socialPluginUrl).done(function () {
+                    tfc.Social();
+                    var params = { container: 'registerSocialConnection', width: 212, height: 30, style: 'signInWith', enabledProviders: 'facebook', isLogin: isLogin, buttonSize: 100 };
+                    tfc.Social.Login(params);
+                });
+
+                $('#signin').on('click', function () {
+                    var windowWidth = 650; var windowHeight = 360;
+                    var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                    var windowTop = parseInt((screen.availHeight / 2) - (windowHeight / 2));
+                    var mywindow = window.open("/User/SignIn?ReturnUrl=" + escape(document.location.href), "tfclgnwdw", "menubar=0,resizable=0,width=" + windowWidth + ",height=" + windowHeight + ",left=" + windowLeft + ",top=" + windowTop + ",location=0,scrollbars=0,directories=0,status=1");
+                    mywindow.focus();
+                    return false;
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

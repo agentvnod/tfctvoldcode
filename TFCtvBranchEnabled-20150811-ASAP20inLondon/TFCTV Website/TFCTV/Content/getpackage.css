@@ -1,0 +1,162 @@
+﻿.packageList_container
+{
+    display: inline-block;
+    width: 100%;
+    padding-top: 10px;
+}
+.packageproduct_container
+{
+    height: 58px;
+    text-align: center;
+    width: 227px;
+    display: block;
+}
+.packageitem_container
+{
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 5px;
+    color: #E5E5E5;
+}
+.product_container
+{
+    text-align: left;
+}
+.product_container span
+{
+    padding-left: 9px;
+}
+.clear
+{
+    clear: both;
+}
+.buy
+{
+    float: right;
+}
+.buy a
+{
+    margin-left: 3px;
+    color: #469DF5;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.buy a:hover
+{
+    text-decoration: underline;
+}
+
+.pckgActionBtn
+{
+    cursor: pointer;
+    float: left;
+    width: 112px;
+    text-align: center;
+    height: 20px;
+    background-color: #00162e;
+    padding-top: 5px;
+}
+.full_width
+{
+    width: 227px;
+}
+.updateBtn
+{
+    background-color: #d6660a;
+}
+.updateTopPad
+{
+    padding-top:10px;
+}
+#break
+{
+    float: left;
+    background-color: White;
+    width: 2px;
+}
+.pckgActionBtn a
+{
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    color: White;
+}
+.pckgActionBtn a:hover
+{
+    text-decoration: underline;
+}
+.border_left
+{
+    border-left-style: solid;
+    border-left-color: White;
+    border-bottom-width: thin;
+}
+
+.tooltip
+{
+    height: 100px;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    vertical-align: middle;
+}
+.tooltip_tall
+{
+    padding-top: 22px;
+    background: transparent url('images/tooltip/tooltip_tall.png');
+    height: 170px;
+}
+.exp_date
+{
+    text-align: center;
+    margin-top: -5px;
+    background-color: Black;
+    font-weight: bold;
+}
+.exp_date a
+{
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    color: White;
+}
+.exp_date a:hover
+{
+    text-decoration: underline;
+}
+.prod-left
+{
+    float:left;
+   /* margin-left :20px;*/
+   width:80px;
+   text-align:right;
+   margin-bottom:2px;
+}
+.prod-right
+{  text-align:left;  
+   margin-bottom:2px;
+}
+.prod-left:hover, .prod-right:hover
+{
+    text-decoration: underline;
+}    
+#right_headertitle
+{ 
+    float:right;     
+    color: #49A4FF;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+#right_headertitle:hover
+{
+    text-decoration:underline; 
+}
+
+#pkgSubHeaderTitle
+{
+    float:left;    
+}

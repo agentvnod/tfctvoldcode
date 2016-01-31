@@ -1,0 +1,27 @@
+﻿@model IQueryable<IPTV2_Model.Episode>
+<div class="previewEpisodes">
+    @foreach (var item in Model)
+    {
+        if (!String.IsNullOrEmpty(item.ImageAssets.ImageVideo))
+        {
+        <a class="prevEps" href="@Url.Action("Details", "Episode", new { id = item.EpisodeId })">
+            <img src="@String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, item.EpisodeId, item.ImageAssets.ImageVideo)" width="96", height="74" /></a>
+
+        }
+        else
+        {
+        <a class="prevEps" href="@Url.Action("Details", "Episode", new { id = item.EpisodeId })">
+            <img src="@String.Format("{0}{1}", GlobalConfig.AssetsBaseUrl, GlobalConfig.BlankGif)" width="96", height="74" /></a>
+        }
+        <div class="tooltip2 prevEptooltip">
+            Date Aired: @item.DateAired.Value.ToString("MMM d, yyyy")<br />
+            Description: @MyUtility.Ellipsis(item.Synopsis, 60)
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.prevEps').tooltip({ tipClass: 'tooltip2', effect: 'fade', relative: true, offset: [-60, 0] });
+    });
+
+</script>

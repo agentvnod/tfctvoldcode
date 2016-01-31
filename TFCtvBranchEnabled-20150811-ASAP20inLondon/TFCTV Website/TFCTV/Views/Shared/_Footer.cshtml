@@ -1,0 +1,322 @@
+﻿@using TFCTV.Helpers
+@{
+    bool isTVEUser = false;
+    if (User.Identity.IsAuthenticated)
+    {
+
+        var userId = new Guid(User.Identity.Name);
+        var context = new IPTV2_Model.IPTV2Entities();
+        var user = context.Users.FirstOrDefault(u => u.UserId == userId);
+        if (user != null)
+        {
+            if (user.IsTVEverywhere != null)
+            {
+                isTVEUser = (bool)user.IsTVEverywhere;
+            }
+        }
+    }
+    
+}
+<div id="footer">
+    @*    <div id="footerContainer">
+        <!-- start of footerChannel -->
+        <div class="footerChannel_container">
+            <div id="footerChannel">
+                <div id="footerLinks">
+                    <ul>
+                        <li class="logo">
+                            @Html.ImageBuilder(Url, "logo/footerlogo.png", new { alt = "TFC.tv" })
+                        </li>
+                        <li>@Html.ActionLink("Send us your feedback", "ContactUs", "Home")</li>
+                        <li>@Html.ActionLink("Find A Dealer", "Index", "Find-A-Dealer")</li>
+                        <li>@Html.ActionLink("Terms and Conditions", "TermsAndConditions", "Home")</li>
+                        <li><span style="font-size: 11px;">E-Commerce Law Compliance</span><br />
+                            <a href="/Home/JapanECommerceLawCompliance">English</a> | <a href="/Home/JapanECommerceLawCompliance/JP">
+                                日本語</a></li>
+                        <li>@Html.ActionLink("Help Center", "Index", "Help")</li>
+                        <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
+                        <li><a href="http://ads.tfc.tv">Advertise with Us</a></li>
+                        <li>Follow <a href="http://twitter.com/globaltfctv" target="_blank">@Html.ImageBuilder(Url, "icons/twitter.png", new { alt = "Twitter" })</a>&nbsp;<a
+                            href="http://www.facebook.com/GlobalTFC.tv" target="_blank">@Html.ImageBuilder(Url, "icons/facebook.png", new { alt = "Facebook" })</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="footerContents">
+                    <h5>
+                        <strong>TFC.tv is the digital tambayan of the global Pinoy!</strong></h5>
+                    <p>
+                        Be part of the official online community of The Filipino Channel (TFC) and enjoy
+                        the largest, most up-to-date source on the web
+                        <br />
+                        for free and premium Kapamilya videos. We bring together Filipinos on the internet
+                        to watch, share, and talk about homegrown Kapamilya content they enjoy and love.
+                        We are here to serve and nurture the relationships of Filipinos worldwide</p>
+                    <ul id="channelLogo">
+                        @*<li>
+                            @Html.ImageBuilder(Url, "logo/small_tfctv.png", new { alt = "TFC.tv" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_bro.png", new { alt = "Bro" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_cinema1global.png", new { alt = "Cinema One" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_anc.png", new { alt = "ANC" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_dzmm.png", new { alt = "DZMM" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_dzmm_teleradyo.png", new { alt = "DZMM Teleradyo" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_tambayan.png", new { alt = "Tambayan" })
+                        </li>
+                        @{if (GlobalConfig.IsTVERegistrationEnabled)
+                          { 
+                            <li><a href="/TFCChannel/1860">@Html.ImageBuilder(Url, "tve/logo/tfc3.png", new { alt = "TFC", title = "TFC" })</a>
+                            </li>
+                            <li><a href="/TFCChannel/1866">@Html.ImageBuilder(Url, "tve/logo/ln3.png", new { alt = "Lifestyle Network", title = "Lifestyle Network" })</a>
+                            </li>
+                            <li><a href="/TFCChannel/1862">@Html.ImageBuilder(Url, "tve/logo/cog3.png", new { alt = "Cinema One", title = "Cinema One" })</a>
+                            </li>
+                            <li><a href="/TFCChannel/1861">@Html.ImageBuilder(Url, "tve/logo/bro3.png", new { alt = "BRO", title = "BRO" })</a>
+                            </li>
+                            <li><a href="/TFCChannel/1863">@Html.ImageBuilder(Url, "tve/logo/anc3.png", new { alt = "ANC", title = "ANC" })</a>
+                            </li>                                                                                    
+                            <li><a href="/TFCChannel/1864">@Html.ImageBuilder(Url, "tve/logo/dzmm3.png", new { alt = "DZMM", title = "DZMM" })</a>
+                            </li>
+                          }
+                          else
+                          {                           
+                            <li>@Html.ImageBuilder(Url, "tve/logo/tfc3.png", new { alt = "TFC", title = "TFC" })
+                            </li>
+                            <li>@Html.ImageBuilder(Url, "tve/logo/ln3.png", new { alt = "Lifestyle Network", title = "Lifestyle Network" })
+                            </li>
+                            <li>@Html.ImageBuilder(Url, "tve/logo/cog3.png", new { alt = "Cinema One", title = "Cinema One" })
+                            </li>
+                            <li>@Html.ImageBuilder(Url, "tve/logo/bro3.png", new { alt = "BRO", title = "BRO" })
+                            </li>
+                            <li>@Html.ImageBuilder(Url, "tve/logo/anc3.png", new { alt = "ANC", title = "ANC" })
+                            </li>                                                                                    
+                            <li>@Html.ImageBuilder(Url, "tve/logo/dzmm3.png", new { alt = "DZMM", title = "DZMM" })
+                            </li>
+                          }
+                        }
+                        @*<li><a href="/TFCChannel">@Html.ImageBuilder(Url, "tve/logo/tambayan2.png", new { alt = "Tambayan 101.9", title = "Tambayan 101.9" })</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <!-- end of footerChannel -->
+        <!-- start of footerNav -->
+        <div class="clear breakSmall">
+        </div>
+        <div class="footerNav_container">
+            <div id="footerNav">
+                <ul id="footerNav_list">
+                    @Html.Action("CreateFooterNav", "Footer", new { menuId = GlobalConfig.Entertainment })
+                    @Html.Action("CreateFooterNav", "Footer", new { menuId = GlobalConfig.News })
+                    @Html.Action("CreateFooterNav", "Footer", new { menuId = GlobalConfig.Movies })
+                    @*<li><span class="navTitle">Live</span>
+                        <ul class="liBlock">
+                            <li><a href="#">ANC</a></li>
+                            <li><a href="#">DZMM Teleradyo</a></li>
+                            <li><a href="#">GVV Uncut</a></li>
+                            <li><a href="#">More</a></li>
+                        </ul>
+                    </li>
+                    <li><span class="navTitle">Free TV</span>
+                        <ul class="liBlock">
+                            <li><a href="#">Classic Drama</a></li>
+                            <li><a href="#">Most Popular Clips</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Special Features</a></li>
+                        </ul>
+                    </li>
+                    <li><span class="navTitle">TFC Digital Network</span>
+                        <ul class="liBlock">
+                            <li><a href="#">TFC Global Site</a></li>
+                            <li><a href="#">Balitan America</a></li>
+                            <li><a href="#">Myx USA</a></li>
+                            <li><a href="#">TFC Insider</a></li>
+                        </ul>
+                    </li>
+                    <li><span class="navTitle">TFC in your Living Room</span>
+                        <ul class="liBlock">
+                            <li><a href="#">IPTV</a></li>
+                            <li><a href="#">DTH</a></li>
+                            <li><a href="#">Program Schedules</a></li>
+                            <li><a href="#">Find a Dealer</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end of footerNav -->
+    </div>*@
+    <div id="footerContainerNew">
+        <!-- start of footerChannelNew -->
+        <div class="footerChannelNew_container">
+            <div id="footerChannelNew">
+                <div id="footerAbout">
+                    <h5>
+                        <strong>ABOUT US</strong></h5>
+                    @Html.ImageBuilder(Url, "footer/TFCtvLOGO.png", new { alt = "TFC.tv" })
+                    <p>
+                        <span id="spanTambayan">TFC.tv is the digital tambayan of the global Pinoy!</span></p>
+                    <p>
+                        Be part of the official online community of The Filipino Channel (TFC) and enjoy
+                        the largest, most up-to-date source on the web for free and premium Kapamilya videos.
+                        We bring together Filipinos on the internet to watch, share, and talk about homegrown
+                        Kapamilya content they enjoy and love. We are here to serve and nurture the relationships
+                        of Filipinos worldwide</p>
+                </div>
+                <div id="footerLinksNew">
+                    <ul>
+                        <li>
+                            <h5>
+                                <strong>GET STARTED</strong></h5>
+                        </li>
+                        @*                        <li class="logo">
+                            
+                        </li>*@
+                        @if (!User.Identity.IsAuthenticated)
+                        {   
+                            <li>@Html.ActionLink("Register", "Register", "User")</li>
+                            <li><a href="#" id="signin" rel="#overlay">Sign In</a> </li>
+                        }
+                        else
+                        {
+                            <li><a href="/">Go to Homepage</a></li>
+                            <li><a href="/Profile">Visit My Profile Page</a> </li>                            
+                        }
+                        <li><a href="@Url.Action("Details", "Subscribe")">Subscribe</a></li>
+                        <li>@Html.ActionLink("Find A Dealer", "Index", "Find-A-Dealer")</li>
+                        <li>@Html.ActionLink("Contact Us", "ContactUs", "Home")</li>
+                        <li>@Html.ActionLink("Help Center", "Index", "Help")</li>
+                        <li>Follow <a href="http://twitter.com/globaltfctv" target="_blank">@Html.ImageBuilder(Url, "icons/twitter.png", new { alt = "Twitter", title = "Twitter" })</a>&nbsp;<a
+                            href="http://www.facebook.com/GlobalTFC.tv" target="_blank">@Html.ImageBuilder(Url, "icons/facebook.png", new { alt = "Facebook", title = "Facebook" })</a>&nbsp;<a
+                                href="https://plus.google.com/102097892180281174791" rel="publisher" target="_blank">@Html.ImageBuilder(Url, "icons/google-plus.png", new { alt = "Google+", title = "Google+" })</a>
+                        </li>
+                        <li><a href="http://ads.tfc.tv">Advertise with Us</a></li>
+                        <li id="liLegal">
+                            <h5>
+                                <strong>LEGAL INFO</strong></h5>
+                        </li>
+                        <li>@Html.ActionLink("Terms and Conditions", "TermsAndConditions", "Home")</li>
+                        <li>This site uses cookies. Read more about our @Html.ActionLink("Cookie Policy", "CookiePolicy", "Home")</li>
+                        <li><span style="font-size: 12px;">Compliance to Japan
+                            <br />
+                            E-Commerce Law</span><br />
+                            <a href="/Home/JapanECommerceLawCompliance">English</a> | <a href="/Home/JapanECommerceLawCompliance/JP">
+                                日本語</a></li>
+                    </ul>
+                </div>
+                <div id="footerContentsNew">
+                    <div id="footerLogoContainer">
+                        <h5>
+                            <strong>TFC CHANNELS</strong>
+                        </h5>
+                        <ul id="channelLogoNew">
+                            @*<li>
+                            @Html.ImageBuilder(Url, "logo/small_tfctv.png", new { alt = "TFC.tv" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_bro.png", new { alt = "Bro" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_cinema1global.png", new { alt = "Cinema One" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_anc.png", new { alt = "ANC" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_dzmm.png", new { alt = "DZMM" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_dzmm_teleradyo.png", new { alt = "DZMM Teleradyo" })
+                        </li>
+                        <li>
+                            @Html.ImageBuilder(Url, "logo/small_tambayan.png", new { alt = "Tambayan" })
+                        </li>*@
+                            @{if (GlobalConfig.IsTVERegistrationEnabled && isTVEUser)
+                              { 
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1860">@Html.ImageBuilder(Url, "footer/TFC.tvTFC.png", new { alt = "TFC", title = "TFC" })</a>
+                                </li>
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1866">@Html.ImageBuilder(Url, "footer/TFC.tvLN.png", new { alt = "Lifestyle Network", title = "Lifestyle Network" })</a>
+                                </li>
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1862">@Html.ImageBuilder(Url, "footer/TFC.tvCOG.png", new { alt = "Cinema One", title = "Cinema One" })</a>
+                                </li>
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1861">@Html.ImageBuilder(Url, "footer/TFC.tvBRO.png", new { alt = "BRO", title = "BRO" })</a>
+                                </li>
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1863">@Html.ImageBuilder(Url, "footer/TFC.tvANC.png", new { alt = "ANC", title = "ANC" })</a>
+                                </li>                                                                                    
+                                <li><a class="footerLogoSmall" href="/TFCChannel/1864">@Html.ImageBuilder(Url, "footer/TFC.tvDZMMteleradyo.png", new { alt = "DZMM", title = "DZMM" })</a>
+                                </li>
+                              }
+                              else
+                              {                           
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvTFC.png", new { alt = "TFC", title = "TFC" })
+                                </li>
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvLN.png", new { alt = "Lifestyle Network", title = "Lifestyle Network" })
+                                </li>
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvCOG.png", new { alt = "Cinema One", title = "Cinema One" })
+                                </li>
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvBRO.png", new { alt = "BRO", title = "BRO" })
+                                </li>
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvANC.png", new { alt = "ANC", title = "ANC" })
+                                </li>                                                                                    
+                                <li>@Html.ImageBuilder(Url, "footer/TFC.tvDZMMteleradyo.png", new { alt = "DZMM", title = "DZMM" })
+                                </li>
+                              }
+                            }
+                            @*<li><a href="/TFCChannel">@Html.ImageBuilder(Url, "tve/logo/tambayan2.png", new { alt = "Tambayan 101.9", title = "Tambayan 101.9" })</a>
+                        </li>*@
+                        </ul>
+                    </div>
+                    <div id="footerGenreContainer">
+                        <div class="footerGenre">
+                            <ul class="footerNavNew_list">
+                                @*@Html.Action("CreatefooterNav", "Footer", new { menuId = GlobalConfig.Entertainment })*@
+                                @Html.Action("CreateFooterNavBasedOnMenuGroup", "Footer", new { id = "Entertainment" })
+                            </ul>
+                        </div>
+                        <div class="footerGenre">
+                            <ul class="footerNavNew_list">
+                                @*@Html.Action("CreatefooterNav", "Footer", new { menuId = GlobalConfig.News })*@
+                                @Html.Action("CreateFooterNavBasedOnMenuGroup", "Footer", new { id = "News" })
+                            </ul>
+                        </div>
+                        <div class="footerGenre">
+                            <ul class="footerNavNew_list">
+                                @*@Html.Action("CreatefooterNav", "Footer", new { menuId = GlobalConfig.Movies })*@
+                                @Html.Action("CreateFooterNavBasedOnMenuGroup", "Footer", new { id = "Movies" })
+                            </ul>
+                        </div>
+                        <div class="footerGenre">
+                            <ul class="footerNavNew_list">
+                                @*<li><span class="navTitle">Live</span>
+                                    <ul>
+                                        <li><a href="/Live/Index/TVChannels">TV Channels</a></li>
+                                        <li><a href="/Live/Index/TVPrograms">TV Programs</a></li></ul>
+                                    
+                                </li>*@ @*@Html.Action("CreatefooterNav", "Footer", new { menuId = GlobalConfig.Live })*@
+                                @Html.Action("CreateFooterNavBasedOnMenuGroup", "Footer", new { id = "Live" })
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <!-- end of footerChannelNew -->
+    </div>
+    @*<div class="clear breakStandard">
+    </div>*@
+</div>

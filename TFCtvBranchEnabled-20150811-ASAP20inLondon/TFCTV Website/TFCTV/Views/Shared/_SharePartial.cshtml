@@ -1,0 +1,180 @@
+﻿@model dynamic
+@{
+    var isLoggedIn = User.Identity.IsAuthenticated.ToString().ToLower();
+    string type = String.Empty;
+    object idx = 0;
+
+    int attribActionId = (int)AnniversaryPromo.AnnivPromo_Sharing;
+    string attribDescription = String.Format("You shared a <a href=\"{0}\">link</a>", Request.Url.AbsoluteUri);
+    if (Model is IPTV2_Model.Episode)
+    {
+        var episode = (IPTV2_Model.Episode)Model;
+        try
+        {
+            if (ViewData["episodeShow"] != null)
+            {
+                IPTV2_Model.Show show = (IPTV2_Model.Show)ViewData["episodeShow"];
+                attribDescription = String.Format("You shared <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Compare(episode.EpisodeCode, episode.EpisodeName, true) == 0 ? String.Format("{0} - {1}", show.Description, episode.DateAired.Value.ToString("MMMM d, yyyy")) : episode.EpisodeName);
+            }
+            else
+            {
+                attribDescription = String.Format("You shared an <a href=\"{0}\">episode</a>", Request.Url.AbsoluteUri);
+            }
+        }
+        catch (Exception) { attribDescription = String.Format("You shared an <a href=\"{0}\">episode</a>", Request.Url.AbsoluteUri); }
+    }
+    else if (Model is IPTV2_Model.Show)
+    {
+        var show = (IPTV2_Model.Show)Model;
+        attribDescription = String.Format("You shared <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, show.Description);
+
+    }
+    else if (Model is IPTV2_Model.Celebrity)
+    {
+        var celeb = (IPTV2_Model.Celebrity)Model;
+        attribDescription = String.Format("You shared <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Format("{0} {1}", celeb.FirstName, celeb.LastName));
+    }
+    else { attribDescription = String.Format("You shared <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Format("{0} {1}", Model.Description)); }
+}
+<div id="socialShareContainer" style="position: relative; border: 0px;" class="floatLeft">
+</div>
+<div class="hideElement dcover">
+    @Html.ImageBuilder(Url, "transparent.png", new { width = 55, height = 20, @class = "cover", alt = "", style = "position: absolute; top: 0; left: 0; cursor: pointer;" })
+</div>
+<div id="naformS" class="hideElement">
+    @Html.AntiForgeryToken()
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+</div>
+<script type="text/javascript">    
+    var socializePluginUrl = '@Html.ContentBuilder(Url, "scripts/socialize.1.Promo.js")';    
+    var title = '';
+    var src = '';
+    var url = '@HttpContext.Current.Request.Url.AbsoluteUri';
+    var shareParams = { container: 'socialShareContainer', shareButtons: 'share', showCounts: 'right', isLoggedIn: @isLoggedIn, userAction: null, postUrl: '/SocialEngagement/UpdateReaction', nattributes: null };    
+</script>
+@{if (Model is IPTV2_Model.Episode)
+  {
+      string episode_title = String.Empty;
+      var episode = (IPTV2_Model.Episode)Model;
+      try
+      {
+          if (ViewData["episodeShow"] != null)
+          {
+              IPTV2_Model.Show show = (IPTV2_Model.Show)ViewData["episodeShow"];
+              episode_title = String.Compare(episode.EpisodeCode, episode.EpisodeName, true) == 0 ? String.Format("{0} - {1}", show.Description, episode.DateAired.Value.ToString("MMMM d, yyyy")) : episode.EpisodeName;
+          }
+          else
+          {
+              episode_title = episode.EpisodeName;
+          }
+      }
+      catch (Exception) { episode_title = episode.EpisodeName; }
+
+      type = "episode";
+      idx = episode.EpisodeId;      
+    <text>
+    <script type="text/javascript">
+        title = '@episode_title';
+        src = '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo';
+        var userAction = {
+            description: '@Ajax.JavaScriptStringEncode(episode.Synopsis)',
+            title: title,
+            url: url,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: src
+        }
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Show)
+  {
+      var show = (IPTV2_Model.Show)Model;
+      type = "show";
+      idx = show.CategoryId;
+    <text>
+    <script type="text/javascript">
+        title = '@Model.Description';
+        src = '@GlobalConfig.ShowImgPath@Model.CategoryId/@Model.ImagePoster';
+        var userAction = {
+            description: '@Ajax.JavaScriptStringEncode(show.Blurb)',
+            title: title,
+            url: url,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: src
+        }
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Celebrity)
+  {
+      var celebrity = (IPTV2_Model.Celebrity)Model;
+      type = "celebrity";
+      idx = celebrity.CelebrityId;
+    <text>
+    <script type="text/javascript">
+    
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Channel)
+  {
+      var channel = (IPTV2_Model.Channel)Model;
+      type = "Live";
+      idx = channel.ChannelId;
+      var channelSrc = Html.ContentBuilder(Url, "content/images/channels/" + channel.ChannelId + ".jpg").ToString();
+    <text>
+    <script type="text/javascript">
+        title = '@Model.Description';
+        src = '@channelSrc';
+        var userAction = {
+            description: '@Ajax.JavaScriptStringEncode(channel.Blurb)',
+            title: title,
+            url: url,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: src
+        }
+    </script>
+    </text>
+  }
+  else if (Model is TFCTV.Models.Youtube.YoutubeAPISingleVideoResponse)
+  {
+      var youtube = (TFCTV.Models.Youtube.YoutubeAPISingleVideoResponse)Model;
+      type = "youtube";
+      idx = youtube.data.id;
+      var youtubeSrc = youtube.data.thumbnail.sqDefault;
+    <text>
+    <script type="text/javascript">
+        title = '@youtube.data.title';
+        src = '@youtubeSrc';
+        var userAction = {
+            description: '@Ajax.JavaScriptStringEncode(youtube.data.description)',
+            title: title,
+            url: url,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: src
+        }
+    </script>
+    </text>
+
+  }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        shareParams.userAction = userAction;
+        shareParams.userAction.actorUID = '@User.Identity.Name';
+        shareParams.type = '@type';
+        shareParams.idx = '@idx';
+        shareParams.nattributes = $('#naformS').find('input').serialize();
+        $.getScript(socializePluginUrl).done(function () {
+            tfc.Socialize.Share(shareParams);
+        });
+        $('#socialShareContainer .cover').live('click', function () {
+            tfc.Social.OnSiteLogin();
+        });
+    });
+</script>

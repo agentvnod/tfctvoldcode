@@ -1,0 +1,55 @@
+﻿@model IPTV2_Model.User
+<div id="social-network">
+    <!-- <ul>
+        <li>
+            <img src="../../Content/images/icons/facebook.png" alt="" /></li>
+        <li>
+            <img src="../../Content/images/icons/twitter.png" alt="" /></li>
+    </ul> -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        jQuery.get('/SocialEngagement/GetUserInfo', { uid: '@ViewBag.viewedUserUserId' }, function (response) {
+            //if ("identities" in response) {
+            if (response.hasOwnProperty('identities')) {
+                var html = '<ul>';
+                for (var i = 0; i < response.identities.length; i++) {
+                    var thisIdentity = response.identities[i];
+                    var thisProvider = thisIdentity.provider;
+                    var thisProfileUrl = thisIdentity.profileURL;
+                    if (thisProvider == 'foursquare') {
+                        thisProfileUrl = 'http://foursquare.com/user/' + thisIdentity.providerUID;
+                    }
+                    if (thisProvider == 'facebook' || thisProvider == 'twitter' || thisProvider == 'foursquare') {
+                        html += '<li>';
+                        html += '<a onclick="openSocialSite(\'' + thisProfileUrl + '\');"><img src="@GlobalConfig.AssetsBaseUrl/content/images/icons/' + thisProvider + '.png" alt="" title="' + '@Model.FirstName @Model.LastName' + '" /> <b>View Profile</b></a>';
+                        if (thisProvider == 'facebook') {
+                            html += '<br/><img src="@GlobalConfig.AssetsBaseUrl/content/images/icons/' + thisProvider + '.png" alt="" title="' + '@Model.FirstName @Model.LastName' + '" /><a onclick="openSocialSite(\'http://www.facebook.com/addfriend.php?id=' + thisIdentity.providerUID + '\');"> <b>Add Friend</b></a>';
+                        }
+                        if (thisProvider == 'twitter') {
+                            html += '<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=' + thisIdentity.nickname + '&show_screen_name=false&show_count=false" style="width:300px; height:20px;"></iframe>';
+                            //                            html += '<a href="https://twitter.com/';
+                            //                            html += thisIdentity.nickname + '" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="medium">Follow</a>';
+                        }
+                        html += '</li>';
+
+                    }
+                }
+                html += "</ul>";
+            }
+
+            //html += '</ul>';
+
+            $("#social-network").html(html);
+        }, 'json');
+
+    });
+
+    // twitter script
+    // !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");
+
+    function openSocialSite(url) {
+        $(this).attr("target", '_blank');
+        window.open(url);
+    }
+</script>

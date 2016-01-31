@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = String.Format("TFC.tv cPanel - {0}", "User Management");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    User Management</h2>
+<form id="form1" method="post" action="#">
+<div>
+    <table>
+        <tr>
+            <th>
+                User Id
+            </th>
+            <td>@Html.TextBox("UserId", null, new { placeholder = "Enter User Id here..." })
+            </td>
+            <td colspan="3">
+                <input type="submit" value="Submit" id="cmdSubmit" />
+            </td>
+        </tr>
+    </table>
+</div>
+</form>
+<pre id="utable" class="pt"></pre>
+<br />
+<pre id="gtable" class="pt"></pre>
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () { $('.pt').hide(); });
+
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var id = $('input#UserId').val();
+            $.getJSON('/Ajax/GetUser/' + id, function (data) {
+                output(syntaxHighlight(JSON.stringify(data.user, undefined, 4)), "#utable");
+                output(syntaxHighlight(JSON.stringify(data.gUser, undefined, 4)), "#gtable");
+                $('.pt').show();
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function output(inp, container) {
+            $(container).html(inp);
+        }
+
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+}

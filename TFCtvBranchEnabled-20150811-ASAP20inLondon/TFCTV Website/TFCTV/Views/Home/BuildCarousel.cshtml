@@ -1,0 +1,69 @@
+﻿@model List<JsonCarouselItem>
+@{
+    int active = 1; 
+    int itemPerSlide = ViewBag.itemPerSlide;
+    string divId = ViewBag.containerId; 
+}
+    <div id="@divId">
+        <div class="navigation">
+            <a href="#" class="prev">
+                @Html.ImageBuilder(Url, "carousel/prev.png", new { width = 28, height = 42, alt = "Previous slide" })
+            </a><a href="#" class="next">
+                @Html.ImageBuilder(Url, "carousel/next.png", new { width = 28, height = 42, alt = "Next slide" })
+            </a>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="featureBannerItems">
+            <div class="wrapper">
+                @{if (Model != null)
+                  {
+                      if (Model.Count() > 0)
+                      {
+                          foreach (var item in Model)
+                          {
+                              string href = item.TargetUrl;
+                              string slideId = String.Format("slide-{0}", item.CarouselSlideId);
+                              string className = active == 1 ? "slides" : "slides slideHidden";
+                              string bannerInfoClassName = active == 1 ? "bannerInfo isActive" : "bannerInfo";
+                              active = 0;                        
+                    <div id="@slideId" class="@className">
+                        <a href="@href">
+                            <img width="940" height="300" src="@Html.Raw(item.BannerImageUrl)" title="@Html.Raw(item.Header)" alt="@Html.Raw(item.Header)" />
+                        </a>
+                        <div class="@bannerInfoClassName">
+                            <div class="bInfo">
+                                <span class="title"><a href="@href">@Html.Raw(item.Header)</a></span>
+                                <p>
+                                    @Html.Raw(item.Blurb)</p>
+                                <div class="button">
+                                    <span class="cbtn"><a href="@href">@Html.Raw(item.ButtonLabel)</a></span></div>
+                            </div>
+                        </div>
+                    </div>
+                          }
+                      }
+                  }              
+                }
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    function slideDown() {
+        var id = '#' + this.id;
+        $(id + ' .bannerInfo').delay(300).slideDown('slow');
+    }
+
+    function slideUp() {
+        var id = '#' + this.id;
+        $(id + ' .bannerInfo').css('display', 'none');
+    }
+    $(document).ready(function () {
+        $('.bannerInfo').removeClass("isActive");
+        $('#featureBody .featureBannerItems .wrapper').cycle({ fx: 'scrollHorz', speed: 1000,
+            timeout: 5000, next: '#featureBody .navigation .next', prev: '#featureBody .navigation .prev', pause: 1
+            , before: slideUp, after: slideDown
+        });
+    });
+</script>

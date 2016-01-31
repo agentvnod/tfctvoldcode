@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Pay via Paypal - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    var id = Url.RequestContext.RouteData.Values["id"];
+
+    IPTV2_Model.ProductPrice productPrice = ViewBag.ProductPrice;
+    IPTV2_Model.Product product = ViewBag.Product;
+
+    bool HasError = ViewBag.HasError;
+    var ReturnUrl = HttpUtility.UrlEncode(ViewContext.HttpContext.Request["ReturnUrl"]);
+
+    var priceOfProduct = productPrice.Amount.ToString("F");
+
+    int p3 = ViewBag.SubscriptionDuration;
+    string t3 = ViewBag.SubscriptionDurationType;
+
+    bool IsSubscriptionProduct = ViewBag.IsSubscriptionProduct;
+
+    //var listOfExcludedProductIds = MyUtility.StringToIntList(GlobalConfig.ProductIdsExcludedFromRecurringBilling);
+    var listOfIncludedProductIds = MyUtility.StringToIntList(GlobalConfig.ProductIdsIncludedInRecurringBilling);
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                SUBSCRIPTION &raquo; PAYMENT &raquo; PAYPAL
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("PaymentSelection", new { pselection = "PayPal", id = id })
+                </div>
+                <div id="payment-main">
+                    @{if (!HasError)
+                      { 
+                        <div class="breakLarge">
+                        </div>
+                        <div class="purchase-summary fold-top">
+                            <div class="breakStandard">
+                            </div>
+                            <div class="title">
+                                You are about to buy this product using a PayPal account</div>
+                            <div class="breakLarge">
+                            </div>
+                            <div>
+                                <p>
+                                    Should you choose to continue, please take note of the reminders below</p>
+                                <ol>
+                                    <li>Do not close this browser.</li>
+                                    <li>On the PayPal page, follow the instructions carefully.</li>
+                                    <li>Upon completion of payment, please wait for the Paypal window to auto-close.</li>
+                                </ol>
+                            </div>
+                        </div>
+                          if (GlobalConfig.IsPayPalRecurringBillingEnabled)
+                          {
+                              if (p3 != 0 && !String.IsNullOrEmpty(t3) && IsSubscriptionProduct && listOfIncludedProductIds.Contains(product.ProductId))
+                              {
+                        <text>
+                        <div class="breakStandard">
+                        </div>
+                        <div class="paypal-note">
+                            <div class="breakStandard">
+                            </div>
+                            <div class="title">
+                                IMPORTANT</div>
+                            <div class="breakStandard">
+                            </div>
+                            <div>
+                                By purchasing this subscription, your PayPal account shall be enrolled to Automatic
+                                Renewal. For more information about Automatic Renewal, please click @Html.ActionLink("here", "TermsAndConditions", "Home", null, null, "autorenewal", null, null).
+                                To cancel Automatic Renewal, please visit Edit My Profile Page.
+                            </div>
+                        </div>
+                        </text>
+                              }
+                              if (!IsSubscriptionProduct || !listOfIncludedProductIds.Contains(product.ProductId))
+                              { 
+                        <text>
+                        <form id="form1" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+                        <div class="clear breakSmall">
+                            <input type="hidden" name="cmd" value="_xclick" />
+                            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+                            <input type="hidden" name="item_name" value="@product.Name" />
+                            <input type="hidden" name="amount" value="@priceOfProduct" />
+                            <input type="hidden" name="currency_code" value="@productPrice.CurrencyCode" />
+                            <input type="hidden" name="return" value="@GlobalConfig.PayPalReturnUrl" />
+                            <input type="hidden" name="custom" value="@product.ProductId&@ViewBag.SubscriptionType&@ViewBag.WishlistId&@ViewBag.CurrentProductId&@User.Identity.Name" />
+                            <input type="hidden" name="no_shipping" value="1" />
+                        </div>
+                        <div class="btn-container">
+                            <input type="submit" value="Proceed to PayPal" class="nbutton" /></div>
+                        </form>
+                        </text>
+                              }
+                              else if (p3 != 0 && !String.IsNullOrEmpty(t3) && IsSubscriptionProduct && listOfIncludedProductIds.Contains(product.ProductId))
+                              {
+                        <text>
+                        <form id="form2" target="_blank" method="post" enctype="multipart/form-data"
+                            action="@GlobalConfig.PayPalSubmitUrl">
+                        <div class="clear breakSmall">
+                            <input type="hidden" name="cmd" value="_xclick-subscriptions" />
+                            <input type="hidden" name="business"
+                            value="@GlobalConfig.PayPalBusiness" />
+                            <input type="hidden" name="item_name" value="@product.Name"
+                            />
+                            <input type="hidden" name="amount" value="@priceOfProduct" />
+                            <input type="hidden"
+                            name="currency_code" value="@productPrice.CurrencyCode" />
+                            <input type="hidden"
+                            name="return" value="@GlobalConfig.PayPalReturnUrl" />
+                            <input type="hidden" name="custom"
+                            value="@product.ProductId&@ViewBag.SubscriptionType&@ViewBag.WishlistId&@ViewBag.CurrentProductId&@User.Identity.Name"
+                            />
+                            <input type="hidden" name="a3" value="@priceOfProduct" />
+                            <input type="hidden" name="p3" value="@p3" />
+                            <input type="hidden" name="t3" value="@t3" />
+                            <input type="hidden" name="no_shipping" value="1" />
+                            <input type="hidden" name="src" value="1" />
+                        </div>
+                        <div class="btn-container">
+                            <input type="submit" value="Subscribe via PayPal" class="nbutton" /></div>
+                        </form>
+                        </text>
+                              }
+                          }
+                          else
+                          { 
+                        <text>
+                        <form id="form1" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+                        <div class="clear breakSmall">
+                            <input type="hidden" name="cmd" value="_xclick" />
+                            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+                            <input type="hidden" name="item_name" value="@product.Name" />
+                            <input type="hidden" name="amount" value="@priceOfProduct" />
+                            <input type="hidden" name="currency_code" value="@productPrice.CurrencyCode" />
+                            <input type="hidden" name="return" value="@GlobalConfig.PayPalReturnUrl" />
+                            <input type="hidden" name="custom" value="@product.ProductId&@ViewBag.SubscriptionType&@ViewBag.WishlistId&@ViewBag.CurrentProductId&@User.Identity.Name" />
+                            <input type="hidden" name="no_shipping" value="1" />
+                        </div>
+                        <div class="btn-container">
+                            <input type="submit" value="Proceed to PayPal" class="nbutton" /></div>
+                        </form>
+                        </text>
+                          }
+                        <div class="clear breakLarge">
+                        </div>
+                        <div class="boldText">
+                            Click on the images to know more about PayPal</div>
+                        <div class="clear breakStandard">
+                        </div>
+                        <div class="paypal-logo-1">
+                            <!--PayPal Logo-->
+                            <a href="https://www.paypal.com/webapps/mpp/paypal-popup" title="How PayPal Works"
+                                onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                <img src="//www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" border="0"
+                                    alt="PayPal Logo" /></a>
+                        </div>
+                        <div class="paypal-logo-2">
+                            <!--Secure Payments by PayPal-->
+                            <a href="https://www.paypal.com/webapps/mpp/paypal-popup" title="How PayPal Works"
+                                onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                <img src="//www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg" border="0"
+                                    alt="PayPal Acceptance Mark" width="300" style="margin-top: -15px;" /></a></div>
+                        <div class="clear breakStandard">
+                        </div>
+                      }
+                      else
+                      {
+                        @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                      }
+                    }
+                </div>
+                <div id="payment-summary">
+                    <div class="breakLarge">
+                    </div>
+                    <div class="title">
+                        Summary of Order</div>
+                    <br />
+                    <div id="summary-body">
+                        @Html.Action("SummaryOfOrder", new { id = id, user = ViewBag.User, product = ViewBag.Product, productPrice = ViewBag.ProductPrice })
+                    </div>
+                    @Html.Action("Reminder")
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').submit(function (event) {
+                var form = $(this);
+                window.open('', 'paypalwindow');
+                this.target = 'paypalwindow';
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.try-again').click(function () {
+                location.reload();
+                return false;
+            });
+        });
+    </script>
+    @{if (p3 != 0 && !String.IsNullOrEmpty(t3) && IsSubscriptionProduct && listOfIncludedProductIds.Contains(product.ProductId) && GlobalConfig.IsPayPalRecurringBillingEnabled)
+      {       
+        <script type="text/javascript">
+            $('#payment-summary').css('min-height', '582px');
+        </script>
+      }
+    }
+}

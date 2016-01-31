@@ -1,0 +1,69 @@
+﻿@model GigyaShareObj
+@{
+    string title = Model.title;
+    string img = Model.img;
+    string href = Model.href;
+    string description = Model.description;
+}
+<!-- ShareBar UI -->
+<script type="text/javascript">
+    var _SHARE = 3;
+    var type = "@Model.elementType";
+    var id = eval('@Model.id');
+    var act = new gigya.socialize.UserAction();
+    act.setTitle("@title");
+    act.setLinkBack("@href");
+    act.addMediaItem({ type: 'image', src: '@img', href: '@href' });
+    act.setDescription("@description");
+    act.addActionLink("TFC.tv", "@href");
+
+    function onSendDone(e) {
+        //publish useraction
+        var publishUserAction_params = {
+            userAction: act,
+            scope: 'internal',
+            privacy: 'public',
+            feedID: 'UserAction'
+        };
+        gigya.socialize.publishUserAction(publishUserAction_params);
+        //log action
+        $.post('/Ajax/CreateInteraction', { reactionId: _SHARE, type: type, id: id }, function (data) { });
+    }
+</script>
+@{if (Request.Browser.IsMobileDevice && Request.Browser.ScreenPixelsWidth <= 480)
+{
+    <script type="text/javascript">
+        var showShareBarUI_params =
+        {
+            containerID: "@Model.containerId",
+            shareButtons: "Facebook,Twitter,Messenger,Share,Email",
+            showCounts: "none",
+            userAction: act,
+            deviceType: "auto",
+            iconsOnly: true,
+            grayedOutScreenOpacity: 20,
+            onSendDone: onSendDone,
+            cid: "@title"
+        }
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        var showShareBarUI_params =
+        {
+            containerID: "@Model.containerId",
+            shareButtons: "Facebook-Like,Twitter-Tweet,googleplus-share,Share",
+            showCounts: "top",
+            userAction: act,
+            deviceType: "auto",
+            grayedOutScreenOpacity: 20,
+            onSendDone: onSendDone,
+            cid: "@title"
+        }
+    </script>
+}
+}
+<script type="text/javascript">
+    gigya.socialize.showShareBarUI(showShareBarUI_params);
+</script>

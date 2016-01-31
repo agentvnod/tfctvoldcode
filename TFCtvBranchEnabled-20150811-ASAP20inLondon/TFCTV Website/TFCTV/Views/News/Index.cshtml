@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "News - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <div id="columnLeft">
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div id="featuredItems_latestEpisodes" class="featuredItems">
+                <div class="fullHeader">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "features/latest_full_episodes.png", new { alt = "Latest Full Episodes", title = "Latest Full Episodes" })
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.LatestNewsFullEpisodes, itemPerSlide = 5, containerId = "latestNewsEpisode_container", navigationContainerId = "latestNewsEpisode_navigation" })
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div id="featuredItems_freeTV" class="featuredItems">
+                <div class="fullHeader">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "features/free_tv.png", new { alt = "Free TV", title = "Free TV" })
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.NewsFreeTV, itemPerSlide = 5, containerId = "latestNewsFreeTV_container", navigationContainerId = "latestNewsFreeTV_navigation" })
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+    </div>
+    <div class="clear breakSmall">
+    </div>
+    <div id="areaBottom">
+        <div class="transparentBg">
+            <div id="featuredShows">
+                <div id="featuredItems_featuredShows" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/current_affairs.png", new { alt = "Current Affairs", title = "Current Affairs" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.FeaturedCurrentAffairs, itemPerSlide = 5, containerId = "latestNewsShows_container", navigationContainerId = "latestNewsShows_navigation", featureType = "show" })
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="featuredCelebrities">
+                <div id="featuredItems_featuredCelebrities" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @*<div class="basic_section_header_title" id="shows_full_header_title">Featured Journalists</div>*@
+                                @Html.ImageBuilder(Url, "features/featured_journalist.png", new { alt = "Featured Journalists", title = "Featured Journalists" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", "Home", new { id = GlobalConfig.FeaturedJournalists, itemPerSlide = 5, containerId = "featuredJournalists_container", navigationContainerId = "featuredJournalists_navigation", featureType = "show" })
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ajax-loading" class="hideElement">
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", width = "50", height = "50" })
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "homepage.css")
+    @Html.CssBuilder(Url, "featureditem-1.1.css")
+    @Html.CssBuilder(Url, "news.css")
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $('.itemListing li img[title]').tooltip({ effect: 'fade',
+            onShow: function () {
+                var tip = this.getTip();
+                setTimeout(function () {
+                    tip.hide();
+                }, 10000);
+            }
+        });
+    </script>
+}
+@section featureBody {
+    <div id="featureBody">
+        @Html.Action("BuildCarousel", "Home", new { id = GlobalConfig.CarouselNewsId, itemPerSlide = 15, containerId = "featureBanner" })
+    </div>
+}

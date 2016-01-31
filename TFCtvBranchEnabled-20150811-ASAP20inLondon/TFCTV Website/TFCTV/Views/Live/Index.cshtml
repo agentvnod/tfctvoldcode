@@ -1,0 +1,49 @@
+﻿@model IEnumerable<IPTV2_Model.Channel>
+@{
+
+    var title = ViewBag.ChannelTitle;
+    var subtitle = title.Replace("TV", "");
+    
+    ViewBag.Title = String.Format("TV {0} - TFC.tv", subtitle);
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="left sectionHeaderTitle">
+                    TV @subtitle</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="latestShows_bodyContainer">
+            @foreach (var item in Model)
+            {
+                <div class="showItem_preview ht_265">
+                    <div class="showItem_image">
+                        <a href="/Channel/Details/@item.ChannelId">
+                            @Html.ImageBuilder(Url, String.Format("channels/{0}.jpg", item.ChannelId), new { width = 150, height = 200 })
+                        </a>
+                    </div>
+                    <div class="showItem_info">
+                        <span class="showTitle"><a href="/Channel/Details/@item.ChannelId">@item.Description</a></span>
+                        <br />
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            }
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+}
+@section JScriptBottom {
+}

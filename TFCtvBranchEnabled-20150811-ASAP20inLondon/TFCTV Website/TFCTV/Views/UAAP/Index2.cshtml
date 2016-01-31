@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "UAAP Season 77 - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var altcastcode = GlobalConfig.UAAPCoverItLiveAltCastCode;
+}
+<!-- uaap main page body  -->
+<section class="page_pagebody uaap_main">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+            @Html.ImageBuilder(Url, "ux/uaap_videos_inner_header.jpg", new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li class="active"><a href="@Url.Action("Index", "UAAP")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Live", "UAAP")">LIVE STREAM</a></li>
+                <li><a href="@Url.Action("Teams", "UAAP")">THE TEAMS</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <!-- block -->
+        <div class="sec_header">
+            <!-- head -->
+            <h2 class="section_title clearfix">
+                Participating Teams</h2>
+        </div>
+        <!-- end head -->
+        <div class="row top_vedio">
+            <!-- movies -->
+            <div class="bxslider">
+                @Html.Action("GetFeaturedTeams", "UAAP")
+            </div>
+        </div>
+        <!-- END movies -->
+        <!-- END block -->
+        <div class="sec_header">
+            <!-- head -->
+            <h2 class="section_title clearfix">
+                Latest Game</h2>
+        </div>
+        <!-- end head -->
+        @Html.Action("GetUAAPContent", "UAAP")
+        <div class="row uaap_extra">
+            <!-- page left side -->
+            <div class="video_left col-sm-6 col-xs-12">
+                <!-- video player section -->
+                <div class="row vp_bottom_video">
+                    <!-- page's bottom videos -->
+                    <div class="col-xs-12 vp_head">
+                        <!-- head part -->
+                        <ul>
+                            <li class="active"><a href="#uaap_allgame" data-toggle="tab">SEE ALL GAMES</a></li>
+                            <li><a href="#uaap_exclusive" data-toggle="tab">EXCLUSIVE VIDEOS</a></li>
+                        </ul>
+                    </div>
+                    <!-- END head part -->
+                    <div class="col-xs-12 vp_body tab-content">
+                        @Html.Action("GetUAAPContent", "UAAP", new { partialViewName = "GetUAAPContentVertical", pageSize = GlobalConfig.FeatureItemsPageSize, id = "uaap_allgame", is_active = true })
+                        @Html.Action("GetUAAPFeaturedContent", "UAAP", new { pageSize = GlobalConfig.FeatureItemsPageSize, id = "uaap_exclusive", featureId = GlobalConfig.UAAPExclusiveFeaturesId })
+                    </div>
+                    <!-- END body part -->
+                </div>
+                <!-- end page bottom videos -->
+            </div>
+            <!-- end page left -->
+            <!-- page right side -->
+            <div class="video_right col-sm-6 col-xs-12">
+                <div class="row live_box">
+                    <!-- right top box -->
+                    <div class="col-xs-12">
+                        <iframe src="http://www.coveritlive.com/index2.php/option=com_altcaster/task=viewaltcast/altcast_code=@altcastcode/height=570/width=350"
+                        scrolling="no" height="928" width="540" frameborder="0" allowTransparency="true"><a href="http://www.coveritlive.com/mobile.php/option=com_mobile/task=viewaltcast/altcast_code=@altcastcode">
+                        </a></iframe>
+                    </div>
+                </div>
+                <!-- end right top box -->
+            </div>
+            <!-- end page right -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- END uaap main page body  -->
+@section Stylesheet {
+    @Html.CssBuilder(Url, "jquery.bxslider.css")
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    @Html.JsBuilder(Url, "jquery.bxslider.min.js")
+    <script type="text/javascript">
+        /* for responsive the movie slide */
+        $(document).ready(function () {
+            ib_movie_slider(); // call function
+        });
+
+        function ib_movie_slider() {  // function body 
+            var ipage_width = $(".top_vedio").width();
+            var ibx_num = 1;
+            if (ipage_width > 991) {
+                var ibx_num = 4;
+            } else if (ipage_width > 768) {
+                var ibx_num = 3;
+            } else if (ipage_width > 480) {
+                var ibx_num = 2;
+            }
+
+            var ibx_width = ipage_width / ibx_num;
+
+            $('.bxslider').bxSlider({
+                slideWidth: ibx_width,
+                minSlides: ibx_num,
+                maxSlides: ibx_num
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer gray jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+}

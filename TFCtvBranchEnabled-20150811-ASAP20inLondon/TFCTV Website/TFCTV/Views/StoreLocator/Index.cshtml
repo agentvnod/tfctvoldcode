@@ -1,0 +1,134 @@
+﻿@model IEnumerable<IPTV2_Model.StoreFront>
+@{
+    ViewBag.Title = "Find A Dealer - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    Maxmind.Location location = ViewBag.Location;
+}
+<div id="mainBody">
+    <div class="breakLarge">
+    </div>
+    <div class="breakLarge">
+    </div>
+    <div class="transparentBg">
+        <div id="aboutTheShow">
+            <div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        Find A Dealer
+                    </div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="storelocator">
+                <div id="storecatalog">
+                    <div class="scrollbar">
+                        <div class="track">
+                            <div id="user-feeds-bar" class="thumb disable">
+                                <div class="end">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="viewport">
+                        <div id="listOfStores" class="overview">
+                            @{foreach (var item in Model)
+                              {
+                                <text>
+                                <div id="s-@item.StoreFrontId" class="storediv">
+                                    <a id="store-@item.StoreFrontId" class="store" title="@item.BusinessName" href="#" latitude="@item.Latitude" longitude="@item.Longitude">@item.BusinessName</a><br />
+                                    <span>@item.Address1</span><br />
+                                    <span>@item.City, @item.State @item.ZipCode</span>
+                                    <div id="storeinfo-@item.StoreFrontId" class="hideElement">
+                                        <div class="sinfo">
+                                            <span class="boldText">@item.BusinessName</span></div>
+                                        <span>@item.Address1</span><br />
+                                        <span>@item.City, @item.State @item.ZipCode</span><br />
+                                        <span>@item.BusinessPhone</span>
+                                        @{if (!String.IsNullOrEmpty(item.ContactPerson))
+                                          {
+                                            <br />
+                                            <span>@item.ContactPerson</span>
+                                          }
+                                        }
+                                    </div>
+                                </div>
+                                </text>
+                              }}
+                            @{if (Model.Count() == 0)
+                              { <div>
+                                  There are currently no stores near you.</div> }}
+                        </div>
+                    </div>
+                </div>
+                <div id="map">
+                </div>
+            </div>
+            <div class="clear breakStandard">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+@section JScript{<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    @Html.JsBuilder(Url, "jquery.gomap-1.3.2.min.js")
+    <script type="text/javascript">
+    var latitude = @location.latitude;
+    var longitude = @location.longitude;
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#map").goMap({
+                latitude: latitude,
+                longitude: longitude,
+                zoom: 12,
+                maptype: 'ROADMAP',
+                mapTypeControl: false
+            });
+
+            /*$.goMap.createMarker({
+            latitude: latitude
+            , longitude: longitude
+            , id: 'current'
+            , title: 'You are here'
+            , html: {
+            content: '<div>You are currently here.</div>'
+            , popup: true
+            }
+            , icon: '/Content/images/bluepin.png'
+            });*/
+        });
+    </script>}
+@section JScriptBottom{
+    @Html.JsBuilder(Url, "userprofile/jquery.tinyscrollbar.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#storecatalog').tinyscrollbar({ sizethumb: 35 });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.store').click(function () {
+            var parent = $(this).parent().attr('id');
+            var storeinfoid = $('#' + parent + ' > div').attr('id');
+            $.goMap.createMarker({
+                latitude: $(this).attr('latitude')
+                , longitude: $(this).attr('longitude')
+                , id: this.id
+                , html: {
+                    content: '<div style="width: 260px;">' + $('#' + storeinfoid).html() + '</div>'
+                }
+
+                , title: $(this).attr('title')
+            });
+            google.maps.event.trigger($($.goMap.mapId).data(this.id), 'click')
+            var position = $($.goMap.mapId).data(this.id).position;
+            $.goMap.map.panTo(position);
+
+            return false;
+        });
+    </script>
+}

@@ -1,0 +1,239 @@
+﻿@model List<HalalanShowAndChannelContainer>
+@{
+    ViewBag.Title = "Halalan 2013 - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    int ctr = 0;    
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div style="margin-bottom: -3px">@Html.ImageBuilder(Url, "banners/halalan-2013-banner.png", new { width = 940 })</div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg">
+        <div id="featuredItems_ECoverage" class="featuredItems h_section">
+            <div class="fullHeader">
+                <div class="fullHeader_title">
+                    <div class="floatLeft">
+                        <div class="halalan_section_header">
+                            HALALAN 2013 SPECIAL ELECTION COVERAGE</div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg floatLeft">
+        <div id="latestShows_bodyContainer">
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="halalan_section_header section_header_40">
+                LIVE STREAMING</div>
+            <div style="margin-left: 40px;">
+                @{foreach (var item in Model)
+                  {
+                      if (String.Compare(item.type, "Channel", true) == 0)
+                      { 
+
+                    <text>
+                    <div class="floatLeft" style="margin-right: 25px; margin-top: 25px; width: 150px;">
+                        <a href="@item.Url">
+                            <img src="@item.src" title="@item.DisplayName" width="150" height="200" /></a>
+                        <div style="margin: 0 auto; width: 100%; text-align: center;">
+                            <div class="white" style="margin-top: 15px; line-height: 20px;">
+                                <div>
+                                    <a href="@item.Url" class="yellow">@item.DisplayName</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    </text>                  
+                          ctr++;
+
+                          if (ctr % 5 == 0)
+                          {
+                    <text>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="clear breakStandard">
+                    </div>
+                    </text>
+                          }
+
+                      }
+                  }}
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="halalan_section_header section_header_40">
+                NEWS AND CURRENT AFFAIRS SHOWS</div>
+            <div style="margin-left: 40px;">
+                @{
+                    //Reset counter
+                    ctr = 0;
+                    foreach (var item in Model)
+                    {
+                        if (String.Compare(item.type, "Show", true) == 0)
+                        { 
+
+                    <text>
+                    <div class="floatLeft" style="margin-right: 25px; margin-top: 25px; width: 150px;">
+                        <a href="@item.Url">
+                            <img src="@item.src" title="@item.DisplayName" width="150" height="200" /></a>
+                        <div style="margin: 0 auto; width: 100%; text-align: center;">
+                            <div class="white" style="margin-top: 15px; line-height: 20px;">
+                                <div>
+                                    <a href="@item.Url" class="yellow">@item.DisplayName</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    </text>                  
+                            ctr++;
+
+                            if (ctr % 5 == 0)
+                            {
+                    <text>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="clear breakStandard">
+                    </div>
+                    </text>
+                            }
+
+                        }
+                    }}
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg">
+        <div id="featuredItems_LatestEpisodes" class="featuredItems h_section">
+            <div class="fullHeader">
+                <div class="fullHeader_title">
+                    <div class="floatLeft">
+                        <div class="halalan_section_header">
+                            LATEST EPISODES</div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg">
+        <div id="featuredItems_NewsAlerts" class="featuredItems h_section">
+            <div class="fullHeader">
+                <div class="fullHeader_title">
+                    <div class="floatLeft">
+                        <div class="halalan_section_header">
+                            LATEST NEWS ALERTS</div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg">
+        <div id="featuredItems_Advisories" class="featuredItems h_section">
+            <div class="fullHeader">
+                <div class="fullHeader_title">
+                    <div class="floatLeft">
+                        <div class="halalan_section_header">
+                            OVERSEAS ABSENTEE VOTING ADVISORIES</div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div class="transparentBg">
+        <div class="featuredItems">
+            <div class="breakLarge">
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                    <div style="text-align: center;">
+                        @Html.ActionLink("FAQS ABOUT OVERSEAS ABSENTEE VOTING", "FAQ", new { controller = "Halalan2013" }, new { @class = "orange" })
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div style="text-align: center;">
+                        <a href="http://www.comelec.gov.ph/oav" target="_blank">@Html.ImageBuilder(Url, "logo/halalan/comelec-logo.png", new { title = "Comelec" })</a>
+                        <a href="http://www.dfa-oavs.gov.ph" target="_blank">@Html.ImageBuilder(Url, "logo/halalan/dfa-oav-logo.png", new { title = "DFA" })</a></div>
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div>
+        <a href="http://halalan2013.abs-cbnnews.com" target="_blank">@Html.ImageBuilder(Url, "banners/halalan-2013-banner-2.png", new { width = 940 })</a></div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+    @Html.CssBuilder(Url, "promo.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "halalan-2013.css?v1.0.1")
+}
+@section JScript{
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">        $(document).ready(function () {
+            var features = [{
+                url: "/Ajax/GetListing/@GlobalConfig.HalalanLatestEpisodesFeatureId", type: "video", itemperslide: 5, container: "featuredItems_LatestEpisodes",
+                nid: "nav-latestepisodes"
+            }, { url: "/Ajax/GetListing/@GlobalConfig.HalalanNewsAlertsFeatureId", type: "video", itemperslide:
+5, container: "featuredItems_NewsAlerts", nid: "nav-newsalerts"
+            }, { url: "/Ajax/GetListing/@GlobalConfig.HalalanAdvisoriesFeatureId",
+                type: "video", itemperslide: 5, container: "featuredItems_Advisories", nid: "nav-advisories"
+            }, { url: "/Ajax/GetLatestEpisodesForElectionCoverage",
+                type: "video", itemperslide: 5, container: "featuredItems_ECoverage", nid: "nav-ecoverage"
+            }];
+            $.each(features, function (x, item) { generateCarousels(item, true); });
+        }); </script>
+}

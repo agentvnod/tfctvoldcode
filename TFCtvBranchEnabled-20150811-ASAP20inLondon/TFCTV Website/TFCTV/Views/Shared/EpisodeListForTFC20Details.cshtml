@@ -1,0 +1,60 @@
+﻿@model  List<EpisodeObject>
+@{    
+    var id = Url.RequestContext.RouteData.Values["id"];
+
+    int episodeCount = 0; 
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      { 
+    <div id="moreEpisodeListContainer">
+        <div id="episodesContainer">
+            <div class="breakStandard clear">
+            </div>
+            <div class="episode-list-large">
+                @foreach (var item in Model)
+                {
+                    string href = String.Format("/TFC20/{0}/{1}", item.EpisodeId, item.slug);
+                    <div>
+                        <div class="e-img-large">
+                            <a href="@href">
+                                <img width="151" height="98" alt="" border="0" src="@Html.Raw(item.ImgUrl)" title="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" alt="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" /></a></div>
+                        <div class="e-body-large">
+                            <div class="e-title-large">
+                                <a href="@href">@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))</a>
+                                @{if (item.EpisodeId == ViewBag.EpisodeId)
+                                  {<text> &nbsp;<span class="watching">- You are currently watching this episode</span></text>}
+                                }
+                            </div>
+                            <div class="e-desc-large">@Html.Raw(item.Synopsis)</div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="e-linebreak">
+                    </div>                                  
+                }
+                <div class="loadmore-b">
+                    <div class="loadmore-cont">
+                        @Html.ActionLink("LOAD MORE EPISODES", "GetMoreEpisodes", new { id = id, page = 1, partialViewName = "GetMoreEpisodesForTFC20Details", episodeId = ViewBag.EpisodeId, NextEpisodeId = ViewBag.NextEpisodeId, PreviousEpisodeId = ViewBag.PreviousEpisodeId, EpisodeNumber = ViewBag.EpisodeNumber, EpisodeCount = ViewBag.EpisodeCount, currentEpisodeCount = episodeCount, initialCount = GlobalConfig.NumberOfItemsInEpisodeListInEpisodePage, isEpisodePage = true }, new { @class = Model.Count() < GlobalConfig.NumberOfItemsInEpisodeListInEpisodePage ? "e-loadmore-large e-hidden" : "e-loadmore-large loadmore-btn" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.episode-list-large').jscroll({
+                autoTrigger: false,
+                loadingHtml: '<div class="loadmore-bb"><div class="loadmore-btn">LOADING EPISODES...</div></div>',
+                nextSelector: 'a.e-loadmore-large:last'
+            });
+        });
+    </script> 
+      }
+      else { }
+  }
+  else { }
+}

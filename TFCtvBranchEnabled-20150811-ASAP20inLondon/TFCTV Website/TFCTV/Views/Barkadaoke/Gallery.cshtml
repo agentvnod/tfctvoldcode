@@ -1,0 +1,106 @@
+﻿@model TFCTV.Models.Youtube.YoutubeAPIPlaylistResponse
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", "Barkadaoke");
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="breakStandard">
+        </div>
+        <!-- click tayo header -->
+        <div style="margin-top: -10px;">
+            @Html.ImageBuilder(Url, "banners/barkadaoke.jpg", new { title = "Barkadaoke", alt = "Barkadaoke", width = 940 })</div>
+        <div>
+            <a href="@Url.Action("Index", "Barkadaoke")" class="record-btn white">Record</a><a href="@Url.Action("Gallery", "Barkadaoke")" class="gallery-btn white">Gallery</a>
+            <a href="@Url.Action("Mechanics", "Barkadaoke")" class="mechanics-btn white">Mechanics</a><a href="@Url.Action("Prizes", "Barkadaoke")" class="prizes-btn white">
+                Prizes</a>
+        </div>
+        <div id="video-list">
+            <div class="clear breakLarge">
+            </div>
+            <div class="yt-videos">
+                @{
+                    if (Model.data.items != null)
+                    {
+                        if (Model.data.items.Count() > 0)
+                        {
+                            int ctr = 1;
+                            foreach (var item in Model.data.items)
+                            {                                
+                    <text>
+                    <div class="yt-thumb">
+                        <div>
+                            <img src="@item.video.thumbnail.sqDefault" alt="@item.video.title" title="@item.video.title" />
+                        </div>
+                        <div class="yt-info">
+                            <div class="yt-title">
+                                <a href="@Url.Action("Video", "Barkadaoke", new { id = item.video.id })" class="light-blue">@item.video.title</a></div>
+                            <div class="yt-subtitle">
+                                @item.video.viewCount views | @Convert.ToDateTime(item.video.uploaded).ToString("MMM. dd, yyyy")</div>
+                        </div>
+                    </div>
+                    </text>                          
+                                if (ctr % 4 == 0)
+                                {
+                    <text>
+                    <div class="clear breakLarge">
+                    </div>
+                    </text>
+                                    ctr = 0;
+                                }
+                                ctr++;
+                            }
+                        }
+                    }
+                    else
+                    { 
+                    <p class="white">
+                        No videos available.</p>
+                    }                       
+                }
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div id="other-videos" class="transparentBg">
+                <div id="dsFeatureItems">
+                    <div class="itemListBody">
+                        <div class="wrapper">
+                        </div>
+                    </div>
+                </div>
+                <div class="breakLarge">
+                </div>
+                @{if (Model.data.items != null)
+                  {
+                    <text>
+                    <div class="floatRight" style="margin-right: 20px;">
+                        <div class="floatLeft white" style="margin-top: 12px; margin-right: 10px;">@ViewBag.OutOf
+                            of @ViewBag.TotalCount</div>
+                        <a href="@Url.Action("Gallery", "Barkadaoke", new { id = ViewBag.Previous })" class="prev-btn-square white">
+                            PREV</a><a href="@Url.Action("Gallery", "Barkadaoke", new { id = ViewBag.Next })" class="next-btn-square white">
+                                NEXT</a>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    </text>
+                  }}
+            </div>
+            <div class="clear breakLarge">
+            </div>
+        </div>
+    </div>
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "barkadaoke.css")
+}

@@ -1,0 +1,201 @@
+﻿@model TFCTV.Models.SignInModel
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to TFC.tv The digital tambayan of the global Pinoy!</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="Welcome to TFC.tv The digital tambayan of the global Pinoy!" />
+    @Html.JsBuilder(Url, "jquery-1.7.1.min.js")
+    @Html.JsBuilder(Url, "common.js")
+    @Html.CssBuilder(Url, "main.css")
+    @Html.CssBuilder(Url, "tfc_style.css")
+</head>
+<body>
+    @Html.Partial("_CheckJS")
+    <div id="main_wrapper">
+        <div id="content_wrapper">
+            <div id="sidebar_wrapper">
+                <div id="copy_1">
+                    Sign up below and be informed of our grand commercial launch coming very soon!</div>
+                <!-- end of copy 1 -->
+                <div class="clear">
+                </div>
+                <div id="rsb-load" class="side-button-loader padLeftStandard">
+                </div>
+                <div id="result" style="padding-left: 10px; width: 180px; height: 26px; padding-bottom: 10px;">
+                </div>
+                <div id="contact_form">
+                    <div id="loginpanel" class="hideElement">
+                        <form id="loginform" method="post" action="#">
+                        <div class="login-label">
+                            Email Address</div>
+                        <div class="input_cont">
+                            @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email Address...", @class = "tbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                        <div class="login-label">
+                            Password</div>
+                        <div class="input_cont">
+                            @Html.PasswordFor(m => m.Password, new { placeholder = "Password...", @class = "tbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                        <div class="float_l">
+                            <div class="breakSmall">
+                            </div>
+                            <input type="submit" class="submit_btn float_l" name="submit" id="login" value="" />
+                            <div id="sb-load" class="side-button-loader padLeftStandard">
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div id="betasignup">
+                        <form id="betaform" method="post" action="#">
+                        <div id="input_cont" class="float_l input_cont">
+                            <input name="email" type="text" class="input_field" id="email" placeholder="Email"
+                                maxlength="255" /></div>
+                        <div id="btn_submit">
+                            <input type="submit" class="submit_btn float_l" name="submit" id="submit" value="" /></div>
+                        </form>
+                        <div class="float_l logintext">
+                            If you already have an account, click <a class="orange" id="loginsw" href="#">here</a>.</div>
+                    </div>
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div class="breakLarge">
+                </div>
+                <!-- end of contact form -->
+                <div id="copy_2" class="clear hideElement">
+                    <div class="color_red" style="padding-bottom: 5px;">
+                        This is a limited beta launch
+                    </div>
+                    <div style="padding-bottom: 5px;">
+                        Some features are not yet available or may not function as intended.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ajaxloading" class="hideElement">
+        <div id="spanner">
+            @Html.ImageBuilder(Url, "loading.gif", new { alt = "loading...", width = "20", height = "20" })
+            <span id="spannertext" class="spannertextvalign">please wait while we process your request...</span>
+        </div>
+    </div>
+    <!-- end of template wrapper -->
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#betaform').validate({
+                rules: {
+                    email: { required: true, email: true }
+                },
+                messages: {
+                    email: { required: 'Please enter your email address.', minlength: 'Please enter a valid email address.' }
+                },
+                errorPlacement: function (error, element) {
+                    $('#result').empty();
+                    $('#result').css('padding-bottom', '10px');
+                    $('#result').html(createError(error.html()));
+                }
+            });
+
+            $('form#betaform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    $('#result').empty();
+                    $('#result').css('padding-bottom', '0px');
+
+                    var form = $(this);
+                    $('#rsb-load').html('<img alt="loading..." border="0" height="20" id="loading-b" src="@GlobalConfig.AssetsBaseUrl/content/images/ajax-loader.gif" width="20" />');
+                    $('#rsb-load').css('margin-top', '-20px');
+                    $.post('/Beta/_SignUp', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#rsb-load').empty();
+                            $('#rsb-load').css('margin-top', '0px');
+                            $('#result').html(createHighlight(data.errorMessage));
+                            //$('#result').css('padding-bottom', '10px');
+                            $('.input_field').val('');
+                        }
+                        else {
+                            $('#result').html(createError(data.errorMessage));
+                            //$('#result').css('padding-bottom', '10px');
+                            $('#rsb-load').empty();
+                            $('#rsb-load').css('margin-top', '0px');
+                        }
+
+                    });
+                }
+
+            });
+            $('#loginsw').click(function () {
+                $('#betasignup').remove();
+                $('#loginpanel').show();
+                $('#copy_2').show();
+                $('#copy_1').html('Sign in below with your registered TFC.tv email address and password.');
+                $('#result').empty();
+
+                var lvalidator = $('form#loginform').validate({
+                    rules: {
+                        EmailAddress: {
+                            required: true,
+                            email: true
+                        },
+                        Password: { required: true }
+                    },
+                    messages: {
+                        EmailAddress: {
+                            required: 'Email & Password are required.',
+                            minlength: 'Email & Password are required.'
+                        },
+                        Password: { required: 'Email & Password are required.' }
+                    },
+                    errorPlacement: function (error, element) {
+                        $('#result').empty();
+                        $('#result').html(createError(error.html()));
+                    }
+                });
+
+                $('form#loginform').submit(function (event) {
+                    event.preventDefault();
+                    if (lvalidator.numberOfInvalids() == 0) {
+                        $('#result').empty();
+                        $('#result').css('padding-bottom', '0px');
+
+                        var form = $(this);
+                        $('#sb-load').html('<img alt="loading..." border="0" height="20" id="loading-b" src="/Content/images/ajax-loader.gif" width="20" />');
+                        $('#sb-load').css('margin-top', '-5px');
+                        $('#sb-load').css('position', 'relative');
+                        $('#sb-load').css('left', '50px');
+                        $.post('/User/_Login', form.find('input').serialize(), function (data) {
+                            if (data.errorCode == 0) {
+                                $('#sb-load').empty();
+                                $('#sb-load').css('margin-top', '0px');
+                                $('#result').html(createHighlight(data.errorMessage));
+                                //$('#result').css('padding-bottom', '10px');
+                                $('.tbox').val('');
+                                setTimeout('reloadPage()', 1000);
+                            }
+                            else {
+                                $('#result').html(createError(data.errorMessage));
+                                //$('#result').css('padding-bottom', '10px');
+                                $('#sb-load').empty();
+                                $('#sb-load').css('margin-top', '0px');
+                            }
+
+                        });
+                    }
+
+                });
+
+                return false;
+            });
+
+        });
+    </script>
+</body>
+</html>

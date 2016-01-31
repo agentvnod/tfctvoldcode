@@ -1,0 +1,299 @@
+﻿@model IPTV2_Model.User
+@{
+    ViewBag.Title = "Earn promo entries and win!";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    Guid? UserId = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        UserId = new Guid(User.Identity.Name);
+    }
+    var ladder = @ViewBag.Ladder;
+}
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="main-container">
+            <div class="main-banner-img">
+                @Html.ImageBuilder(Url, "banners/annivpromotopbanner960x141.png", new { style = "z-index: -11;", width = "940", height = "141", title = "FAN MOB", alt = "FAN MOB" })
+            </div>
+            <div class="breakSmall">
+            </div>
+            <div class="main-container-links">
+                @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("MECHANICS", "Mechanics")
+                | @Html.ActionLink("MY ENTRIES", "Profile")
+            </div>
+            <div class="breakSmall">
+            </div>
+            <div class="main-container-body">
+                <div class="mpadbottom">
+                    <div class="main-leftPanel mp-leftPanel floatLeft">
+                        <div class="mp-img">
+                            @Html.ImageBuilder(Url, "userprofile/profile.jpg")</div>
+                        <div>
+                            <span class="mp-name">@Html.Raw(String.Format("{0} {1}", Model.FirstName, Model.LastName))</span><br />
+                            <span>
+                                @{if (String.IsNullOrEmpty(Model.State))
+                                  {
+                                    @Html.Raw(String.Format("{1}", Model.State, Model.Country.Description));
+                                  }
+                                  else
+                                  {
+                                    @Html.Raw(String.Format("{0}, {1}", Model.State, Model.Country.Description));
+                                  }
+                                }
+                            </span>
+                            @{if (UserId == Model.UserId)
+                              {
+                                <br />
+                                <br />
+                                <span class="prf-link"><a href="/Profile/@Model.UserId">Go to Profile Page</a></span>  
+                              }
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mp-currentpoints">
+                            <div class="mp-stitle">
+                                TOTAL ENTRIES</div>
+                            <div class="mp-cpbody">
+                                <br />
+                                <span>You have earned</span><br />
+                                <span id="mpts-container" class="mp-cpoints">-</span><br />
+                                <span>from your activities on the site</span>
+                            </div>
+                        </div>
+                        <div class="mp-currentpoints">
+                            <div class="mp-stitle">
+                                CURRENT RANK</div>
+                            <div class="mp-cpbody">
+                                <br />
+                                <span>You are currently</span><br />
+                                <span id="mrnk-container" class="mp-cpoints">-</span><br />
+                                <span>among other promo participants</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear breakStandard">
+                </div>
+                <div class="mp-lbody">
+                    <div class="mp-lPanel floatLeft">
+                        <div class="main-container-subtitle">
+                            Your Activities
+                        </div>
+                        <div class="clear breakSmall">
+                        </div>
+                        <div class="mp-activities">
+                            <div class="mp-activities-menu-container">
+                                <ul class="mp-activities-menu">
+                                    <li class="selected"><a href="#" rel="action3" data-tab="#mp-tab-loved">Loved</a></li>
+                                    <li><a href="#" rel="action7" data-tab="#mp-tab-watched">Watched</a></li>
+                                    <li><a href="#" rel="action4" data-tab="#mp-tab-posts">Posts</a></li>
+                                    <li><a href="#" rel="action6" data-tab="#mp-tab-shares">Shares</a></li>
+                                    <li><a href="#" rel="action2" data-tab="#mp-tab-connections">Connections</a></li>
+                                </ul>
+                                <div class="clear">
+                                </div>
+                            </div>
+                            <div id="action3">
+                                <div class="mp-tab-summary">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <p>
+                                        You have earned <span class="mp-cpoints-small">0 entries</span> from the shows,
+                                        episodes, movies, and celebrities that you have loved on TFC.tv. Love more to earn
+                                        more Fan Mob entries.</p>
+                                    <ul class="mp-activitylist" id="mp-list-loved">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="action7" class="hideElement">
+                                <div class="mp-tab-summary">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <p>
+                                        You have earned <span class="mp-cpoints-small">0 entries</span> from the episodes
+                                        that you have watched on TFC.tv. Watch more to earn more Fan Mob entries.</p>
+                                    <ul class="mp-activitylist" id="mp-list-watched">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="action4" class="hideElement">
+                                <div class="mp-tab-summary">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <p>
+                                        You have earned <span class="mp-cpoints-small">0 entries</span> from the shows,
+                                        episodes, movies, and celebrities that you have commented on or reviewed TFC.tv.
+                                        Post more to earn more Fan Mob entries.</p>
+                                    <ul class="mp-activitylist" id="mp-list-posts">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="action6" class="hideElement">
+                                <div class="mp-tab-summary">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <p>
+                                        You have earned <span class="mp-cpoints-small">0 entries</span> from the shows,
+                                        episodes, movies, and celebrities that you have shared from TFC.tv. Share more to
+                                        earn more Fan Mob entries.</p>
+                                    <ul class="mp-activitylist" id="mp-list-shares">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="action2" class="hideElement">
+                                <div class="mp-tab-summary">
+                                    <div class="breakSmall">
+                                    </div>
+                                    <p>
+                                        You have earned <span class="mp-cpoints-small">0 entries</span> from linking your
+                                        account to social networks. Add your other social accounts to earn more Fan Mob entries.</p>
+                                    <ul class="mp-activitylist" id="mp-list-connection">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mp-leaderboard floatLeft">
+                        <div class="main-container-subtitle main-indent">
+                            Leaderboard
+                        </div>
+                        <div class="main-top-users-vertical" id="featuredItems_TopUsers">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear breakSmall">
+                </div>
+            </div>
+            <div class="clear breakStandard">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "whitelayout-1.2.css")
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var promoName = '@GlobalConfig.GigyaPromoChallengeID';
+        var defaultphotoURL = '@Html.ContentBuilder(Url, "content/images/userprofile/profile.jpg")';
+        var featureItemGeneratorJs = '@Html.ContentBuilder(Url, "scripts/featureItemsGenerator-1.4.js")';
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.mp-activities-menu li').click(function () {
+                var ulappend = "";
+                $('.mp-activities-menu li').removeClass('selected'); $(this).addClass('selected');
+                $('.mp-activities>div:not(:first)').addClass('hideElement');
+                var tab = $('.mp-activities-menu').find('.selected').find('a').attr('rel');
+                var tabdiv = $('.mp-activities>div[id=' + tab + ']');
+                tabdiv.removeClass('hideElement');
+                tabdiv.addClass('tabShown');
+                if (tabdiv.find("ul li").length == 0) {
+                    tabdiv.find("ul").html('<li>Loading...</li>');
+                    var idParam = tab.replace("action", "");
+                    $.ajax({
+                        url: "/Ajax/GetPointsByAction/" + idParam
+                    , dataType: 'json'
+                    }).done(function (data) {
+                        tabdiv.find('.mp-cpoints-small').text(data.statusReason);
+                    });
+                    $.ajax({
+                        url: "/Ajax/GetVariants/" + idParam
+                    , dataType: 'json'
+                    })
+            .done(function (data) {
+                if (!data)
+                    $(tabdiv.find("ul")).html('<li>No activies found.</li>');
+                else {
+                    tabdiv.find("ul").empty();
+                    $.each(data, function (i, item) {
+                        var decoded = $('<div/>').html(item.actions.description).text();
+                        var liText = '<li>' + decoded + '. <span style="font-size:10px; color: gray">' + item.actions.timeStr + '</span></li>';
+                        $(tabdiv.find("ul")).append(liText);
+                    });
+                }
+            });
+                }
+
+                return false;
+            });
+        });
+        function loadData(item) {
+            $.ajax({
+                url: item.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        $('#' + item.container + ' .itemListBody .wrapper').empty();
+                        $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">Loading users...</div>');
+                    }
+            })
+            .done(function (data) {
+                if (data.errorCode == 0) {
+                    $.getScript(featureItemGeneratorJs).done(function () {
+                        var list = new featureItem({
+                            json_str: data.users, type: item.type, itemperslide: item.itemperslide, container: item.container, maxCount: 10, section: '/Profile', defaultphotoURL: defaultphotoURL, promoName: promoName, pointContainer: $('#mpts-container'), rankContainer: $('#mrnk-container')
+                        }).topUsersV();
+                    });
+                }
+                else {
+                    $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">The system encountered an error while retrieving the users. Please click <a href="#" class="retryTopUsers">here</a> to try again.</div>');
+                }
+            })
+            .fail(function () { $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">The system encountered an error while retrieving the users. Please click <a href="#" class="retryTopUsers">here</a> to try again.</div>'); });
+        }
+
+        function init() {
+            var item = { url: "/Ajax/GetTopUsers", type: "profile", itemperslide: 10, container: "featuredItems_TopUsers", nid: "nav-topusers" };
+            loadData(item);
+        }
+
+        $(document).ready(function () {
+            init();
+            $(document).on('click', '.retryTopUsers', function () { init(); return false; });
+
+
+        });
+
+        $(this).load(function () {
+            $('#action3').find("ul").html('<li>Loading...</li>');
+            $.ajax({
+                url: "/Ajax/GetPointsByAction/3"
+                    , dataType: 'json'
+            }).done(function (data) {
+                $('#action3').find('.mp-cpoints-small').text(data.statusReason);
+            });
+            $.ajax({
+                url: "/Ajax/GetVariants/3"
+                    , dataType: 'json'
+            })
+            .done(function (data) {
+                $('#action3').find("ul").empty();
+                if (!data)
+                    $('#action3').find("ul").html('<li>No activies found.</li>');
+                else {
+                    $.each(data, function (i, item) {
+                        var decoded = $('<div/>').html(item.actions.description).text();
+                        var liText = '<li>' + decoded + '. <span style="font-size:10px; color: gray;">' + item.actions.timeStr + '</span></li>';
+                        $('#action3').find("ul").append(liText);
+                    });
+                }
+            });
+        });
+    </script>
+}

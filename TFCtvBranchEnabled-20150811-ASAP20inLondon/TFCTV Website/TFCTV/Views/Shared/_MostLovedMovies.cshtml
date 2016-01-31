@@ -1,0 +1,48 @@
+﻿<div style="display: inline-block; width: 100%;">
+    <ul id="most-loved-navigation">
+        <li class="current" id="showstab"><a href="#"><b>Movies</b></a></li>
+       <!-- <li id="episodestab" class="idle"><a href="#"><b>Episodes</b></a></li>
+        <li id="celebstab" class="idle"><a href="#"><b>Celebs</b></a></li> -->
+    </ul>
+</div>
+<div class="clear">
+</div>
+<div id="most-loved-shows" class="">
+</div>
+<div id="most-loved-episodes" class="display-none">
+</div>
+<div id="most-loved-celebrities" class="display-none">
+</div>
+<script type="text/javascript">
+    /****/
+    $("#showstab").click(function (e) {
+
+        $("#showstab").addClass("current");
+        $("#showstab").removeClass("idle");
+        e.preventDefault();
+    });
+
+    /****/
+
+    //Get Most Loved Shows
+    var url = '/SocialEngagement/GetMostLovedMovies';
+    var html = "";
+    jQuery.get(url, function (data) {
+        var counter = 0;
+        html = '<ul class="most-loved-container">';
+        $.each(data, function (x, y) {
+            counter = counter + 1;
+            html += '<li class="showslistcontainer">';
+            html += '<ul class="showslist">';
+            html += '<li class="showscount">' + counter + '</li>';
+            html += '<li class="showsdetails marTop"><span class="showsname"><a href="/Show/Details/' + y.categoryId + '">' + y.categoryName + '</a></span></li>';
+            html += '<li class="pointsbox"><span class="showspoints">' + y.totalLove + '</span></li>';
+            html += '</ul>';
+            html += '</li>';
+
+        });
+        html += '</ul>';
+
+        $("#most-loved-shows").html(html);
+    }, 'json');
+</script>

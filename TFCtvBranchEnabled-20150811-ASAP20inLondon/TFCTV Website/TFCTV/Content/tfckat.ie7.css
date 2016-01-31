@@ -1,0 +1,13 @@
+
+.log-title
+{
+    margin-top: 0 !important;
+    margin-bottom: 0;
+    margin-left: 0;
+    position: relative;
+    left: -5px;
+}
+#teamContent > .wrapper
+{
+    height: 347px;
+}

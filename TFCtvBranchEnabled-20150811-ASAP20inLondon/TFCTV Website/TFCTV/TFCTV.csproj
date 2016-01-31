@@ -1,0 +1,1629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{87BF5CC3-6D01-4670-99E8-201B11ADC3A0}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TFCTV</RootNamespace>
+    <AssemblyName>TFCTV</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CreditCardUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CreditCardUtilityCS\bin\Debug\CreditCardUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="DevTrends.MvcDonutCaching, Version=1.3.0.0, Culture=neutral, PublicKeyToken=73c58d802958a09f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MvcDonutCaching.1.3.0\lib\net40\DevTrends.MvcDonutCaching.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EngagementsModel, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EngagementsModel\bin\Debug\EngagementsModel.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FiftyOne.Foundation">
+      <HintPath>..\..\packages\51Degrees.mobi.3.1.8.4\lib\NET40\FiftyOne.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="GOMS_TFCtv, Version=1.0.4561.18286, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GOMS_TFCtv\bin\Debug\GOMS_TFCtv.dll</HintPath>
+    </Reference>
+    <Reference Include="GSCSharpSDK, Version=2.15.5.0, Culture=neutral, PublicKeyToken=ecc5cd8277006f58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\codes\sdk\Gigya\2.15.5.0\GSCSharpSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.3.1.5\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Mvc, Version=3.1.5.463, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageResizer.Mvc.3.1.5\lib\ImageResizer.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageResizer.Plugins.DiskCache">
+      <HintPath>..\packages\ImageResizer.Plugins.DiskCache.3.1.5\lib\ImageResizer.Plugins.DiskCache.dll</HintPath>
+    </Reference>
+    <Reference Include="IPTV2 Model, Version=1.0.4561.18285, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\IPTV2 Model\bin\Debug\IPTV2 Model.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MaxMind, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\MaxMind\bin\Debug\MaxMind.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.AzureClientHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureClientHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.AzureCommon, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationServer.Caching.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.DistributedCache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.Web.DistributedCache.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\microsoft-web-helpers.1.15\lib\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.CloudDrive, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsFabric.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.WindowsFabric.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Caching.2.4.0.0\lib\net40-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\..\packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.EntityFramework6">
+      <HintPath>..\..\packages\MiniProfiler.EF6.3.0.11\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
+    </Reference>
+    <Reference Include="msshrtmi, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <HintPath>..\..\..\..\Program Files\Microsoft SDKs\Windows Azure\.NET SDK\2012-06\bin\runtimes\base\x86\msshrtmi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mswacdmi, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=AMD64">
+      <HintPath>..\..\..\..\Program Files\Microsoft SDKs\Windows Azure\.NET SDK\2012-06\bin\runtimes\storage\cloud\x64\mswacdmi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider, Version=3.3.4.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MvcSiteMapProvider.3.3.4.0\lib\net40\MvcSiteMapProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal">
+      <HintPath>..\..\packages\PayPal.Helper.1.0.1\lib\PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="paypal_base">
+      <HintPath>..\..\packages\PayPal.Helper.1.0.1\lib\paypal_base.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi">
+      <HintPath>..\..\packages\SendGrid.SmtpApi.1.1.3\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGridMail, Version=5.0.0.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Sendgrid.5.0.0\lib\SendGridMail.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceDesk">
+      <HintPath>..\..\ServiceDesk\bin\Debug\ServiceDesk.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.40804.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TFCNowModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\TFCNowModel\bin\Debug\TFCNowModel.dll</HintPath>
+    </Reference>
+    <Reference Include="TimeZoneNames">
+      <HintPath>..\..\packages\TimeZoneNames.1.2.1\lib\portable-net40+sl50+win+wpa81+wp80\TimeZoneNames.dll</HintPath>
+    </Reference>
+    <Reference Include="TokenAuth, Version=1.0.4476.18789, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\TokenAuth\bin\Debug\TokenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WorldDomination.Web.Mvc">
+      <HintPath>..\..\packages\MagicalUnicorn.MvcErrorToolkit.2.2.2\lib\net40\WorldDomination.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\EditorLocalization.bg-BG.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.bg-BG.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.de-DE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.en-US.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.fr-FR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.pl-PL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.pl-PL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.pt-BR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.pt-BR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.uk-UA.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.uk-UA.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\EditorLocalization.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditorLocalization.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.bg-BG.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.bg-BG.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.de-DE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.en-US.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.es-ES.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.fr-FR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.nl-NL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.pl-PL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.pl-PL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.pt-BR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.pt-BR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.pt-PT.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.pt-PT.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.uk-UA.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.uk-UA.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\GridLocalization.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GridLocalization.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.bg-BG.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.bg-BG.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.en-US.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.en-US.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.fr-FR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.fr-FR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.pl-PL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.pl-PL.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UploadLocalization.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadLocalization.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\CustomErrorHander.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\AirController.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
+    <Compile Include="Controllers\CompController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\FanMobPromoController.cs" />
+    <Compile Include="Controllers\BarkadaokeController.cs" />
+    <Compile Include="Controllers\BetaController.cs" />
+    <Compile Include="Controllers\BuyController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CelebrityController.cs" />
+    <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\EpisodeController.cs" />
+    <Compile Include="Controllers\FooterController.cs" />
+    <Compile Include="Controllers\FPJController.cs" />
+    <Compile Include="Controllers\FreeController.cs" />
+    <Compile Include="Controllers\FreeTVController.cs" />
+    <Compile Include="Controllers\HalalanController.cs" />
+    <Compile Include="Controllers\HaloHaloController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\ITEController.cs" />
+    <Compile Include="Controllers\IWantvController.cs" />
+    <Compile Include="Controllers\KapamilyaChatController.cs" />
+    <Compile Include="Controllers\KuwentongPaskoController.cs" />
+    <Compile Include="Controllers\KwentoNgPaskoController.cs" />
+    <Compile Include="Controllers\LiveController.cs" />
+    <Compile Include="Controllers\LoadController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MigrationController.cs" />
+    <Compile Include="Controllers\MopayController.cs" />
+    <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\NewsletterController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
+    <Compile Include="Controllers\PackagesController.cs" />
+    <Compile Include="Controllers\PacMayController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PaypalController.cs" />
+    <Compile Include="Controllers\PinoyBigBrotherController.cs" />
+    <Compile Include="Controllers\PpcController.cs" />
+    <Compile Include="Controllers\ProbeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\PromoController.cs" />
+    <Compile Include="Controllers\ReloadController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SendGridController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\ShowController.cs" />
+    <Compile Include="Controllers\SocialController.cs" />
+    <Compile Include="Controllers\SocialEngagementController.cs" />
+    <Compile Include="Controllers\StoreLocatorController.cs" />
+    <Compile Include="Controllers\SubscribeController.cs" />
+    <Compile Include="Controllers\SynapseController.cs" />
+    <Compile Include="Controllers\TFC20Controller.cs" />
+    <Compile Include="Controllers\TFCkatController.cs" />
+    <Compile Include="Controllers\UAAPController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="Controllers\VinodController.cs" />
+    <Compile Include="Controllers\WeddingController.cs" />
+    <Compile Include="Controllers\WishlistController.cs" />
+    <Compile Include="ErrorEntity.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\AkamaiToken.cs" />
+    <Compile Include="Helpers\AnniversaryPromo.cs" />
+    <Compile Include="Helpers\AzureStorage.cs" />
+    <Compile Include="Helpers\BinaryResult.cs" />
+    <Compile Include="Helpers\CategoryTreeHelper.cs" />
+    <Compile Include="Helpers\CelebritySitemap.cs" />
+    <Compile Include="Helpers\ContextHelper.cs" />
+    <Compile Include="Helpers\DatabaseInfo.cs" />
+    <Compile Include="Helpers\DataTableSerialization.cs" />
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
+    <Compile Include="Helpers\GigyaHelpers.cs" />
+    <Compile Include="Helpers\GigyaMethods.cs" />
+    <Compile Include="Helpers\GlobalConfig.cs" />
+    <Compile Include="Helpers\HttpHeaderAttribute.cs" />
+    <Compile Include="Helpers\IpLocation.cs" />
+    <Compile Include="Helpers\IPNHolder.cs" />
+    <Compile Include="Helpers\MyHtmlHelper.cs" />
+    <Compile Include="Helpers\MyUtility.cs" />
+    <Compile Include="Helpers\MyValidation.cs" />
+    <Compile Include="Helpers\NoCache.cs" />
+    <Compile Include="Helpers\OtherUsefulHelpers.cs" />
+    <Compile Include="Helpers\PagedData.cs" />
+    <Compile Include="Helpers\PaymentHelper.cs" />
+    <Compile Include="Helpers\PDTHolder.cs" />
+    <Compile Include="Helpers\ProfileSiteMap.cs" />
+    <Compile Include="Helpers\PromoUtility.cs" />
+    <Compile Include="Helpers\RegexUtilities.cs" />
+    <Compile Include="Helpers\Region.cs" />
+    <Compile Include="Helpers\RegionName.cs" />
+    <Compile Include="Helpers\ReloadHelper.cs" />
+    <Compile Include="Helpers\RequestBaseHelper.cs" />
+    <Compile Include="Helpers\ShowSiteMap.cs" />
+    <Compile Include="Helpers\StringExtension.cs" />
+    <Compile Include="Helpers\TFCTVClasses.cs" />
+    <Compile Include="Helpers\UserPackages.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BarkadaokeModel.cs" />
+    <Compile Include="Models\BingSearchModel.cs" />
+    <Compile Include="Models\MigrationModel.cs" />
+    <Compile Include="Models\CustomSearchModel.cs" />
+    <Compile Include="Models\HelpCenterCategoryModel.cs" />
+    <Compile Include="Models\PlayerControlBarModel.cs" />
+    <Compile Include="Models\SynapseModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\Wishlist.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SNSTemplates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SNSTemplates.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WebRole.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="android-icon-144x144.png" />
+    <Content Include="android-icon-192x192.png" />
+    <Content Include="android-icon-36x36.png" />
+    <Content Include="android-icon-48x48.png" />
+    <Content Include="android-icon-72x72.png" />
+    <Content Include="android-icon-96x96.png" />
+    <Content Include="apple-icon-114x114.png" />
+    <Content Include="apple-icon-120x120.png" />
+    <Content Include="apple-icon-144x144.png" />
+    <Content Include="apple-icon-152x152.png" />
+    <Content Include="apple-icon-180x180.png" />
+    <Content Include="apple-icon-57x57.png" />
+    <Content Include="apple-icon-60x60.png" />
+    <Content Include="apple-icon-72x72.png" />
+    <Content Include="apple-icon-76x76.png" />
+    <Content Include="apple-icon-precomposed.png" />
+    <Content Include="apple-icon.png" />
+    <Content Include="apple-touch-icon-144x144-precomposed.png" />
+    <Content Include="apple-touch-icon-144x144.png" />
+    <Content Include="apple-touch-icon-72x72-precomposed.png" />
+    <Content Include="apple-touch-icon-72x72.png" />
+    <Content Include="apple-touch-icon-precomposed.png" />
+    <Content Include="apple-touch-icon.png" />
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="BingSiteAuth.xml" />
+    <Content Include="border-radius.htc" />
+    <Content Include="boxsizing.htc" />
+    <Content Include="browserconfig.xml" />
+    <Content Include="connections.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\air-ie.css" />
+    <Content Include="Content\air.css" />
+    <Content Include="Content\bootstrap-ie7.css" />
+    <Content Include="Content\bootstrap-tour.min.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\events.css" />
+    <Content Include="Content\images\actions\small_tfctv_dark.png" />
+    <Content Include="Content\images\celebrity\unknown.jpg" />
+    <Content Include="Content\images\logo\small_tfctv_dark.png" />
+    <Content Include="Content\images\social\profilephoto.png" />
+    <Content Include="Content\images\ux\load_more.png" />
+    <Content Include="Content\main.7.css" />
+    <Content Include="Content\menu.10.css" />
+    <Content Include="Content\menu.2.css" />
+    <Content Include="Content\menu.css" />
+    <Content Include="Content\mopay.css" />
+    <Content Include="Content\robots_txt_transform\robots.Debug.txt">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Content\robots_txt_transform\robots.Release.txt" />
+    <Content Include="Content\style-air.css" />
+    <Content Include="Content\style-update-air.css" />
+    <Content Include="Content\style-update.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\tfckat.ie7.css" />
+    <Content Include="Content\tfckat.ie9.css" />
+    <Content Include="Content\uaap.css" />
+    <Content Include="crossdomain.xml" />
+    <Content Include="DevTrends.MvcDonutCaching.README.txt" />
+    <Content Include="favicon-16x16.png" />
+    <Content Include="favicon-32x32.png" />
+    <Content Include="favicon-96x96.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\helvetica-bold.svg" />
+    <Content Include="fonts\helvetica.svg" />
+    <Content Include="fonts\proximanova-bold.svg" />
+    <Content Include="fonts\proximanova-regular.svg" />
+    <Content Include="fonts\stylesheet.css" />
+    <Content Include="Global.asax" />
+    <Content Include="51Degrees.mobi.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\helvetica-bold.eot" />
+    <Content Include="fonts\helvetica-bold.ttf" />
+    <Content Include="fonts\helvetica-bold.woff" />
+    <Content Include="fonts\helvetica.eot" />
+    <Content Include="fonts\helvetica.ttf" />
+    <Content Include="fonts\helvetica.woff" />
+    <Content Include="fonts\proximanova-bold.eot" />
+    <Content Include="fonts\proximanova-bold.ttf" />
+    <Content Include="fonts\proximanova-bold.woff" />
+    <Content Include="fonts\proximanova-regular.eot" />
+    <Content Include="fonts\proximanova-regular.ttf" />
+    <Content Include="fonts\proximanova-regular.woff" />
+    <Content Include="51Degrees.config" />
+    <Content Include="manifest.json" />
+    <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="js\boxsizing.htc" />
+    <Content Include="ms-icon-144x144.png" />
+    <Content Include="ms-icon-150x150.png" />
+    <Content Include="ms-icon-310x310.png" />
+    <Content Include="ms-icon-70x70.png" />
+    <Content Include="Player\AkamaiFlowPlugin.swf" />
+    <Content Include="Player\expressInstall.swf" />
+    <Content Include="Player\flowplayer.bwcheck-httpstreaming-3.2.9.swf" />
+    <Content Include="Player\fplayer.3.2.12.swf" />
+    <Content Include="Player\flowplayer.controls-3.2.12.swf" />
+    <Content Include="Player\flowplayer.controls-v3.2.5.swf" />
+    <Content Include="Player\flowplayer.swf" />
+    <Content Include="Player\flowplayer.controls-3.2.5.swf" />
+    <Content Include="Player\flowplayer.tfc.tv.swf" />
+    <Content Include="Player\PlayerWBx.swf" />
+    <Content Include="Scripts\a0ej.js" />
+    <Content Include="Scripts\bgJS.js" />
+    <Content Include="Scripts\events.js" />
+    <Content Include="Scripts\featureItemsGenerator.1.js" />
+    <Content Include="Scripts\fp3.js" />
+    <Content Include="Scripts\fplo3.js" />
+    <Content Include="Scripts\jquery.bxslider.min.js" />
+    <Content Include="Scripts\jquery.menu-aim-tfctv.js" />
+    <Content Include="Scripts\jwp.js" />
+    <Content Include="Scripts\jwp6.js" />
+    <Content Include="Scripts\jwp7.js" />
+    <Content Include="Scripts\jwp7hls.js" />
+    <Content Include="Scripts\jwp7\crossdomain.xml" />
+    <Content Include="Scripts\jwp7\jwplayer.flash.swf" />
+    <Content Include="Scripts\jwp7\jwplayer.js" />
+    <Content Include="Scripts\jwp7\jwplayer.provider.swf" />
+    <Content Include="Scripts\jwp7\jwplayer7.js" />
+    <Content Include="Scripts\jwp7\provider.shaka.js" />
+    <Content Include="Scripts\jwp7\skins\beelden.css" />
+    <Content Include="Scripts\jwp7\skins\bekle.css" />
+    <Content Include="Scripts\jwp7\skins\five.css" />
+    <Content Include="Scripts\jwp7\skins\glow.css" />
+    <Content Include="Scripts\jwp7\skins\roundster.css" />
+    <Content Include="Scripts\jwp7\skins\seven.css" />
+    <Content Include="Scripts\jwp7\skins\six.css" />
+    <Content Include="Scripts\jwp7\skins\stormtrooper.css" />
+    <Content Include="Scripts\jwp7\skins\vapor.css" />
+    <Content Include="Scripts\jwp7_streamsense.js" />
+    <Content Include="Scripts\jwp_streamsense.js" />
+    <Content Include="Scripts\kendo.modernizr.custom.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\menuBuilder.1.js" />
+    <Content Include="Scripts\menuBuilder.2.js" />
+    <Content Include="Scripts\menuBuilderN.3.js" />
+    <Content Include="Scripts\minimizejwp.js" />
+    <Content Include="Scripts\minimizeplayer.js" />
+    <Content Include="Scripts\obfplyr.js" />
+    <Content Include="Scripts\sessioncheck.js" />
+    <Content Include="Scripts\takeoverJS.js" />
+    <Content Include="Scripts\transaction.js" />
+    <Content Include="Scripts\player-1.2.3.js" />
+    <Content Include="Scripts\flowplayer.ipad-3.2.11.min.js" />
+    <Content Include="Scripts\itemgenerator.js" />
+    <Content Include="Scripts\jquery.timeago.js" />
+    <Content Include="Scripts\player-1.1.js" />
+    <Content Include="Scripts\dotdotdot.js" />
+    <Content Include="Scripts\commentsGenerator.js" />
+    <Content Include="Scripts\socialize.js" />
+    <Content Include="Scripts\2011.3.1115\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\2011.3.1115\jquery.validate.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.autocomplete.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.calendar.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.chart.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.combobox.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.common.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.datepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.datetimepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.draganddrop.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.editor.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.editing.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.filtering.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.grouping.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.reordering.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.grid.resizing.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.imagebrowser.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.list.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.menu.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.panelbar.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.slider.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.splitter.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.tabstrip.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.textbox.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.timepicker.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.treeview.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.upload.min.js" />
+    <Content Include="Scripts\2011.3.1115\telerik.window.min.js" />
+    <Content Include="Scripts\carouselGenerator.js" />
+    <Content Include="Scripts\celebrity\celebrityItemsGenerator.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\date.js" />
+    <Content Include="Scripts\featureItemsGenerator.js" />
+    <Content Include="Scripts\flowplayer-3.2.11.min.js" />
+    <Content Include="Scripts\flowplayer-3.2.6.min.js" />
+    <Content Include="Scripts\flowplayer-controller-config.js" />
+    <Content Include="Scripts\flowplayer.ipad-3.2.10.min.js" />
+    <Content Include="Scripts\flowplayer.ipad-3.2.8.js" />
+    <Content Include="Scripts\flowplayer.ipad-3.2.8.min.js" />
+    <Content Include="Scripts\freetv\freetv.js" />
+    <Content Include="Scripts\freetv\FreeTvfeatureItemsGen.js" />
+    <Content Include="Scripts\helpcenter.js" />
+    <Content Include="Scripts\init.js" />
+    <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.5.1.js" />
+    <Content Include="Scripts\jquery-1.5.1.min.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.18.custom.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.cycle.all.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.gomap-1.3.2.min.js" />
+    <Content Include="Scripts\jquery.tinysort.min.js" />
+    <Content Include="Scripts\jquery.tools.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jscrollpane\jquery.jscrollpane.min.js" />
+    <Content Include="Scripts\jscrollpane\jquery.mousewheel.js" />
+    <Content Include="Scripts\menuBuilder.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\modernizr-1.7.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\packages.js" />
+    <Content Include="Scripts\package_overlay.js" />
+    <Content Include="Scripts\pagination.js" />
+    <Content Include="Scripts\player.js" />
+    <Content Include="Scripts\player_playlist.js" />
+    <Content Include="Scripts\swfobject.js" />
+    <Content Include="Scripts\tfc.social.plugin.js" />
+    <Content Include="Scripts\userprofile\carouselGenerator.js" />
+    <Content Include="Scripts\userprofile\feeds.js" />
+    <Content Include="Scripts\userprofile\jquery.tinyscrollbar.min.js" />
+    <Content Include="Scripts\userprofile\userItemsGenerator.js" />
+    <Content Include="Scripts\wishlist.js" />
+    <Content Include="swf\AkamaiFlowPlugin.swf" />
+    <Content Include="swf\expressInstall.swf" />
+    <Content Include="swf\flowplayer.analytics.swf" />
+    <Content Include="swf\flowplayer.bw.swf" />
+    <Content Include="swf\flowplayer.bwcheck-httpstreaming.swf" />
+    <Content Include="swf\flowplayer.controls.swf" />
+    <Content Include="swf\flowplayer.f4m.swf" />
+    <Content Include="swf\flowplayer.httpstreaming.swf" />
+    <Content Include="swf\flowplayer.swf" />
+    <Content Include="TFCTV.Publish.xml" />
+    <Content Include="Views\Episode\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
+    <Content Include="Views\Shared\_UXUpdateMobileSignIn.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Show\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\TFCkat\ContenderDetails.cshtml" />
+    <Content Include="Views\TFCkat\Finalists.cshtml" />
+    <Content Include="Views\TFCkat\Index.cshtml" />
+    <Content Include="Views\TFCkat\ListAllEpisodes.cshtml" />
+    <Content Include="Views\TFCkat\Mechanics.cshtml" />
+    <Content Include="Views\TFCkat\OnDemand.cshtml" />
+    <Content Include="Views\TFCkat\_ExclusiveVideos.cshtml" />
+    <Content Include="Views\TFCkat\_LatestEpisodes.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Gift\Send.cshtml" />
+    <Content Include="Views\Gift\_WalletPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyViaWalletPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyProcessPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyViaPrepaidCardPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyViaCreditCardPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyViaPaypalPartial.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_PayPalPaymentCallbackUrlPartial.cshtml" />
+    <Content Include="Mvc.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="App_Data\GeoIPCity.dat" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Search\DefaultSearch.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyAuthenticationErrorPartial.cshtml" />
+    <Content Include="Views\User\_UserCreditsPartial.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\_FriendsFeeds.cshtml" />
+    <Content Include="Views\Profile\_UserFeeds.cshtml" />
+    <Content Include="Views\Profile\_Welcome.cshtml" />
+    <Content Include="Views\Shared\_EpisodesReactions.cshtml" />
+    <Content Include="Views\Shared\_ShowsReactions.cshtml" />
+    <Content Include="Views\Shared\_TopReviewers.cshtml" />
+    <Content Include="Views\Shared\_UserLovedCelebrities.cshtml" />
+    <Content Include="Views\Shared\_UserLovedShows.cshtml" />
+    <Content Include="Views\Shared\_MostLoved.cshtml" />
+    <Content Include="Views\Profile\_FriendsList.cshtml" />
+    <Content Include="Views\Profile\_AboutMe.cshtml" />
+    <Content Include="Views\Profile\_UserInfo.cshtml" />
+    <Content Include="Views\Promo\HimigHandog.cshtml" />
+    <Content Include="Views\Packages\TVE.cshtml" />
+    <Content Include="Views\Promo\Concerts.cshtml" />
+    <Content Include="Views\Home\PreventMultipleLoginUsingJavaScript.cshtml" />
+    <Content Include="Views\Halalan\Index.cshtml" />
+    <Content Include="Views\Show\MovieVideo.cshtml" />
+    <Content Include="Views\Promo\TFCkat.cshtml" />
+    <Content Include="Views\Shared\_PlayerControlBar.cshtml" />
+    <Content Include="Views\Show\LiveEvent.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerPartial.cshtml" />
+    <Content Include="Views\Reload\_ReloadProcessPartial.cshtml" />
+    <Content Include="Views\Packages\Compare.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyErrorPartial.cshtml" />
+    <Content Include="Views\FreeTV\_GetPlayList.cshtml" />
+    <Content Include="Views\Profile\_AllUsersFeeds.cshtml" />
+    <Content Include="Views\Profile\_SocialNetworks.cshtml" />
+    <Content Include="Views\Profile\_WishList.cshtml" />
+    <Content Include="Views\User\Entitlements.cshtml" />
+    <Content Include="Views\Live\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_UserIsEntitled.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Beta\Index.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\UserMailer\Welcome.cshtml" />
+    <Content Include="Views\UserMailer\ForgotPassword.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.text.cshtml" />
+    <Content Include="Views\UserMailer\Welcome.text.cshtml" />
+    <Content Include="Views\UserMailer\ForgotPassword.text.cshtml" />
+    <Content Include="Views\Shared\_MostLovedMovies.cshtml" />
+    <Content Include="Views\Shared\_CheckJS.cshtml" />
+    <Content Include="Views\StoreLocator\Index.cshtml" />
+    <Content Include="Views\Help\Question.cshtml" />
+    <Content Include="Views\Help\_SubmitTicket.cshtml" />
+    <Content Include="Views\Search\BingCustomSiteSearchResult.cshtml" />
+    <Content Include="Views\Search\_BingCustomSiteSearchPagingPartial.cshtml" />
+    <Content Include="Views\Home\JavascriptError.cshtml" />
+    <Content Include="Views\Search\GoogleCustomSiteSearchResult.cshtml" />
+    <Content Include="Views\Search\_GoogleCustomSiteSearchPagingPartial.cshtml" />
+    <Content Include="Views\Shared\_GoogleAnalyticsPartial.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
+    <Content Include="Views\Shared\_GetEpisodesForDetails.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\_SendFeedback.cshtml" />
+    <Content Include="Views\UserMailer\SendFeedback.cshtml" />
+    <Content Include="Views\UserMailer\SendFeedback.text.cshtml" />
+    <Content Include="Views\Newsletter\Beta.cshtml" />
+    <Content Include="Views\Newsletter\FreeTrial.cshtml" />
+    <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <Content Include="Views\Shared\_StatusBarPartial.cshtml" />
+    <Content Include="Views\User\RegisterViaSocial.cshtml" />
+    <Content Include="Views\User\RegisterViaTFC.cshtml" />
+    <Content Include="Views\User\RegisterConfirm.cshtml" />
+    <Content Include="Views\User\RegisterVerify.cshtml" />
+    <Content Include="Views\User\EnrollSmartPit.cshtml" />
+    <Content Include="Views\User\EnrolledSmartPit.cshtml" />
+    <Content Include="Views\Migration\Index.cshtml" />
+    <Content Include="Views\Migration\Complete.cshtml" />
+    <Content Include="Views\User\ResendVerification.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyPendingChangeCountryErrorPartial.cshtml" />
+    <Content Include="Views\Migration\Terms.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\Promo\OnlinePremiere.cshtml" />
+    <Content Include="Views\Help\CheckYourBandwidth.cshtml" />
+    <Content Include="Views\Promo\ReferAKapamilya.cshtml" />
+    <Content Include="Views\Search\GoogleCustomSearchResultsUI.cshtml" />
+    <Content Include="Views\Show\_GetShowProductPackages.cshtml" />
+    <Content Include="Views\Show\_GetUserEntitlements.cshtml" />
+    <Content Include="Views\Episode\_GetEpisodeProductPackages.cshtml" />
+    <Content Include="Views\Promo\HeatMap.cshtml" />
+    <Content Include="Views\Promo\ClickTayoMV.cshtml" />
+    <Content Include="Views\Shared\_SharePartial.cshtml" />
+    <Content Include="Views\Shared\_LovePartial.cshtml" />
+    <Content Include="Views\Promo\OKGo.cshtml" />
+    <Content Include="Views\Promo\DigitalShorts.cshtml" />
+    <Content Include="Views\HaloHalo\Video.cshtml" />
+    <Content Include="Views\HaloHalo\List.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_CreditCardDownTimePartial.cshtml" />
+    <Content Include="Views\Barkadaoke\Gallery.cshtml" />
+    <Content Include="Views\Barkadaoke\Video.cshtml" />
+    <Content Include="Views\Barkadaoke\Index.cshtml" />
+    <Content Include="Views\Barkadaoke\Prizes.cshtml" />
+    <Content Include="Views\Barkadaoke\Mechanics.cshtml" />
+    <Content Include="Views\Shared\_EffectiveMeasurePartial.cshtml" />
+    <Content Include="Views\Channel\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Promo\BeCarefulWithMyHeart.cshtml" />
+    <Content Include="Views\Promo\LiveSpecials.cshtml" />
+    <Content Include="Views\Error\Unknown.cshtml" />
+    <Content Include="Views\Home\ConcurrentLogin.cshtml" />
+    <Content Include="Views\Home\JapanECommerceLawCompliance.cshtml" />
+    <Content Include="Views\Home\JapanECommerceLawComplianceJP.cshtml" />
+    <Content Include="Views\Show\GetLowestPackages.cshtml" />
+    <Content Include="Views\KuwentongPasko\Video.cshtml" />
+    <Content Include="Views\KuwentongPasko\List.cshtml" />
+    <Content Include="Views\Packages\GetLowestPackages.cshtml" />
+    <Content Include="Views\User\RegisterToTFCEverywhere.cshtml" />
+    <Content Include="Views\User\RegistrationCompleteTFCEverywhere.cshtml" />
+    <Content Include="Views\User\TVEverywhereMain.cshtml" />
+    <Content Include="Views\Social\Index.cshtml" />
+    <Content Include="Views\Halalan\FAQ.cshtml" />
+    <Content Include="Views\Halalan\NewsAlerts.cshtml" />
+    <Content Include="Views\Halalan\Advisories.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_IsEnrolledToRecurringPartial.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyErrorEncounteredPartial.cshtml" />
+    <Content Include="Views\Promo\KapamilyaChat.cshtml" />
+    <Content Include="Views\KapamilyaChat\Details.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsAU.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Home\TermsAndConditionsCA.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsEU.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsTVE.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsTW.cshtml" />
+    <Content Include="Views\Home\CookiePolicy.cshtml" />
+    <Content Include="Views\Shared\PaymentTemplates\_BuyErrorExceededMaximumThresholdPartial.cshtml" />
+    <Content Include="Views\UAAP\Index.cshtml" />
+    <Content Include="Views\UAAP\_GetEpisodesMinimizedWithImage.cshtml" />
+    <Content Include="Views\UAAP\_GetShowProductPackagesVertical.cshtml" />
+    <Content Include="Views\UAAP\TeamDetails.cshtml" />
+    <Content Include="Views\UAAP\_GetAllEpisodes.cshtml" />
+    <Content Include="Views\Shared\_ShareBarPartial.cshtml" />
+    <Content Include="Views\Shared\_NewLovePartial.cshtml" />
+    <Content Include="Views\UAAP\ListAllGameEpisodes.cshtml" />
+    <Content Include="Views\UAAP\_GetGameEpisodes.cshtml" />
+    <Content Include="Views\UAAP\Teams.cshtml" />
+    <Content Include="Views\UAAP\_GetExclusiveEpisodes.cshtml" />
+    <Content Include="Views\UAAP\OnDemand.cshtml" />
+    <Content Include="Views\UAAP\GetFeatureTeamsPR.cshtml" />
+    <Content Include="Views\UAAP\ListAllExclusives.cshtml" />
+    <Content Include="Views\UAAP\_GetOnDemandExclusiveEpisodes.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerPartialUAAP.cshtml" />
+    <Content Include="Views\Show\GetLowestPackagesJQueryClick.cshtml" />
+    <Content Include="Views\Shared\_MenuPreviewEpisodes.cshtml" />
+    <Content Include="Views\Payment\EWallet.cshtml" />
+    <Content Include="Views\Payment\CreditCard.cshtml" />
+    <Content Include="Views\Payment\Paypal.cshtml" />
+    <Content Include="Views\Payment\PrepaidCard.cshtml" />
+    <Content Include="Views\Payment\Confirmation.cshtml" />
+    <Content Include="Views\Payment\SummaryOfOrder.cshtml" />
+    <Content Include="Views\Payment\Reminder.cshtml" />
+    <Content Include="Views\Payment\PaymentSelection.cshtml" />
+    <Content Include="Views\Payment\ErrorEncountered.cshtml" />
+    <Content Include="Views\Load\PrepaidCard.cshtml" />
+    <Content Include="Views\Load\ReloadSelection.cshtml" />
+    <Content Include="Views\Load\PayPal.cshtml" />
+    <Content Include="Views\Load\CreditCard.cshtml" />
+    <Content Include="Views\Load\SmartPit.cshtml" />
+    <Content Include="Views\Load\Balance.cshtml" />
+    <Content Include="Views\Load\Confirmation.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\User\SignIn.cshtml" />
+    <Content Include="Views\Load\ErrorEncountered.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Live\Details.cshtml" />
+    <Content Include="Views\Subscribe\Details.cshtml" />
+    <Content Include="Views\Home\Main.cshtml" />
+    <Content Include="Views\Shared\_TFCTVWhite.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerPartialWelcome.cshtml" />
+    <Content Include="Views\UAAP\Live.cshtml" />
+    <Content Include="Views\FanMobPromo\Index.cshtml" />
+    <Content Include="Views\FanMobPromo\Profile.cshtml" />
+    <Content Include="Views\FanMobPromo\Mechanics.cshtml" />
+    <Content Include="Views\FanMobPromo\EnterPromo.cshtml" />
+    <Content Include="Views\Payment\PayPalHandler.cshtml" />
+    <Content Include="Views\Load\PayPalHandler.cshtml" />
+    <Content Include="Views\Subscribe\FreeTrial.cshtml" />
+    <Content Include="Views\Shared\_NewLovePartialDBCount.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsJP.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsME.cshtml" />
+    <Content Include="Views\Shared\_SocialNetworkConnectPartial.cshtml" />
+    <Content Include="Views\Wedding\Index.cshtml" />
+    <Content Include="Views\Wedding\List.cshtml" />
+    <Content Include="Views\Wedding\Details.cshtml" />
+    <Content Include="Views\KwentoNgPasko\Details.cshtml" />
+    <Content Include="Views\KwentoNgPasko\List.cshtml" />
+    <Content Include="Views\User\RedeemLite.cshtml" />
+    <Content Include="Views\Load\Mopay.cshtml" />
+    <Content Include="Views\TFCkat\GrandWinners.cshtml" />
+    <Content Include="Views\FPJ\Index.cshtml" />
+    <Content Include="Views\FPJ\Library.cshtml" />
+    <Content Include="Views\FPJ\Details.cshtml" />
+    <Content Include="Views\FPJ\LibraryA.cshtml" />
+    <Content Include="Views\Show\GetMoreEpisodes.cshtml" />
+    <Content Include="Views\Show\EpisodeList.cshtml" />
+    <Content Include="Views\Home\BuildFeature.cshtml" />
+    <Content Include="Views\Show\EpisodeListForEpisodeDetails.cshtml" />
+    <Content Include="Views\Show\GetMoreEpisodesForEpisodeDetails.cshtml" />
+    <Content Include="Views\Home\BuildCarousel.cshtml" />
+    <Content Include="Views\SocialEngagement\GetReviewers.cshtml" />
+    <Content Include="Views\SocialEngagement\GetLovedShows.cshtml" />
+    <Content Include="Views\SocialEngagement\GetLovedEpisodes.cshtml" />
+    <Content Include="Views\SocialEngagement\GetLovedCelebrities.cshtml" />
+    <Content Include="Views\SocialEngagement\GetLovedMovies.cshtml" />
+    <Content Include="Views\Payment\PaypalIPN.cshtml" />
+    <Content Include="Views\FanMobPromo\Winners.cshtml" />
+    <Content Include="Views\Live\ABSCBNFreeLiveStreamView.cshtml" />
+    <Content Include="Views\User\ClaimFreeABSCBNLiveStream.cshtml" />
+    <Content Include="Views\PinoyBigBrother\Index.cshtml" />
+    <Content Include="Views\Home\BuildFeatureCustomLink.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerPartialPBB.cshtml" />
+    <Content Include="Views\TFC20\Details.cshtml" />
+    <Content Include="Views\Shared\EpisodeListForTFC20Details.cshtml" />
+    <Content Include="Views\Shared\GetMoreEpisodesForTFC20Details.cshtml" />
+    <Content Include="Views\Shared\_GoogleTagManagerPartial.cshtml" />
+    <Content Include="Views\Shared\SetUIDCookie.cshtml" />
+    <Content Include="Views\Shared\_UXUpdate.cshtml" />
+    <Content Include="Views\Shared\UXFooterBottom.cshtml" />
+    <Content Include="Views\Shared\UXFooterTop.cshtml" />
+    <Content Include="Views\Shared\UXHeader.cshtml" />
+    <Content Include="Views\Shared\UXMenuDesktop.cshtml" />
+    <Content Include="Views\Shared\UXMenuMobile.cshtml" />
+    <Content Include="Views\Home\Index2.cshtml" />
+    <Content Include="Views\Shared\BuildSection.cshtml" />
+    <Content Include="Views\Shared\LoadMoreItems.cshtml" />
+    <Content Include="Views\User\Registration.cshtml" />
+    <Content Include="Views\Category\Shows.cshtml" />
+    <Content Include="Views\Category\Movies.cshtml" />
+    <Content Include="Views\Category\News.cshtml" />
+    <Content Include="Views\Category\Live.cshtml" />
+    <Content Include="Views\Category\List2.cshtml" />
+    <Content Include="Views\Show\Details2.cshtml" />
+    <Content Include="Views\Show\UXEpisodeList.cshtml" />
+    <Content Include="Views\Show\UXGetMoreEpisodes.cshtml" />
+    <Content Include="Views\Show\_GetCastMembers.cshtml" />
+    <Content Include="Views\Episode\Details2.cshtml" />
+    <Content Include="Views\Celebrity\Profile2.cshtml" />
+    <Content Include="Views\Home\ContactUs2.cshtml" />
+    <Content Include="Views\Help\Index2.cshtml" />
+    <Content Include="Views\Help\BuildSubCategories.cshtml" />
+    <Content Include="Views\Help\BuildQuestions.cshtml" />
+    <Content Include="Views\Help\RightWidget.cshtml" />
+    <Content Include="Views\Help\Question2.cshtml" />
+    <Content Include="Views\Profile\Index2.cshtml" />
+    <Content Include="Views\Profile\AboutMe.cshtml" />
+    <Content Include="Views\Profile\GetFeed.cshtml" />
+    <Content Include="Views\Profile\GetFeedTab.cshtml" />
+    <Content Include="Views\Profile\GetFriends.cshtml" />
+    <Content Include="Views\Profile\GetUserLovedShows.cshtml" />
+    <Content Include="Views\Profile\GetUserLovedCelebrities.cshtml" />
+    <Content Include="Views\Profile\LoadMoreFeed.cshtml" />
+    <Content Include="Views\User\Entitlements2.cshtml" />
+    <Content Include="Views\User\GetEntitlements.cshtml" />
+    <Content Include="Views\User\Transactions2.cshtml" />
+    <Content Include="Views\User\GetTransactions.cshtml" />
+    <Content Include="Views\User\ChangePassword2.cshtml" />
+    <Content Include="Views\User\EditYourProfile.cshtml" />
+    <Content Include="Views\Menu\BuildUXMenu.cshtml" />
+    <Content Include="Views\StoreLocator\Index2.cshtml" />
+    <Content Include="Views\Ppc\Index2.cshtml" />
+    <Content Include="Views\Packages\TVE2.cshtml" />
+    <Content Include="Views\Packages\BuildTVEContentList.cshtml" />
+    <Content Include="Views\Live\Details2.cshtml" />
+    <Content Include="Views\Subscribe\Details2.cshtml" />
+    <Content Include="Views\Show\GetRelatedContent.cshtml" />
+    <Content Include="Views\Shared\FeatureList.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2AU.cshtml" />
+    <Content Include="Views\Home\CookiePolicy2.cshtml" />
+    <Content Include="Views\Home\JapanECommerceLawCompliance2.cshtml" />
+    <Content Include="Views\Home\JapanECommerceLawCompliance2JP.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2CA.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2EU.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2JP.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2ME.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions2TW.cshtml" />
+    <Content Include="Views\Home\TermsAndConditionsTVE2.cshtml" />
+    <Content Include="Views\User\RegisterToTFCEverywhere2.cshtml" />
+    <Content Include="Views\HaloHalo\Video2.cshtml" />
+    <Content Include="Views\About\Index2.cshtml" />
+    <Content Include="Views\HaloHalo\GetFeatures.cshtml" />
+    <Content Include="Views\HaloHalo\List2.cshtml" />
+    <Content Include="Views\HaloHalo\BuildContentList.cshtml" />
+    <Content Include="Views\HaloHalo\LoadMoreContent.cshtml" />
+    <Content Include="Views\UAAP\Index2.cshtml" />
+    <Content Include="Views\UAAP\GetFeaturedTeams.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPContent.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPContentVertical.cshtml" />
+    <Content Include="Views\UAAP\GetMoreUAAPContent.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPFeaturedContent.cshtml" />
+    <Content Include="Views\UAAP\GetMoreUAAPFeaturedContent.cshtml" />
+    <Content Include="Views\UAAP\Teams2.cshtml" />
+    <Content Include="Views\UAAP\GetTeams.cshtml" />
+    <Content Include="Views\UAAP\LiveUX.cshtml" />
+    <Content Include="Views\Episode\Details3.cshtml" />
+    <Content Include="Views\UAAP\OnDemand2.cshtml" />
+    <Content Include="Views\UAAP\TeamDetails2.cshtml" />
+    <Content Include="Views\UAAP\GetTeamGames.cshtml" />
+    <Content Include="Views\UAAP\LoadMoreGames.cshtml" />
+    <Content Include="Views\UAAP\ListTeams.cshtml" />
+    <Content Include="Views\Shared\_UXShareUI.cshtml" />
+    <Content Include="Views\Shared\_UXCommentsUI.cshtml" />
+    <Content Include="Views\Shared\_UXReactionsUI.cshtml" />
+    <Content Include="Views\Shared\_UXRatingsUI.cshtml" />
+    <Content Include="Views\UAAP\Index3.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPContentSlider.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPFeaturedContentSlider.cshtml" />
+    <Content Include="Views\UAAP\GetUAAPContentSliderBigThumb.cshtml" />
+    <Content Include="Views\Search\Results2.cshtml" />
+    <Content Include="Views\Subscribe\Details3.cshtml" />
+    <Content Include="Views\Load\Index.cshtml" />
+    <Content Include="Views\FPJ\Index2.cshtml" />
+    <Content Include="Views\FPJ\GetFPJThemes.cshtml" />
+    <Content Include="Views\FPJ\GetFPJContent.cshtml" />
+    <Content Include="Views\FPJ\GetMoreFPJContent.cshtml" />
+    <Content Include="Views\FPJ\Library2.cshtml" />
+    <Content Include="Views\FPJ\LibraryA2.cshtml" />
+    <Content Include="Views\FPJ\OnDemand.cshtml" />
+    <Content Include="Views\Load\ConfirmPaypalPayment.cshtml" />
+    <Content Include="Views\Subscribe\ConfirmPaypalPayment.cshtml" />
+    <Content Include="Views\Shared\UXGenericError.cshtml" />
+    <Content Include="Views\Home\BuildSection2.cshtml" />
+    <Content Include="Views\Home\LoadMoreItems2.cshtml" />
+    <Content Include="Views\Home\ConcurrentLogin2.cshtml" />
+    <Content Include="Views\User\MobileSignIn.cshtml" />
+    <Content Include="Views\Home\GetFeaturedImageFromCarousel.cshtml" />
+    <Content Include="Views\TFC20\Details2.cshtml" />
+    <Content Include="Views\TFC20\GetTFC20Content.cshtml" />
+    <Content Include="Views\TFC20\GetMoreTFC20Content.cshtml" />
+    <Content Include="Views\Shared\BuildSectionNoTitle.cshtml" />
+    <Content Include="Views\PinoyBigBrother\Index2.cshtml" />
+    <Content Include="Views\PinoyBigBrother\GetPBBEpisodes.cshtml" />
+    <Content Include="Views\PinoyBigBrother\GetPBBLiveStream.cshtml" />
+    <Content Include="Views\Shared\UXPlayerControlBar.cshtml" />
+    <Content Include="Views\Shared\_UXUpdateHomepage.cshtml" />
+    <Content Include="Views\Home\UXBackgroundSlider.cshtml" />
+    <Content Include="Views\Home\BuildSectionFooter.cshtml" />
+    <Content Include="Views\Home\BuildReviews.cshtml" />
+    <Content Include="Views\Home\HomePageTour.cshtml" />
+    <Content Include="Views\Help\BuildSubCategoriesMobile.cshtml" />
+    <Content Include="Views\Help\BuildQuestionsMobile.cshtml" />
+    <Content Include="Views\Menu\BuildUXMenuV2.cshtml" />
+    <Content Include="Views\Shared\MultipleRegistrationBlocking.cshtml" />
+    <Content Include="Views\Shared\FeatureListCelebrities.cshtml" />
+    <Content Include="Views\Home\BuildSectionCelebList.cshtml" />
+    <Content Include="Views\Air\Index.cshtml" />
+    <Content Include="Views\Air\BottomFeature.cshtml" />
+    <Content Include="Views\Air\MiddleFeature.cshtml" />
+    <Content Include="Views\Shared\_UXProjectAir.cshtml" />
+    <Content Include="Views\Episode\DetailsJW.cshtml" />
+    <Content Include="Views\Air\AirShareUI.cshtml" />
+    <Content Include="Views\Air\GetProgramSchedule.cshtml" />
+    <Content Include="Views\Air\GetCurrentlyShowing.cshtml" />
+    <Content Include="Views\Shared\ProjectAirModalBox.cshtml" />
+    <Content Include="Views\Home\Pixel.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
+    <Content Include="Views\Home\UXBackgroundNoSlide.cshtml" />
+    <Content Include="Views\Episode\Details4.cshtml" />
+    <Content Include="Views\Shared\UXPlayerControlBarJWP.cshtml" />
+    <Content Include="Views\Live\Details3.cshtml" />
+    <Content Include="Views\Shared\JWPlayerPartial.cshtml" />
+    <Content Include="Views\HaloHalo\Video3.cshtml" />
+    <Content Include="Views\UAAP\OnDemand3.cshtml" />
+    <Content Include="Views\UAAP\LiveUX2.cshtml" />
+    <Content Include="Views\Free\Compensation201411.cshtml" />
+    <Content Include="Views\Subscribe\Details4.cshtml" />
+    <Content Include="Views\Comp\Try.cshtml" />
+    <Content Include="Views\Shared\_UXPlain.cshtml" />
+    <Content Include="Views\Subscribe\Details5.cshtml" />
+    <Content Include="Views\Shared\UXPlayerControlBarJWPVisible.cshtml" />
+    <Content Include="Views\Comp\AirTry.cshtml" />
+    <Content Include="Views\Comp\VodTry.cshtml" />
+    <Content Include="Views\Shared\PlayerSwitcher.cshtml" />
+    <Content Include="Views\Shared\PlayerSwitcherJS.cshtml" />
+    <Content Include="Views\Shared\FlowHLSPartial.cshtml" />
+    <Content Include="Views\Episode\DetailsFlowHLS.cshtml" />
+    <Content Include="Views\HaloHalo\VideoFlowHLS.cshtml" />
+    <Content Include="Views\Live\DetailsFlowHLS.cshtml" />
+    <Content Include="Views\UAAP\LiveUXFlowHLS.cshtml" />
+    <Content Include="Views\UAAP\OnDemandFlowHLS.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Shared\_UXUpdateLogin.cshtml" />
+    <Content Include="Views\ITE\Index.cshtml" />
+    <Content Include="Views\Shared\AppIconPartial.cshtml" />
+    <Content Include="Views\Episode\DetailsTheOPlayer.cshtml" />
+    <Content Include="Views\Shared\PinoyPride30TakeoverPartial.cshtml" />
+    <Content Include="Views\Episode\DetailsVideoJS.cshtml" />
+    <Content Include="Views\Shared\MinimizePlayerOnScroll.cshtml" />
+    <Content Include="Views\Episode\DetailsFlowHLS2.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerHLSPartial.cshtml" />
+    <Content Include="Views\User\ResetPassword2.cshtml" />
+    <Content Include="Views\PacMay\Index.cshtml" />
+    <Content Include="Views\Shared\SideFeature.cshtml" />
+    <Content Include="Views\Shared\SideShowEpisodes.cshtml" />
+    <Content Include="Views\Subscribe\DetailsPacMay.cshtml" />
+    <Content Include="Views\Subscribe\DetailsPacMay2.cshtml" />
+    <Content Include="Views\Home\TestP.cshtml" />
+    <Content Include="Views\Home\IndexRichMedia.cshtml" />
+    <Content Include="Views\Shared\UXHeader2.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Shared\_UXEvents.cshtml" />
+    <Content Include="Views\PinoyBigBrother\PBB737.cshtml" />
+    <Content Include="Views\Episode\DetailsJwplayerAkamai.cshtml" />
+    <Content Include="Views\Shared\JwplayerAkamaiPartial.cshtml" />
+    <Content Include="Views\Live\DetailsJwplayerAkamai.cshtml" />
+    <Content Include="Views\HaloHalo\VideoJwplayerAkamai.cshtml" />
+    <Content Include="Views\Episode\DetailsJwplayer7Akamai.cshtml" />
+    <Content Include="Views\Shared\Jwplayer7AkamaiPartial.cshtml" />
+    <Content Include="Views\Shared\PlayerSwitcher2.cshtml" />
+    <Content Include="Views\Shared\PlayerSwitcherJS2.cshtml" />
+    <Content Include="Views\Live\DetailsJwplayer7Akamai.cshtml" />
+    <Content Include="Views\HaloHalo\VideoJwplayer7Akamai.cshtml" />
+    <Content Include="Views\Shared\BackgroundTakeoverPartial.cshtml" />
+    <Content Include="Views\Shared\_ProbeLayout.cshtml" />
+    <Content Include="Views\Probe\Jwp7Test.cshtml" />
+    <Content Include="Views\Probe\Jwp6Test.cshtml" />
+    <Content Include="Views\Probe\FlowTest.cshtml" />
+    <Content Include="Views\Probe\Jwp7HLSTest.cshtml" />
+    <Content Include="Views\Shared\FlowPlayerStreamSensePartial.cshtml" />
+    <Content Include="Views\Shared\StreamSensePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="lib\" />
+    <Folder Include="obj\Debug\" />
+    <Folder Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_TFCTVBlue.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_FooterNav.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_GetEpisodes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\News\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.bg-BG.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.bg-BG.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.de-DE.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.en-US.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.en-US.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.fr-FR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.nl-NL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.nl-NL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.pl-PL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.pl-PL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.pt-BR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.pt-BR.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.uk-UA.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.uk-UA.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\EditorLocalization.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EditorLocalization.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.bg-BG.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.bg-BG.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.de-DE.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.en-US.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.en-US.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.es-ES.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.fr-FR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.nl-NL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.nl-NL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.pl-PL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.pl-PL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.pt-BR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.pt-BR.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.pt-PT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.pt-PT.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.uk-UA.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.uk-UA.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\GridLocalization.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>GridLocalization.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.bg-BG.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.bg-BG.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.en-US.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.en-US.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.fr-FR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.pl-PL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.pl-PL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\UploadLocalization.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UploadLocalization.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_SignInPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reload\Index.cshtml" />
+    <Content Include="Views\Reload\_ReloadViaPrepaidCardPartial.cshtml" />
+    <Content Include="Views\Reload\_ReloadViaCreditCardPartial.cshtml" />
+    <Content Include="Views\Reload\_ReloadViaPayPalPartial.cshtml" />
+    <Content Include="Views\Reload\_PayPalReloadReturn.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\User\Transactions.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_ShowsRatingsAndReviews.cshtml" />
+    <Content Include="Views\Shared\_GetShowPackages.cshtml" />
+    <Content Include="Views\Shared\_GetCasts.cshtml" />
+    <Content Include="Views\Shared\_CelebritiesComments.cshtml" />
+    <Content Include="Views\Shared\_CelebritiesReactions.cshtml" />
+    <Content Include="Views\Shared\_EpisodesRatingsAndReviews.cshtml" />
+    <Content Include="Views\Packages\AlaCarte.cshtml" />
+    <Content Include="Views\Packages\Index.cshtml" />
+    <Content Include="Views\Packages\Subscription.cshtml" />
+    <Content Include="Views\Packages\_GetAlacartePerEpisodes.cshtml" />
+    <Content Include="Views\Packages\_GetAlacartePerShows.cshtml" />
+    <Content Include="Views\Celebrity\Index.cshtml" />
+    <Content Include="Views\Celebrity\Profile.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\FreeTV\Index.cshtml" />
+    <Content Include="Views\Episode\List.cshtml" />
+    <Content Include="Views\Shared\_GetEpisodePackages.cshtml" />
+    <Content Include="Views\Ppc\Index.cshtml" />
+    <Content Include="Views\Shared\_GetEpisodePackages.cshtml" />
+    <Content Include="Views\Packages\PerMovie.cshtml" />
+    <Content Include="Views\Packages\PerSerye.cshtml" />
+    <Content Include="Views\Packages\PerShow.cshtml" />
+    <Content Include="Views\Packages\PerSpecial.cshtml" />
+    <Content Include="Views\Packages\PerSports.cshtml" />
+    <Content Include="Views\Shared\_GetPreviewEpisodes.cshtml" />
+    <Content Include="Views\Wishlist\_WishlistPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SNSTemplates.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SNSTemplates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\VideoEngagementsModel\VideoEngagementsModel.csproj">
+      <Project>{6711EBFF-E266-4C1C-B582-B47CFDB61F83}</Project>
+      <Name>VideoEngagementsModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="robots.txt" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>50696</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseCdnSupport="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(ProjectDir)Content\robots_txt_transform\robots.$(ConfigurationName).txt" "$(ProjectDir)robots.txt" /Y</PreBuildEvent>
+  </PropertyGroup>
+</Project>

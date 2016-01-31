@@ -1,0 +1,182 @@
+﻿@{
+    //User Entitlement List
+    List<UserEntitlementDisplay> packagelist = ViewBag.UserPackageList;
+    List<IPTV2_Model.ProductShow> productshow = ViewBag.productshow;
+    List<IPTV2_Model.ProductPackage> productPriceList = ViewBag.productlist;
+
+    //Upgrade List
+    List<PackageProductUpgradeDisplay> upgrade_packagelist = ViewBag.Upgrade_PackageList;
+    List<IPTV2_Model.ProductPackage> upgrade_productlist = ViewBag.Upgrade_productlist;
+
+}
+<div time="@ViewBag.ElapsedTime" style="display:none"></div>
+<div id="aboutPackage">
+    <div class="genericHeader">
+        <div class="genericHeader_header">
+            <div id="pkgSubHeaderTitle" class="sectionHeaderTitle">
+                Already accessible on
+            </div>
+            @*<div>
+                <a id="right_headertitle" href="/GoPremium">
+                    See all packages
+                </a>
+            </div>*@
+            <div id="pkgSubHeaderCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div id="packageContainer">
+        <br />
+        <div class="packageList_container">
+            @if (packagelist != null && packagelist.Count() > 0)
+            {
+                foreach (var GrpItem in packagelist.OrderBy(p => p.PackageId).ThenBy(p => p.ALaCarteSubscriptionTypeId))
+                {
+
+                    if (GrpItem.ALaCarteSubscriptionTypeId != null)
+                    {
+                        //Alacarte Products                        
+                <div class="packageitem_container">
+                    <div class="exp_date full_width">
+                        <a href="/User/Entitlements">Valid Until: @GrpItem.ExpiryDate.Value.ToString("MMM d, yyyy")
+                        </a>
+                    </div>
+                    <div class="packageproduct_container">
+                        @Html.ImageBuilder(Url, "package/buttons/pay-" + (GrpItem.ALaCarteSubscriptionTypeId ?? 1).ToString() + ".png", new { height = "58", width = "227", alt = GrpItem.ALaCarteSubscriptionTypeId ?? 1, prdid = GrpItem.ProductId })
+                    </div>
+                    <div class="pckgActionBtn">
+                        <a class="subscribe_btn">Extend Access</a>
+                        <div class="tooltip">
+                            <div class="scrollpane">
+                                <div>
+                                    <a  href="/buy/process/@GrpItem.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        @{ Html.RenderAction("GetAmount", "Show", new { productid = GrpItem.ProductId }); }
+                                        | @GrpItem.Duration @(GrpItem.DurationType == "m" ? " Month(s)" : " Day(s)")
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pckgActionBtn border_left">
+                        <a class="subscribe_btn">Add to Wishlist</a>
+                        <div class="tooltip">
+                            <div class="scrollpane">
+                                @foreach (var item in productshow)
+                                {
+                                    <div>
+                                        <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                            @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                            @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    }
+                    else
+                    {
+                        // Packages
+                <div class="packageitem_container">
+                    <div class="exp_date full_width">
+                        <a href="/User/Entitlements">Valid Until: @GrpItem.ExpiryDate.Value.ToString("MMM d, yyyy")
+                        </a>
+                    </div>
+                    <div class="packageproduct_container">
+                        @Html.ImageBuilder(Url, "package/buttons/img_" + GrpItem.PackageId + ".png", new { height = "58", width = "227", alt = GrpItem.PackageName, prdid = GrpItem.PackageId })
+                    </div>
+                    <div class="pckgActionBtn">
+                        <a pckId="@GrpItem.PackageId" class="subscribe_btn">Extend Access</a>
+                        <div class="tooltip">
+                            @foreach (var item in productPriceList.Where(p => p.PackageId == GrpItem.PackageId))
+                            {
+                                <div>
+                                    <a  href="/buy/process/@item.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        @{ Html.RenderAction("GetAmount", "Show", new { productid = item.ProductId }); }
+                                        |
+                                        @item.Product.Duration @(item.Product.DurationType == "m" ? "Month(s)" : "Day(s)")
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="pckgActionBtn border_left">
+                        <a pckId="@GrpItem.PackageId" class="addwishlist_btn">Add to Wishlist</a>
+                        <div class="tooltip">
+                            @foreach (var item in productPriceList.Where(p => p.PackageId == GrpItem.PackageId))
+                            {
+                                <div>
+                                    <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                        @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                        @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                    }
+                }
+                @*
+                //Upgrade Packages
+                if (upgrade_packagelist != null && upgrade_packagelist.Count() > 0)
+                {
+                    foreach (var GrpItem in upgrade_packagelist.OrderBy(p => p.PackageId))
+                    {
+                        if (GrpItem.ALaCarteSubscriptionTypeId != null)
+                        {
+
+                            //Alacarte Products
+                <div class="packageitem_container">
+                    <div class="packageproduct_container updateTopPad">
+                        @Html.ImageBuilder(Url, "package/buttons/pay-" + (GrpItem.ALaCarteSubscriptionTypeId ?? 1).ToString() + ".png", new { height = "58", width = "227", alt = GrpItem.ALaCarteSubscriptionTypeId ?? 1, prdid = GrpItem.ProductId })
+                    </div>
+                    <div class="pckgActionBtn full_width updateBtn">
+                        <a class="subscribe_btn">Upgrade Subscription</a>
+                        <div class="tooltip">
+                            <div class="scrollpane">
+                                <div>
+                                    <a  href="/buy/process/@GrpItem.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        @{ Html.RenderAction("GetAmount", "Show", new { productid = GrpItem.ProductId }); }
+                                        | @GrpItem.Duration @(GrpItem.DurationType == "m" ? " Month(s)" : " Day(s)")
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                        }
+                        else
+                        {
+                            //package
+                <div class="packageitem_container">
+                    <div class="packageproduct_container updateTopPad">
+                        @Html.ImageBuilder(Url, "package/buttons/" + GrpItem.PackageId + "_upgrade.png", new { height = "58", width = "227", alt = GrpItem.PackageName, prdid = GrpItem.PackageId })
+                    </div>
+                    <div class="pckgActionBtn full_width updateBtn">
+                        <a pckId="@GrpItem.PackageId" class="subscribe_btn">Upgrade Subscription</a>
+                        <div class="tooltip">
+                            @foreach (var item in productPriceList.Where(p => p.PackageId == GrpItem.PackageId))
+                            {
+                                <div>
+                                    <a  href="/buy/process/@item.ProductId?cpid=@GrpItem.CurrentProductId" rel="#bs_overlay" class="buyproduct">
+                                        @{ Html.RenderAction("GetAmount", "Show", new { productid = item.ProductId }); }
+                                        |
+                                        @item.Product.Duration @(item.Product.DurationType == "m" ? "Month(s)" : "Day(s)")
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                        }
+                    }
+                }
+
+                *@
+            }
+        </div>
+    </div>
+</div>

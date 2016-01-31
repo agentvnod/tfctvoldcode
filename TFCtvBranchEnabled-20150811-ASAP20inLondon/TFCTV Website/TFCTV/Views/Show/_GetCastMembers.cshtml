@@ -1,0 +1,11 @@
+﻿@model string
+@{
+    
+}
+@{if (!String.IsNullOrEmpty(Model))
+  { 
+    <p>
+        Cast: @Html.Raw(Model)
+    </p>
+  }  
+}

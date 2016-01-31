@@ -1,0 +1,51 @@
+﻿@{
+    bool ShowAirLink = false;
+    bool isAirCookieAvailable = false;
+    try
+    {
+        if (ViewBag.ShowAirLink != null)
+        {
+            ShowAirLink = ViewBag.ShowAirLink;
+        }
+        if (Request.Cookies.AllKeys.Contains("air"))
+        {
+            isAirCookieAvailable = true;
+        }
+    }
+    catch (Exception) { }
+}
+<nav class="navbar navbar-default visible-xs" role="navigation">
+    <div class="navbar-header hide480">
+        <span id="m_m_t" data-toggle="collapse" data-target=".nav-colapse">Menu</span>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-colapse">
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span
+                class="icon-bar"></span><span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse nav-colapse">
+        <ul class="nav navbar-nav">
+            <li><a href="@Url.Action("Shows", "Category")">SHOWS</a>
+                @Html.Action("BuildUXMenu", "Menu", new { id = "Entertainment", isDesktop = false })
+                <!-- end submenu mobile -->
+            </li>
+            <li><a href="@Url.Action("Movies", "Category")">Movies</a>
+                @Html.Action("BuildUXMenu", "Menu", new { id = "Movies", isDesktop = false })
+                <!-- end submenu mobile -->
+            </li>
+            <li><a href="@Url.Action("News", "Category")">News</a>
+                @Html.Action("BuildUXMenu", "Menu", new { id = "News", isDesktop = false })
+                <!-- end submenu mobile -->
+            </li>
+            <li><a href="@Url.Action("Live", "Category")">Live</a>
+                @Html.Action("BuildUXMenu", "Menu", new { id = "Live", isDesktop = false })
+                <!-- end submenu mobile -->
+            </li>
+            @{if (ShowAirLink || isAirCookieAvailable)
+              { 
+                <li><a href="/WatchNow" class="ared_bg">Watch Now</a></li>
+              }              
+            }
+        </ul>
+    </div>
+</nav>
+<!-- end main menu mobile -->

@@ -1,0 +1,195 @@
+﻿@model IPTV2_Model.Episode
+@{
+    ViewBag.Title = "Video playback trial page";
+    Layout = "~/Views/Shared/_UXPlain.cshtml";
+
+    IPTV2_Model.Show show = ViewBag.Show;
+    string title = String.Format("{0}, {1}", show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"));
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.ImageAssets.ImageVideo);
+    string description = MyUtility.trimmer.Replace(Model.Synopsis.Ellipsis(160), " ");
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+
+    //Build PlayerContorlBarModel
+    var playerControlBarModel = new TFCTV.Models.PlayerControlBarModel() { EpisodeId = Model.EpisodeId, IsUserEntitled = HasActiveSubscriptionBasedOnCategoryId.HasSubscription, TFCTvDownloadPlayerFullUrl = null, Episode = Model, HasHD = false, HasSD = true, IgnoreCheckForMobileDevices = true };
+
+    var flowplayerObj = new FlowPlayerObj() { IsLiveStream = false, IsMobileDeviceHtml5Capable = false };
+    var playbackUri = String.Format("/Ajax/GetMedia/{0}", Model.EpisodeId);
+    Html5CapableObj html5capableObj = MyUtility.IsDeviceHtml5Capable(Request, Model.EpisodeId);
+    Mp4CapableObj mp4capableObj = MyUtility.CheckIfMp4Compatible(Request, Model.EpisodeId, "4.4");
+    //playbackUri = html5capableObj.playbackUri;
+    flowplayerObj.IsMobileDeviceHtml5Capable = html5capableObj.IsMobileDeviceHtml5Capable;
+    bool HasHD = ContextHelper.DoesEpisodeHaveAkamaiHDCdnReferenceBasedOnAsset(Model);
+    playerControlBarModel.HasHD = HasHD;
+    playerControlBarModel.HasSD = ContextHelper.DoesEpisodeHaveAkamaiCdnReferenceBasedOnAsset(Model);
+    if (mp4capableObj.UseMp4ForPlayback)
+    {
+        playbackUri = mp4capableObj.playbackUri;
+    }
+    if (HasHD)
+    {
+        if (mp4capableObj.UseMp4ForPlayback)
+        {
+            playbackUri += (playbackUri.IndexOf('?') > 0 ? "&" : "?") + "q=1";
+        }
+        else
+        {
+            playbackUri = String.Format("/Ajax/GetMedia/{0}?p=3", Model.EpisodeId);
+        }
+    }
+
+    playbackUri += (playbackUri.IndexOf('?') > 0 ? "&" : "?") + "j=1";
+    string ts = String.Format("{0}", (int)MyUtility.ConvertToTimestamp(DateTime.Now));
+    string ScreenImage = "http://az332173.vo.msecnd.net/content/images/ux/screen5.jpg";
+
+    var jwpObj = new JWPObject()
+    {
+        clipType = "vod",
+        EpisodeId = Model.EpisodeId,
+        playbackUri = playbackUri,
+        ScreenImage = ScreenImage,
+        title = title,
+        show = show,
+        ErrorFontSize = "22px",
+        ErrorMessage = "Ooops! The video didn't load properly. Please contact Customer Support."
+    };
+
+    IPTV2_Model.User user = null;
+    try
+    {
+        user = ViewBag.User;
+    }
+    catch (Exception) { }
+}
+<h2 class="text-muted">
+    Video</h2>
+<div class="text-primary">
+    <div class="form-group">
+        <label>
+            Email Address</label>
+        @user.EMail
+    </div>
+    <div class="form-group">
+        <label>
+            Country Code</label>
+        @user.CountryCode
+    </div>
+    <div class="form-group">
+        <label>
+            IP Address</label>
+        @Request.GetUserHostAddressFromCloudflare()
+    </div>
+    <div class="form-group">
+        <label>
+            Premium Entitlement</label>
+        @user.PackageEntitlements.FirstOrDefault(c => c.PackageId == 47).EndDate.ToString("MMMM d, yyyy")
+    </div>
+    <div class="form-group">
+        <label>
+            Login Status</label>
+        @String.Format("{0}", User.Identity.IsAuthenticated ? "Logged In" : "Logged Out")
+    </div>
+    <div class="form-group">
+        <label id="getlink">
+            File Raw Link</label>
+        <a href="" id="arl_url"><span id="rl_url"></span></a>
+    </div>
+</div>
+<div id="playerContainer" class="regular_video">
+</div>
+<div class="bs_screentext bs_pb text-danger">
+</div>
+@{if (Model.IsLiveChannelActive != true)
+  { 
+    @Html.Partial("UXPlayerControlBarJWP", playerControlBarModel)  
+  }
+}
+@section JScriptBottom {
+    @{if ((show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow))
+      { 
+        <script type="text/javascript">
+            var gmessage = "I just watched @HttpUtility.JavaScriptStringEncode(show.Description)";
+            var gtitle = "@HttpUtility.JavaScriptStringEncode(title)";
+            var gdescription = "@HttpUtility.JavaScriptStringEncode(show.Blurb)";
+            var gimg = "@img";
+            var ghref = "@href";
+        </script>
+      }
+      else
+      {      
+        <script type="text/javascript">
+            var gmessage = "I just watched an episode of @Ajax.JavaScriptStringEncode(show.Description)";
+            var gtitle = "@Ajax.JavaScriptStringEncode(title)";
+            var gdescription = "@Ajax.JavaScriptStringEncode(Model.Synopsis)";
+            var gimg = "@img";
+            var ghref = "@href";
+        </script>
+      }
+    }
+    @Html.Partial("JWPlayerPartial", jwpObj)
+    <script type="text/javascript">
+        $('.ib_close').on('click', function () {
+            $('.ib_close_bar').fadeOut(800);
+            return false;
+        });
+    </script>
+    <script type="text/javascript">
+        $("#getlink").click(function () {
+            var ln = jwplayer(playerContainer).getPlaylist()[0].file;
+            $("#rl_url").text(ln);
+            $('#arl_url').attr('href', ln);
+            return false;
+        });
+    </script>
+    @{if (playerControlBarModel.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Request.Browser.IsMobileDevice)
+      {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.playmode').on('click', function () {
+                    $('.playmode').removeClass('mode-selected');
+                    $(this).addClass('mode-selected');
+                    player.SwitchUri($(this).data('href')).done(function (data) {
+                        if (data.errorCode == 0) {
+                            $("#rl_url").text(data.data.Url);
+                            $('#arl_url').attr('href', data.data.Url);
+                            jwplayer(jConfig.playerContainer).load([{ file: data.data.Url}]);
+                        }
+                        setTimeout(function () { jwplayer(jConfig.playerContainer).play(); }, 850);
+                    }, 1000);
+                    return false;
+                });
+            });
+        </script>
+      }
+      else if (playerControlBarModel.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && (!playerControlBarModel.IgnoreCheckForMobileDevices ? !Request.Browser.IsMobileDevice : true))
+      { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.playmode').on('click', function () {
+                    $('.playmode').removeClass('mode-selected');
+                    $(this).addClass('mode-selected');
+                    player.SwitchUri($(this).data('href')).done(function (data) {
+                        if (data.errorCode == 0) {
+                            $("#rl_url").text(data.data.Url);
+                            $('#arl_url').attr('href', data.data.Url);
+                            var typ = data.data.Url.split('?').shift().split('.').pop();
+                            jwplayer(jConfig.playerContainer).load([{ image: "http://res2.abs-cbnip.tv/images/categoryimages/310/MMK-Banner-960x300.jpg", file: data.data.Url}]);
+                        }
+                    }, 1000);
+                    return false;
+                });
+            });
+        </script>
+      }
+    }
+}
+@section StyleSheet {
+    <style type="text/css">
+        li
+        {
+            float: left;
+            width: 140px;
+            margin-top: 20px;
+        }
+    </style>
+}

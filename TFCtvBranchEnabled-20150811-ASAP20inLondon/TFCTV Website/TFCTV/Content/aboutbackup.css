@@ -1,0 +1,200 @@
+﻿body
+{
+	font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+#main_container
+{
+	position: relative; /*background: #00162e url('/Content/images/about/default-bg.jpg') no-repeat top center;*/
+}
+
+#aboutUsContainer
+{
+	position: relative;
+	margin: 0 auto;
+	padding: 25px 0;
+	height: auto;
+	width: 978px;
+}
+
+.clearfix, .clear
+{
+	clear: both;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+.left
+{
+	float: left;
+}
+
+.right
+{
+	float: right;
+}
+
+.bold
+{
+	font-weight: bold;
+}
+
+ul
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.link
+{
+	/*color: #ef5504;*/
+	color:#FF9900;
+}
+
+.title
+{
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+/* ----- HEADER Styles ----- */
+#aboutUsHeaderContainer
+{
+	display: inline-block;
+	width: 948px;
+	background-color: #011730;
+	padding: 15px;
+}
+
+#aboutUsHeaderContent
+{
+	background: #011730 url('/Content/images/about/aboutus-header.jpg') no-repeat center;
+	border: #224263 1px solid;
+	width: 946px;
+	height: 209px;
+}
+
+#headerBox
+{
+	display: inline-block;
+	width: 630px;
+	margin-top: 15px;
+	margin-right: 15px;
+}
+
+#aboutUsTitle
+{
+	color: #FFFFFF;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+#aboutUsContent
+{
+	line-height: 130%;
+	margin-top: 15px;
+	color: #FFFFFF;
+	font-size: 14px;
+	width: 630px;
+}
+
+/******************************/
+.contentWrap
+{
+	display: inline-block;
+	width: 100%;
+}
+
+#goDigitalContainer, #goWatchContainer, #goSocializeContainer
+{
+	display: inline-block;
+	width: 948px;
+	margin-top: 15px;
+	background-color: #011730;
+	padding: 15px;
+}
+
+#goDigitalContentContainer, #goWatchContentContainer, #goSocializeContentContainer
+{
+	display: inline-block;
+	width: 100%;
+}
+
+#goDigitalTitle, #goWatchTitle, #goSocializeTitle
+{
+	color: #FFFFFF;
+	font-size: 20px;
+	width: 100%;
+	padding-bottom: 5px;
+	border-bottom: #535e6a 1px solid;
+}
+
+#goDigitalLeftInfoContainer, #goWatchLeftInfoContainer, #goSocializeLeftInfoContainer
+{
+	display: inline-block;
+	width: 600px;
+	margin-top: 15px;
+}
+
+.goDigitalLeftPane, .goWatchLeftPane, .goSocializeLeftPane
+{
+	display: inline-block;
+	width: 360px;
+	border-right: #263a4f 2px solid;
+	margin: 10px;
+}
+
+#goDigitalPic, #goWatchPic, #goSocializePic
+{
+	display: inline-block;
+	margin-top: 15px;
+	width: 329px;
+	height: 432px;
+}
+
+.goDigitalRightPane, .goWatchRightPane, .goSocializeRightPane
+{
+	display: inline-block;
+	width: 190px;
+	float: right;
+	margin: 10px;
+}
+
+.contentContainer
+{
+	display: inline-block;
+	background-color: #0b1724;
+	margin-bottom: 5px;
+	width: 100%;
+	border: #263a4f 1px dotted;
+}
+
+.contentTitle
+{
+	color: #49a4ff;
+	font-size: 14px;
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+.contentLeft
+{
+	color: #FFFFFF;
+	font-size: 12px;
+	padding-top: 10px;
+	padding-right: 10px;
+}
+
+.contentRight
+{
+	text-align: right;
+	color: #ff9900;
+	font-size: 11px;
+}

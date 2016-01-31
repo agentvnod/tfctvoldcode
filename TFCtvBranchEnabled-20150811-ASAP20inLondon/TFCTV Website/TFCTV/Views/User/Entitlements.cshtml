@@ -1,0 +1,59 @@
+﻿@model IEnumerable<IPTV2_Model.Entitlement>
+@{
+    ViewBag.Title = "My Subscriptions - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    My Subscriptions</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        @*<div id="latestShows_bodyContainer">
+            @(Html.Telerik().Grid<EntitlementDisplay>()
+        .Name("Grid")
+        .Columns(columns =>
+        {
+            columns.Bound(e => e.EntitlementId).Width(183).Title("EID").HtmlAttributes(new { style = "width: 183px;" });
+            columns.Bound(e => e.Content).Width(243).Title("Content").HtmlAttributes(new { style = "width: 243px;" });
+            //columns.Bound(e => e.ExpiryDate).Format("{0:MMM. dd, yyyy hh:mm:ss tt}")
+            columns.Bound(e => e.ExpiryDateStr)
+                .Width(455).Title("Expiry Date").HtmlAttributes(new { style = "width: 455px;" });
+        })
+        .DataBinding(dataBinding => dataBinding.Ajax().Select("_Entitlements", "User"))
+                .Pageable(paging =>
+                    paging.PageSize(20))
+        .Sortable()
+        .Scrollable(c => c.Height("400px"))
+        .HtmlAttributes(new { style = "font-size:11px;" })
+)
+            <div class="clear">
+            </div>
+        </div>*@
+        <!-- end of list -->
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+    <meta name="robots" content="nofollow" />
+}
+@section JScript {
+    @*@(Html.Telerik().StyleSheetRegistrar().DefaultGroup(group => group.Add("telerik.common.css").Add("telerik.black.css").Combined(true).Compress(true)))*@
+}
+@section JScriptBottom{
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.common.min.js"></script>    
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.grid.min.js"></script>
+    @*@(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+                         .OutputScriptFiles(false)
+    )*@
+}

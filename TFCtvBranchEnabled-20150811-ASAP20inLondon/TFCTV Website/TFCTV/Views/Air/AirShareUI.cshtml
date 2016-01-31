@@ -1,0 +1,141 @@
+﻿@model GigyaShareObj
+@{
+    string title = Model.title;
+    string img = Model.img;
+    string href = Model.href;
+    string description = Model.description;
+    string kissTitle = HttpUtility.JavaScriptStringEncode(title);
+}
+<!-- ShareBar UI -->
+<script type="text/javascript">
+    var _SHARE = 3;
+    var type = "@Model.elementType";
+    var id = eval('@Model.id');
+    var act = new gigya.socialize.UserAction();
+    act.setTitle("@title");
+    act.setLinkBack("@href");
+    act.addMediaItem({ type: 'image', src: '@img', href: '@href' });
+    act.setDescription("@description");
+    act.addActionLink("TFC.tv", "@href");
+
+    var twitter_act = new gigya.socialize.UserAction();
+    twitter_act.setTitle("Unlimited ang saya at panonood sa free time kapag TFC.tv ang kasama! #FREEtimeisFUNtime");
+    twitter_act.setLinkBack("@href");
+    twitter_act.addMediaItem({ type: 'image', src: '@img', href: '@href' });
+    twitter_act.addActionLink("TFC.tv", "@href");
+
+    var fb_act = new gigya.socialize.UserAction();
+    fb_act.setUserMessage("Free time is fun time with TFC.tv!");
+    fb_act.setTitle("Free time is fun time with TFC.tv!");
+    fb_act.setLinkBack("@href");
+    fb_act.addMediaItem({ type: 'image', src: '@img', href: '@href' });
+    fb_act.setDescription("Tuloy-tuloy ang panonood kaya tumutok na. Dito mo lang makikita ang pinakabagong shows at movies na bubuo sa araw mo! Magpapahuli ka pa ba?");
+    fb_act.addActionLink("TFC.tv", "@href");
+
+
+    function onSendDone(e) {
+        //publish useraction
+        var publishUserAction_params = {
+            userAction: act,
+            scope: 'internal',
+            privacy: 'public',
+            feedID: 'UserAction'
+        };
+        gigya.socialize.publishUserAction(publishUserAction_params);
+        //log action
+        $.post('/Ajax/CreateInteraction', { reactionId: _SHARE, type: type, id: id }, function (data) { });
+        _kmq.push(['record', 'Share Video', { 'Source': e.providers, 'title': '@kissTitle', 'type': '@Model.elementType', 'id': '@Model.id'}]);
+    }
+
+    function onShareButtonClicked(e) {
+        if (e != undefined) {
+            if (e.shareItem != undefined) {
+                if (e.shareItem.provider == "Email") {
+                    setTimeout(function () {
+                        $('textarea').val("@description");
+                        var tfr = $("input[id$='tbFriendsEmail']");
+                        tfr.val("Enter an email address");
+                        tfr.removeAttr("onblur");
+                        tfr.attr("onblur", "if (this.value=='') {this.watermarkCleared=false; this.value='Enter an email address'}");
+                    }, 500);
+                }
+            }
+        }
+    }
+</script>
+@{if (Request.Browser.IsMobileDevice)
+  {
+      if (Request.Browser.ScreenPixelsWidth <= 640)
+      {
+    <script type="text/javascript">
+        var showShareBarUI_params =
+        {
+            containerID: '@Model.containerId'
+            , shareButtons: 'Twitter,Facebook,Email'
+            , userAction: act
+            , deviceType: 'auto'
+            , grayedOutScreenOpacity: 20
+            , onSendDone: onSendDone
+            , noButtonBorders: false
+            , wrap: true
+            , buttonTemplate: '<a onClick="$onClick"><div class="img-responsive iconair-Sz iconair-$text"></div></a>'
+            , buttonWithCountTemplate: '<a onClick="$onClick"><div class="img-responsive iconair-Sz iconair-$text">&nbsp;</div></a>'
+            , onShareButtonClicked: onShareButtonClicked
+            , useEmailCaptcha: true
+            , twitterUserAction: twitter_act
+            , facebookUserAction: fb_act
+            , emailUserAction: fb_act
+        }
+    </script>
+      }
+      else
+      {
+    <script type="text/javascript">
+        var showShareBarUI_params =
+        {
+            containerID: '@Model.containerId'
+            , shareButtons: 'Twitter,Facebook,Email,Facebook-Like'
+            , userAction: act
+            , deviceType: 'auto'
+            , grayedOutScreenOpacity: 20
+            , onSendDone: onSendDone
+            , noButtonBorders: false
+            , wrap: true
+            , buttonTemplate: '<span class="img-responsive icon-Sz icon-$text"></span><a onClick="$onClick">$text</a>'
+            , buttonWithCountTemplate: '<span class="img-responsive icon-Sz icon-$text"></span><a onClick="$onClick">$text </a>'
+            , onShareButtonClicked: onShareButtonClicked
+            , useEmailCaptcha: true
+            , twitterUserAction: twitter_act
+            , facebookUserAction: fb_act
+            , emailUserAction: fb_act
+        }
+    </script>
+      }
+  }
+  else
+  { 
+    <script type="text/javascript">
+        var showShareBarUI_params =
+        {
+            containerID: '@Model.containerId'
+            , shareButtons: 'Twitter,Facebook,Email,Facebook-Like'
+            , userAction: act
+            , deviceType: 'auto'
+            , grayedOutScreenOpacity: 20
+            , onSendDone: onSendDone
+            , buttonTemplate: '<span class="img-responsive icon-Sz icon-$text"></span><a onClick="$onClick">$text</a>'
+            , buttonWithCountTemplate: '<span class="img-responsive icon-Sz icon-$text"></span><a onClick="$onClick">$text </a>'
+            , noButtonBorders: false
+            , wrap: true
+            , onShareButtonClicked: onShareButtonClicked
+            , useEmailCaptcha: true
+            , twitterUserAction: twitter_act
+            , facebookUserAction: fb_act
+            , emailUserAction: fb_act
+        }
+    </script>
+  }
+}
+<script type="text/javascript">
+    gigya.socialize.showShareBarUI(showShareBarUI_params);
+</script>

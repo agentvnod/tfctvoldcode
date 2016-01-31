@@ -1,0 +1,184 @@
+﻿@model IPTV2_Model.Episode
+@{
+    IPTV2_Model.Show show = (IPTV2_Model.Show)ViewBag.Show;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+    }
+}
+<div id="social_component">
+    <div id="ShareThisShow">
+    </div>
+    <div id="componentDiv">
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var isLogin = '@User.Identity.IsAuthenticated.ToString().ToLower()';
+
+            var loveText = '@ViewBag.loved' == 'True' ? 'Unlove' : 'Love';
+            var myReactions = [
+            {
+                text: loveText,
+                ID: 'love',
+                iconImgUp: '@Html.ContentBuilder(Url, "content/images/social/heart.png")',
+                tooltip: '@Ajax.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")',
+                headerText: 'You love @Ajax.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")'
+            }
+            ]
+
+            var act = new gigya.services.socialize.UserAction();
+            act.setLinkBack(location.href);
+            act.setTitle("Love on TFC.tv");
+            act.setSubtitle("www.tfc.tv");
+            act.setDescription("Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.");
+            act.addActionLink("Love this too", location.href);  // Adding Action Link
+            act.addMediaItem({ type: 'image', src: '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo', href: location.href });
+            act.setUserMessage('loves @Ajax.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")'); // + ' - ' + '@Model.Description');
+
+            var showReactionsBarUI_params =
+            {
+                barID: 'Episode_' + '@Model.EpisodeId',
+                showCounts: 'right',
+                containerID: 'componentDiv',
+                reactions: myReactions,
+                userAction: act,
+                showSuccessMessage: false,
+                noButtonBorders: false,
+                cid: '@Model.EpisodeName',
+                shortURLs: 'never',
+                onReactionClicked: onReactionClickedHandler,
+                onReactionUnclicked: onReactionUnclickedHandler,
+                onSendDone: onSendReactionHandler,
+                onLoad: onLoadReactionHandler
+            }
+
+            gigya.services.socialize.showReactionsBarUI(showReactionsBarUI_params);
+
+            /**HANDLERS**/
+            function onReactionUnclickedHandler(eventObj) {
+                updateReactions(eventObj);
+                tfc.Social.OnLoveReaction({ love: 'False' });
+            }
+
+            function onReactionClickedHandler(eventObj) {
+                updateReactions(eventObj);
+                publishInternalUserAction('loves @Ajax.JavaScriptStringEncode(show.Description)) - @Model.DateAired.Value.ToString("MMM d, yyyy")');
+                tfc.Social.OnLoveReaction({ love: 'True' });
+            }
+
+            function updateReactions(eventObj) {
+                var userId = '@User.Identity.Name';
+                var reactionTypeId = tfc.Social.getEngagementId(eventObj.reaction.ID);
+                var episodeId = '@Model.EpisodeId';
+
+                var action = (eventObj.eventName == "reactionClicked") ? 'add' : 'remove';
+                jQuery.post('@Url.Action("EpisodeReactions", "SocialEngagement")',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    episodeId: episodeId,
+                    action: action
+                }, function (data) {
+                    //alert(data);
+                });
+            }
+
+            function onLoadReactionHandler(eventObj) {
+                if (isLogin == 'false') {
+                    $(".gig-reaction-button").attr("onclick", "");
+                }
+
+                //tfc.Social.OnLoveReaction({ love: '@ViewBag.Loved' });
+            }
+
+            function onSendReactionHandler(eventObj) {
+                var userId = '@User.Identity.Name';
+                var reactionTypeId = tfc.Social.getEngagementId('share');
+                var episodeId = '@Model.EpisodeId';
+
+                jQuery.post('@Url.Action("EpisodeReactions", "SocialEngagement")',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    episodeId: episodeId,
+                    action: 'add'
+                }, function (data) {
+                    //alert(data);
+                });
+
+                $(".pop_up_message").click();
+            }
+
+            /**-=HANDLERS=-**/
+
+            $("#componentDiv").click(function () {
+                if (isLogin == 'false') {
+                    tfc.Social.OnSiteLogin();
+                }
+            });
+
+            function publishInternalUserAction(feedMessage) {
+                var actInternal = new gigya.services.socialize.UserAction();
+                actInternal.setLinkBack(location.href);
+                actInternal.setTitle('@Ajax.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")');
+                actInternal.setDescription('has loved: ');
+                actInternal.addMediaItem({ type: 'image', src: '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo', href: location.href });                
+                actInternal.actorUID = '@User.Identity.Name';                
+                var params = {
+                    feedID: 'UserAction',
+                    userAction: actInternal,   // including the UserAction object
+                    scope: 'internal', // the Activity Feed will be published internally only (site scope), not to social networks
+                    privacy: 'public',
+                    callback: publishInternalUserAction_callback
+                };
+                @{
+                    if (userData != null)
+                    {
+                        if (userData.IsInternalSharingEnabled.Contains("true"))
+                        {
+                            <text>
+                            gigya.services.socialize.publishUserAction(params);
+                            </text>
+                        }
+                    }
+                }
+            }
+
+            function publishInternalUserAction_callback(response) {
+                if (response.errorCode != 0) {
+                 // catch error
+                }
+            }
+
+            $.getScript(socialPluginUrl, function () {
+                var share = { container: 'ShareThisShow', showCounts: 'right', isLogin: isLogin };
+                var action = { actorUID: '@User.Identity.Name', description: '@Ajax.JavaScriptStringEncode(Model.Synopsis)', title: '@Ajax.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")', linkback: '@HttpContext.Current.Request.Url.AbsoluteUri', actionlinkmessage: 'Read more', actionlinkurl: '@HttpContext.Current.Request.Url.AbsoluteUri', mediaitem: { type: 'image', src: '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo', href: '@HttpContext.Current.Request.Url.AbsoluteUri'} };
+                tfc.Social.Share(share, action);
+            });
+
+            $("#ShareThisShow").click(function () {
+                if (isLogin == 'false') {
+                    tfc.Social.OnSiteLogin();
+                }
+            });
+
+            $('.pop_up_message').overlay({
+                mask: 'black',
+                fixed: false,
+                closeOnClick: false,
+                onBeforeLoad: function () {
+                    $(".apple_overlay").width(270);
+                    $(".contentWrap").html("<h3>You've successfully shared your activity.</h3>");
+                },
+                onClose: function () {
+                    $('#bs_overlay .contentWrap').empty();
+                }
+            });
+        });
+    </script>
+</div>
+<div class="pop_up_message" rel="#bs_overlay">
+</div>

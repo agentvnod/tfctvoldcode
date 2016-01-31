@@ -1,0 +1,97 @@
+﻿@model List<TFCTV.Helpers.CategoryWithPreview>
+@{
+
+    ViewBag.Title = "Online Premiere - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+
+    int ctr = 0;
+    DateTime registDt = DateTime.Now;
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div id="latestShows_bodyContainer">
+            <div class="clear">
+            </div>
+            <div>@Html.ImageBuilder(Url, "onlinepremiere/online_premiere_logo.png", null, ContentSource.Assets)</div>
+            <div class="breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div>
+                <div class="floatRight white" style="font-size: 23px; margin-right: 40px; text-align: right;">
+                    Inihahandog ng TFC.tv ang mga pinakabago at
+                    <br />
+                    pinakabonggang pelikula na dito mo lang mapapanood.
+                </div>
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div style="margin-left: 40px;">
+                @{foreach (var item in Model)
+                  {
+                      bool isAvailable = false;
+                      if (item.Full.StatusId == GlobalConfig.Visible && item.Full.EndDate > registDt && item.Full.StartDate < registDt) { isAvailable = true; }
+
+                      if (item.Preview is IPTV2_Model.Show)
+                      {
+                    <text>
+                    <div class="floatLeft" style="margin-right: 25px;">
+                        <a href="@Url.Action("Details", "Show", new { id = !isAvailable ? item.Preview.CategoryId : item.Full.CategoryId })">@Html.ImageBuilder(Url, "onlinepremiere/" + @item.Preview.CategoryId + ".jpg", new { title = item.Full != null ? item.Full.Description : item.Preview.Description }, ContentSource.Assets)</a>
+                        <div style="margin: 0 auto; width: 100%; text-align: center;">
+                            <div class="white" style="margin-top: 15px; line-height: 20px;">
+                                <div>
+                                    Available on:<br />
+                                    <span class="boldText" style="font-size: 15px;">@item.Full.StartDate.Value.ToString("MMMM dd").ToUpper()
+                                        - @item.Full.EndDate.Value.AddDays(-3).ToString("MMMM dd").ToUpper()</span>
+                                </div>
+                                @{if (isAvailable)
+                                  {
+                                    <div>
+                                        @Html.ActionLink("Full Movie", "Details", "Show", new { id = item.Full.CategoryId }, new { @class = "yellow" })</div>
+                                  }}
+                                <div>
+                                    @Html.ActionLink("Preview", "Details", "Show", new { id = item.Preview.CategoryId }, new { @class = "yellow" })</div>
+                            </div>
+                        </div>
+                    </div>
+                    </text>                  
+                                  ctr++;
+                      }
+                      if (ctr % 3 == 0)
+                      {
+                    <text>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="clear breakStandard">
+                    </div>
+                    </text>
+                      }
+                  }}
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="promo_blue_text" style="font-size: 25px; text-align: center;">
+                Sa murang halaga, pwedeng pwede mo nang ulit-uliting ang pelikulang<br />
+                napupusuan mo sa loob ng 48 hours pagka-purchase!
+            </div>
+            <div class="clear breakLarge">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css", ContentSource.Assets)
+    @Html.CssBuilder(Url, "promo.css", ContentSource.Assets)
+    <link rel="canonical" href="@String.Format("{0}/OnlinePremiere", GlobalConfig.baseUrl)" />
+}
+@section JScript{
+}
+@section JScriptBottom {
+}

@@ -1,0 +1,25 @@
+﻿@model List<MostLovedEpisodesDisplay>
+@{if (Model != null)
+  {
+      if (Model.Count > 0)
+      {
+          int i = 0;
+    <ul class="most-loved-container">
+        @foreach (var item in Model)
+        {
+            i++;
+            string href = String.Format("/Show/Details/{0}/{1}", item.showId, item.showSlug);
+            string ehref = String.Format("/Episode/Details/{0}/{1}", item.episodeId, item.slug);
+            <li class="showslistcontainer">
+                <ul class="showslist">
+                    <li class="showscount">@i</li>
+                    <li class="showsdetails"><span class="showsname"><a href="@href" title="@HttpUtility.HtmlEncode(item.showName)" class="s12">@Html.Raw(item.showName.Ellipsis(15))</a></span><span
+                        class="showsname"><a href="@ehref" class="s11">@Html.Raw(item.dateAired)</a></span></li>
+                    <li class="pointsbox"><span class="showspoints">@item.totalLove</span></li>
+                </ul>
+            </li>          
+        }
+    </ul>
+      }
+  }
+}

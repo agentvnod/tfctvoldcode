@@ -1,0 +1,92 @@
+﻿@using TFCTV.Helpers
+@model List<FPJThematicBundle>
+@{
+    ViewBag.Title = "FPJ: Idolo ng Pilipino - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<br />
+<br />
+<div>
+    <div style="width: 940px; display: table; margin: 0 auto;">
+        <div class="transparentBg">
+            <div id="dTopLinksFour" style="display: table; margin: 0 auto; font-size: 20px;">
+                @Html.ActionLink("MAIN PAGE", "Index", "FPJ") | MOVIE LIBRARY</div>
+            <div id="featuredCelebrities">
+                <div id="featuredItems_featuredTitles" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft" style="width: 940px;">
+                                <h1 class="uaap-title mbottom20">
+                                    MOVIE PACKAGES</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sortlinks">
+                        Packages | <a href="/FPJ/LibraryA/1">Titles</a></div>
+                    <div class="bundlesContainer">
+                        @{foreach (FPJThematicBundle bundle in Model)
+                          {
+                            <div class="lib-bundleContainer">
+                                <div class="lib-bundleTitle" id="@bundle.featureId">
+                                    @bundle.BundleDescription
+                                </div>
+                                <div class="lib-moviesContainer">
+                                    @foreach (FPJFeaturedMovie movie in bundle.featuredTitles)
+                                    {
+                                        <div class="lib-movieContainer">
+                                            <div class="lib-feature-image">
+                                                <a href="/FPJ/Details/@movie.movieEpisodeID">
+                                                    <img src="@movie.movieImage" width= "205" height="240"/ alt="@movie.movieTitle"/></a>
+                                            </div>
+                                            <div class="lib-feature-title">
+                                                <a href="/FPJ/Details/@movie.movieEpisodeID">@movie.movieTitle</a>
+                                            </div>
+                                            <div>
+                                                @* @Html.Partial("_NewLovePartial", Model, dictionary)*@</div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                          }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="apple_overlay" id="bs_overlay">
+    <!-- the external content is loaded inside this tag -->
+    <div class="contentWrap">
+    </div>
+    <div class="contentMessage" style="color: #000">
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "uaap.4.css")
+    @Html.CssBuilder(Url, "getpackage.css")
+    @Html.CssBuilder(Url, "payment.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "tabs-no-images.css")
+    @Html.CssBuilder(Url, "tfckat.6.css")
+    @Html.CssBuilder(Url, "fpj.4.css")
+    <!--[if IE 9]>
+    @Html.CssBuilder(Url, "uaap.ie9.css")
+    @Html.CssBuilder(Url, "tfckat.ie9.css")
+    <![endif]-->
+    <!--[if lte IE 8]>
+    @Html.CssBuilder(Url, "uaap.ie8.css")
+    <![endif]-->
+    <!--[if lte IE 7]>
+    @Html.CssBuilder(Url, "tfckat.ie7.css")
+    <![endif]-->
+}
+@section JScript {
+    @Html.JsBuilder(Url, "common.1.js")
+    @Html.JsBuilder(Url, "packages.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+
+    </script>
+    @Html.JsBuilder(Url, "package_overlay.js")
+}

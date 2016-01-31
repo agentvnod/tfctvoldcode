@@ -1,0 +1,716 @@
+﻿@{
+    ViewBag.Title = "TFC.tv - Digital Tambayan of the Global Pinoy! - ABS-CBN Entertainment";
+    Layout = "~/Views/Shared/_UXUpdateHomepage.cshtml";
+    ViewBag.DaxName = "tfc-tv:home";
+
+    bool HasActiveSubscriptions = false;
+    bool IsFreeTrialUser = false;
+    TransactionReturnType ErrorMessage = null;
+    string DefaultProductOfferingPrice = "USD 12.95";
+    bool IsPacMayBannerEnabledInHomepage = false;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+        if (ViewBag.HasActiveSubscriptions != null)
+        {
+            HasActiveSubscriptions = ViewBag.HasActiveSubscriptions;
+        }
+        if (ViewBag.IsFreeTrialUser != null)
+        {
+            IsFreeTrialUser = ViewBag.IsFreeTrialUser;
+        }
+        if (ViewBag.DefaultProductOfferingPrice != null)
+        {
+            DefaultProductOfferingPrice = ViewBag.DefaultProductOfferingPrice;
+        }
+        if (ViewBag.IsPacMayBannerEnabledInHomepage != null)
+        {
+            IsPacMayBannerEnabledInHomepage = ViewBag.IsPacMayBannerEnabledInHomepage;
+        }
+    }
+    catch (Exception) { }
+
+    string button_copy = String.Empty;
+    string button_href = String.Empty;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        if (!HasActiveSubscriptions)
+        {
+            button_copy = "subscribe now";
+            button_href = Url.Action("Details", "Subscribe").ToString();
+        }
+    }
+    else
+    {
+        //button_copy = "start your free trial today!";
+        button_copy = "TRY THIS FREE FOR 7 DAYS";
+        button_href = Url.Action("Register", "User").ToString();
+    }
+
+    bool IsAndroid = MyUtility.IsAndroid(request: Request);
+
+    bool IsPacMayPurchase = false;
+    try
+    {
+        if (TempData["IsPacMayPurchase"] != null)
+        {
+            IsPacMayPurchase = (bool)TempData["IsPacMayPurchase"];
+        }
+    }
+    catch (Exception) { }
+}
+<section class="slidersec home hide480">
+    <div class="container">
+        <div class="row">
+            <div class="slidertop">
+                <div class="textholder">
+                </div>
+            </div>
+            <div class="sliderbottom clearfix">
+                <!-- slider bottom -->
+                <h1>
+                    TFC.tv is the official online source of your most loved ABS-CBN shows.
+                </h1>
+                @{if (!String.IsNullOrEmpty(button_copy))
+                {
+                    <div class="sliderbottom_right">
+                        <a href="@button_href">
+                            <button type="button" class="btn btn-danger red_button">
+                                @button_copy
+                            </button>
+                        </a>
+                    </div>
+                }
+                }
+            </div>
+            <!-- end slider bottom -->
+        </div>
+        @*@{if (HasActiveSubscriptions && User.Identity.IsAuthenticated && Request.Browser.ScreenPixelsWidth > 480)
+              {
+                @Html.Action("GetFeaturedImageFromCarousel", "Home", new { id = GlobalConfig.UXHomePageCarouselId, partialViewName = "UXBackgroundSlider" })
+              }
+              else
+              {
+                @Html.Action("GetFeaturedImageFromCarousel", "Home", new { id = GlobalConfig.UXAnonymousHomepageCarouselId, partialViewName = "UXBackgroundNoSlide" })
+              }
+            }*@
+        @{if (Request.Browser.ScreenPixelsWidth > 480)
+        {
+            if (HasActiveSubscriptions && User.Identity.IsAuthenticated)
+            {
+                @Html.Action("GetFeaturedImageFromCarousel", "Home", new { id = GlobalConfig.UXHomePageCarouselId, partialViewName = "UXBackgroundSlider" })
+            }
+            else
+            {
+                @Html.Action("GetFeaturedImageFromCarousel", "Home", new { id = GlobalConfig.UXAnonymousHomepageCarouselId, partialViewName = "UXBackgroundSlider" })
+            }
+        }
+        }
+    </div>
+</section>
+<!-- end home page Slider  -->
+<!--  home page body -->
+<section class="page_pagebody home_pagebody home480">
+    <div class="container">
+        @Html.Action("BuildSection", new { id = GlobalConfig.LatestFullEpisodes, sectionTitle = "Latest full episodes", containerId = "latest_episodes", featureType = "episode", removeShowAll = false, isFeature = true, pageSize = 40 })
+        @*<div class="row add page_add width_add hide480">
+                <div class="inner">
+                    <div id="div-gpt-ad-1411726243809-0" style="width: 728px; height: 90px;" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-0');
+                        </script>
+                    </div>
+                </div>
+            </div>*@
+        <div class="row add page_add width_add">
+            <div class="inner">
+                @{if (Request.Browser.IsMobileDevice && false)
+                {
+                    <div id="nexage_adreturn_728x90_1" class="center-block">
+                        <script src="http://ads.nexage.com/js/admax/admax_api.js"></script>
+                        <script>
+                            var suid1 = getSuid();
+                            /* var loc = "location in format 'lat,long'"; */
+                            /* if (loc == ",") loc = ""; */
+                            var admax_vars1 = {
+                                "dcn": "8a809418014c4c5807515cb67f060025" /* Your publisher ID */
+                                ,"pos": "728x90"    /* Position name */
+                                ,"grp": ""
+                                ,"req(url)": document.URL
+                                ,"p(mmdo)":window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+                                ,"p(mmlang)": window.navigator.language.substring(0, 2)
+                                ,"p(mmhpx)":  window.screen.height * window.devicePixelRatio
+                                ,"p(mmwpx)":window.screen.width * window.devicePixelRatio
+                                ,"p(mmaccelerometer)":void 0 !== window.ondevicemotion
+                                ,"p(mmdm)":escape(window.navigator.platform)
+                                ,"p(mmate)":1 != window.navigator.doNotTrack && "yes" != window.navigator.doNotTrack
+                                ,"p(mmdomain)":document.domain
+                                ,"p(mmate)":(window.navigator.doNotTrack != 1 && window.navigator.doNotTrack != "yes")
+                                ,"p(mmtslr)": Math.round((new Date()).getTime() / 1000)
+                                ,"p(mmr)": Math.floor(1e4 * Math.random())
+                                ,"p(mmdensity)":window.devicePixelRatio
+                                /* ,"req(loc)": loc */
+                            };
+                            if (suid1)
+                                admax_vars1["u(id)"] = suid1;
+                            admaxAd(admax_vars1);
+                        </script>
+                    </div>
+                    <script>
+
+                        setTarget("nexage_adreturn_728x90_1");
+                    </script>
+                }
+                else
+                {
+                    <div id="div-gpt-ad-1411726243809-0" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-0');
+                        </script>
+                    </div>
+                }}
+
+            </div>
+        </div>
+        @Html.Action("BuildSection", new { id = GlobalConfig.MostViewed, sectionTitle = "Popular on TFC", containerId = "popular_episodes", featureType = "episode", removeShowAll = false, isFeature = true, pageSize = 40 })
+        <!-- home page add -->
+        @{if (!HasActiveSubscriptions)
+        {
+            <div class="row homepage_add add1 hide480">
+                <h2 class="add_title">
+                    Enjoy unlimited ABS-CBN shows all day, everyday!
+                </h2>
+                <h3 class="add_subtitle">
+                    Watch hanggang sawa, halakhak til you drop for <a href="@Url.Action(User.Identity.IsAuthenticated ? "Details" : "Register", User.Identity.IsAuthenticated ? "Subscribe" : "User")">
+                        only @String.Format("{0} monthly!", DefaultProductOfferingPrice)
+                    </a>
+                </h3>
+                <a href="@Url.Action(User.Identity.IsAuthenticated ? "Details" : "Register", User.Identity.IsAuthenticated ? "Subscribe" : "User")">
+                    <button type="button" class="btn btn-danger">
+                        @String.Format("{0}", User.Identity.IsAuthenticated ? "subscribe now" : "Click here to start your free trial")
+                    </button>
+                </a>
+            </div>
+        }
+        else
+        {
+            if (IsFreeTrialUser)
+            {
+                <div class="row homepage_add add1 hide480">
+                    <h2 class="add_title">
+                        Mag-enjoy sa exclusive 7-day online access to TFC.tv
+                    </h2>
+                    <h3 class="add_subtitle">
+                        All original ABS-CBN entertainment lang ang bagay sa 'yo Kapamilya.
+                        <br />
+                        Subscribe na sa Kapamilya-friendly price of <a href="@Url.Action(User.Identity.IsAuthenticated ? "Details" : "Register", User.Identity.IsAuthenticated ? "Subscribe" : "User")">
+                            @String.Format("{0}/month", DefaultProductOfferingPrice)
+                            lang!
+                        </a>
+                    </h3>
+                    <a href="@Url.Action(User.Identity.IsAuthenticated ? "Details" : "Register", User.Identity.IsAuthenticated ? "Subscribe" : "User")">
+                        <button type="button" class="btn btn-danger">
+                            @String.Format("{0}", User.Identity.IsAuthenticated ? "subscribe now" : "yes! I am ready")
+                        </button>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="row homepage_add add1 hide480">
+                    <h2 class="add_title">
+                        The TFC.tv experience is the best way to watch<br />
+                        your ABS-CBN shows all day, online!
+                    </h2>
+                </div>
+            }
+
+        }
+        }
+        @Html.Action("BuildSection", new { id = GlobalConfig.LatestShows, sectionTitle = "Latest shows", containerId = "latest_shows", featureType = "show", pageSize = 24, removeShowAll = false, isFeature = true })
+        @*<div class="row add page_add width_add hide480">
+                <div class="inner">
+                    <div id="div-gpt-ad-1411726243809-1" style="width: 728px; height: 90px;" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-1');
+                        </script>
+                    </div>
+                </div>
+            </div>*@
+        <div class="row add page_add width_add">
+            <div class="inner">
+                @{if (Request.Browser.IsMobileDevice && false)
+                {
+                    <div id="nexage_adreturn_728x90_2" class="center-block">
+                        <script>
+                            var suid2 = getSuid();
+                            /* var loc = "location in format 'lat,long'"; */
+                            /* if (loc == ",") loc = ""; */
+                            var admax_vars2 = {
+                                "dcn": "8a809418014c4c5807515cb67f060025" /* Your publisher ID */
+                                ,"pos": "728x90"    /* Position name */
+                                ,"grp": ""
+                                ,"req(url)": document.URL
+                                ,"p(mmdo)":window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+                                ,"p(mmlang)": window.navigator.language.substring(0, 2)
+                                ,"p(mmhpx)":  window.screen.height * window.devicePixelRatio
+                                ,"p(mmwpx)":window.screen.width * window.devicePixelRatio
+                                ,"p(mmaccelerometer)":void 0 !== window.ondevicemotion
+                                ,"p(mmdm)":escape(window.navigator.platform)
+                                ,"p(mmate)":1 != window.navigator.doNotTrack && "yes" != window.navigator.doNotTrack
+                                ,"p(mmdomain)":document.domain
+                                ,"p(mmate)":(window.navigator.doNotTrack != 1 && window.navigator.doNotTrack != "yes")
+                                ,"p(mmtslr)": Math.round((new Date()).getTime() / 1000)
+                                ,"p(mmr)": Math.floor(1e4 * Math.random())
+                                ,"p(mmdensity)":window.devicePixelRatio
+                                /* ,"req(loc)": loc */
+                            };
+                            if (suid2)
+                                admax_vars2["u(id)"] = suid2;
+                            admaxAd(admax_vars2);
+                        </script>
+                    </div>
+                    <script>
+                        setTarget("nexage_adreturn_728x90_2");
+                    </script>
+                }
+                else
+                {
+                    <div id="div-gpt-ad-1411726243809-1" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-1');
+                        </script>
+                    </div>
+                }}
+            </div>
+        </div>
+        @Html.Action("BuildSection", new { id = GlobalConfig.FeaturedCelebrities, sectionTitle = "Featured Celebrity", containerId = "featured_celebrity", featureType = "celebrity", pageSize = 24, removeShowAll = false, isFeature = true })
+        @*<div class="row add page_add width_add hide480">
+                <div class="inner">
+                    <div id="div-gpt-ad-1411726243809-2" style="width: 728px; height: 90px;" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-2');
+                        </script>
+                    </div>
+                </div>
+            </div>*@
+        <div class="row add page_add width_add">
+            <div class="inner">
+                @{if (Request.Browser.IsMobileDevice && false)
+                {
+                    <div id="nexage_adreturn_728x90_3" class="center-block">
+                        <script>
+                            var suid3 = getSuid();
+                            /* var loc = "location in format 'lat,long'"; */
+                            /* if (loc == ",") loc = ""; */
+                            var admax_vars3 = {
+                                "dcn": "8a809418014c4c5807515cb67f060025" /* Your publisher ID */
+                                ,"pos": "728x90"    /* Position name */
+                                ,"grp": ""
+                                ,"req(url)": document.URL
+                                ,"p(mmdo)":window.innerWidth > window.innerHeight ? "landscape" : "portrait"
+                                ,"p(mmlang)": window.navigator.language.substring(0, 2)
+                                ,"p(mmhpx)":  window.screen.height * window.devicePixelRatio
+                                ,"p(mmwpx)":window.screen.width * window.devicePixelRatio
+                                ,"p(mmaccelerometer)":void 0 !== window.ondevicemotion
+                                ,"p(mmdm)":escape(window.navigator.platform)
+                                ,"p(mmate)":1 != window.navigator.doNotTrack && "yes" != window.navigator.doNotTrack
+                                ,"p(mmdomain)":document.domain
+                                ,"p(mmate)":(window.navigator.doNotTrack != 1 && window.navigator.doNotTrack != "yes")
+                                ,"p(mmtslr)": Math.round((new Date()).getTime() / 1000)
+                                ,"p(mmr)": Math.floor(1e4 * Math.random())
+                                ,"p(mmdensity)":window.devicePixelRatio
+                                /* ,"req(loc)": loc */
+                            };
+                            if (suid3)
+                                admax_vars3["u(id)"] = suid3;
+                            admaxAd(admax_vars3);
+                        </script>
+                    </div>
+                    <script>
+
+                        setTarget("nexage_adreturn_728x90_3");
+                    </script>
+                }
+                else
+                {
+                    <div id="div-gpt-ad-1411726243809-2" class="center-block">
+                        <script type="text/javascript">
+                            googletag.display('div-gpt-ad-1411726243809-2');
+                        </script>
+                    </div>
+
+                    <!-- /2744311/Test_1x1 -->
+                    <div id="div-gpt-ad-1432184098534-3" class="ad-slide">
+                        <script type="text/javascript">
+                            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1432184098534-3'); });
+                        </script>
+                    </div>
+
+                }}
+
+            </div>
+        </div>
+        <br />
+    </div>
+</section>
+@{if (Request.Browser.IsMobileDevice && !User.Identity.IsAuthenticated)
+{
+    <!-- "Start your Free Trial!" -->
+    <div class="str_free_trial show480">
+        <a href="@Url.Action("Register", "User")">
+            <button class="btn btn-danger red_button" type="button">
+                @Html.Raw(button_copy)
+            </button>
+        </a>
+    </div>
+}
+}
+<!-- /2744311/Test_OutOfPageAdSlot -->
+<div id="div-gpt-ad-1432184098534-4">
+    <script type="text/javascript">
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1432184098534-4'); });
+    </script>
+</div>
+
+@section Stylesheet {
+    @Html.CssBuilder(Url, "bootstrap-tour.min.css")
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "bootstrap-tour.min.js")
+    @Html.Partial("HomePageTour")
+    @{if (ErrorMessage != null)
+    {
+        <script type="text/javascript">
+            $('#regSceMsg').modal('show');
+        </script>
+        if (String.Compare(ErrorMessage.TransactionType, "Registration", true) == 0)
+        {
+            if (ErrorMessage.StatusCode == 0)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        dataLayer.push({ 'pageview': '/user/registerattempt', 'pagetitle': 'Registration Attempt', 'event': 'vpv' });
+                        createCookie("rcDate", new Date().toUTCString(), 1826);
+                        checkRegistration();
+                        _kmq.push(['record', 'Registration Attempt', { 'Email': '@ErrorMessage.info7'}]);
+                    });
+                </script>
+            }
+        }
+        else if (String.Compare(ErrorMessage.TransactionType, "CompensationClaimTransaction", true) == 0)
+        {
+            if (ErrorMessage.StatusCode == 0)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        dataLayer.push({ 'pageview': '/Free/Compensation201411', 'pagetitle': 'Claim Compensation (Downtime)', 'event': 'vpv' });
+                    });
+                </script>
+            }
+        }
+        else if (String.Compare(ErrorMessage.TransactionType, "Subscription", true) == 0)
+        {
+            if (ErrorMessage.StatusCode == 0)
+            {
+                bool IsFirstTimePurchaser = false;
+                if (User.Identity.IsAuthenticated)
+                {
+                    try
+                    {
+                        var context = new IPTV2_Model.IPTV2Entities();
+                        var user = context.Users.FirstOrDefault(u => u.UserId == new Guid(User.Identity.Name));
+                        if (user != null)
+                        {
+                            var offering = context.Offerings.Find(GlobalConfig.offeringId);
+                            IsFirstTimePurchaser = user.IsFirstTimePurchaser(offering);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+
+                if (IsFirstTimePurchaser)
+                {
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            dataLayer.push({ 'pageview': '/user/subscribecompletenew', 'pagetitle': 'New Subscription Complete', 'event': 'vpv' });
+                            _kmq.push(['record', 'Subscribe', { 'Email': '@ErrorMessage.info7', 'Product': '@ErrorMessage.info3'}]);
+                        });
+                    </script>
+                }
+                else
+                {
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            dataLayer.push({ 'pageview': '/user/subscribecomplete', 'pagetitle': 'Subscription Complete', 'event': 'vpv' });
+                            _kmq.push(['record', 'Subscribe', { 'Email': '@ErrorMessage.info7', 'Product': '@ErrorMessage.info3'}]);
+                        });
+                    </script>
+                }
+
+            }
+        }
+        else if (String.Compare(ErrorMessage.TransactionType, "Activation", true) == 0)
+        {
+            if (ErrorMessage.StatusCode == 0)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        dataLayer.push({ 'pageview': '/user/registercomplete', 'pagetitle': 'Registration Complete', 'event': 'vpv' });
+                        createCookie("rcDate", new Date().toUTCString(), 1826);
+                        checkRegistration();
+                        _kmq.push(['record', 'Registration Complete', { 'Email': '@ErrorMessage.info7'}]);
+                    });
+                </script>
+            }
+        }
+        else if (String.Compare(ErrorMessage.TransactionType, "SocialRegistration", true) == 0)
+        {
+            if (ErrorMessage.StatusCode == 0)
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        dataLayer.push({ 'pageview': '/user/registerattempt', 'pagetitle': 'Registration Attempt', 'event': 'vpv' });
+                        dataLayer.push({ 'pageview': '/user/registercomplete', 'pagetitle': 'Registration Complete', 'event': 'vpv' });
+                        createCookie("rcDate", new Date().toUTCString(), 1826);
+                        checkRegistration();
+                        _kmq.push(['record', 'Registration Attempt', { 'Email': '@ErrorMessage.info7'}]);
+                        _kmq.push(['record', 'Registration Complete', { 'Email': '@ErrorMessage.info7'}]);
+                    });
+                </script>
+            }
+        }
+    }
+    }
+    <script type="text/javascript">
+        $('.footer_homepage_li').remove();
+    </script>
+    @{if (Request.Browser.ScreenPixelsWidth > 480)
+    {
+        @*<script type="text/javascript">
+                $(document).ready(function () {
+                    $('body').removeClass('new_home_bg').addClass('subscribed_bg');
+                });
+            </script>*@
+    }
+    else if (Request.Browser.ScreenPixelsWidth > 480)
+    {
+        @* @Html.Action("GetFeaturedImageFromCarousel", "Home", new { id = GlobalConfig.UXAnonymousHomepageCarouselId })*@
+    }
+    }
+    @{if (IsAndroid)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var regChrome = new RegExp('Chrome/[.0-9]*');
+                if (!regChrome.test(navigator.userAgent)) {
+                    $('#ib_android_chrome').modal('show');
+                }
+            });
+        </script>
+    }
+    }
+    @{if (PromoUtility.IsPromoActive(GlobalConfig.EdsaWoolworthPromoId))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('section.home_pagebody').removeClass('home_pagebody');
+                $('body').addClass('edsa_home_bg').removeClass('subscribed_bg');
+            });
+        </script>
+    }
+    }
+
+    @{if (IsPacMayPurchase)
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#regSceMsg').on('hidden.bs.modal', function (e) {
+                    window.location.href= "/mayweather-vs-pacquiao-may-3";
+                })
+            });
+        </script>
+    }}
+
+    @{if (IsPacMayBannerEnabledInHomepage)
+    {
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('<section class="pacmaysec"><div class="container"><div class="row"><a href="https://tfc.tv/subscribe/details/Mayweather-vs-pacquiao-may-3?utm_source=TFC.Tv&utm_medium=banner&utm_campaign=20150501_MayPac_ME_tfcbanner"><img src="//az332173.vo.msecnd.net/content/images/pacmay_hp_banner.jpg" class="img-responsive"/></a></div></div></section>').insertBefore('.topmenusec');
+            });
+        </script>
+    }}
+}
+@{if (ErrorMessage != null)
+{
+    <!-- popup successful message -->
+    <div class="modal fade" id="regSceMsg" tabindex="-1" role="dialog" aria-labelledby="regSceMsgLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <p class="boxHead">
+                        @ErrorMessage.StatusHeader
+                    </p>
+                    <p>
+                        @ErrorMessage.StatusMessage
+                    </p>
+                    <p>
+                        @Html.Raw(ErrorMessage.StatusMessage2)
+                    </p>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+    <!-- END popup successful message -->
+}
+}
+@{if (IsAndroid)
+{
+    <!-- popup box for Android Chrome[only mobile] -->
+    <div class="modal fade" id="ib_android_chrome" tabindex="-1" role="dialog" aria-labelledby="android_chrome"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <div class="text">
+                        <p>
+                            Gumamit ng Google Chrome para sa mas masayang panonood
+                        </p>
+                        <!-- <p>Best Experienced <br>on<br> Google Ghrome</p> -->
+                        <a class="button blue" href="market://details?id=com.android.chrome&hl=en">UPDATE</a>
+                        <!-- <a class="button white" href="#">OPEN</a>
+                        <a class="button lgreen" href="#">INSTALL</a> -->
+                    </div>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>  <!-- END popup box for inactivity [Logged In User ] -->
+}
+}
+@section MetaTags{
+    <meta name="description" content="As the official ABS-CBN online platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium subscription based videos from ABS-CBN." />
+    <link rel="canonical" href="@GlobalConfig.baseUrl" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@GlobalConfig.baseUrl" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="TFC.tv" />
+    <meta property="og:description" content="As the official ABS-CBN online platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium subscription based videos from ABS-CBN." />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}
+@section GAECommerce {
+    @{
+        try
+        {
+            if (ErrorMessage != null)
+            {
+                if (String.Compare(ErrorMessage.TransactionType, "Subscription", true) == 0)
+                {
+                    if (ErrorMessage.StatusCode == 0)
+                    {
+                        if (!(String.IsNullOrEmpty(ErrorMessage.info1) && String.IsNullOrEmpty(ErrorMessage.info2) && String.IsNullOrEmpty(ErrorMessage.info3) && String.IsNullOrEmpty(ErrorMessage.info4) && String.IsNullOrEmpty(ErrorMessage.info5)))
+                        {
+                            <script type="text/javascript">
+                                dataLayer = [{
+                                    'transactionId': '@ErrorMessage.info1',
+                                    'transactionAffiliation': 'TFC.tv',
+                                    'transactionTotal': @ErrorMessage.info4,
+                                    'transactionCurrency': '@ErrorMessage.info5',
+                                    'transactionProducts': [{
+                                        'sku': '@ErrorMessage.info2',
+                                        'name': '@ErrorMessage.info3',
+                                        'category': '@ErrorMessage.info6',
+                                        'price': @ErrorMessage.info4,
+                                        'currency': '@ErrorMessage.info5',
+                                        'quantity': 1
+                                    }]
+                                }];
+                            </script>
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception) { }
+    }
+}
+@section JScript{
+
+    @{if (!Request.Browser.IsMobileDevice || true)
+    {
+        <script type='text/javascript'>
+            (function () {
+                var useSSL = 'https:' == document.location.protocol;
+                var src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+                document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+            })();
+        </script>
+    }}
+
+    @{if (Request.Browser.IsMobileDevice && false)
+    {
+        <script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js">
+            googletag.pubads().definePassback("/2744311/TFCtv_Home_Leaderboard01", [728, 90]).display();
+        </script>
+        <script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js">
+            googletag.pubads().definePassback("/2744311/TFCtv_Home_Leaderboard02", [728, 90]).display();
+        </script>
+        <script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js">
+            googletag.pubads().definePassback("/2744311/TFCtv_Home_Leaderboard03", [728, 90]).display();
+        </script>
+
+        <script>
+            function setTarget(objName) {
+                var clickThru = document.getElementById(objName).getElementsByTagName('a');
+                if(clickThru.length > 0){
+                    for(var i =0; i< clickThru.length ; i++){clickThru[i].setAttribute('target', '_blank');}
+                }
+            }
+        </script>
+    }
+    else
+    {
+        <script type='text/javascript'>
+            googletag = window.googletag || { cmd: [] };
+            googletag.cmd.push(function () {
+
+                var mapping = googletag.sizeMapping()
+                    .addSize([1024, 0], [728, 90])
+                    .addSize([640, 0], [468, 60])
+                    .addSize([320, 0], [320, 50])
+                    .build();
+                googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard01', [[320, 50], [468, 60], [728, 90]], 'div-gpt-ad-1411726243809-0').defineSizeMapping(mapping).addService(googletag.pubads());
+                googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard02', [[320, 50], [468, 60], [728, 90]], 'div-gpt-ad-1411726243809-1').defineSizeMapping(mapping).addService(googletag.pubads());
+                googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard03', [[320, 50], [468, 60], [728, 90]], 'div-gpt-ad-1411726243809-2').defineSizeMapping(mapping).addService(googletag.pubads());
+                googletag.defineOutOfPageSlot('/2744311/TFCtv_OutOfPage', 'div-gpt-ad-1432184098534-4').addService(googletag.pubads());
+                googletag.pubads().collapseEmptyDivs();
+                googletag.pubads().enableSyncRendering();
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        </script>
+    }}
+    @*<script type='text/javascript'>
+            googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard01', [728, 90], 'div-gpt-ad-1411726243809-0').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard02', [728, 90], 'div-gpt-ad-1411726243809-1').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_Home_Leaderboard03', [728, 90], 'div-gpt-ad-1411726243809-2').addService(googletag.pubads());
+            googletag.pubads().enableSyncRendering();
+            googletag.enableServices();
+        </script>*@
+}

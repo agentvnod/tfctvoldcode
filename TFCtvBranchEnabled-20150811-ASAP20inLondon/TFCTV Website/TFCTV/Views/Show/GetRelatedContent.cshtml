@@ -1,0 +1,43 @@
+﻿@model  List<EpisodeObject>
+@{    
+    var id = Url.RequestContext.RouteData.Values["id"];
+    int pageSize = ViewBag.PageSize;    
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      { 
+    <div class="small_video_list">
+        <div class="row small_movie_item ux_episode_list">
+            <h3>
+                You may also like</h3>
+            @foreach (var item in Model.Take(pageSize))
+            {
+                string href = String.Format("/Show/Details/{0}/{1}", item.EpisodeId, item.slug);
+                <div class="col-xs-4">
+                    <div class="video_cover">
+                        <!-- play button cover -->
+                        <a href="@href" title="@item.Show">
+                            <img src="@Html.Raw(item.ImgUrl)" title="@Html.Raw(item.Show)" alt="@Html.Raw(item.Show)" />
+                            <div class="video_play_button">
+                            </div>
+                            <!-- play button -->
+                        </a>
+                        <!-- play button -->
+                    </div>
+                </div>
+                <div class="col-xs-8">
+                    <h4>
+                        <a href="@href">@Html.Raw(item.Show)</a></h4>
+                    <p>
+                        @Html.Raw(item.Synopsis.Ellipsis(90))</p>
+                </div>
+                <div class="clear breakSmall">
+                </div>
+            }
+        </div>
+        <!-- end small video box -->
+    </div>   
+      }
+  }  
+}

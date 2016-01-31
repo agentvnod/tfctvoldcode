@@ -1,0 +1,302 @@
+﻿/* File Created: February 12, 2012 */
+/* File Modified: August 05, 2013 */
+
+#payment-container
+{
+    font-size: 12px;
+}
+
+#payment-container .genericHeader
+{
+    width: 640px;
+}
+
+#payment-container .sectionHeaderTitle
+{
+    color: #000;
+}
+
+.poptions li a
+{
+    display: inline;
+    float: left;
+    height: 25px;
+    padding-top: 10px;
+    color: #49a4ff;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.poptions li:hover a
+{
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #49a4ff;
+}
+
+.formSubHeaders
+{
+    border-bottom: 1px dotted #222;
+    margin-bottom: 10px;
+    width: 90%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #49A4FF;
+}
+
+.info-row
+{
+    color: #000;
+    line-height: 25px;
+}
+
+.info-row-label
+{
+    width: 100px;
+}
+
+.miniText
+{
+    position: relative;
+    top: -1px;
+}
+.miniText a
+{
+    color: #fff;
+    font-weight: normal;
+    font-size: 10px;
+    text-decoration: none;
+}
+.miniText a:hover
+{
+    font-size: 10px;
+    text-decoration: underline;
+}
+
+.textbuttons
+{
+    vertical-align: bottom;
+    overflow: visible;
+    font-size: 1em;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #49a4ff;
+    cursor: pointer;
+    background: transparent;
+    text-indent: -999;
+}
+
+.textbuttons:hover
+{
+    text-decoration: underline;
+}
+
+#transactionid
+{
+    color: #49A4FF;
+    font-weight: bold;
+}
+
+/*#reloadMethod a
+{
+    color: #777;
+    text-decoration: none;
+}
+
+#reloadMethod a:hover
+{
+    background-color: #F7F7F7;
+    color: #333;
+    text-decoration: none;
+}
+*/
+#currentbalance
+{
+    color: #49A4FF;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#transactionid
+{
+    color: #49A4FF;
+    font-weight: bold;
+}
+
+#reload-spanner
+{
+    min-height: 180px;
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reload-spanner img
+{
+    margin: auto;
+    margin-top: 90%;
+    height: 36px;
+    width: 36px;
+}
+
+#reload-span-text
+{
+    margin-left: -15px;
+}
+
+#payment-spanner
+{
+    min-height: 180px;
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#payment-spanner img
+{
+    margin: auto;
+    margin-top: 90%;
+    height: 36px;
+    width: 36px;
+}
+
+#payment-span-text
+{
+    margin-left: -20px;
+}
+
+.t-selector
+{
+    width: 180px;
+}
+
+.inputmleft
+{
+    font-size: 12px;
+    width: 200px;
+    border: 1px solid #aaa;
+    margin-left: -1px;
+}
+
+.vert-spacing
+{
+    height: 25px;
+}
+
+.paymentSubHeaders a
+{
+    color: #1e67b3;
+    text-decoration: none;
+}
+
+.paymentSubHeaders a:hover
+{
+    text-decoration: underline;
+}
+
+.wallet-box
+{
+    width: 320px;
+    text-indent: 10px;
+    min-height: 200px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    color: #000;
+}
+
+.wallet-box h4
+{
+    margin-top: 5px;
+}
+
+.wallet-payment-options
+{
+    margin-left: 10px;
+    text-indent: 0px;
+    margin-top: 5px;
+}
+
+.wallet-btn-link
+{
+    display: block;
+    width: 78px;
+    height: 18px;
+    font-size: 12px;
+    padding: 7px 7px 3px 10px;
+    background-color: #f15a29;
+    border: 1px solid #f15a29;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 5px;
+    border-bottom: 1px solid #9f9f9f;
+    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+
+.underline
+{
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+.close-window
+{
+    float: right;
+    margin-right: 5px;
+    font-size: 10px;
+    color: #49a4ff;
+}
+
+#wallet-container a
+{
+    text-decoration: none;
+    color: #49a4ff;
+}
+
+#wallet-container a:hover
+{
+    text-decoration: underline;
+    color: #49a4ff;
+}
+
+#wallet-container
+{
+    position: absolute;
+    left: 743px;
+    top: 28px;
+    z-index: 200;
+    display: none;
+}
+
+.link-to-right
+{
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#wallet-payment-options a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+#wallet-payment-options a:hover
+{
+    color: #fff;
+    text-decoration: none;
+}

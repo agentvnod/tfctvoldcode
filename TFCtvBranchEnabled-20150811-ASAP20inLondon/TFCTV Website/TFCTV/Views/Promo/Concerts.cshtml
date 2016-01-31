@@ -1,0 +1,123 @@
+﻿@model List<IPTV2_Model.CategoryClass>
+@{
+
+    ViewBag.Title = "Concerts - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    int ctr = 0;
+    DateTime registDt = DateTime.Now;
+
+    IPTV2_Model.Category category = (IPTV2_Model.Category)ViewBag.MainCategory;
+
+    var banner = Html.ContentBuilder(Url, "content/images/blank-image.jpg").ToString();
+    if (!String.IsNullOrEmpty(category.ImageBanner))
+    {
+        banner = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, category.CategoryId, category.ImageBanner);
+    }        
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div id="latestShows_bodyContainer">
+            <div class="clear">
+            </div>
+            <div style="margin-left: -20px; margin-top: -20px;">
+                @{if (String.IsNullOrEmpty(category.ImageBanner))
+                  {
+                    <img src="@banner" width="940" border="0" title="@category.Description" height="100" alt="@category.Description" />
+                  }
+                  else
+                  { 
+                    <img src="@banner" width="940" border="0" title="@category.Description" alt="@category.Description" />
+                  }
+                }
+                @*@Html.ImageBuilder(Url, "banners/daniel.jpg", new { width = 940 })*@</div>
+            <div class="breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div>
+                <div class="floatRight white" style="font-size: 18px; margin-right: 40px; text-align: right;">
+                    @Html.Raw(category.Blurb)
+                </div>
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div style="margin-left: 40px;">
+                @{foreach (var item in Model)
+                  {
+                      if (item is IPTV2_Model.Show)
+                      {
+                    <text>
+                    <div class="floatLeft" style="margin-right: 25px;">
+                        @{if (item.StartDate <= registDt && item.EndDate >= registDt)
+                          {
+                            <a href="@Url.Action("Details", "Show", new { id = item.CategoryId })">@Html.ImageBuilder(Url, "concerts/" + @item.CategoryId + ".jpg", new { title = item.Description }, ContentSource.Assets)</a>
+                          }
+                          else
+                          {
+                            @Html.ImageBuilder(Url, "concerts/" + @item.CategoryId + ".jpg", new { title = item.Description }, ContentSource.Assets)
+                          }
+                        }
+                        <div style="margin: 0 auto; width: 100%; text-align: center;">
+                            <div class="white" style="margin-top: 15px; line-height: 20px;">
+                                <div>
+                                    Available on:<br />
+                                    <span class="boldText" style="font-size: 15px;">@item.StartDate.Value.ToString("MMMM dd").ToUpper()
+                                        - @item.EndDate.Value.AddDays(-3).ToString("MMMM dd").ToUpper()</span>
+                                </div>
+                                <div>
+                                    @{if (item.StartDate <= registDt && item.EndDate >= registDt)
+                                      {
+                                        @Html.ActionLink("Watch now", "Details", "Show", new { id = item.CategoryId }, new { @class = "yellow" })<br />
+                                        @*<a href="/Subscription#GoPremium" class="orange">Get Premium</a>*@
+                                      }
+                                      else
+                                      { 
+                                        <span class="white boldText">COMING SOON</span>
+                                      }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </text>                  
+                                      ctr++;
+                      }
+                      if (ctr % 3 == 0)
+                      {
+                    <text>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="clear breakStandard">
+                    </div>
+                    </text>
+                      }
+                  }}
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="clear breakLarge">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css", ContentSource.Assets)
+    @Html.CssBuilder(Url, "promo.css", ContentSource.Assets)
+}
+@section JScript {
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri" />
+    <meta property="og:title" content="@Ajax.JavaScriptStringEncode(category.Description)" />
+    <meta property="og:description" content="@Ajax.JavaScriptStringEncode(category.Blurb)" />
+    <meta property="og:type" content="Show" />
+    <meta property="og:image" content="@Html.ContentBuilder(Url, "content/images/143-poster.jpg")" />
+    <meta property="og:site_name" content="TFC.tv" />
+}
+@section JScriptBottom {
+}

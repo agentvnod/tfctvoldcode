@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "DefaultSearch";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <h2>
+        Default Search</h2>
+    @using (Html.BeginForm("DefaultSearch", "Samples", FormMethod.Post, new { id = "form1" }))
+    {
+        <table border="0" cellpadding="10" cellspacing="0">
+            <tr valign="top" style="font-size: 8pt; font-family: Verdana">
+                <td>
+                    When you drag-and-drop the <b>UltimateSearchInputMVC</b> and <b>UltimateSearchOutputMVC</b>
+                    controls into a web form they are displayed with the following default style.<br />
+                    <br />
+                    Note that if you want to display search results on a different page you can put
+                    the <b>UltimateSearchOutputMVC</b> control on another web form, and call the <b>SearchOutputPage</b>
+                    method of the <b>UltimateSearchInputMVC</b> control to point to that page.<br />
+                    <br />
+                    You can change the style of the <b>SearchTextBox</b> and <b>SearchButton</b> controls
+                    based on your preferences. SearchTextBox is derived from a regular <b>TextBox</b>
+                    control, while SearchButton is a <b>Button</b> control.<br />
+                    <br />
+                    You can also change the style of the <b>UltimateSearchOutputMVC</b> control, which
+                    is derived from a DataList control.
+                </td>
+            </tr>
+            <tr valign="top" style="font-size: 8pt; font-family: Verdana">
+                <td>
+                    @(Html.UltimateSearchInputMVC()
+                .SearchTextBox(stb => stb
+                    .Text("water"))
+                .Render())
+                    @(Html.UltimateSearchOutputMVC()
+                .Render())
+                </td>
+            </tr>
+        </table>
+    }
+</div>

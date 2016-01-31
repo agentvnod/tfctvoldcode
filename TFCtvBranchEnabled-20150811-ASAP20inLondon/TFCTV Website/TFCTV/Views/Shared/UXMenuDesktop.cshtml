@@ -1,0 +1,52 @@
+﻿@{
+    bool ShowAirLink = false;
+    bool isAirCookieAvailable = false;
+    try
+    {
+        if (ViewBag.ShowAirLink != null)
+        {
+            ShowAirLink = ViewBag.ShowAirLink;
+        }
+        if (Request.Cookies.AllKeys.Contains("air"))
+        {
+            isAirCookieAvailable = true;
+        }
+    }
+    catch (Exception) { }
+}
+<div class="mainManu col-md-6 col-sm-5 hidden-xs">
+    <nav>
+        <ul id="main_menu">
+            <li><a href="@Url.Action("Shows", "Category")">SHOWS</a>
+                <div class="top_arrow">
+                </div>
+                @Html.Action("BuildUXMenuV2", "Menu", new { id = "Entertainment", isDesktop = true })
+                <!-- end submenu desktop -->
+            </li>
+            <li><a href="@Url.Action("Movies", "Category")">Movies</a>
+                <div class="top_arrow">
+                </div>
+                @Html.Action("BuildUXMenuV2", "Menu", new { id = "Movies", isDesktop = true })
+                <!-- end submenu desktop -->
+            </li>
+            <li><a href="@Url.Action("News", "Category")">News</a>
+                <div class="top_arrow">
+                </div>
+                @Html.Action("BuildUXMenuV2", "Menu", new { id = "News", isDesktop = true })
+                <!-- end submenu desktop -->
+            </li>
+            <li><a href="@Url.Action("Live", "Category")">Live</a>
+                <div class="top_arrow">
+                </div>
+                @Html.Action("BuildUXMenuV2", "Menu", new { id = "Live", isDesktop = true })
+                <!-- end submenu desktop -->
+            </li>
+            @{if (ShowAirLink || isAirCookieAvailable)
+              { 
+                <li><a href="/WatchNow" class="ared_bg">Watch Now</a></li>
+              }              
+            }
+        </ul>
+    </nav>
+</div>
+<!-- end main menu -->

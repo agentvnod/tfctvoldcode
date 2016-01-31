@@ -1,0 +1,290 @@
+﻿@{
+    ViewBag.Title = "Sign In - TFC.tv";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div id="LoginPanel">
+    <div class="clear breakStandard">
+    </div>
+    <div id="leftBlock" class="floatLeft">
+        <div class="breakLarge">
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="header">
+            Sign in using your Social Network
+        </div>
+        <div id="socializePanel">
+        </div>
+    </div>
+    <div id="rightBlock" class="floatLeft">
+        <div class="breakLarge">
+        </div>
+        <div class="header" id="lheader">
+            Or sign in using your TFC.tv credentials
+        </div>
+        <div class="header hideElement" id="fpheader">
+            Forgot your password?
+            <br />
+            <br />
+            <span class="subheader">Enter your email address and we'll send you<br />
+                instructions</span>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="msgbox hideElement">
+            <div class="message">
+            </div>
+            <div class="breakSmall">
+            </div>
+        </div>
+        <div id="loginContainer">
+            @{using (Html.BeginForm("_SignIn", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "form1" }))
+              {            
+                <div class="clear">@Html.AntiForgeryToken()</div>
+                <div id="login-main">
+                    <div class="copy">
+                        Email Address</div>
+                    <div>
+                        <input type="text" class="textbox no-transform" name="EmailAddress" id="EmailAddress"
+                            placeholder="Email Address" />
+                        <div class="errstatus">
+                        </div>
+                    </div>
+                    <div class="clear breakSmall">
+                    </div>
+                    <div class="copy">
+                        Password</div>
+                    <div>
+                        <input type="password" class="textbox no-transform" placeholder="Password" name="Password"
+                            id="Password" /><div class="errstatus">
+                            </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="usefulLinks">
+                        <div>
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword", null, new { id = "forgotpassword", @class = "default_link" })</div>
+                        <div>
+                            @Html.ActionLink("Account not verified?", "ResendVerification", null, new { id = "resendverification", @class = "default_link alinks" })</div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="btn-container">
+                        <input type="submit" value="Submit" class="nbutton" /></div>
+                </div>
+              }
+            }
+        </div>
+        <div id="forgotPasswordContainer" class="hideElement">
+            @{using (Html.BeginForm("_ForgetPassword", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "form2" }))
+              {            
+                <div class="clear">@Html.AntiForgeryToken()</div>
+                <div id="forgotpw-main">
+                    <div class="copy">
+                        Email Address</div>
+                    <div>
+                        <input type="text" class="textbox no-transform" name="FEmailAddress" id="FEmailAddress"
+                            placeholder="Email Address" />
+                        <div class="errstatus">
+                        </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="usefulLinks">
+                        <div>
+                            @Html.ActionLink("Go back to sign in.", "SignIn", null, new { id = "signinf", @class = "default_link" })</div>
+                    </div>
+                    <div class="clear breakSmall">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="btn-container">
+                        <input type="submit" value="Submit" class="nbutton" /></div>
+                </div>
+              }
+            }
+        </div>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+    <div id="registerBlock">
+        <span class="rbText">No TFC.tv account yet? @Html.ActionLink("Register here", "Register", "User", "http", null, null, null, new { @class = "registerLink alinks" })
+        </span>
+    </div>
+</div>
+<div id="haloContainer" class="hideElement">
+    <div id="haloMain">
+        <div class="breakStandard">
+        </div>
+        <span id="haloText">Login successful. Please wait while we redirect you...</span>
+    </div>
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "signin-1.0.css", removeProtocol: true)
+}
+@section JScriptBottom {
+    @{
+        <text>
+        <script type="text/javascript">
+            var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower();
+        </script>
+        </text>
+    }
+    <script type="text/javascript">
+        var jQueryValidateUrl = "//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js";
+    </script>
+    <script type="text/javascript">
+        $.getScript(socialPluginUrl).done(function () {
+            tfc.Social();
+            var enabledProviders = '@GlobalConfig.SocialProvidersList';
+            var params = { container: 'socializePanel', width: 250, height: 140, style: 'fullLogo', enabledProviders: enabledProviders, lastLoginIndication: 'welcome', isLogin: isLogin, UIConfig: true, buttonSize: 40 };
+            tfc.Social.Login(params);
+        });
+    </script>
+    <script type="text/javascript">
+        function readCookie(name) {
+            return (name = new RegExp('(?:^|;\\s*)' + ('' + name).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '=([^;]*)').exec(document.cookie)) && name[1];
+        }
+
+        function GetReturnUrl(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        $(document).ready(function () {
+            $('#EmailAddress').focus();
+            $.getScript(jQueryValidateUrl).done(function () {
+                var checker = $('form#form1').validate({
+                    rules: {
+                        EmailAddress: {
+                            required: true,
+                            email: true
+                        },
+                        Password: { required: true }
+                    },
+                    messages: {
+                        EmailAddress: {
+                            required: 'This field is required.'
+                        }
+                    },
+                    errorPlacement: function (error, element) {
+                        error.appendTo(element.parent().find('.errstatus'));
+                    }
+                });
+                $('form#form1').submit(function (event) {
+                    event.preventDefault();
+                    $('.msgbox .message').empty().parent().hide();
+                    if (checker.numberOfInvalids() == 0) {
+                        var form = $(this);
+                        $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                            if (data.StatusCode == 0) {
+//                                _gaq.push(['t2._trackEvent', 'User', 'Login', data.info.toString()]);
+                                if (data.HtmlUri)
+                                    window.opener.location.href = data.HtmlUri;
+                                else {
+                                    if (GetReturnUrl("ReturnUrl") != null)
+                                        window.opener.location.href = unescape(GetReturnUrl("ReturnUrl"));
+                                    else
+                                        window.opener.location.reload();
+                                }
+                                $('#LoginPanel').empty().html($('#haloText').html(data.StatusMessage)).addClass('haloCenter');
+                                setTimeout(function () {
+                                    window.close();
+                                }, 1000);
+                            }
+                            else {
+                                $('.msgbox .message').html(data.StatusMessage).parent().show();
+                            }
+                        });
+                    }
+                });
+
+                var fchecker = $('form#form2').validate({
+                    rules: {
+                        FEmailAddress: {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        FEmailAddress: {
+                            required: 'This field is required.'
+                        }
+                    },
+                    errorPlacement: function (error, element) {
+                        error.appendTo(element.parent().find('.errstatus'));
+                    }
+                });
+                $('form#form2').submit(function (event) {
+                    event.preventDefault();
+                    if (fchecker.numberOfInvalids() == 0) {
+                        var form = $(this);
+                        $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                            if (data.StatusCode == 0) {
+                                $('#LoginPanel').empty().html($('#haloText').html(data.StatusMessage)).addClass('haloCenter');
+                                setTimeout(function () {
+                                    window.close();
+                                }, 2000);
+                            }
+                            else {
+                                $('.msgbox .message').html(data.StatusMessage).parent().show();
+                            }
+                        });
+                    }
+                });
+            });
+        });    
+    </script>
+    <script type="text/javascript">
+        $('.alinks').click(function () {
+            window.opener.location.href = $(this).attr('href');
+            setTimeout(function () { window.close(); }, 600);
+            return false;
+        });
+
+        $('#forgotpassword').click(function () {
+            $('#rightBlock #lheader').hide();
+            $('#loginContainer').hide();
+            $('#forgotPasswordContainer').show();
+            $('#rightBlock #fpheader').show();
+            return false;
+        });
+        $('#signinf').click(function () {
+            $('#rightBlock #lheader').show();
+            $('#loginContainer').show();
+            $('#forgotPasswordContainer').hide();
+            $('#rightBlock #fpheader').hide();
+            return false;
+        });
+
+        $('.default_link').click(function () {
+            $('.textbox').val('');
+            $('.msgbox .message').empty();
+            return false;
+        });        
+    </script>
+    @{if (MyUtility.isUserLoggedIn())
+      {      
+        <text>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                if (window.opener != null) {
+                    if (GetReturnUrl("ReturnUrl") != null)
+                        window.opener.location.href = unescape(GetReturnUrl("ReturnUrl"));
+                    else
+                        window.opener.location.href = "/";
+                    window.close();
+                }
+                else {
+                    if (GetReturnUrl("ReturnUrl") != null)
+                        window.opener.location.href = unescape(GetReturnUrl("ReturnUrl"));
+                    else
+                        window.location.href = "/";
+                }
+            });        
+        </script>
+        </text>      
+      }
+    }
+}

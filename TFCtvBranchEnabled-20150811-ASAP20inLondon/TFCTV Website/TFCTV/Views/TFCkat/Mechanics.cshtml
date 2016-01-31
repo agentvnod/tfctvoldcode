@@ -1,0 +1,102 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Show
+@{
+    ViewBag.Title = "TFCkat - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+        bool Loved = false;
+        if (ViewBag.Loved != null)
+        {
+            Loved = (bool)ViewBag.Loved;
+        }
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+
+    }
+    string parentCategories = ContextHelper.GetShowParentCategories(GlobalConfig.UAAPGamesParentId);
+    var altcastcode = ViewBag.CoverItLiveAltCastCode;
+
+}
+<br />
+<br />
+<div>
+    <div style="width: 940px; display: table; margin: 0 auto;">
+        <div style="width: 940px; height: 141px; background-color: #fff;">
+            <img src="http://cdnassets.tfc.tv/content/images/banners/tfckat2013.png" style="z-index: -11;"
+                width="940" height="141" title="TFCkat" alt="TFCkat" />
+        </div>
+        <div class="transparentBg">
+            <div id="dTopLinksFour" style="display: table; margin: 0 auto;">
+                @Html.ActionLink("MAIN PAGE", "Index", "TFCkat") | @Html.ActionLink("PROMO MECHANICS", "Mechanics", "TFCkat")
+                | @Html.ActionLink("THE CONTENDERS", "Finalists", "TFCkat") | @Html.ActionLink("GRAND WINNERS", "GrandWinners", "TFCkat")</div>
+            <div id="mechanicsContainer">
+                <div class="mechanicsImage">
+                    <img src="http://cdnassets.tfc.tv/content/images/banners/TFCKATMechanicsImage.jpg"
+                        style="z-index: -11;" width="720" height="209" title="TFCkat Mechanics" alt="TFCkat Season 76" />
+                </div>
+                <div class="mechanicsText">
+                    <p style="font-weight: bold;">
+                        TFC.tv Online Voting</p>
+                    <p>
+                        Vote for your favorite TFCkat 2013 Semi-Finalist on TFC.tv by clicking “Love”!</p>
+                    <p>
+                        TFCkat 2013 ANZ and Asia Voting Mechanics:</p>
+                    <ol>
+                        <li>Voters must register to TFC.tv to join. <a href="http://tfc.tv/user/registerviasocial">
+                            Register here.</a></li>
+                        <li>Vote for your favorite TFCkat 2013 Finalists by clicking on the “Love” button on
+                            the Contender's Profile page. Each “love” will be equivalent to 1 vote. Votes reflected
+                            on the Contender's profile page will be counted as final.</li>
+                        <li>Voters can only vote for any TFCkat Finalist once.</li>
+                        <li>Voting period will be from December 20, 2013 to January 31, 2014. </li>
+                        <li>The Online Grand Finals Winners for ANZ and Asia will be selected as follows:
+                            <ul style="list-style: initial; list-style-position: inside;">
+                                <li>20% Online “votes” via TFC.TV Online Voting</li>
+                                <li>80% Judges’ Score (based on the Grand Finals online audition video) </li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div>
+                        <p>
+                            By participating in the TFCkat 2013 People's Choice, participants agree to be bound
+                            by these official rules and the decisions of the judges. Sponsor and the Sponsor
+                            Affiliates are not responsible for technical, hardware, software or telephone malfunctions
+                            of any kind, lost or unavailable network connections, or failed, incorrect, incomplete,
+                            inaccurate, garbled or delayed electronic communications caused by the user or by
+                            any of the equipment or programming associated with or utilized in this contest
+                            or by any human error which may occur in the processing of entries/votes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="breakLarge clear">
+            </div>
+            <div class="breakLarge clear">
+            </div>
+            <div class="breakStandard clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "uaap.4.css")
+    @Html.CssBuilder(Url, "tabs-no-images.css")
+    @Html.CssBuilder(Url, "tfckat.6.css")
+    <!--[if IE 9]>
+    @Html.CssBuilder(Url, "uaap.ie9.css")
+    <![endif]-->
+    <!--[if lte IE 8]>
+    @Html.CssBuilder(Url, "uaap.ie8.css")
+<![endif]-->
+}
+@section JScript {
+    @Html.JsBuilder(Url, "common.1.js")
+}

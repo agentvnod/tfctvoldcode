@@ -1,0 +1,109 @@
+{
+    "callId": "e440ebd2ccff4080b4ec5c1a6fb862d8",
+    "commentCount": 5,
+    "comments": [
+        {
+            "commentText": "TEST",
+            "flagCount": 0,
+            "ID": "de9817c30a2e44c1a8ebfdb8b35f32cc",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Rayneil Molas",
+                "UID": "f7f739e3-e072-4ed3-b4a9-6d8c8ffddb20"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1344651792053,
+            "timestamp": 1344651792053
+        },
+        {
+            "commentText": "Test",
+            "flagCount": 0,
+            "ID": "31b718bf0054434c99409e50f6c81a21",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Gelo del Rosario",
+                "UID": "3b45407b-819c-4bd9-af38-fe3688a690ed"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1343005194984,
+            "timestamp": 1343005194984
+        },
+        {
+            "commentText": "test din:P",
+            "flagCount": 0,
+            "ID": "da53a99ff6784966a16f0c07265bdb94",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Mitho Sheila Manganaan",
+                "UID": "9ca60f4a-1e5e-48fd-bee1-ed307e0a9c21"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342681480255,
+            "timestamp": 1342681480255
+        },
+        {
+            "commentText": "Test!!!!!",
+            "flagCount": 0,
+            "ID": "b63403604a504843830d1105fd55ff28",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Ma.Stella  Chua",
+                "UID": "a3da8f4c-7a31-45f8-88c3-c4f53bdd69f5"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342675631764,
+            "timestamp": 1342675631764
+        },
+        {
+            "commentText": "hey\n\n",
+            "flagCount": 0,
+            "ID": "20997ad7e7ad4de19d8794ef4e611b50",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Jefferson Desacada",
+                "UID": "ebe4ff51-389c-47a0-be0e-9f89603b5810"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342675610175,
+            "timestamp": 1342675610175
+        }
+    ],
+    "errorCode": 0,
+    "hasMore": true,
+    "next": "ts_1342675610175",
+    "nextTS": 1342675610175,
+    "statusCode": 200,
+    "statusReason": "OK",
+    "threadCount": 5,
+    "userComments": []
+}

@@ -1,0 +1,42 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    string containerId = ViewBag.containerId;
+    bool IsActive = ViewBag.IsActive;
+}
+<!-- body part -->
+<div class="tab-pane fade in @String.Format("{0}", IsActive ? "active" : String.Empty)" id="@containerId">
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+              foreach (var item in Model)
+              { 
+        <div class="row vp_video">
+            <!-- video -->
+            <div class="col-xs-4">
+                <div class="video_cover">
+                    <!-- play button cover -->
+                    <a href="@Url.Action("Video", "HaloHalo", new { id = item.id, slug = item.slug })">
+                        <img class="img100" src="@item.imgurl" alt="@item.name" title="@item.name">
+                        <div class="video_play_button">
+                        </div>
+                        <!-- play button -->
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <h3>
+                    <a href="@Url.Action("Video", "HaloHalo", new { id = item.id, slug = item.slug })">@item.name</a></h3>
+                <p>
+                    @Html.Raw(MyUtility.FormatUrls(item.blurb))</p>
+            </div>
+        </div>          
+              }
+          }
+      }      
+    }
+    <!-- END video -->
+    <div class="vb_show_all">
+        <a href="@Url.Action("List", "HaloHalo")">SEE ALL VIDEOS</a>
+    </div>
+</div>

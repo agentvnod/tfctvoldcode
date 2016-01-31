@@ -1,0 +1,152 @@
+﻿<!-- TFC.tv player -->
+@* The model toggles between what the version of the flowplayer we will use.
+    We need to use a lower version of flowplayer for Live streaming events
+
+    If true, use the lower version
+    If false, use the higher version
+
+*@
+@model dynamic
+@{
+    FlowPlayerObj flowplayerObj = new FlowPlayerObj() { IsLiveStream = false, IsMobileDeviceHtml5Capable = false };
+
+    if (Model is FlowPlayerObj)
+    {
+        flowplayerObj = (FlowPlayerObj)Model;
+    }
+    else
+    {
+        flowplayerObj.IsLiveStream = (bool)Model;
+    }
+
+    if (flowplayerObj.IsLiveStream)
+    {
+        @Html.JsBuilder(Url, "flowplayer-3.2.6.min.js")
+        @Html.JsBuilder(Url, "flowplayer.ipad-3.2.8.min.js")
+
+        @*@Html.JsBuilder(Url, "flowplayer-3.2.13.min.js")
+            @Html.JsBuilder(Url, "flowplayer.ipad-3.2.13.min.js")*@
+
+    }
+    else
+    {
+        @Html.JsBuilder(Url, "flowplayer-3.2.13.min.js")
+        @Html.JsBuilder(Url, "flowplayer.ipad-3.2.13.min.js")
+    }
+}
+@{
+    if (GlobalConfig.IsFlowHTML5PlayerEnabled)
+    {
+        if (Request.Browser.IsMobileDevice)
+        {
+            if (flowplayerObj.IsMobileDeviceHtml5Capable)
+            {
+                <script type="text/javascript">
+                    var playerJS = '@Html.ContentBuilder(Url, "scripts/player-1.3.12.mobile.js")';
+                </script>
+            }
+            else
+            {
+                if (flowplayerObj.IsLiveStream)
+                {
+                    <script type="text/javascript">
+                        var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+                    </script>
+                }
+                else
+                {
+                    <script type="text/javascript">
+                        @*var playerJS = '@Html.ContentBuilder(Url, "scripts/player.ads-1.3.12.js")';*@
+                        var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+                    </script>
+                }
+            }
+        }
+        else
+        {
+            if (flowplayerObj.IsLiveStream)
+            {
+                <script type="text/javascript">
+                    var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+                </script>
+            }
+            else
+            {
+                <script type="text/javascript">
+                    @*var playerJS = '@Html.ContentBuilder(Url, "scripts/player.ads-1.3.12.js")';*@
+                    var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+                </script>
+            }
+        }
+    }
+    else
+    {
+        if (flowplayerObj.IsLiveStream)
+        {
+            <script type="text/javascript">
+                var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                @*var playerJS = '@Html.ContentBuilder(Url, "scripts/player.ads-1.3.12.js")';*@
+                var playerJS = '@Html.ContentBuilder(Url, "scripts/player.hls-1.3.12.js")';
+            </script>
+        }
+    }
+}
+
+@{if (flowplayerObj.IsLiveStream)
+{
+    <script type="text/javascript">
+        var playerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.cml-3.2.7.swf")';
+        var expressInstallSWF = '@Html.ContentBuilder(Url, "swf/expressInstall.swf")';
+        var playButtonURL = '@Html.ContentBuilder(Url, "content/images/entrypoint/playbtn-silver.png")';
+        var logoURL = '@Html.ContentBuilder(Url, "content/images/logo/player-logo.png")';
+        var controllerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.ctr-3.2.5.swf")';
+        var trackerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.analytics.swf")';
+        @*var analyticsSWF = '@Html.ContentBuilder(Url, "swf/analytics-plugin-flowplayer-loader.swf")';*@
+        var analyticsSWF = [];
+        var trackerID = 'UA-2265816-2';
+        var Afp = '@Html.ContentBuilder(Url, "swf/AkamaiFlowPlugin-2.11.swf")';
+        @*var csmaPluginSWF = '@GlobalConfig.csmaPluginPath';*@
+        var csmaPluginSWF = [];
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+
+        var playerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.ads.commercial-3.2.18.swf")';
+        var expressInstallSWF = '@Html.ContentBuilder(Url, "swf/expressInstall.swf")';
+        var playButtonURL = '@Html.ContentBuilder(Url, "content/images/entrypoint/playbtn-silver.png")';
+        var logoURL = '/content/images/logo/player-logo.png';
+        var controllerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.ads.controls-3.2.16.swf")';
+        var trackerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.analytics-3.2.9.swf")';
+        @*var analyticsSWF = '@Html.ContentBuilder(Url, "swf/analytics-plugin-flowplayer-loader.swf")';*@
+        var analyticsSWF = [];
+        var trackerID = 'UA-2265816-2';
+        var Afp = '@Html.ContentBuilder(Url, "swf/AkamaiAdvancedFlowplayerProvider.swf")';
+        @*var csmaPluginSWF = '@GlobalConfig.csmaPluginPath';*@
+        var csmaPluginSWF = [];
+    </script>
+}
+}
+
+@{
+    if (MyUtility.IsIos(Request))
+    {
+        <script type="text/javascript">
+        @*var csmaConfig = '@GlobalConfig.AkamaiBeaconIos';*@
+            var csmaConfig = [];
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+        @*var csmaConfig = '@GlobalConfig.AkamaiBeaconAdobeFlash';*@
+            var csmaConfig = [];
+        </script>
+    }
+}

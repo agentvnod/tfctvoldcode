@@ -1,0 +1,17 @@
+﻿@model TransactionReturnType
+<div id="errorContainer_2">
+    <div class="msgbox-header">
+        <p>
+            Oops! There seems to be a problem with your account.</p>
+    </div>
+    <div class="breakStandard">
+    </div>
+    <div id="msgbox-content_2" class="msgbox-content ui-state-error">
+        @Html.Raw(Model.StatusMessage)
+    </div>
+    <div class="breakStandard">
+    </div>
+    <div>
+        <input type="button" id="try-again_2" value="Click here to try again" class="nbutton try-again" />
+    </div>
+</div>

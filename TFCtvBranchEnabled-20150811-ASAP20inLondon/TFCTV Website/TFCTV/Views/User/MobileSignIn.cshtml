@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "Mobile Sign In - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdateMobileSignIn.cshtml";
+    ViewBag.DaxName = "tfc-tv:mobile-login";
+
+    string ErrorMessage = String.Empty;
+    string HideLoginFormClass = String.Empty;
+    string HideForgotPassFormClass = "hide";
+    string HideResendVerFormClass = "hide";
+    try
+    {
+        if (TempData["LoginErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["LoginErrorMessage"];
+        }
+        else if (TempData["ForgotPasswordErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ForgotPasswordErrorMessage"];
+            HideForgotPassFormClass = String.Empty;
+            HideLoginFormClass = "hide";
+            HideResendVerFormClass = "hide";
+        }
+        else if (TempData["ResendVerificationErrorMessage"] != null)
+        {
+            ErrorMessage = (string)TempData["ResendVerificationErrorMessage"];
+            HideResendVerFormClass = String.Empty;
+            HideForgotPassFormClass = "hide";
+            HideLoginFormClass = "hide";
+
+        }
+    }
+    catch (Exception) { }
+}
+<div class="logo">
+    <a href="@Url.Action("Index", "Home")">
+        @Html.ImageBuilder(Url, "ux/logo.png", new { alt = "TFC.tv", title = "TFC.tv", @class = "img-responsive" })
+    </a>
+</div>
+<div class="ib_form">
+    <!-- Login Form-->
+    @{if (!String.IsNullOrEmpty(ErrorMessage))
+      {      
+        <div class="form-group">
+            <div class="alert alert-danger" id="login_err">
+                <a class="close" data-dismiss="alert">×</a> @ErrorMessage
+            </div>
+        </div>       
+      }                  
+    }
+    <form id="loginForm" class="@HideLoginFormClass" role="form" action="@Url.Action("MobileLogin", "User", null, "https")" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="login_email">
+            Email Address</label>
+        <input type="email" class="form-control" id="login_email" name="login_email" required>
+    </div>
+    <div class="form-group">
+        <label for="login_pass">
+            Password</label>
+        <input type="password" class="form-control" id="login_pass" name="login_pass" required>
+    </div>
+    <div class="form-group subb">
+        <input type="submit" class="btn btn-default red_button" value="Sign In">
+    </div>
+    </form>
+    <!-- Forgot Password Form-->
+    <form id="forgotPasswordForm" class="@HideForgotPassFormClass" role="form" action="@Url.Action("ForgotPassword", "User")" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="forgotpassword_email">
+            Email Address</label>
+        <input type="email" class="form-control" id="forgotpassword_email" name="forgotpassword_email"
+            placeholder="Email Address" required>
+    </div>
+    <div class="form-group subb">
+        <input type="submit" class="btn btn-default red_button" value="Send" />
+    </div>
+    <br />
+    <br />
+    </form>
+    <!-- Resend Verification Form-->
+    <form id="resendVerificationForm" class="@HideResendVerFormClass" role="form" action="@Url.Action("ResendVerification", "User")" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="login_email">
+            Email Address</label>
+        <input type="email" class="form-control" id="resendverification_email" name="resendverification_email"
+            placeholder="Email Address" required>
+    </div>
+    <div class="form-group subb">
+        <input type="submit" class="btn btn-default red_button" value="Resend" /><br />
+    </div>
+    <br />
+    <br />
+    </form>
+</div>
+<div class="login_bottom">
+    <p class="social-media-signin">
+        <div id="loginPanel">
+        </div>
+    </p>
+    <div id="login_password_links" class="@HideLoginFormClass">
+        <p class="help-block">
+            Forgot your <a class="forgotPasswordLink" href="#">password</a>?</p>
+        <p class="help-block">
+            Account not <a class="accountNotVerifiedLink" href="#">verified</a>?</p>
+        <p class="reg_now">
+            No TFC.tv account yet? <a href="@Url.Action("Register", "User")">Register here</a></p>
+    </div>
+    <div id="forget_password_links" class="@HideForgotPassFormClass">
+        <p class="help-block">
+            Go back to <a class="default_link signinf" onclick="" href="#" id="signinlink">sign
+                in.</a></p>
+        <p class="reg_now">
+            No TFC.tv account yet? <a href="@Url.Action("Register", "User")">Register here</a></p>
+    </div>
+    <div id="resend_verification_links" class="@HideResendVerFormClass">
+        <p class="help-block">
+            Go back to <a class="default_link signinf" onclick="" href="#" id="signinlinkver">sign
+                in.</a></p>
+        <p class="reg_now">
+            No TFC.tv account yet? <a href="@Url.Action("Register", "User")">Register here</a></p>
+    </div>
+</div>

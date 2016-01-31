@@ -1,0 +1,34 @@
+﻿@*@model IEnumerable<IPTV2_Model.Category>*@
+@model List<TFCTV.Helpers.MyMenu>
+@{
+    var LIstyle = "";
+    if (String.Compare(ViewBag.footerNavTitle, "News", true) == 0)
+    {
+        LIstyle = "style=\"margin-left: 15px;\"";
+    }
+}
+@*@{if (String.Compare(ViewBag.footerNavTitle, "News", true) == 0)
+  {
+    <text><li style="margin-left: 15px;">
+    </text>
+  }
+  else
+  {       
+    <text><li></text>
+  }
+}*@
+@{if (Model != null)
+  {
+    <li @Html.Raw(LIstyle)><span class="navTitle">@ViewBag.footerNavTitle</span>
+        <ul>
+            @foreach (var item
+in Model)
+            { <li>@Html.ActionLink(item.name, "List", "Category", new
+         {
+             id
+                 = item.id
+         }, null) </li> }
+        </ul>
+    </li>
+  }
+}

@@ -1,0 +1,615 @@
+﻿@model IPTV2_Model.Episode
+@{
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    IPTV2_Model.Show show = ViewBag.Show;
+
+    string pageTitle = String.Format("{0}, {1} Episode", show.Description, Model.Description);
+
+    /* ShareBar Metadata */
+    string title = String.Format("{0}, {1}", show.Description, Model.Description);
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.ImageAssets.ImageVideo);
+    string description = MyUtility.trimmer.Replace(Model.Synopsis.Ellipsis(160), " ");
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}. {1}", title, MyUtility.trimmer.Replace(Model.Synopsis, " "));
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "video.episode";
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = description,
+        containerId = "shareDiv",
+        elementType = "episode",
+        id = Model.EpisodeId
+    };
+
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Episode_{0}", Model.EpisodeId);
+    string categoryID = "Episodes";
+    if (show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow || show is IPTV2_Model.LiveEvent)
+    {
+        title = show.Description;
+        img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, show.CategoryId, show.ImagePoster);
+        pageTitle = title;
+        streamID = String.Format("Show_{0}", show.CategoryId);
+        categoryID = "Shows";
+
+        /* Change the type to Show & id to CategoryId if found to be a Movie/Special/LiveEvent */
+        ShareObj.elementType = "show";
+        ShareObj.id = show.CategoryId;
+
+        /* Change the meta description if it is a movie */
+        metaDescription = String.Format("{0}, {1}", show.Description, MyUtility.trimmer.Replace(show.Blurb, " "));
+
+        /* Change Open Graph data */
+        og_type = "video.movie";
+        open_graph_img = img;
+    }
+
+    /* Robot Crawlability */
+    var noCommentText = String.Format("There are no comments available for {0}", title);
+    bool IsAjaxCrawlable = Request.IsAjaxCrawlingCapable();
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj,
+        IsAjaxCrawlable = IsAjaxCrawlable
+    };
+
+    /* Reactions Obj */
+    var ReactionsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "reactionsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    string red_button_copy = "start your free trial";
+    string red_button_href = Url.Action("Register", "User").ToString();
+
+    ViewBag.Title = String.Format("{0} - TFC.tv", pageTitle);
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+
+    //Check for preview asset
+    bool HasPreviewAsset = false;
+    try
+    {
+        if (ViewBag.HasPreviewAsset != null)
+        {
+            HasPreviewAsset = ViewBag.HasPreviewAsset;
+        }
+    }
+    catch (Exception) { }
+    string ScreenText = "Click play to watch the full video";
+    // catch parent shows
+    bool IsAlaCarte = false;
+    string showParentCategories = ContextHelper.GetShowParentCategories(show.CategoryId);
+    if (!String.IsNullOrEmpty(showParentCategories))
+    {
+        var ids = MyUtility.StringToIntList(showParentCategories);
+        var alaCarteIds = MyUtility.StringToIntList(GlobalConfig.UXAlaCarteParentCategoryIds);
+        IsAlaCarte = ids.Intersect(alaCarteIds).Count() > 0;
+    }
+
+    if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+    {
+        if (Request.Browser.IsMobileDevice)
+        {
+            if (HasPreviewAsset)
+            {
+                ScreenText = "Click play to watch preview of this video";
+            }
+            else
+            {
+                ScreenText = "Preview of this video is not available on your device";
+            }
+        }
+        else
+        {
+            ScreenText = "Click play to watch preview of this video";
+        }
+
+        if (User.Identity.IsAuthenticated)
+        {
+            red_button_copy = "subscribe now";
+            if (IsAlaCarte)
+            {
+                red_button_href = Url.Action("Details", "Subscribe", new { id = show.CategoryId }).ToString();
+            }
+            else
+            {
+                red_button_href = Url.Action("Details", "Subscribe").ToString();
+            }
+
+        }
+    }
+    else
+    {
+        red_button_copy = String.Empty;
+        if (HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+        {
+            red_button_copy = "subscribe now";
+            if (IsAlaCarte)
+            {
+                red_button_href = Url.Action("Details", "Subscribe", new { id = show.CategoryId }).ToString();
+            }
+            else
+            {
+                red_button_href = Url.Action("Details", "Subscribe").ToString();
+            }
+        }
+    }
+
+    string show_href = String.Format("/Show/Details/{0}/{1}", show.CategoryId, MyUtility.GetSlug(show.Description));
+
+    //Build PlayerContorlBarModel
+    var playerControlBarModel = new TFCTV.Models.PlayerControlBarModel() { EpisodeId = Model.EpisodeId, IsUserEntitled = HasActiveSubscriptionBasedOnCategoryId.HasSubscription, TFCTvDownloadPlayerFullUrl = null, Episode = Model, HasHD = false };
+
+    //category parent categories
+    string parentCategories = ContextHelper.GetEpisodeParentCategories(Model.EpisodeId);
+
+    bool IsExclusiveContent = false;
+    if (ViewBag.isExclusiveEpisode != null)
+    {
+        IsExclusiveContent = ViewBag.isExclusiveEpisode;
+        pageTitle = Model.Description;
+        title = Model.Description;
+    }
+
+    //instantiate flowplayerobj
+    var flowplayerObj = new FlowPlayerObj() { IsLiveStream = false, IsMobileDeviceHtml5Capable = false };
+    var playbackUri = String.Format("/Ajax/GetMedia/{0}", Model.EpisodeId);
+    Html5CapableObj html5capableObj = MyUtility.IsDeviceHtml5Capable(Request, Model.EpisodeId);
+    playbackUri = html5capableObj.playbackUri;
+    flowplayerObj.IsMobileDeviceHtml5Capable = html5capableObj.IsMobileDeviceHtml5Capable;
+    bool HasHD = ContextHelper.DoesEpisodeHaveAkamaiHDCdnReferenceBasedOnAsset(Model);
+    playerControlBarModel.HasHD = HasHD;
+    if (HasHD)
+    {
+        playbackUri = String.Format("/Ajax/GetMedia/{0}?p=3", Model.EpisodeId);
+    }
+
+    //get dax
+    var daxDetail = String.Format("tfc-tv:uaap:on-demand:{0}{1}", MyUtility.GetSlug(show.Description), (show is IPTV2_Model.Movie || show is IPTV2_Model.LiveEvent) ? null : String.Format(":{0}", Model.DateAired));
+    ViewBag.DaxName = daxDetail;
+}
+<!-- uaap videos inner page body  -->
+<section class="page_pagebody page_videopage uaap_pagebody">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+           @Html.ImageBuilder(Url, String.Format("banners/uaap_{0}.jpg", GlobalConfig.UAAPMainCategoryId.ToString()), new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li><a href="@Url.Action("Index", "UAAP")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Live", "UAAP")">LIVE STREAM</a></li>
+                <li><a href="@Url.Action("Teams", "UAAP")">THE TEAMS</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="row">
+            <!-- page left side -->
+            <div class="video_left col-sm-7 col-xs-12">
+                <!-- video player section -->
+                <div class="video_player_outer">
+                    <div class="video_player">
+                        <!-- video player -->
+                        <div class="video_part">
+                            <div class="black-screen-668x406" id="floating_videodiv">
+                                <div class="bs-play">
+                                    @{if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription || !Request.Browser.IsMobileDevice || HasPreviewAsset)
+                                    {
+                                        @Html.ImageBuilder(Url, "entrypoint/playbtn-silver.png", new { id = "pbtn-silver" })
+                                    }
+                                    else
+                                    {
+                                        <div class="breakLarge">
+                                        </div>
+                                        <div class="breakLarge">
+                                        </div>
+                                    }
+                                    }
+                                    <div class="bs-watch">
+                                        @Html.Raw(ScreenText)
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("UXPlayerControlBar", playerControlBarModel)
+                            <div id="playerContainer" class="regular_video">
+                            </div>
+                            @{if (!User.Identity.IsAuthenticated)
+                            {
+                                if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                                { <div class="ib_close_bar hide480">
+                                    <span>
+                                        @Html.ActionLink("START YOUR FREE TRIAL", "Register", "User", null, new { @class = "bs-subscribe bs-atag bs-box bs-box-subscribe" })
+                                        to watch full video or <a href="#" class="bs-atag bs-close ib_close">close</a> this
+                                        bar to subscribe later.
+                                    </span>
+                                </div>
+                                }
+                            }
+                            else
+                            {
+                                if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription && HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+                                {  <div class="ib_close_bar hide480">
+                                    @{if (IsAlaCarte)
+                                    {
+                                        <span>
+                                            Your subscription will expire in @HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft
+                                            @(HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft > 1 ? "days" : "day").
+                                            @Html.ActionLink("RENEW", "Details", "Subscribe", new { id = show.CategoryId }, new { @class = "bs-atag bs-box bs-box-renew" })
+                                            to extend your subscription or <a href="#" class="bs-atag bs-close ib_close">close</a>
+                                            this bar to renew later.
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            Your subscription will expire in @HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft
+                                            @(HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft > 1 ? "days" : "day").
+                                            @Html.ActionLink("RENEW", "Details", "Subscribe", null, new { @class = "bs-atag bs-box bs-box-renew" })
+                                            to extend your subscription or <a href="#" class="bs-atag bs-close ib_close">close</a>
+                                            this bar to renew later.
+                                        </span>
+                                    }
+                                    }
+                                </div>
+                                }
+                                else if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                                {
+                                    <div class="ib_close_bar hide480">
+                                        @{if (IsAlaCarte)
+                                        {
+                                            <span>
+                                                @Html.ActionLink("SUBSCRIBE", "Details", "Subscribe", new { id = show.CategoryId }, new { @class = "bs-atag bs-box bs-box-subscribe" })
+                                                to watch full video or <a href="#" class="bs-atag bs-close ib_close">close</a> this
+                                                bar to subscribe later.
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                @Html.ActionLink("SUBSCRIBE", "Details", "Subscribe", null, new { @class = "bs-atag bs-box bs-box-subscribe" })
+                                                to watch full video or <a href="#" class="bs-atag bs-close ib_close">close</a> this
+                                                bar to subscribe later.
+                                            </span>
+                                        }
+                                        }
+                                    </div>
+                                }
+                            }
+                            }
+                        </div>
+                        @{if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                        {
+                            <div class="player_botton">
+                                <a href="@red_button_href">
+                                    <input type="button" class="red_button subscribe" value="@red_button_copy">
+                                </a>
+                                to watch the video
+                            </div>
+                        }
+                        }
+                    </div>
+                    @Html.Partial("PlayerSwitcher")
+                    <!-- end video player -->
+                    <div class="video_des" itemscope itemtype="http://schema.org/Episode">
+                        <!-- description for video -->
+                        <h3 itemprop="name">
+                            @Html.Raw(Model.Description)
+                        </h3>
+                        <p itemprop="description">
+                            @Html.Raw(MyUtility.FormatUrls(Model.Synopsis))
+                        </p>
+                    </div>
+                    <!-- end description -->
+                    <div class="video_share clearfix">
+                        <!-- Social media share part -->
+                        <div id="@ShareObj.containerId" class="col-xs-6 clearfix show_share">
+                        </div>
+                        <p>
+                            If you are having problems viewing this video, please visit our <a href="@Url.Action("Index", "Home")">
+                                Help Center.
+                            </a> Is your video buffering? <a href="#">Check your bandwidth.</a>
+                        </p>
+                    </div>
+                    <div class="clearfix">
+                        <div id="@ReactionsUIObj.containerId">
+                        </div>
+                    </div>
+                    <!-- end social -->
+                </div>
+                <!-- end video player section -->
+                <div class="border">
+                </div>
+            </div>
+            <!-- end page left -->
+            <!-- page right side -->
+            <div class="video_right col-sm-5 col-xs-12">
+                <div class="row vp_bottom_video">
+                    <div class="col-xs-12 vp_head">
+                        <!-- head part -->
+                        <ul>
+                            @{if (IsExclusiveContent)
+                            {
+                                <li class="active"><a href="#uaap_exclusive" data-toggle="tab">EXCLUSIVE VIDEOS</a></li>
+                            }
+                            else
+                            {
+                                <li class="active"><a href="#uaap_quarters" data-toggle="tab">QUARTERS</a></li>
+                                <li><a href="#uaap_allgame" data-toggle="tab">SEE ALL GAMES</a></li>
+                            }
+                            }
+                        </ul>
+                    </div>
+                    <!-- END head part -->
+                    <div class="col-xs-12 vp_body tab-content">
+                        <!-- Tab panes -->
+                        @{if (IsExclusiveContent)
+                        {
+                            @Html.Action("GetUAAPFeaturedContent", "UAAP", new { pageSize = GlobalConfig.FeatureItemsPageSize, id = "uaap_exclusive", featureId = GlobalConfig.UAAPExclusiveFeaturesId, is_active = true })
+                        }
+                        else
+                        {
+                            @Html.Action("GetUAAPGameEpisodes", "UAAP", new { partialViewName = "GetUAAPContentVertical", pageSize = GlobalConfig.FeatureItemsPageSize, id = "uaap_quarters", is_active = true, episodeId = Model.EpisodeId })
+                            @Html.Action("GetUAAPContent", "UAAP", new { partialViewName = "GetUAAPContentVertical", pageSize = GlobalConfig.FeatureItemsPageSize, id = "uaap_allgame" })
+                        }
+                        }
+                        <!-- END SEE ALL body part -->
+                    </div>
+                    <!-- END Tab panes -->
+                </div>
+                <div class="row page_add">
+                    <!-- page add -->
+                    @{if (!MyUtility.IsAdRestricted(show.CategoryId))
+                    {
+                        <!-- Google MRec -->
+                        <script type='text/javascript'>
+                            GA_googleFillSlot("TFCtv_MediumRectangle_300x250");
+                        </script>
+                    }
+                    }
+                </div>
+            </div>
+            <!-- end page right -->
+            <!-- Review section -->
+            <div class="reviewsec col-sm-7 col-xs-12">
+                <h3>
+                    @String.Format("{0} - Ratings and Reviews", title)
+                </h3>
+                <div id="@CommentsUIObj.containerId" class="row post_review clearfix">
+                    @{if (IsAjaxCrawlable)
+                    {
+                        try
+                        {
+                            var responseData = GigyaMethods.GetComments(categoryID, streamID);
+                            if (responseData != null)
+                            {
+                                if (responseData.errorCode == 0)
+                                {
+                                    if (responseData.commentCount > 0)
+                                    {
+                                        @Html.Raw(responseData.comments)
+                                    }
+                                    else
+                                    {
+                                        <span>@noCommentText</span>
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception) { }
+                    }
+                    }
+                </div>
+            </div>
+            <!-- end Review section -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- END uaap videos inner page body  -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+    @Html.Partial("_UXShareUI", ShareObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    @Html.Partial("_UXReactionsUI", ReactionsUIObj)
+    <!-- Flowplayer -->
+    @Html.Partial("FlowPlayerPartial", flowplayerObj)
+    <script type="text/javascript">
+
+        var userActionURL = '@href';
+        var playerContainer = 'playerContainer';
+        var eid = null;
+        var sid = null;
+        var playbackId = @Model.EpisodeId;
+        var playbackType = 1; // Episode
+        var flow = {}; var config = {};
+        var categoryType = '@ViewBag.CategoryType';
+        var time = true;
+        var isClip = false;
+        var isSelectedMode = 0;
+    </script>
+    @{if ((show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow))
+    {
+        <script type="text/javascript">
+            var gmessage = 'I just watched @HttpUtility.JavaScriptStringEncode(show.Description)';
+            var gtitle = '@HttpUtility.JavaScriptStringEncode(title)';
+            var gdescription = '@HttpUtility.JavaScriptStringEncode(show.Blurb)';
+            var gimg = '@img';
+            var ghref = '@href';
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            var gmessage = 'I just watched an episode of @Ajax.JavaScriptStringEncode(show.Description)';
+            var gtitle = '@Ajax.JavaScriptStringEncode(title)';
+            var gdescription = '@Ajax.JavaScriptStringEncode(Model.Synopsis)';
+            var gimg = '@img';
+            var ghref = '@href';
+        </script>
+    }
+    }
+    <!-- media-player -->
+    <script type="text/javascript">
+        //CreatePlayer()
+        function CreatePlayer(uri) {
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            $.getScript(playerJS).done(function () {
+                                var akObj = { url: Afp };
+                                if (data.data.SubClip != null) {
+                                    var subClip = { clipBegin: data.data.SubClip.Start, clipEnd: data.data.SubClip.End };
+                                    akObj = { url: Afp, subClip: subClip };
+                                    time = false;
+                                    isClip = true;
+                                    gmessage = 'I just watched a preview of @Ajax.JavaScriptStringEncode(show.Description)';
+                                }
+                                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, csmaPluginSWF: csmaPluginSWF, csmaConfig: csmaConfig, apObj: akObj, scaling: 'fit', url: data.data.Url, categoryType: categoryType, label: null, sid: sid, eid: eid, isClip: isClip, trackerSWF: trackerSWF, trackerID: trackerID, userActionURL: userActionURL, uri: uri, time: time, ipadUrl: data.data.Url, allowShare: true, playbackType: playbackType, playbackId: playbackId, analyticsSWF: analyticsSWF, subscribe: data.data.PromptToSubscribe, gmessage: gmessage, gtitle: gtitle, gdescription: gdescription, gimg: gimg, ghref: ghref, streamType: isSelectedMode };
+                                flow.Player.Create(config);
+                            });
+                        }
+                        else if (data.errorCode == -4000) {
+                            gigya.socialize.logout({ callback: function (response) {
+                                location.href = '@GlobalConfig.MultipleLoginRedirectedUrl';
+                            }
+                            });
+                            location.href = '@GlobalConfig.MultipleLoginRedirectedUrl';
+                        }
+                        else if (data.errorCode == -704) {
+                            $('#' + playerContainer).append($('#subscribePromptcontainer_1').html());
+                            if ($f() == undefined) {
+                                $('#subscribePrompt_1').css('margin-top', '0px');
+                            }
+                        }
+                        else {
+                            $('.player-menu-container').remove();
+                            $('#' + playerContainer).html($('#not-available').html());
+                        }
+                    }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '@playbackUri';
+            CreatePlayer(uri);
+        });
+    </script>
+    <script type="text/javascript">
+        $('.bs-close').on('click', function () {
+            $('.bs-sbar').fadeOut(800);
+            $('.black-screen-668x406').fadeOut(800);
+            return false;
+        });
+    </script>
+    @{if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription || !Request.Browser.IsMobileDevice || HasPreviewAsset)
+    {
+        <text>
+            <script type="text/javascript">
+                $('#pbtn-silver').on('click', function () {
+                    $('.black-screen-668x406').fadeOut(800);
+                    if ($f() != undefined)
+                        $f().play();
+                    setTimeout(function () { $('.ib_close_bar').fadeOut(800); }, 15000);
+                });
+                $('.player-mode').on('click', function () {
+                    $('.black-screen-668x406').fadeOut(800);
+                });
+            </script>
+        </text>
+    }
+    }
+    @{if (playerControlBarModel.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Akamai.IsIos(Request))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.playmode').on('click', function () {
+                    $('.playmode').removeClass('mode-selected');
+                    $(this).addClass('mode-selected');
+                    isSelectedMode = $(this).data('mode');
+                    $('.black-screen-668x406').fadeOut(800);
+                    CreatePlayer($(this).data('href'));
+                    setTimeout('$f(playerContainer).play();', 1500);
+                    return false;
+                });
+
+                //                setTimeout(function () {
+                //                    $('#playmode_container').removeClass('hide').show('slow');
+                //                }, 1500);
+            });
+        </script>
+    }
+    }
+    <script type="text/javascript">
+        $('.gray').removeClass('gray');
+    </script>
+    @Html.Partial("PlayerSwitcherJS")
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta name="keywords" content="@Model.Metadata" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="@img">
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}
+@section JScript {
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type="text/javascript">
+        GA_googleAddAttr("Episode", "@Model.EpisodeId");
+        GA_googleAddAttr("Show", "@parentCategories");
+        GA_googleAddAttr("Category", "@showParentCategories");
+    </script>
+    <script type='text/javascript'>
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_MediumRectangle_300x250");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+}

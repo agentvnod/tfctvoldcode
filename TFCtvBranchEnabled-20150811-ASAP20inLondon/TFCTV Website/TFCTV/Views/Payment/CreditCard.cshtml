@@ -1,0 +1,437 @@
+﻿@{
+    ViewBag.Title = "Pay via Credit Card - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    var id = Url.RequestContext.RouteData.Values["id"];
+
+    IPTV2_Model.ProductPrice productPrice = ViewBag.ProductPrice;
+    IPTV2_Model.Product product = ViewBag.Product;
+
+    List<TFCTV.Helpers.CreditCard> creditCardList = ViewBag.CreditCardList;
+
+    bool HasError = ViewBag.HasError;
+    var ReturnUrl = HttpUtility.UrlEncode(ViewContext.HttpContext.Request["ReturnUrl"]);
+    //var listOfExcludedProductIds = MyUtility.StringToIntList(GlobalConfig.ProductIdsExcludedFromRecurringBilling);
+    var listOfIncludedProductIds = MyUtility.StringToIntList(GlobalConfig.ProductIdsIncludedInRecurringBilling);
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                SUBSCRIPTION &raquo; PAYMENT &raquo; CREDIT CARD
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("PaymentSelection", new { pselection = "CreditCard", id = id })
+                </div>
+                <div class="cn-white">
+                    <div id="payment-main-container">
+                        <div id="payment-main">
+                            @{if (!HasError)
+                              {
+                                  using (Html.BeginForm("_CreditCard", "Payment", new { ReturnUrl = ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", id = "form1" }))
+                                  {
+                                <div id="body-summary">
+                                    <div class="breakSmall">
+                                        @Html.AntiForgeryToken()
+                                    </div>
+                                    <div id="cc-purchase-instructions">
+                                        <p>
+                                            Before entering your payment information, please make sure that your computer meets
+                                            our system requirements, as indicated in our <a href="/Help">Help Center</a>. The
+                                            subscription fee is non-refundable.</p>
+                                    </div>
+                                    <div id="cc-main">
+                                        <div class="copy">
+                                            Type of Credit Card:</div>
+                                        <div class="cc-rows">
+                                            @Html.DropDownList("CreditCard", new SelectList(creditCardList, "value", "text"), new { @class = "textbox-medium" })
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            &nbsp;</div>
+                                        <div class="cc-rows">
+                                            @{foreach (var item in creditCardList)
+                                              {
+                                                @Html.ImageBuilder(Url, String.Format("cclogos/{0}.png", item.value), new { @class = "cclogo-nopos" })
+                                              }
+                                            }
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Cardholder's Name:</div>
+                                        <div class="cc-rows">
+                                            <input id="cardholdername" name="cardholdername" maxlength="150" type="text" class="textbox"
+                                                placeholder="Cardholder's Name" /><div class="errstatus">
+                                                </div>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Card Number:</div>
+                                        <div class="cc-rows">
+                                            <input type="text" class="textbox" placeholder="Card Number" id="cardnumber" name="cardnumber"
+                                                maxlength="16" />
+                                            <div class="errstatus">
+                                            </div>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Card Security Code:</div>
+                                        <div class="cc-rows">
+                                            <input type="password" class="textbox-small" placeholder="CSC" id="securitycode"
+                                                name="securitycode" maxlength="4" /><div class="errstatus">
+                                                </div>
+                                        </div>
+                                        <div class="clear breakStandard">
+                                        </div>
+                                        <div class="copy-l">
+                                            @Html.ImageBuilder(Url, "ccard-back2.jpg")
+                                        </div>
+                                        <div class="csc-copy">
+                                            The card security code (CSC) is a 3- or 4-digit number (not part of the credit card
+                                            number) that appears on the credit card. On most cards, the CSC appears on the back
+                                            of the card (usually in the signature field).
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Expiration Date:</div>
+                                        <div class="cc-rows">
+                                            @Html.DropDownList("ExpiryMonth", new SelectList(ViewBag.Months, "Value", "Text"), new { @class = "textbox-medium" })&nbsp;
+                                            @Html.DropDownList("ExpiryYear", new SelectList(ViewBag.Years, "Value", "Text"), new { @class = "textbox-small" })</div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Street Address:</div>
+                                        <div class="cc-rows">
+                                            <input type="text" class="textbox" placeholder="Street Address" id="address" name="address"
+                                                maxlength="255" /><div class="errstatus">
+                                                </div>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            City:</div>
+                                        <div class="cc-rows">
+                                            <input type="text" class="textbox" placeholder="City" id="city" name="city" maxlength="50" /><div
+                                                class="errstatus">
+                                            </div>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="copy">
+                                            Postal Code:</div>
+                                        <div class="cc-rows">
+                                            <input type="text" class="textbox" placeholder="Postal Code" id="zip" name="zip"
+                                                maxlength="16" /><div class="errstatus">
+                                                </div>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div class="cc-purchase-instructions">
+                                            <p>
+                                                Service Agreement. Please place a check mark on each box below by clicking on the
+                                                box to signify your agreement to our service terms.</p>
+                                        </div>
+                                        <div class="clear breakSmall">
+                                        </div>
+                                        <div>
+                                            <div class="cbox">
+                                                <input id="agree1" type="checkbox" name="agree1" />
+                                            </div>
+                                            <div class="cbox-copy">
+                                                I hereby certify that my computer meets the system requirements and I can view the
+                                                free videos.
+                                                <div class="errstatus">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clear breakStandard">
+                                        </div>
+                                        <div>
+                                            <div class="cbox">
+                                                <input id="agree2" type="checkbox" name="agree2" />
+                                            </div>
+                                            <div class="cbox-copy">
+                                                I hereby certify that the above information is correct.<div class="errstatus">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clear breakStandard">
+                                        </div>
+                                        <div>
+                                            <div class="cbox">
+                                                <input id="agree3" type="checkbox" name="agree3" />
+                                            </div>
+                                            <div class="cbox-copy">
+                                                I hereby authorize @MyUtility.GetABSCBNSubsidiary()
+                                                to deduct payments in connection with my subscription to TFC.tv. I also agree that
+                                                said payments are non-refundable.<div class="errstatus">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clear breakStandard">
+                                        </div>
+                                        @{if (GlobalConfig.IsRecurringBillingEnabled)
+                                          {
+                                              if ((bool)ViewBag.IsSubscriptionProduct && String.IsNullOrEmpty(ViewBag.WishlistId) && listOfIncludedProductIds.Contains(product.ProductId))
+                                              {
+                                                  var RecurringDescription = "I want to automatically renew my subscription when it expires using the same credit card information used in this transaction. I understand that I need to opt out at least three (3) days prior to the expiration of my current subscription to discontinue the automatic renewal for the next subscription duration. To opt-out I can visit Edit Your Profile page.";
+                                                  if ((bool)ViewBag.HasCreditCardEnrolled)
+                                                  {
+                                                      if (ViewBag.UserCreditCard != null)
+                                                      {
+                                                          var UserCreditCard = (IPTV2_Model.CreditCard)ViewBag.UserCreditCard;
+                                                          RecurringDescription = String.Format("I want to automatically renew my subscription when it expires using my enrolled credit card (XXXX XXXX XXXX {0}). I understand that I need to opt out at least three (3) days prior to the expiration of my current subscription to discontinue the automatic renewal for the next subscription duration. To opt-out I can visit Edit Your Profile page.", UserCreditCard.LastDigits);
+                                                      }
+                                                  }
+                                            <div>
+                                                <div class="cbox">
+                                                    <input id="recur" type="checkbox" name="recur" checked />
+                                                </div>
+                                                <div class="cbox-copy">
+                                                    <strong>Automatic Renewal</strong>. @Html.Raw(RecurringDescription)
+                                                </div>
+                                                <div class="errstatus">
+                                                </div>
+                                            </div>
+                                            <div class="clear breakSmall">
+                                            </div>
+                                              }
+                                          }
+                                        }
+                                        <div class="cbox">
+                                            &nbsp;
+                                        </div>
+                                        <div class="cbox-copy btn-container btn-margin-ie7">
+                                            <input type="button" id="cmdConfirm" value="Submit" class="nbutton" /></div>
+                                    </div>
+                                    <div class="clear breakLarge">
+                                    </div>
+                                </div> 
+                                <div id="cc-summary">
+                                    <div class="breakLarge">
+                                    </div>
+                                    <div class="purchase-summary fold-top">
+                                        <div class="breakLarge">
+                                            @Html.Hidden("id", (object)product.ProductId)
+                                            @Html.Hidden("wid", (object)ViewBag.WishlistId)
+                                            @Html.Hidden("cpid", (object)ViewBag.CurrentProductId)
+                                        </div>
+                                        <div class="title">
+                                            Summary of Purchase</div>
+                                        <div class="breakLarge">
+                                        </div>
+                                        <div>
+                                            <p class="no-indent">
+                                                Type of Credit Card: <span id="ccard-type"></span>
+                                                <br />
+                                                Cardholder's Name: <span id="ccard-name"></span>
+                                                <br />
+                                                Card Number: <span id="ccard-num"></span>
+                                                <br />
+                                                Mode: <span id="ccard-mode"></span>
+                                                <br />
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="breakStandard">
+                                    </div>
+                                    <div class="btn-container">
+                                        <input type="submit" value="Confirm Payment" class="nbutton" /></div>
+                                </div>
+                                  }
+                              }
+                              else
+                              { 
+                                @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                              }                      
+                            }
+                            <div id="wait-time">
+                                <div class="breakSmall">
+                                    <a id="wait-anchor"></a>
+                                </div>
+                                <div class="purchase-instructions">
+                                    <p>
+                                        @Html.ImageBuilder(Url, "3.gif", new { style = "position: relative; top: 5px;" })
+                                        Please wait while we process your request...</p>
+                                </div>
+                            </div>
+                            <div id="tcomplete" class="hideElement">
+                                <div class="breakSmall">
+                                </div>
+                                <div class="purchase-instructions">
+                                    <p>
+                                        Congratulations! You have successfully completed this transaction.</p>
+                                </div>
+                            </div>
+                            <div id="errorContainer" class="hideElement">
+                                <div class="msgbox-header">
+                                    <p>
+                                        Oops! Something went wrong with your transaction.</p>
+                                </div>
+                                <div class="breakStandard">
+                                </div>
+                                <div id="msgbox-content" class="msgbox-content ui-state-error">
+                                </div>
+                                <div class="breakStandard">
+                                </div>
+                                <div class="btn-container15">
+                                    <input type="button" id="try-again" value="Click here to try again" class="nbutton try-again btn-container15" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="payment-summary">
+                        <div class="breakLarge">
+                        </div>
+                        <div class="title">
+                            Summary of Order</div>
+                        <br />
+                        <div id="summary-body">
+                            @Html.Action("SummaryOfOrder", new { id = id, user = ViewBag.User, product = ViewBag.Product, productPrice = ViewBag.ProductPrice })
+                        </div>
+                        @Html.Action("Reminder")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 8]>
+    @Html.CssBuilder(Url, "transaction.ie8.css")
+    <![endif]-->
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var jQueryValidateUrl = '//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js';
+    </script>
+    <script type="text/javascript">
+        function FillUpCreditCardSummary() {
+            $('#ccard-type').text($('#CreditCard :selected').text());
+            $('#ccard-name').text($('#cardholdername').val());
+            $('#ccard-num').text('XXXX-XXXX-XXXX-' + $('#cardnumber').val().substr($('#cardnumber').val().length - 4));
+            if ($('#recur').is(':checked'))
+                $('#ccard-mode').text('Renewal');
+            else
+                $('#ccard-mode').text('Subscription');
+        }
+
+        $(document).ready(function () {
+            $.getScript(jQueryValidateUrl).done(function () {
+                var checker = $('form#form1').validate({
+                    rules: {
+                        cardholdername: { required: true }
+                        , cardnumber: { required: true, number: true }
+                        , securitycode: { required: true, number: true }
+                        , address: { required: true }
+                        , city: { required: true }
+                        , zip: { required: true }
+                        , agree1: { required: true }
+                        , agree2: { required: true }
+                        , agree3: { required: true }
+                    },
+                    messages: {
+                        cardholdername: { required: 'This field is required.' }
+                        , cardnumber: { required: 'This field is required.', number: 'Must be numeric' }
+                        , securitycode: { required: 'This field is required.', number: 'Must be numeric' }
+                        , address: { required: 'This field is required.' }
+                        , city: { required: 'This field is required.' }
+                        , zip: { required: 'This field is required.' }
+                        , agree1: { required: 'Please accept the service agreement.' }
+                        , agree2: { required: 'Please accept the service agreement.' }
+                        , agree3: { required: 'Please accept the service agreement.' }
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.is(":checkbox"))
+                            error.appendTo(element.parent().parent().find('.cbox-copy').find('.errstatus'));
+                        else
+                            error.appendTo(element.parent().find('.errstatus'));
+                    }
+                });
+                $('#cmdConfirm').click(function () {
+                    $('form#form1').valid();
+                    if (checker.numberOfInvalids() == 0) {
+                        $('html, body').animate({ scrollTop: $('#entertainmentBtn').offset().top }, 700, function () {
+                            $('#body-summary').fadeOut(350, function () {
+                                // set info
+                                FillUpCreditCardSummary();
+                                $('#cc-summary').fadeIn();
+                            });
+                        });
+                    }
+                });
+
+                $('form#form1').submit(function (event) {
+                    event.preventDefault();
+                    if (checker.numberOfInvalids() == 0) {
+                        $('#errorContainer').hide();
+                        $('#cc-summary').fadeOut(500, function () {
+                            $('#wait-time').fadeIn();
+                            $('html, body').animate({ scrollTop: $('#entertainmentBtn').offset().top }, 800);
+                        });
+
+                        var form = $(this);
+                        $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                            if (data.StatusCode == 0)
+                                setTimeout(function () { $('#wait-time').hide(); $('#tcomplete').show(); document.location = data.HtmlUri; }, 800);
+                            else {
+                                setTimeout(function () {
+                                    $('#msgbox-content').html(data.StatusMessage);
+                                    $('#wait-time').fadeOut(500, function () {
+                                        $('#errorContainer').fadeIn();
+                                        $('html, body').animate({ scrollTop: $('#entertainmentBtn').offset().top }, 800);
+                                    });
+                                }, 800);
+                            }
+                        }).fail(function () {
+                            setTimeout(function () {
+                                $('#msgbox-content').html("Error requesting page: " + form.attr('action'));
+                                $('#wait-time').fadeOut(500, function () {
+                                    $('#errorContainer').fadeIn();
+                                    $('html, body').animate({ scrollTop: $('#entertainmentBtn').offset().top }, 800);
+                                });
+                            }, 800);
+                        });
+                    }
+                });
+
+            });
+        });    
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.try-again').click(function () {
+                location.reload();
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        //onbeforeunload
+        window.onbeforeunload = function () {
+            var msg = '';
+            if ($('#cc-summary').is(':visible'))
+                msg = 'You are about to submit your credit card information. Do you want to leave without sending?';
+            else if ($('#wait-time').is(':visible'))
+                msg = 'The system is currently processing your request. Leaving this page might cause some problems.';
+            if (msg != '')
+                return msg;
+        };
+    </script>
+}

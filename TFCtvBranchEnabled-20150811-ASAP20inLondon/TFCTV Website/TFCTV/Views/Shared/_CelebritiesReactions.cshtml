@@ -1,0 +1,198 @@
+﻿@model IPTV2_Model.Celebrity
+@{    
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+    }
+    int attribActionId = (int)AnniversaryPromo.AnnivPromo_Loving;
+    string attribDescription = String.Format("You loved <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Format("{0} {1}", Model.FirstName, Model.LastName));
+}
+@{using (Html.BeginForm(String.Empty, String.Empty, FormMethod.Post, new { id = "naformL", style = "display: none;" }))
+  {                  
+    <div class="hideElement">@Html.AntiForgeryToken()</div>
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+  }
+}
+<div id="social_component">
+    <div id="componentDiv">
+    </div>
+    <!-- <div id="ShareThisShow">
+    </div> -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var isLoggedIn = true;
+
+            var loveText = '@ViewBag.loved' == 'True' ? 'Unlove' : 'Love';
+            var myReactions = [
+            {
+                text: loveText,
+                ID: 'love',
+                iconImgUp: '@Html.ContentBuilder(Url, "content/images/celebrity/LoveIt_Icon_Up.png")',
+                tooltip: '@Model.FirstName' + ' ' + '@Model.LastName',
+                //feedMessage: 'loves ' + '@Model.FirstName' + ' ' + '@Model.LastName',
+                headerText: 'You love @Model.FirstName' + ' ' + '@Model.LastName'
+            }
+        ]
+
+            var act = new gigya.services.socialize.UserAction();
+            act.setLinkBack(location.href);
+            act.setTitle("Love on TFC.tv");
+            act.setSubtitle("www.tfc.tv");
+            act.setDescription("Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.");
+            act.addActionLink("Love this too", location.href);  // Adding Action Link  
+            act.addMediaItem({ type: 'image', src: '@GlobalConfig.CelebrityImgPath@Model.CelebrityId/@Model.ImageUrl', href: location.href });
+            act.setUserMessage('loves ' + '@Model.FirstName' + ' ' + '@Model.LastName');
+            //act.setActorUID('@User.Identity.Name');
+
+            var showReactionsBarUI_params =
+        {
+            barID: 'Celebrity_' + '@Model.CelebrityId',
+            showCounts: 'right',
+            containerID: 'componentDiv',
+            reactions: myReactions,
+            userAction: act,
+            showSuccessMessage: false,
+            noButtonBorders: false,
+            cid: '@Model.FirstName' + '-' + '@Model.LastName',
+            onReactionClicked: onReactionClickedHandler,
+            onReactionUnclicked: onReactionUnclickedHandler,
+            shortURLs: 'never',
+            onSendDone: onSendReactionHandler,
+            onLoad: onLoadReactionHandler
+        }
+
+            gigya.services.socialize.showReactionsBarUI(showReactionsBarUI_params);
+
+
+            /**HANDLERS**/
+
+            function onReactionUnclickedHandler(eventObj) {
+                updateReactions(eventObj);
+                tfc.Social.OnLoveReaction({ love: 'False' });
+            }
+
+            function onReactionClickedHandler(eventObj) {
+                updateReactions(eventObj);
+                publishInternalUserAction('loves @Model.FirstName' + ' ' + '@Model.LastName');
+                tfc.Social.OnLoveReaction({ love: 'True' });
+            }
+
+            function updateReactions(eventObj) {
+                var userId = '@User.Identity.Name';
+                var reactionTypeId = tfc.Social.getEngagementId(eventObj.reaction.ID);
+                var celebrityId = '@Model.CelebrityId';
+
+                var action = (eventObj.eventName == "reactionClicked") ? 'add' : 'remove';
+                jQuery.post('@Url.Action("CelebrityReactions", "SocialEngagement")',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    celebrityId: celebrityId,
+                    action: action
+                }, function (data) {
+                                            var nform = $('form#naformL');
+                        $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+                            //do something
+                        });
+                });
+            }
+
+            function onLoadReactionHandler(eventObj) {
+                var userName = '@User.Identity.Name';
+                if (userName.length == 0) {
+                    isLoggedIn = false;
+                    $(".gig-reaction-button").attr("onclick", "");
+                }
+
+                //tfc.Social.OnLoveReaction({ love: '@ViewBag.Loved' });
+            }
+
+            function onSendReactionHandler(eventObj) {
+                var userId = '@User.Identity.Name';
+                var reactionTypeId = tfc.Social.getEngagementId('share');
+                var celebrityId = '@Model.CelebrityId';
+
+                jQuery.post('@Url.Action("CelebrityReactions", "SocialEngagement")',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    celebrityId: celebrityId,
+                    action: 'add'
+                }, function (data) {
+                    //alert(data);
+                });
+
+                $(".pop_up_message").click();
+            }
+
+            function onSiteLoginHandler(event) {
+                /* $('.t-window-title').html('Login');
+                $('#Window').data('tWindow').center().open();*/
+                $('#signin').click();
+                return false;
+            }
+            /**-=HANDLERS=-**/
+
+            $("#componentDiv").click(function () {
+                if (isLoggedIn == false) {
+                    onSiteLoginHandler(this);
+                }
+            });
+
+            function publishInternalUserAction(feedMessage) {
+                var actInternal = new gigya.services.socialize.UserAction();
+                actInternal.setLinkBack(location.href);
+                actInternal.setTitle('@Model.FirstName @Model.LastName');                
+                actInternal.setDescription('has loved: ');                
+                actInternal.addMediaItem({ type: 'image', src: '@GlobalConfig.CelebrityImgPath@Model.CelebrityId/@Model.ImageUrl', href: location.href });                
+                actInternal.actorUID = '@User.Identity.Name';                
+                var params = {
+                    feedID: 'UserAction',
+                    userAction: actInternal,   // including the UserAction object
+                    scope: 'internal', // the Activity Feed will be published internally only (site scope), not to social networks
+                    privacy: 'public',
+                    callback: publishInternalUserAction_callback
+                };
+                @{
+                    if (userData != null)
+                    {
+                        if (userData.IsInternalSharingEnabled.Contains("true"))
+                        {
+                            <text>
+                            gigya.services.socialize.publishUserAction(params);
+                            </text>
+                        }
+                    }
+                }
+            }
+
+            function publishInternalUserAction_callback(response) {
+                if (response.errorCode != 0) {
+                    // catch error                    
+                }
+            }
+
+            $('.pop_up_message').overlay({
+                mask: 'black',
+                fixed: false,
+                closeOnClick: false,
+                onBeforeLoad: function () {
+                    $(".apple_overlay").width(270);
+                    $(".contentMessage").html("<h3>You've successfully shared your activity.</h3>");
+                },
+                onClose: function () {
+                    $('#bs_overlay .contentMessage').empty();
+                }
+            });
+        });
+    </script>
+</div>
+<div class="pop_up_message" rel="#bs_overlay">
+</div>
+<div class="apple_overlay" id="bs_overlay">
+    <div class="contentMessage" style="color: Black">
+    </div>
+</div>

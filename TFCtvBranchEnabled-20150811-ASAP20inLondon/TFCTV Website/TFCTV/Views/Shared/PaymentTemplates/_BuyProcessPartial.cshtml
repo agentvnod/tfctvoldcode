@@ -1,0 +1,276 @@
+﻿@{
+
+    IPTV2_Model.User recipient = ViewBag.Recipient;
+    IPTV2_Model.Product product = ViewBag.Product;
+    ViewBag.Title = recipient != null ? "Gift a friend" : "Subscribe";
+    if (recipient != null)
+    {
+        if (String.Compare(recipient.UserId.ToString(), User.Identity.Name) == 0)
+        {
+            ViewBag.Title = "Subscribe";
+        }
+    }
+
+    if (ViewBag.CurrentProductId != null)
+    {
+        ViewBag.Title = "Upgrade";
+    }
+
+    DateTime? SubscriptionEndDate = ViewBag.SubscriptionEndDate;
+    DateTime? RenewalSubscriptionEndDate = ViewBag.RenewalSubscriptionEndDate;
+
+    bool IsFirstTimeSubscriber = false;
+    if (ViewBag.IsFirstTimeSubscriber != null)
+    {
+        IsFirstTimeSubscriber = ViewBag.IsFirstTimeSubscriber;
+    }
+    DateTime? FreeTrialEndDate = null;
+    DateTime? PackageToBeBoughtEntitlementEndDate = null;
+    int FreeTrialConvertedDays = 0;
+
+    if (IsFirstTimeSubscriber)
+    {
+        FreeTrialEndDate = ViewBag.FreeTrialEndDate;
+        FreeTrialConvertedDays = ViewBag.FreeTrialConvertedDays;
+        PackageToBeBoughtEntitlementEndDate = ViewBag.PackageToBeBoughtEntitlementEndDate;
+    }
+    
+
+}
+<div id="payment-container">
+    <div class="genericHeader">
+        <div id="genericHeader_header">
+            <div id="headerTitle" class="sectionHeaderTitle">
+                @ViewBag.Title</div>
+            <div id="headerCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div class="breakStandard">
+    </div>
+    @{if (!String.IsNullOrEmpty(ViewBag.ErrorMessage))
+      {
+        <text>
+        <div id="payment-body">
+            @{if (recipient != null)
+              {
+                  if (String.Compare(recipient.UserId.ToString(), User.Identity.Name) != 0)
+                  {
+                <text>
+                <div id="recipient" class="subTitle">
+                    @ViewBag.ErrorMessage<br />
+                    <div class="breakSmall">
+                    </div>
+                    <strong>Please review our policies for sending gifts on our @Html.ActionLink("Help Center", "Question", "Help", new { id = 988 }, new { target = "_blank", @class = "orange" }).</strong>
+                </div>
+                </text>
+                  }
+              }}
+            @{if (User.Identity.IsAuthenticated && recipient == null)
+              {
+                <text>
+                @ViewBag.ErrorMessage
+                </text>
+              }
+
+            }
+            <div class="breakStandard">
+            </div>
+        </div>
+        </text>
+      }}
+    @{if (String.IsNullOrEmpty(ViewBag.ErrorMessage))
+      {
+        <text>
+        <div id="payment-body">
+            @{if (IsFirstTimeSubscriber && FreeTrialConvertedDays > 0 && FreeTrialEndDate != null)
+              {              
+                <text> You currently have <span class="boldText">@FreeTrialConvertedDays day(s)</span>
+                left on your TFC.tv Free Trial, expiring on <span class="boldText">@FreeTrialEndDate.Value.ToString("MMM. dd, yyyy")</span>.
+                Buying this product now will add <span class="boldText">@FreeTrialConvertedDays day(s)</span>
+                to your TFC.tv Premium subscription, which will now expire on <span class="boldText">@PackageToBeBoughtEntitlementEndDate.Value.AddDays(FreeTrialConvertedDays).ToString("MMM. dd, yyyy")</span>.
+                </text>
+              }
+            }
+            @{if (recipient != null)
+              {
+                  if (String.Compare(recipient.UserId.ToString(), User.Identity.Name) != 0)
+                  {
+                <div id="recipient" class="subTitle">
+                    You are about to send a gift to @recipient.FirstName @recipient.LastName<br />
+                    <div class="breakSmall">
+                    </div>
+                    @*NOTE: This user is already entitled to @ViewBag.PackageName*@ <strong>Prior to purchasing,
+                        please review our policies for sending gifts on our @Html.ActionLink("Help Center", "Question", "Help", new { id = 988 }, new { target = "_blank", @class = "orange" }).</strong>
+                </div>
+                  }
+              }}
+            @{if (User.Identity.IsAuthenticated && recipient == null)
+              {
+                  if (SubscriptionEndDate != null)
+                  {
+                <text>Your current @ViewBag.PackageName subscription will expire on <span class="boldText">@SubscriptionEndDate.Value.ToString("MMM. dd, yyyy")</span>
+                <br />
+                Buying this product will extend your @ViewBag.PackageName subscription to <span class="boldText">@RenewalSubscriptionEndDate.Value.ToString("MMM. dd, yyyy")</span><br />
+                </text>
+                  }
+
+              }}
+            @{if (ViewBag.CurrentProductId != null && User.Identity.IsAuthenticated)
+              {
+                <text>@* You currently have @ViewBag.remainingDaysofCurrentSubscription day(s) left
+                on your
+                @ViewBag.CurrentSubscriptionName
+                subscription.<br />
+                The remaining days will be converted along with your new upgraded @ViewBag.NewSubscriptionName
+                subscription.<br />
+                After the transaction is completed, a total of @ViewBag.ConvertedDays day(s) will
+                be added to your @ViewBag.NewSubscriptionProductName subscription.*@<br />
+                You have @ViewBag.remainingDaysofCurrentSubscription
+                day(s) left on your current @ViewBag.CurrentPackageName subscription. The remaining
+                days will be converted and added when you upgrade to a @ViewBag.NewSubscriptionName
+                Subscription.<div class="breakSmall">
+                </div>
+                After the transaction is completed, enjoy a total of @ViewBag.CombinedSubscriptionTotalDays
+                day(s) of @ViewBag.NewSubscriptionName Subscription access (@ViewBag.ConvertedDays
+                remaining day(s) + @ViewBag.NewSubscriptionProductName
+                Subscription).<div class="breakSmall">
+                </div>
+                </text>
+              }}
+            <div class="breakStandard">
+            </div>
+            <div>
+                <div class="formSubHeaders">
+                    Product Information</div>
+                <div class="info-row">
+                    <div class="info-row-label floatLeft">
+                        Product Name
+                    </div>
+                    <div class="boldText">
+                        @ViewBag.PackageName
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label floatLeft">
+                        Description
+                    </div>
+                    <div class="boldText">
+                        @product.Description
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label floatLeft">
+                        Amount:
+                    </div>
+                    <div class="boldText">
+                        @ViewBag.ProductAmountFormat
+                    </div>
+                </div>
+                <div class="breakStandard">
+                </div>
+            </div>
+            <div id="paymentMethod">
+                <ul class="css-tabs">
+                    @{if (recipient != null)
+                      {
+                          if (GlobalConfig.IsEWalletPaymentModeEnabled)
+                          {
+                        <li>
+                            @Ajax.ActionLink("E-Wallet", "Wallet", "Buy", new { id = product.ProductId, wid = ViewBag.WishlistId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                          }
+                          if (GlobalConfig.IsPpcPaymentModeEnabled)
+                          {
+                        <li>
+                            @Ajax.ActionLink("Prepaid Card", "PrepaidCard", "Buy", new { id = product.ProductId, wid = ViewBag.WishlistId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                          }
+                          //if (GlobalConfig.IsCreditCardPaymentModeEnabled)
+                          //{
+                          if (ViewBag.CreditCardList != null)
+                          {
+                        <li>@Ajax.ActionLink("Credit Card", "CreditCard", "Buy", new { id = product.ProductId, wid = ViewBag.WishlistId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                          }
+                          //}
+                          if (GlobalConfig.IsPaypalPaymentModeEnabled)
+                          {
+                        <li>@Ajax.ActionLink("PayPal", "PayPal", "Buy", new { id = product.ProductId, wid = ViewBag.WishlistId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                          }
+
+                      }
+                    }
+                    @{if (recipient == null)
+                      {
+                          if (GlobalConfig.IsEWalletPaymentModeEnabled)
+                          {
+                        <li>@Ajax.ActionLink("E-Wallet", "Wallet", "Buy", new { id = product.ProductId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "payment-spanner" })</li>
+                          }
+                          if (GlobalConfig.IsPpcPaymentModeEnabled)
+                          {
+                        <li>@Ajax.ActionLink("Prepaid Card", "PrepaidCard", "Buy", new { id = product.ProductId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "payment-spanner" })</li>
+                          }
+                          //if (GlobalConfig.IsCreditCardPaymentModeEnabled)
+                          //{
+                          if (ViewBag.CreditCardList != null)
+                          {
+                        <li>@Ajax.ActionLink("Credit Card", "CreditCard", "Buy", new { id = product.ProductId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "payment-spanner" })</li>
+                          }
+                          //}
+                          if (GlobalConfig.IsPaypalPaymentModeEnabled)
+                          {
+                        <li>@Ajax.ActionLink("PayPal", "PayPal", "Buy", new { id = product.ProductId, callId = System.Guid.NewGuid(), cpid = ViewBag.CurrentProductId }, new AjaxOptions { LoadingElementId = "payment-spanner" })</li>
+                          }
+                      }}
+                </ul>
+                <div class="css-panes">
+                    <div style="display: block">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div id="payment-ajax-loading">
+            <div id="payment-spanner" class="hideElement">
+                @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading..." })
+                <br />
+                <span id="payment-span-text">Please wait...</span>
+            </div>
+        </div>
+        <script type="text/javascript">
+        var initialIndex = @ViewBag.Tab;
+        $(document).ready(function () {
+            $('ul.css-tabs').tabs('div.css-panes > div', { effect: 'ajax', initialIndex: initialIndex,
+                onBeforeClick: function (event, i) {
+                    event.preventDefault();
+                    var pane = this.getPanes('div.css-panes > div');
+                    pane.html($('#payment-ajax-loading').html());
+                    @{if (User.Identity.IsAuthenticated)
+                      {
+                  <text>
+                  pane.load(this.getTabs().eq(i).attr('href'));
+                  </text>
+                      }
+                      else
+                      {
+                  <text>
+                  pane.load('/Buy/Authenticate');
+                  return false;
+                  </text>
+                      }
+                }
+                    //
+                }
+            });
+
+            $('ul.css-tabs li a').click(function () {
+                $('ul.css-tabs li a').removeClass('cur-tab');
+                $(this).addClass('cur-tab');
+            });
+
+        });
+        </script>
+        </text>
+      }}
+    <div class="clear breakLarge">
+    </div>
+</div>

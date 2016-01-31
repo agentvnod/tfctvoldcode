@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Search Results - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:search-results";
+}
+<section class="page_pagebody">
+    <!-- PAGE BODY SECTION -->
+    <div class="container">
+        <h1 class="page_title">
+            SEARCH RESULTS</h1>
+        <!-- page title -->
+        <div>
+            <gcse:searchresults-only><span style="color:#fff;">Loading results...</span></gcse:searchresults-only>
+        </div>
+        <!-- end search section  -->
+    </div>
+    <!-- container  -->
+</section><!-- end page body section -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        (function () {
+            var cx = '014045967172328131312:je8wvy59rya';
+            var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>    
+}

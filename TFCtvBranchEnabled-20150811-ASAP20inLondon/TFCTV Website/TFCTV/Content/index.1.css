@@ -1,0 +1,334 @@
+﻿body
+{
+    margin: 0;
+    padding: 0;
+    background: none;
+    background-position: center center;
+    background-attachment: fixed;
+    background-color: #fff;
+    font-family: Helvetica Neue, Arial, Helvetica, Sans-Serif;
+    font-size: 14px;
+}
+.spotlight
+{
+    /*background: url('images/blue-spotlight.png') no-repeat;     width: 731px;     height: 100%;     position: absolute;     top: 0;     z-index: -10;*/
+    display: none;
+}
+
+img
+{
+    border: 0;
+}
+
+ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+h5
+{
+    font-size: 14px;
+}
+.separator
+{
+    color: #5e5e5e;
+    font-size: 14px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.breakStandard
+{
+    height: 10px;
+}
+
+.breakSmall
+{
+    height: 5px;
+}
+
+.breakLarge
+{
+    height: 20px;
+}
+
+#page
+{
+    height: 100%;
+    width: 100%;
+}
+
+#mainBody
+{
+    margin: 0 auto;
+    width: 940px;
+    text-align: left;
+    color: #000;
+}
+#topBarContainer
+{
+    background-color: #000;
+    height: 85px;
+    width: 100%;
+}
+#topBar
+{
+    margin: 0 auto;
+    width: 940px;
+    text-align: left;
+    color: #fff;
+    padding-top: 7px;
+    height: 30px;
+}
+
+#signIn
+{
+    float: right;
+    position: relative;
+    bottom: -50px;
+}
+
+
+.indexlink:visited, .indexlink:active, .indexlink:link
+{
+    color: #f15a29;
+    font-weight: bold;
+}
+
+#columnLeft, #columnRight
+{
+    margin-top: 20px;
+    width: 450px;
+    position: relative;
+    float: left;
+    height: 550px;
+    margin-right: 10px;
+}
+
+#columnRight
+{
+    border-left: solid 1px #ccc;
+    padding-left: 10px;
+}
+
+.iconImage
+{
+    margin-left: -42px;
+    margin-top: -1px;
+}
+#playVideo
+{
+    width: 448px;
+    height: 241px;
+    background-color: Black;
+}
+#fbLink
+{
+    display: block;
+    width: 215px;
+    height: 37px;
+    background: url('images/welcome/Facebook-Button.png') bottom;
+    text-indent: -99999px;
+    position: absolute;
+}
+#fbLink:hover
+{
+    background-position: 0 0;
+}
+
+#playerContainer, #imagesContainer, #coverImage
+{
+    width: 448px;
+    height: 241px;
+}
+#coverImage
+{
+    cursor: pointer;
+}
+#playButton
+{
+    width: 114px;
+    height: 41px;
+    position: relative;
+    top: -60px;
+    left: 170px;
+    cursor: pointer;
+}
+.hidden
+{
+    display: none;
+}
+
+#regsubmit
+{
+    background-color: #f15a29;
+    border-color: #f15a29;
+    color: white;
+    width: 160px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-style: solid;
+}
+#regsubmit:hover
+{
+    cursor: pointer;
+    background-color: #ef5422;
+}
+.editor-label
+{
+    width: 160px;
+    float: left;
+}
+.editor-row
+{
+    margin-bottom: 5px;
+}
+
+.textbox
+{
+    width: 280px;
+}
+.t-dropdown
+{
+    width: 262px !important;
+    height: 34px !important;
+}
+
+#tnc a
+{
+    font-weight: bold;
+}
+
+
+#regform
+{
+    border-top: solid 1px #ccc;
+    padding-top: 15px;
+}
+#registerSocialConnection
+{
+    display: none;
+}
+
+.registerbtn
+{
+    background: none;
+}
+.textbox
+{
+    text-indent: 5px;
+    height: 30px;
+    width: 260px;
+    border: 1px solid #469df5;
+}
+.copy
+{
+    width: 150px !important;
+}
+.textbox-medium
+{
+    text-indent: 5px;
+    height: 30px;
+    width: 160px;
+    border: 1px solid #469df5;
+}
+.t-header
+{
+    background: none !important;
+}
+.t-widget
+{
+    background-color: #fff !important;
+    color: #000;
+}
+.t-item
+{
+    background-color: #fff;
+    color: #000;
+}
+
+
+.t-state-hover, .t-state-selected
+{
+    color: #fff !important;
+    background-color: #469df5 !important;
+}
+
+.t-dropdown-wrap
+{
+    height: 34px !important;
+    border: none !important;
+}
+.t-input
+{
+    color: #000 !important;
+    height: 30px;
+    padding: .4em 0 .2em 3px !important;
+}
+.errstatus
+{
+    font-size: 12px;
+}
+
+.remove-uppercase
+{
+    text-transform: none !important;
+}
+#errorSummary
+{
+    text-align: center;
+    width: 450px;
+    margin-bottom: 15px;
+}
+#or
+{
+    float: center;
+    color: #ccc;
+    font-weight: bold;
+    background-color: #fff;
+    text-align: center;
+    width: 30px;
+    height: 15px;
+    position: relative;
+    left: 150px;
+    font-size: 16px;
+    top: 6px;
+}
+.hello
+{
+    font-size: 16px;
+    font-weight: bold;
+}
+.unliPinoyEntertainment
+{
+    font-size: 35px;
+    font-weight: bold;
+    color: #49a4ff;
+}
+.pDesc
+{
+    font-size: 13px;
+    position: relative;
+    top: -20px;
+}
+.topMargin20
+{
+    margin-top: 20px;
+}
+.mediumBold
+{
+    font-size: 20px;
+    font-weight: bold;
+}
+input[type="text"]
+{
+    text-transform: none !important;
+}

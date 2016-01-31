@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.CssBuilder(Url, "Site.css")
+    @Html.CssBuilder(Url, "main.css")
+    @Html.JsBuilder(Url, "jquery-1.7.2.min.js")
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    @Html.JsBuilder(Url, "common.js")
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css"
+        media="all" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    @Html.JsBuilder(Url, "jquery.pnotify.min.js")
+    @Html.CssBuilder(Url, "jquery.pnotify.default.css")
+    @Html.CssBuilder(Url, "jquery.pnotify.default.icons.css")
+    @Html.JsBuilder(Url, "jquery-ui-timepicker-addon.js")
+    @if (IsSectionDefined("Stylesheet"))
+    { @RenderSection("Stylesheet", false)}
+    @if (IsSectionDefined("JScript"))
+    { @RenderSection("JScript", false)}
+</head>
+@*<link type="text/css" href="http://cometc.azurewebsites.net/cometchatcss.php" rel="stylesheet"
+    charset="utf-8">
+<script type="text/javascript" src="http://cometc.azurewebsites.net/cometchatjs.php"
+    charset="utf-8"></script>*@
+<body>
+    <div class="page">
+        <div id="header">
+            <div id="title">
+                <h1>
+                    TFC.tv cPanel</h1>
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <div id="menucontainer">
+                <ul id="menu">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("User Mgmt", "Index", "User")</li>
+                    <li>@Html.ActionLink("Settlement", "Subscription", "Settlement")</li>
+                    <li>@Html.ActionLink("Preview Player", "Index", "Preview")</li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+    @if (IsSectionDefined("JScriptBottom"))
+    { @RenderSection("JScriptBottom", false)}
+</body>
+</html>

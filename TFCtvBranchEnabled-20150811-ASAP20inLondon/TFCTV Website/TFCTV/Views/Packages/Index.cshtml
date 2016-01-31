@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = " Go Premium - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="main_container">
+    <div id="body_container">
+        <div id="topContainer">
+            <div id="gopremium">
+                <div id="gopremiumInfoContainer">
+                    <div id="gopremiumInfo">
+                        Have access to premium TFC content with budget-friendly subscription packages and
+                        retail products. Choose your own affordable way to match your viewing needs.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bottomContainer" align="center">
+            <div id="bottomWrap" align="left">
+                <a href="@Url.Action("Subscription", "Packages")">
+                    <div id="subscription" class="left">
+                        <div id="subscriptionInfo">
+                            We've bundled the best access to our videos just for you.</div>
+                        <div id="subscriptionPriceInfo">
+                            AS LOW AS @ViewBag.LowestSubscription</div>
+                        <div>
+                            <a href="@Url.Action("Subscription", "Packages")" class="gp-subscribe">SUBSCRIBE</a>
+                        </div>
+                    </div>
+                </a><a href="@Url.Action("PerSerye", "Packages")">
+                    <div id="alacarte" class="left">
+                        <div id="alacarteInfo">
+                            Get access to only videos you want with our ala carte store.</div>
+                        <div id="alacartePriceInfo">
+                            AS LOW AS @ViewBag.LowestAlacarte</div>
+                        <div>
+                            <a href="@Url.Action("PerSerye", "Packages")" class="gp-subscribe">SUBSCRIBE</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "packages.css")
+    @Html.CssBuilder(Url, "gopremium.1.css")
+}

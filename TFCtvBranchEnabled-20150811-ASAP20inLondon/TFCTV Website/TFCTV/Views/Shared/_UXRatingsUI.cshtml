@@ -1,0 +1,17 @@
+﻿@model GigyaWidgetUIObj
+@{
+    string categoryID = Model.categoryID;
+    string streamID = Model.streamID;
+               
+}
+<!-- RatingsUI -->
+<script type="text/javascript">
+    var ratingsParams = {
+        categoryID: "@categoryID",
+        streamID: "@streamID",
+        containerID: "@Model.containerId",
+        linkedCommentsUI: "@Model.linkedCommentsUI",
+        ratingTemplate: "Average rating: $stars"
+    }
+    gigya.comments.showRatingUI(ratingsParams);  
+</script>

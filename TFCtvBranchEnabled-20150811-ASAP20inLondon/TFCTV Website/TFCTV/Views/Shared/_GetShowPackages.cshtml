@@ -1,0 +1,117 @@
+﻿@{
+    List<IPTV2_Model.Package> packagelist = ViewBag.PackageList;
+    List<IPTV2_Model.ProductPackage> productPriceList = ViewBag.productlist;
+    List<IPTV2_Model.ProductShow> productshow = ViewBag.productshow;
+}
+<div time="@ViewBag.ElapsedTime" style="display:none">
+</div>
+@if (packagelist != null || productshow != null)
+{
+    <div id="aboutPackage">
+        <div class="genericHeader">
+            <div class="genericHeader_header">
+                <div id="pkgSubHeaderTitle" class="sectionHeaderTitle">
+                    Available on</div>
+                <div id="pkgSubHeaderCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="packageContainer">
+            <br />
+            <div class="packageList_container">
+                <!-- Products Package -->
+                @if (packagelist != null)
+                {
+
+                    foreach (var GrpItem in packagelist)
+                    {
+                    <div class="packageitem_container">
+                        <div class="packageproduct_container">
+                            @Html.ImageBuilder(Url, "package/buttons/img_" + GrpItem.PackageId + ".png", new { height = "58", width = "227", alt = GrpItem.PackageName, prdid = GrpItem.PackageId })
+                        </div>
+                        <div class="pckgActionBtn">
+                            <a pckId="@GrpItem.PackageId" class="subscribe_btn">Subscribe</a>
+                            <div class="tooltip">
+                                @foreach (var item in productPriceList.Where(p => p.PackageId == GrpItem.PackageId))
+                                {
+                                    <a  href="/buy/process/@item.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        <div class="prod-left">
+                                            @{ Html.RenderAction("GetAmount", "Show", new { productid = item.ProductId }); }
+                                        </div>
+                                        <div class="prod-right">
+                                            &nbsp;| @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                        </div>
+                                    </a>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="pckgActionBtn border_left">
+                            <a pckId="@GrpItem.PackageId" class="addwishlist_btn">Add to Wishlist</a>
+                            <div class="tooltip">
+                                @foreach (var item in productPriceList.Where(p => p.PackageId == GrpItem.PackageId))
+                                {
+                                    <div>
+                                        <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                            @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                            @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+                <!-- Alacarte Package -->
+                @if (productshow != null)
+                {   
+                    if (productshow.Count() > 0)
+                    {
+                    <div class="packageitem_container">
+                        <div class="packageproduct_container">
+                            @Html.ImageBuilder(Url, "package/buttons/pay-" + (productshow.FirstOrDefault().Product.ALaCarteSubscriptionTypeId ?? 1).ToString() + ".png", new { height = "58", width = "227", alt = productshow.FirstOrDefault().Product.ALaCarteSubscriptionTypeId ?? 1, prdid = productshow.FirstOrDefault().ProductId })
+                        </div>
+                        <div class="pckgActionBtn">
+                            <a class="subscribe_btn">Subscribe</a>
+                            <div class="tooltip">
+                                <div class="scrollpane">
+                                    @foreach (var item in productshow)
+                                    {
+                                        <div>
+                                            <a  href="/buy/process/@item.ProductId" rel="#bs_overlay" class="buyproduct">
+                                                <div class="prod-left">
+                                                    @{ Html.RenderAction("GetAmount", "Show", new { productid = item.ProductId }); }
+                                                </div>
+                                                <div class="prod-right">
+                                                    &nbsp;| @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pckgActionBtn border_left">
+                            <a class="subscribe_btn">Add to Wishlist</a>
+                            <div class="tooltip">
+                                <div class="scrollpane">
+                                    @foreach (var item in productshow)
+                                    {
+                                        <div>
+                                            <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                                @(item.Product.DurationType == "m" ? item.Product.Duration + "-Month" : item.Product.Duration + "-Day")
+                                                @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        @{if (MyUtility.isTVECookieValid())
+          {
+            <div>
+                @Html.ImageBuilder(Url, "register/tve-banner-green-long.jpg", new { title = "TFC Everywhere", alt = "TFC Everywhere", width = 940 })</div>
+          }
+          else
+          {
+            <div>@Html.ImageBuilder(Url, "register/REGISTRATION-1A.jpg", new { width = 940 })</div>
+          }
+        }
+        @*<div>@Html.ImageBuilder(Url, "register/REGISTRATION-1A.jpg", new { width = 940 })</div>*@
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div id="social-header">
+                        @Html.ImageBuilder(Url, "register/REGISTRATION-1A_07.png")
+                    </div>
+                    <div id="registerSocialConnection">
+                    </div>
+                    <div class="breakSmall">
+                    </div>
+                    <div id="social-bullet-header">
+                        Link your social networking account and start enjoying:
+                    </div>
+                    <div>
+                        <div id="social-bullets" class="floatLeft">
+                            <ul>
+                                <li>Easy and convenient login</li>
+                                <li>Profile photo added to your account</li>
+                                <li>Automatically add friends also on TFC.tv</li>
+                                <li>Instant updates on your TFC.tv activities</li>
+                            </ul>
+                        </div>
+                        @{if (!MyUtility.isTVECookieValid())
+                          {
+                            <div id="ft-img">
+                                @Html.ImageBuilder(Url, "register/7-Day-Free-Trial-BOX.png")
+                                @*@Html.ImageBuilder(Url, "register/REGISTRATION-1A_22.png")*@
+                            </div>
+                          }
+                          else
+                          {
+                            <div class="breakStandard clear">
+                            </div>
+                          }
+                        }
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div id="no-social-no" class="floatRight">
+                @Html.ActionLink("Don't want to use your social network account? Click here.", "RegisterViaTFC", "User", null, new { @class = "big-orange" })
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.1.css?v1.0")}

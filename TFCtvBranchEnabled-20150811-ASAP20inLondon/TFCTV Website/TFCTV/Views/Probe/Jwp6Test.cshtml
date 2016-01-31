@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Jwp6Test";
+    Layout = "~/Views/Shared/_ProbeLayout.cshtml";
+}
+
+<h2>Jwplayer 6 Test Page</h2>
+<div class="uri"></div>
+<div class="error"></div>
+<div id="playerTarget">
+</div>
+
+@section JScript{
+    @Html.JsBuilder(Url, "jwp/jwplayer.js")
+    <script type="text/javascript">
+        jwplayer.key = "e5fCJaiUhg7exm7VY3A5ZzyNtcMWClxJmB3oWg==";
+    </script>
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var jwp = jwplayer("playerTarget");
+    </script>
+    <script type="text/javascript">
+        function relp(uri) {
+            $.ajax({
+                url: uri
+                , dataType: 'json'
+            }).done(function (data) {
+                var u = (window.location.hash === "#vod") ? data.data.Url : data.info;
+                var tp = u.split('?').shift().split('.').pop();
+                $(".uri").text(u);
+                console.log(u);
+                jwp.setup({
+                    playlist: [{
+                        file: u
+                        , provider: 'http://az332173.vo.msecnd.net/scripts/jwp/jwplayer.provider.swf'
+                        , type: (tp !== "m3u8" ? "mp4" : tp)
+                    }]
+                    , width: "50%"
+                    , aspectratio: "16:9"
+                    , androidhls: true
+                    , primary: "flash"
+                });
+
+                jwp.onError(function (evt) {
+                    $(".error").html(evt.message);
+                    console.log(evt.message);
+                });
+                console.log("LOADED");
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var relp_uri = "/iwantv/asap20";
+            if (window.location.hash === "#vod")
+                relp_uri = "/ajax/getmedia/28300";
+            relp(relp_uri);
+        });
+    </script>
+}
+

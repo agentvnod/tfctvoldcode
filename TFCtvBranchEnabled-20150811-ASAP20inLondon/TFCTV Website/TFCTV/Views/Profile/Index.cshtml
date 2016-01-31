@@ -1,0 +1,298 @@
+﻿@model IPTV2_Model.User
+@{
+    ViewBag.Title = @Model.FirstName + " " + @Model.LastName + " - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    TFCTV.Helpers.UserData UserData = ViewBag.UserData;
+
+    bool IsUserProfileHidden = false;
+    if (ViewBag.sameUser)
+    {
+        IsUserProfileHidden = false;
+    }
+    else
+    {
+        if (UserData.IsProfilePrivate.Contains("true"))
+        {
+            IsUserProfileHidden = true;
+        }
+    }
+    var metaDesc = String.Format("{0} {1}", Model.FirstName, Model.LastName);
+}
+<div id="mainBody">
+    <div id="LeaderAdBlock" style="position: relative; top: 20px; padding-bottom: 5px;
+        left: 32px;" class="floatRight">
+        <!-- TFCtv_Leaderboard_728x90 -->
+        <script type='text/javascript'>
+            GA_googleFillSlot("TFCtv_Leaderboard_728x90");
+        </script>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="userProfileContainer">
+        <!-- ============================ -->
+        <div id="userProfileTopContainer">
+            <div id="profilePic" class="left">
+                <img src="" alt="" width="150" height="150" />
+            </div>
+            <div id="infoContainer" class="left">
+                @Html.Partial("_UserInfo")
+            </div>
+            <div id="profileNotifications" class="right">
+                <ul>
+                    @{ if (ViewBag.sameUser)
+                       {
+                        <li class="edit-profile-button">
+                            @Html.ImageBuilder(Url, "userprofile/edit-profile.png", new { width = 17, height = 17 })
+                            &nbsp;&nbsp;<b><a href="/EditProfile">Edit My Profile</a></b> </li>
+                       } 
+                    }
+                    <!-- <li class="messages">
+                        <img src="/Content/images/userprofile/icon-message.png" width="17" height="17" />&nbsp&nbsp<b>Messages</b></li>
+                    <li class="newmessage">
+                        <img src="/Content/images/userprofile/icon-message.png" width="17" height="17" />&nbsp&nbsp<b>Create
+                            Message</b></li> -->
+                    <!--<li class="friendrequests">
+                            <img src="/Content/images/userprofile/icon-add.png" width="17" height="17" alt="" />&nbsp&nbsp<b>Add
+                                as friend</b></li> -->
+                    <!-- <li class="gifts">
+                        <img src="/Content/images/userprofile/icon-gift.png" width="17" height="17" />&nbsp&nbsp<b>Gifts</b></li>
+                    <li class="welcome">
+                        <img src="/Content/images/userprofile/icon-welcome.png" width="17" height="17" />&nbsp&nbsp<b>Welcome</b></li> -->
+                </ul>
+                <div class="clear">
+                </div>
+                @{ if (!ViewBag.sameUser)
+                   {
+                       if (!IsUserProfileHidden)
+                       { 
+                    @Html.Partial("_SocialNetworks", Model) 
+                       }
+                   }
+                }
+            </div>
+        </div>
+        <!-- ============================ -->
+        @{if (!IsUserProfileHidden)
+          { 
+        
+            <div id="userProfileBottomContainer">
+                <div id="leftPane" class="left">
+                    <!-- ABOUT ME -->
+                    @Html.Partial("_AboutMe", Model)
+                    <!-- MY FRIENDS -->
+                    @Html.Partial("_FriendsList", Model)
+                    <!-- LOVED SHOWS -->
+                    @Html.Partial("_UserLovedShows", Model)
+                    <!-- LOVED CELEBS -->
+                    @Html.Partial("_UserLovedCelebrities", Model)
+                </div>
+                <!-- ============================ -->
+                <div id="middlePane" class="left">
+                    <div id="tabsContainer" align="center">
+                        <ul>
+                            <!-- <li class="welcomeTab idle">Welcome</li> -->
+                            <li id="profileTabButton" class="profileTab current">Profile</li>
+                            <li id="activitywallTabButton" class="activitywallTab idle">Friends' Feed</li>
+                            <!-- <li class="playlistTab idle">Playlist</li> -->
+                            <li id="wishlistTabButton" class="wishlistTab idle">Wishlist</li>
+                        </ul>
+                    </div>
+                    <div id="welcomeTab" class="no-display">
+                        @Html.Partial("_Welcome", Model)
+                    </div>
+                    <div id="profileTab">
+                        @Html.Partial("_UserFeeds", Model)
+                    </div>
+                    <div id="activitywallTab">
+                        @Html.Partial("_FriendsFeeds", Model)
+                    </div>
+                    <div id="wishlistTab">
+                        @Html.Partial("_WishList", Model)
+                    </div>
+                </div>
+                <!-- ============================ -->
+                <div id="rightPane">
+                    <!-- Everyone's Feed -->
+                    <div id="videosContainer">
+                        <div class="videoTitleContainer">
+                            <div id="videosTitle" class="left" style="color: #2A2A2B;">
+                                EVERYONE'S <span style="color: #185695; font-weight: bold;">ACTIVITY</span>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="allUsersActivity">
+                            @Html.Partial("_AllUsersFeeds")
+                        </div>
+                    </div>
+                    <div id="profileTowerBlock" style="text-align: center;">
+                        <!-- Square 250x250 -->
+                        <script type='text/javascript'>
+                            GA_googleFillSlot("TFCtv_SquareBanner_250x250");
+                        </script>
+                    </div>
+                </div>
+            </div>
+          }
+
+          else
+          { 
+          
+            <div id="userProfileBottomContainer">
+                <div id="profilePrivate">
+                    <div style="height: 100px; border: 0px; padding-top: 80px; text-align: center; width: 100%;
+                        margin: auto; font-size: 17px;">
+                        This profile is private.</div>
+                </div>
+            </div>
+          }
+          
+        }
+    </div>
+</div>
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "userprofile.css")
+    @Html.CssBuilder(Url, "wishlist.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "payment.css")
+    @Html.CssBuilder(Url, "tabs-no-images.css")
+    @Html.CssBuilder(Url, "modal_popup.css")
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDesc)" />
+    @{if ((bool)ViewBag.sameUser)
+      {
+        <link rel="canonical" href="@String.Format("{0}/Profile", GlobalConfig.baseUrl)" />
+      }
+      else
+      { 
+        <link rel="canonical" href="@String.Format("{1}/Profile/{0}/{2}", Model.UserId, GlobalConfig.baseUrl, ViewBag.dbSlug)" />
+      }
+    }
+    @if (IsUserProfileHidden)
+    {
+        <meta name="robots" content="nofollow" />
+    }
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "userprofile/userItemsGenerator.js")
+    @Html.JsBuilder(Url, "userprofile/jquery.tinyscrollbar.min.js")
+    @Html.JsBuilder(Url, "userprofile/feeds.js")
+    @Html.JsBuilder(Url, "date.js")
+    @Html.JsBuilder(Url, "wishlist.js")
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type='text/javascript'>
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_SquareBanner_250x250");
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_Leaderboard_728x90");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+    <!-- End of Google Ads -->
+}
+@section JscriptBottom
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            jQuery.get('/User/GetPhoto/@ViewBag.viewedUserUserId', function (data) {
+                if (data.errorCode == 0) {
+                    $("#profilePic img").attr("src", data.photoURL == '' ? '@Html.ContentBuilder(Url, "content/images/celebrity/unknown.jpg?width=150&height=150")' : '/Image/Generate?source=' + escape(data.photoURL) + '&width=150&height=150');
+                    $('#profilePic img').attr('width', '150');
+                    $('#profilePic img').attr('height', '150');
+                    $('#profilePic img').attr('alt', '');
+                    $('#profilePic img').attr('title', '@Model.LastName, @Model.FirstName');
+                }
+            });
+
+            //added getuserinfo
+            jQuery.get('/User/GetPhoto/@ViewBag.viewedUserUserId', function (data) {
+                if (data.errorCode == 0) {
+
+                }
+            });
+
+
+
+            var currentSelected = "profileTab";
+            $("#welcomeTab").hide();
+            $("#activitywallTab").hide();
+            $("#wishlistTab").hide();
+            $("#profileTab").hide();
+            //Welcome Message Tab
+            $(".welcomeTab").click(function () {
+                if (currentSelected != "welcomeTab") {
+                    $("#" + currentSelected).hide();
+                    $("." + currentSelected).removeClass("current").addClass("idle");
+                }
+                $(this).removeClass("idle");
+                $(this).addClass("current");
+
+
+                currentSelected = "welcomeTab";
+                $("#" + currentSelected).show();
+                $("#" + currentSelected).click();
+
+            });
+            //User's activity Tab
+            $(".profileTab").click(function () {
+                if (currentSelected != "profileTab") {
+                    $("#" + currentSelected).hide();
+                    $("." + currentSelected).removeClass("current").addClass("idle");
+                }
+                $(this).removeClass("idle");
+                $(this).addClass("current");
+
+                currentSelected = "profileTab";
+                $("#" + currentSelected).show();
+            });
+
+            //User's friends's activity Tab
+            $(".activitywallTab").click(function () {
+                if (currentSelected != "activitywallTab") {
+                    $("#" + currentSelected).hide();
+                    $("." + currentSelected).removeClass("current").addClass("idle");
+                }
+
+                $(this).removeClass("idle");
+                $(this).addClass("current");
+
+                currentSelected = "activitywallTab";
+                $("#" + currentSelected).show();
+                $("#" + currentSelected).click();
+            });
+
+            //Wishlist
+            $(".wishlistTab").click(function () {
+                if (currentSelected != "wishlistTab") {
+                    $("#" + currentSelected).hide();
+                    $("." + currentSelected).removeClass("current").addClass("idle");
+                }
+
+                $(this).removeClass("idle");
+                $(this).addClass("current");
+
+                currentSelected = "wishlistTab";
+                $("#" + currentSelected).show();
+            });
+
+            if (location.hash.substring(1) == 'Wishlist') {
+                $("#wishlistTabButton").click();
+            }
+            else {
+                $("#profileTabButton").click();
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        var country = '@ViewBag.userCountry';
+        var city = '@ViewBag.userCity';
+
+    </script>
+}

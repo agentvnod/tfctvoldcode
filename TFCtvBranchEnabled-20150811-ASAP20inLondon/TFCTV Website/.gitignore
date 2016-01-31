@@ -1,0 +1,12 @@
+# git ignore file
+*.zip
+*.bak
+*.suo
+*.htm
+web.config.config
+web.config.substitute.xml
+connections.config
+# Build Folders
+obj
+Backup
+_UpgradeReport_Files

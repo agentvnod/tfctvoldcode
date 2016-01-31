@@ -1,0 +1,169 @@
+.e-img {
+width: 151px;
+min-height: 110px;
+float: left;
+margin-right: 3px;
+padding: 3px 3px 3px 5px;
+}
+
+.e-img img { border: 1px solid #ccc; }
+
+.e-body {
+float: left;
+width: 182px;
+padding: 3px;
+}
+
+div.episode-list {
+background: #000;
+width: 370px;
+height: 271px;
+overflow-y: scroll;
+}
+
+.e-title {
+margin-top: 3px; }
+
+.e-title a {
+font-weight: bold;
+font-size: 12px;
+color: #49A4FF;
+text-decoration: none;
+}
+
+.e-title a:hover {
+text-decoration: underline;
+}
+
+.e-desc { margin-top: 3px; color: #fff; font-size: 11px; }
+
+.e-loader {color: #fff; margin-left: 3px; padding-bottom: 3px;}
+a.e-loadmore {color: #fff; text-decoration: none; font-size: 10px; margin-left: 3px;}
+a:hover.e-loadmore {text-decoration: underline; }
+
+
+a.e-loadmore-large {color: #fff; text-decoration: none; font-size: 12px; font-weight: bold;}
+a:hover.e-loadmore-large {text-decoration: underline; }
+
+.e-hidden  { display: none; }
+
+
+div.episode-list-large {
+/*margin-top: 5px;*/
+background: #000;
+width: 100%;
+/*height: 420px;
+overflow-y: scroll;*/
+}
+
+.e-body-large {
+float: left;
+width: 680px;
+padding: 3px;
+}
+
+.e-img-large {
+width: 151px;
+min-height: 110px;
+float: left;
+margin-right: 10px;
+padding: 8px 5px 0px 7px;
+}
+
+.e-img-large img { border: 3px solid #ccc; }
+
+.e-linebreak { height: 1px; font-size: 1px; line-height: 1px; border-bottom: 1px #222 solid; width: 99%; margin: 0 auto;}
+
+
+.e-title-large {
+margin-top: 5px; }
+
+.e-title-large a {
+font-weight: bold;
+font-size: 16px;
+color: #49A4FF;
+text-decoration: none;
+}
+
+.e-title-large a:hover{
+text-decoration: underline;
+}
+
+.e-desc-large { margin-top: 5px; color: #fff; font-size: 12px; }
+
+
+.e-genericHeader {
+margin-left: 20px;
+padding-top: 40px;
+margin: 0 auto;
+line-height: 28px;
+width: 900px;
+border-bottom: 1px solid #5e5e5e; }
+
+h2.sectionHeaderTitle { font-weight: normal !important; float: left; margin: 0 auto;}
+
+div.sectionHeader { float: right; }
+
+div.sectionHeader span { position: relative; top: 5px; font-size: 11px; }
+div.sectionHeader span.e-small { font-size: 10px !important; }
+div.sectionHeader span.e-curr { float: left !important; left: 200px; top: -8px; }
+div.sectionHeader span a{ color: #49A4FF; text-decoration: none; }
+div.sectionHeader span a:hover{ text-decoration: underline; }
+
+span.watching { font-size: 11px;
+color: #f15a29;
+font-style: italic;
+}
+
+.loadmore-b { width: 100%; text-align: center; padding: 5px;}
+.loadmore-btn { margin: 0 auto;
+padding: 5px;
+background-color: #f15a29;
+width: 150px;
+border: 1px #eee solid; color: #fff; font-weight: bold;}
+
+.loadmore-cont { padding: 5px; }
+
+
+.loadmore-bb { width: 100%; text-align: center; padding: 0 5px 5px 5px; margin-top: -5px;}
+
+div.control-bar { color: #fff; padding: 5px;
+background: #000;
+ }
+
+div.control-bar span { position: relative; top: 5px; font-size: 11px; }
+div.control-bar span.e-small { font-size: 10px !important; }
+div.control-bar span.e-curr { float: left !important; left: 200px; top: -8px; }
+div.control-bar span a, div.control-bar span span{ 
+ display: block;
+    width: 95px;
+    height: 18px;
+    font-size: 12px;
+    padding: 7px 7px 3px 10px;
+    background-color: #f15a29;
+    border: 1px solid #eee;    
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+ }
+
+div.control-bar span a.strike{ text-decoration: line-through; background-color: #999;}
+div.control-bar span a.strike:hover{ text-decoration: line-through; background-color: #666; cursor: default;}
+
+div.control-bar span a:hover {
+background-color: #CC5500;
+}
+
+div.control-bar .cwatching {padding: 5px;
+position: relative;
+top: 3px;
+margin-right: 5px;
+font-size: 11px;
+float: left;
+}
+
+.episode-number-small { font-size: 11px; color: #fff; margin-right: 3px;}

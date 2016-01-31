@@ -1,0 +1,18 @@
+﻿@{if (GlobalConfig.UseJWPlayer)
+  {
+      if (Request.Cookies.AllKeys.Contains("hplayer"))
+      { 
+    <div class="clearfix h_player h_player_no_pad">
+        If you want to try the new player, click <a href="#" class="hplayer_swap">here</a>.</div>
+      }
+      else
+      { 
+    <div class="clearfix h_player h_player_no_pad">
+        If you are having problems with the new player, click <a href="#" class="hplayer_swap">
+            here</a>.</div>
+      }
+                        
+    <div class="clearfix">
+    </div>
+  }
+}

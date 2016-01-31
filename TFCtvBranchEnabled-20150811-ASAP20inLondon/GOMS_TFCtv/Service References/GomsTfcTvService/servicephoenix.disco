@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx?wsdl" docRef="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" xmlns:q1="http://secured.netsuite2.abs-cbni.com/" binding="q1:ServicePhoenixSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" xmlns:q2="http://secured.netsuite2.abs-cbni.com/" binding="q2:ServicePhoenixSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

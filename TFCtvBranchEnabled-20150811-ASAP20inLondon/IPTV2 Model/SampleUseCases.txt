@@ -1,0 +1,33 @@
+﻿Service For Display, Package for selling and access control
+
+Service
+- TFC.tv
+- Root Categories for display only
+- Others fall under
+  - PPV Movies
+
+
+TFC.tv Packages
+- standard subscriptions (lite, premium)
+- pay per show
+- pay per view movies
+
+
+???
+- Each Category/Show should know packages it belongs to
+- Each Episode should know packages it belongs to
+
+
+Movie: No Other Woman
+- For Display
+1. Create No Other Woman Category/Show (Category: NoOtherWomanMovie)
+2. Create Episode with No Other Woman Assets
+3. Add Category:NoOtherWomanMovie to Category:PPV Movies  which is "grand child" of TFC.tv Service (TFC.tv Service -> PPV Movies - > No Other Woman)
+
+- For Selling
+1. Create "Package:TFC.tv - PPV Package - NoOtherWoman"
+2. Create root Category: PpvNoOtherWomanMovie 
+3. Add Category: PpvNoOtherWomanMovie to "Package:TFC.tv - PPV Package - NoOtherWoman"
+4. Add Category: NoOtherWomanMovie to Category: PpvNoOtherWomanMovie 
+5. Create Product
+6. Create Price

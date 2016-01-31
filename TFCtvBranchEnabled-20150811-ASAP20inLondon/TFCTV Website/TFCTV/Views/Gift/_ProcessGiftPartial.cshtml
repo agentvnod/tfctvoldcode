@@ -1,0 +1,41 @@
+﻿@{
+
+    IPTV2_Model.User recipient = ViewBag.Recipient;
+    IPTV2_Model.Product product = ViewBag.Product;
+
+}
+<div id="giftContainer">
+    <div class="subTitle">
+        You are about to send a gift to @recipient.EMail
+    </div>
+    <div id="paymentMethod">
+        <ul class="poptions">
+            <li>@Ajax.ActionLink("Pay via Wallet", "Wallet", "Subscribe", new { id = product.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+            <li>@Ajax.ActionLink("Pay via Prepaid Card", "PrepaidCard", "Subscribe", new { id = product.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+            <li>@Ajax.ActionLink("Pay via Credit Card", "CreditCard", "Subscribe", new { id = product.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+            <li>@Ajax.ActionLink("Pay via PayPal", "PayPal", "Subscribe", new { id = product.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+        </ul>
+    </div>
+    <div class="clear">
+    </div>
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "loading-b.gif", new { alt = "loading..." })
+        <br />
+        <span id="spannertext">please wait while we process your request...</span>
+    </div>
+    <div id="paymentMethod_container">
+    </div>
+    <div class="clear breakLarge">
+    </div>
+</div>
+<script type="text/javascript">
+        function checkUser() {
+            $('#paymentMethod_container').empty();
+            var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower()@Html.Raw(";")
+            if(!isLogin) {
+                   $('.t-window-title').html('Ooops! It seems that you are not logged in..');
+                   $('#Window').data('tWindow').center().open();
+                   return false;
+            }
+        }
+</script>

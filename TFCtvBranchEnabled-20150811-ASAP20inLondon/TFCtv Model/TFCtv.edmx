@@ -1,0 +1,738 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="TFCtv.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="TFCtvTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TFCtv" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="TFCtvContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Packages" EntityType="TFCtv.Packages" />
+          <EntitySet Name="Products" EntityType="TFCtv.Products" />
+          <EntitySet Name="ProductPrices" EntityType="TFCtv.ProductPrices" />
+          <AssociationSet Name="ProductPrice" Association="TFCtv.ProductPrice">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Price" EntitySet="ProductPrices" />
+          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="TFCtv.Categories" />
+          <AssociationSet Name="PackagesCategories" Association="TFCtv.PackagesCategories">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="TFCtv.Users" />
+          <EntitySet Name="Purchases" EntityType="TFCtv.Purchases" />
+          <AssociationSet Name="UsersPurchases" Association="TFCtv.UsersPurchases">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Purchases" EntitySet="Purchases" />
+          </AssociationSet>
+          <EntitySet Name="Entitlements" EntityType="TFCtv.Entitlements" />
+          <AssociationSet Name="UsersEntitlements" Association="TFCtv.UsersEntitlements">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Entitlements" EntitySet="Entitlements" />
+          </AssociationSet>
+          <AssociationSet Name="PackagesEntitlements" Association="TFCtv.PackagesEntitlements">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="Entitlements" EntitySet="Entitlements" />
+          </AssociationSet>
+          <EntitySet Name="Shows" EntityType="TFCtv.Shows" />
+          <AssociationSet Name="CategoriesShows" Association="TFCtv.CategoriesShows">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Shows" EntitySet="Shows" />
+          </AssociationSet>
+          <EntitySet Name="Episodes" EntityType="TFCtv.Episodes" />
+          <AssociationSet Name="ShowsEpisodes" Association="TFCtv.ShowsEpisodes">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="Episodes" EntitySet="Episodes" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="TFCtv.Countries" />
+          <AssociationSet Name="CountriesPrices" Association="TFCtv.CountriesPrices">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Prices" EntitySet="ProductPrices" />
+          </AssociationSet>
+          <EntitySet Name="VideoClips" EntityType="TFCtv.VideoClip" />
+          <AssociationSet Name="VideoClipEpisodes" Association="TFCtv.VideoClipEpisodes">
+            <End Role="VideoClip" EntitySet="VideoClips" />
+            <End Role="Episodes" EntitySet="Episodes" />
+          </AssociationSet>
+          <AssociationSet Name="FreeVideoClipEpisodes" Association="TFCtv.FreeVideoClipEpisodes">
+            <End Role="VideoClip" EntitySet="VideoClips" />
+            <End Role="Episodes" EntitySet="Episodes" />
+          </AssociationSet>
+          <AssociationSet Name="VideoClipShows" Association="TFCtv.VideoClipShows">
+            <End Role="VideoClip" EntitySet="VideoClips" />
+            <End Role="Shows" EntitySet="Shows" />
+          </AssociationSet>
+          <EntitySet Name="Services" EntityType="TFCtv.Services" />
+          <AssociationSet Name="ServicesPackages" Association="TFCtv.ServicesPackages">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Packages" EntitySet="Packages" />
+          </AssociationSet>
+          <AssociationSet Name="ServicesCountries" Association="TFCtv.ServicesCountries">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Countries" EntitySet="Countries" />
+          </AssociationSet>
+          <EntitySet Name="Carousels" EntityType="TFCtv.Carousels" />
+          <AssociationSet Name="CarouselsServices" Association="TFCtv.CarouselsServices">
+            <End Role="Carousels" EntitySet="Carousels" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <EntitySet Name="CarouselItems" EntityType="TFCtv.CarouselItems" />
+          <AssociationSet Name="CarouselItemsCarousels" Association="TFCtv.CarouselItemsCarousels">
+            <End Role="CarouselItems" EntitySet="CarouselItems" />
+            <End Role="Carousels" EntitySet="Carousels" />
+          </AssociationSet>
+          <AssociationSet Name="EpisodesCarouselItems" Association="TFCtv.EpisodesCarouselItems">
+            <End Role="Episodes" EntitySet="Episodes" />
+            <End Role="CarouselItems" EntitySet="CarouselItems" />
+          </AssociationSet>
+          <AssociationSet Name="ShowsCarouselItems" Association="TFCtv.ShowsCarouselItems">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="CarouselItems" EntitySet="CarouselItems" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriesCarouselItems" Association="TFCtv.CategoriesCarouselItems">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CarouselItems" EntitySet="CarouselItems" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriesCategories" Association="TFCtv.CategoriesCategories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="OnlineAllowedShowsCountries" Association="TFCtv.AllowedShowsCountries">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="Countries" EntitySet="Countries" />
+          </AssociationSet>
+          <AssociationSet Name="OnlineBlockedShowsCountries" Association="TFCtv.BlockedShowsCountries">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="Countries" EntitySet="Countries" />
+          </AssociationSet>
+          <EntitySet Name="Celebrities" EntityType="TFCtv.Celebrities" />
+          <EntitySet Name="CelebrityRoles" EntityType="TFCtv.CelebrityRoles" />
+          <AssociationSet Name="CelebritiesRoles" Association="TFCtv.CelebritiesRoles">
+            <End Role="Celebrities" EntitySet="Celebrities" />
+            <End Role="Roles" EntitySet="CelebrityRoles" />
+          </AssociationSet>
+          <AssociationSet Name="PackagesSubscriptionProducts" Association="TFCtv.PackagesSubscriptionProducts">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="SubscriptionProducts" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="EntitlementRequests" EntityType="TFCtv.EntitlementRequests" />
+          <AssociationSet Name="EntitlementsEntitlementRequests" Association="TFCtv.EntitlementsEntitlementRequests">
+            <End Role="Entitlements" EntitySet="Entitlements" />
+            <End Role="EntitlementRequests" EntitySet="EntitlementRequests" />
+          </AssociationSet>
+          <EntitySet Name="PurchasedItems" EntityType="TFCtv.PurchasedItems" />
+          <AssociationSet Name="ProductPricesPurchasedItems" Association="TFCtv.ProductPricesPurchasedItems">
+            <End Role="ProductPrices" EntitySet="ProductPrices" />
+            <End Role="PurchasedItems" EntitySet="PurchasedItems" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasesPurchasedItems" Association="TFCtv.PurchasesPurchasedItems">
+            <End Role="Purchases" EntitySet="Purchases" />
+            <End Role="PurchasedItems" EntitySet="PurchasedItems" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedItemsEntitlementRequests" Association="TFCtv.PurchasedItemsEntitlementRequests">
+            <End Role="PurchasedItems" EntitySet="PurchasedItems" />
+            <End Role="EntitlementRequests" EntitySet="EntitlementRequests" />
+          </AssociationSet>
+          <AssociationSet Name="PurchasedItemsUsers" Association="TFCtv.PurchasedItemsUsers">
+            <End Role="PurchasedItems" EntitySet="PurchasedItems" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="CelebrityRolesShows" Association="TFCtv.CelebrityRolesShows">
+            <End Role="CelebrityRoles" EntitySet="CelebrityRoles" />
+            <End Role="Shows" EntitySet="Shows" />
+          </AssociationSet>
+          <AssociationSet Name="CelebrityRolesEpisodes" Association="TFCtv.CelebrityRolesEpisodes">
+            <End Role="CelebrityRoles" EntitySet="CelebrityRoles" />
+            <End Role="Episodes" EntitySet="Episodes" />
+          </AssociationSet>
+          <AssociationSet Name="MobileAllowedShowsCountries" Association="TFCtv.MobileAllowedShowsCountries">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="Countries" EntitySet="Countries" />
+          </AssociationSet>
+          <AssociationSet Name="MobileBlockedShowsCountries" Association="TFCtv.MobileBlockedShowsCountries">
+            <End Role="Shows" EntitySet="Shows" />
+            <End Role="Countries" EntitySet="Countries" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Packages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Categories" Relationship="TFCtv.PackagesCategories" FromRole="Packages" ToRole="Categories" />
+          <NavigationProperty Name="Entitlements" Relationship="TFCtv.PackagesEntitlements" FromRole="Packages" ToRole="Entitlements" />
+          <NavigationProperty Name="Service" Relationship="TFCtv.ServicesPackages" FromRole="Packages" ToRole="Services" />
+          <NavigationProperty Name="SubscriptionProducts" Relationship="TFCtv.PackagesSubscriptionProducts" FromRole="Packages" ToRole="SubscriptionProducts" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Prices" Relationship="TFCtv.ProductPrice" FromRole="Product" ToRole="Price" />
+        </EntityType>
+        <EntityType Name="ProductPrices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Amount" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="TFCtv.ProductPrice" FromRole="Price" ToRole="Product" />
+          <NavigationProperty Name="Country" Relationship="TFCtv.CountriesPrices" FromRole="Prices" ToRole="Countries" />
+          <NavigationProperty Name="PurchasedItems" Relationship="TFCtv.ProductPricesPurchasedItems" FromRole="ProductPrices" ToRole="PurchasedItems" />
+        </EntityType>
+        <Association Name="ProductPrice">
+          <End Type="TFCtv.Products" Role="Product" Multiplicity="1" />
+          <End Type="TFCtv.ProductPrices" Role="Price" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Package" Relationship="TFCtv.PackagesCategories" FromRole="Categories" ToRole="Packages" />
+          <NavigationProperty Name="Shows" Relationship="TFCtv.CategoriesShows" FromRole="Categories" ToRole="Shows" />
+          <NavigationProperty Name="CarouselItems" Relationship="TFCtv.CategoriesCarouselItems" FromRole="Categories" ToRole="CarouselItems" />
+          <NavigationProperty Name="SubCategories" Relationship="TFCtv.CategoriesCategories" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="ParentCategory" Relationship="TFCtv.CategoriesCategories" FromRole="Categories1" ToRole="Categories" />
+          <Property Type="Int32" Name="ParentCategoryId" Nullable="false" />
+        </EntityType>
+        <Association Name="PackagesCategories">
+          <End Type="TFCtv.Packages" Role="Packages" Multiplicity="*" />
+          <End Type="TFCtv.Categories" Role="Categories" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Purchases" Relationship="TFCtv.UsersPurchases" FromRole="Users" ToRole="Purchases" />
+          <NavigationProperty Name="Entitlements" Relationship="TFCtv.UsersEntitlements" FromRole="Users" ToRole="Entitlements" />
+          <NavigationProperty Name="PurchasedItems" Relationship="TFCtv.PurchasedItemsUsers" FromRole="Users" ToRole="PurchasedItems" />
+        </EntityType>
+        <EntityType Name="Purchases">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="TFCtv.UsersPurchases" FromRole="Purchases" ToRole="Users" />
+          <NavigationProperty Name="PurchasedItems" Relationship="TFCtv.PurchasesPurchasedItems" FromRole="Purchases" ToRole="PurchasedItems" />
+        </EntityType>
+        <Association Name="UsersPurchases">
+          <End Type="TFCtv.Users" Role="Users" Multiplicity="1" />
+          <End Type="TFCtv.Purchases" Role="Purchases" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Entitlements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="TFCtv.UsersEntitlements" FromRole="Entitlements" ToRole="Users" />
+          <NavigationProperty Name="Package" Relationship="TFCtv.PackagesEntitlements" FromRole="Entitlements" ToRole="Packages" />
+          <Property Type="DateTime" Name="ExpirationDate" Nullable="false" />
+          <NavigationProperty Name="EntitlementRequests" Relationship="TFCtv.EntitlementsEntitlementRequests" FromRole="Entitlements" ToRole="EntitlementRequests" />
+        </EntityType>
+        <Association Name="UsersEntitlements">
+          <End Type="TFCtv.Users" Role="Users" Multiplicity="1" />
+          <End Type="TFCtv.Entitlements" Role="Entitlements" Multiplicity="*" />
+        </Association>
+        <Association Name="PackagesEntitlements">
+          <End Type="TFCtv.Packages" Role="Packages" Multiplicity="1" />
+          <End Type="TFCtv.Entitlements" Role="Entitlements" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Shows">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Categories" Relationship="TFCtv.CategoriesShows" FromRole="Shows" ToRole="Categories" />
+          <NavigationProperty Name="Episodes" Relationship="TFCtv.ShowsEpisodes" FromRole="Shows" ToRole="Episodes" />
+          <NavigationProperty Name="FreeVideoClips" Relationship="TFCtv.VideoClipShows" FromRole="Shows" ToRole="VideoClip" />
+          <NavigationProperty Name="CarouselItems" Relationship="TFCtv.ShowsCarouselItems" FromRole="Shows" ToRole="CarouselItems" />
+          <NavigationProperty Name="OnlineAllowedCountries" Relationship="TFCtv.AllowedShowsCountries" FromRole="Shows" ToRole="Countries" />
+          <NavigationProperty Name="OnlineBlockedCountries" Relationship="TFCtv.BlockedShowsCountries" FromRole="Shows" ToRole="Countries" />
+          <NavigationProperty Name="CelebrityRoles" Relationship="TFCtv.CelebrityRolesShows" FromRole="Shows" ToRole="CelebrityRoles" />
+          <NavigationProperty Name="MobileAllowedCountries" Relationship="TFCtv.MobileAllowedShowsCountries" FromRole="Shows" ToRole="Countries" />
+          <NavigationProperty Name="MobileBlockedCountries" Relationship="TFCtv.MobileBlockedShowsCountries" FromRole="Shows" ToRole="Countries" />
+        </EntityType>
+        <Association Name="CategoriesShows">
+          <End Type="TFCtv.Categories" Role="Categories" Multiplicity="*" />
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Episodes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Shows" Relationship="TFCtv.ShowsEpisodes" FromRole="Episodes" ToRole="Shows" />
+          <NavigationProperty Name="EpisodeVideoClips" Relationship="TFCtv.VideoClipEpisodes" FromRole="Episodes" ToRole="VideoClip" />
+          <NavigationProperty Name="FreeVideoClips" Relationship="TFCtv.FreeVideoClipEpisodes" FromRole="Episodes" ToRole="VideoClip" />
+          <NavigationProperty Name="CarouselItems" Relationship="TFCtv.EpisodesCarouselItems" FromRole="Episodes" ToRole="CarouselItems" />
+          <NavigationProperty Name="CelebrityRoles" Relationship="TFCtv.CelebrityRolesEpisodes" FromRole="Episodes" ToRole="CelebrityRoles" />
+        </EntityType>
+        <Association Name="ShowsEpisodes">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+          <End Type="TFCtv.Episodes" Role="Episodes" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Prices" Relationship="TFCtv.CountriesPrices" FromRole="Countries" ToRole="Prices" />
+          <Property Type="String" Name="Currency" Nullable="false" />
+          <NavigationProperty Name="Services" Relationship="TFCtv.ServicesCountries" FromRole="Countries" ToRole="Services" />
+          <NavigationProperty Name="OnlineAllowedShows" Relationship="TFCtv.AllowedShowsCountries" FromRole="Countries" ToRole="Shows" />
+          <NavigationProperty Name="OnlineBlockedShows" Relationship="TFCtv.BlockedShowsCountries" FromRole="Countries" ToRole="Shows" />
+          <NavigationProperty Name="MobileAllowedShows" Relationship="TFCtv.MobileAllowedShowsCountries" FromRole="Countries" ToRole="Shows" />
+          <NavigationProperty Name="MobileBlockedShows" Relationship="TFCtv.MobileBlockedShowsCountries" FromRole="Countries" ToRole="Shows" />
+        </EntityType>
+        <Association Name="CountriesPrices">
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="1" />
+          <End Type="TFCtv.ProductPrices" Role="Prices" Multiplicity="*" />
+        </Association>
+        <EntityType Name="VideoClip">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Episodes" Relationship="TFCtv.VideoClipEpisodes" FromRole="VideoClip" ToRole="Episodes" />
+          <NavigationProperty Name="FreeInEpisodes" Relationship="TFCtv.FreeVideoClipEpisodes" FromRole="VideoClip" ToRole="Episodes" />
+          <NavigationProperty Name="FreeInShows" Relationship="TFCtv.VideoClipShows" FromRole="VideoClip" ToRole="Shows" />
+          <Property Type="String" Name="Title" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Rating" Nullable="false" />
+          <Property Type="String" Name="RunningTime" Nullable="false" />
+          <Property Type="String" Name="MobileThumbnail" Nullable="false" />
+          <Property Type="String" Name="PlaylistThumbnail" Nullable="false" />
+          <Property Type="String" Name="VideoThumbnail" Nullable="false" />
+          <Property Name="Gaps" Type="TFCtv.Gap" Nullable="false" />
+          <Property Name="Snippet" Type="TFCtv.VideoSnippet" Nullable="false" />
+        </EntityType>
+        <Association Name="VideoClipEpisodes">
+          <End Type="TFCtv.VideoClip" Role="VideoClip" Multiplicity="*" />
+          <End Type="TFCtv.Episodes" Role="Episodes" Multiplicity="*" />
+        </Association>
+        <Association Name="FreeVideoClipEpisodes">
+          <End Type="TFCtv.VideoClip" Role="VideoClip" Multiplicity="*" />
+          <End Type="TFCtv.Episodes" Role="Episodes" Multiplicity="*" />
+        </Association>
+        <Association Name="VideoClipShows">
+          <End Type="TFCtv.VideoClip" Role="VideoClip" Multiplicity="*" />
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Packages" Relationship="TFCtv.ServicesPackages" FromRole="Services" ToRole="Packages" />
+          <NavigationProperty Name="AllowedCountries" Relationship="TFCtv.ServicesCountries" FromRole="Services" ToRole="Countries" />
+          <NavigationProperty Name="Carousel" Relationship="TFCtv.CarouselsServices" FromRole="Services" ToRole="Carousels" />
+        </EntityType>
+        <Association Name="ServicesPackages">
+          <End Type="TFCtv.Services" Role="Services" Multiplicity="1" />
+          <End Type="TFCtv.Packages" Role="Packages" Multiplicity="*" />
+        </Association>
+        <Association Name="ServicesCountries">
+          <End Type="TFCtv.Services" Role="Services" Multiplicity="*" />
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Carousels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Services" Relationship="TFCtv.CarouselsServices" FromRole="Carousels" ToRole="Services" />
+          <NavigationProperty Name="CarouselItems" Relationship="TFCtv.CarouselItemsCarousels" FromRole="Carousels" ToRole="CarouselItems" />
+        </EntityType>
+        <Association Name="CarouselsServices">
+          <End Type="TFCtv.Carousels" Role="Carousels" Multiplicity="1" />
+          <End Type="TFCtv.Services" Role="Services" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CarouselItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Carousels" Relationship="TFCtv.CarouselItemsCarousels" FromRole="CarouselItems" ToRole="Carousels" />
+          <NavigationProperty Name="Episode" Relationship="TFCtv.EpisodesCarouselItems" FromRole="CarouselItems" ToRole="Episodes" />
+          <NavigationProperty Name="Show" Relationship="TFCtv.ShowsCarouselItems" FromRole="CarouselItems" ToRole="Shows" />
+          <NavigationProperty Name="Category" Relationship="TFCtv.CategoriesCarouselItems" FromRole="CarouselItems" ToRole="Categories" />
+        </EntityType>
+        <Association Name="CarouselItemsCarousels">
+          <End Type="TFCtv.CarouselItems" Role="CarouselItems" Multiplicity="*" />
+          <End Type="TFCtv.Carousels" Role="Carousels" Multiplicity="*" />
+        </Association>
+        <Association Name="EpisodesCarouselItems">
+          <End Type="TFCtv.Episodes" Role="Episodes" Multiplicity="1" />
+          <End Type="TFCtv.CarouselItems" Role="CarouselItems" Multiplicity="*" />
+        </Association>
+        <Association Name="ShowsCarouselItems">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="1" />
+          <End Type="TFCtv.CarouselItems" Role="CarouselItems" Multiplicity="*" />
+        </Association>
+        <Association Name="CategoriesCarouselItems">
+          <End Type="TFCtv.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="TFCtv.CarouselItems" Role="CarouselItems" Multiplicity="*" />
+        </Association>
+        <Association Name="CategoriesCategories">
+          <End Type="TFCtv.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="TFCtv.Categories" Role="Categories1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Categories1">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AllowedShowsCountries">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="*" />
+        </Association>
+        <Association Name="BlockedShowsCountries">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Celebrities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Roles" Relationship="TFCtv.CelebritiesRoles" FromRole="Celebrities" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="CelebrityRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Celebrity" Relationship="TFCtv.CelebritiesRoles" FromRole="Roles" ToRole="Celebrities" />
+          <NavigationProperty Name="Shows" Relationship="TFCtv.CelebrityRolesShows" FromRole="CelebrityRoles" ToRole="Shows" />
+          <NavigationProperty Name="Episodes" Relationship="TFCtv.CelebrityRolesEpisodes" FromRole="CelebrityRoles" ToRole="Episodes" />
+        </EntityType>
+        <Association Name="CelebritiesRoles">
+          <End Type="TFCtv.Celebrities" Role="Celebrities" Multiplicity="1" />
+          <End Type="TFCtv.CelebrityRoles" Role="Roles" Multiplicity="*" />
+        </Association>
+        <EntityType Name="SubscriptionProducts" BaseType="TFCtv.Products" >
+          <NavigationProperty Name="Packages" Relationship="TFCtv.PackagesSubscriptionProducts" FromRole="SubscriptionProducts" ToRole="Packages" />
+          <Property Type="String" Name="Duration" Nullable="false" />
+        </EntityType>
+        <Association Name="PackagesSubscriptionProducts">
+          <End Type="TFCtv.Packages" Role="Packages" Multiplicity="*" />
+          <End Type="TFCtv.SubscriptionProducts" Role="SubscriptionProducts" Multiplicity="*" />
+        </Association>
+        <EntityType Name="EntitlementRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Source" Nullable="false" />
+          <NavigationProperty Name="Entitlement" Relationship="TFCtv.EntitlementsEntitlementRequests" FromRole="EntitlementRequests" ToRole="Entitlements" />
+          <NavigationProperty Name="PurchasedItem" Relationship="TFCtv.PurchasedItemsEntitlementRequests" FromRole="EntitlementRequests" ToRole="PurchasedItems" />
+        </EntityType>
+        <Association Name="EntitlementsEntitlementRequests">
+          <End Type="TFCtv.Entitlements" Role="Entitlements" Multiplicity="1" />
+          <End Type="TFCtv.EntitlementRequests" Role="EntitlementRequests" Multiplicity="*" />
+        </Association>
+        <EntityType Name="PurchasedItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ProductPrice" Relationship="TFCtv.ProductPricesPurchasedItems" FromRole="PurchasedItems" ToRole="ProductPrices" />
+          <NavigationProperty Name="Purchase" Relationship="TFCtv.PurchasesPurchasedItems" FromRole="PurchasedItems" ToRole="Purchases" />
+          <NavigationProperty Name="EntitlementRequest" Relationship="TFCtv.PurchasedItemsEntitlementRequests" FromRole="PurchasedItems" ToRole="EntitlementRequests" />
+          <NavigationProperty Name="Recipient" Relationship="TFCtv.PurchasedItemsUsers" FromRole="PurchasedItems" ToRole="Users" />
+        </EntityType>
+        <Association Name="ProductPricesPurchasedItems">
+          <End Type="TFCtv.ProductPrices" Role="ProductPrices" Multiplicity="1" />
+          <End Type="TFCtv.PurchasedItems" Role="PurchasedItems" Multiplicity="*" />
+        </Association>
+        <Association Name="PurchasesPurchasedItems">
+          <End Type="TFCtv.Purchases" Role="Purchases" Multiplicity="1" />
+          <End Type="TFCtv.PurchasedItems" Role="PurchasedItems" Multiplicity="*" />
+        </Association>
+        <Association Name="PurchasedItemsEntitlementRequests">
+          <End Type="TFCtv.PurchasedItems" Role="PurchasedItems" Multiplicity="1" />
+          <End Type="TFCtv.EntitlementRequests" Role="EntitlementRequests" Multiplicity="0..1" />
+        </Association>
+        <Association Name="PurchasedItemsUsers">
+          <End Type="TFCtv.PurchasedItems" Role="PurchasedItems" Multiplicity="*" />
+          <End Type="TFCtv.Users" Role="Users" Multiplicity="1" />
+        </Association>
+        <Association Name="CelebrityRolesShows">
+          <End Type="TFCtv.CelebrityRoles" Role="CelebrityRoles" Multiplicity="*" />
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+        </Association>
+        <Association Name="CelebrityRolesEpisodes">
+          <End Type="TFCtv.CelebrityRoles" Role="CelebrityRoles" Multiplicity="*" />
+          <End Type="TFCtv.Episodes" Role="Episodes" Multiplicity="*" />
+        </Association>
+        <Association Name="MobileAllowedShowsCountries">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="*" />
+        </Association>
+        <Association Name="MobileBlockedShowsCountries">
+          <End Type="TFCtv.Shows" Role="Shows" Multiplicity="*" />
+          <End Type="TFCtv.Countries" Role="Countries" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="Gap" >
+          <Property Type="Time" Name="Gap01" Nullable="false" />
+          <Property Type="Time" Name="Gap02" Nullable="false" />
+          <Property Type="Time" Name="Gap12" Nullable="false" />
+          <Property Type="Time" Name="Gap03" Nullable="false" />
+          <Property Type="Time" Name="Gap04" Nullable="false" />
+          <Property Type="Time" Name="Gap05" Nullable="false" />
+          <Property Type="Time" Name="Gap06" Nullable="false" />
+          <Property Type="Time" Name="Gap07" Nullable="false" />
+          <Property Type="Time" Name="Gap08" Nullable="false" />
+          <Property Type="Time" Name="Gap09" Nullable="false" />
+          <Property Type="Time" Name="Gap10" Nullable="false" />
+          <Property Type="Time" Name="Gap11" Nullable="false" />
+          <Property Type="Time" Name="Gap13" Nullable="false" />
+          <Property Type="Time" Name="Gap14" Nullable="false" />
+          <Property Type="Time" Name="Gap15" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="VideoSnippet" >
+          <Property Type="Time" Name="Start" Nullable="false" />
+          <Property Type="Time" Name="End" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="TFCtv" />
+        <Alias Key="Target" Value="TFCtv.Store" />
+        <EntityContainerMapping CdmEntityContainer="TFCtvContainer" StorageEntityContainer="TFCtvTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="TFCtv" >
+        <EntityTypeShape EntityType="TFCtv.Packages" Width="1.5" PointX="8" PointY="6" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="TFCtv.Products" Width="1.5" PointX="7.25" PointY="2" Height="1.7879850260416657" />
+        <EntityTypeShape EntityType="TFCtv.ProductPrices" Width="1.5" PointX="5.375" PointY="2.75" Height="1.9802864583333326" />
+        <AssociationConnector Association="TFCtv.ProductPrice">
+          <ConnectorPoint PointX="7.25" PointY="3.172841796875" />
+          <ConnectorPoint PointX="6.875" PointY="3.172841796875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Categories" Width="1.5" PointX="6" PointY="7.5" Height="2.5571907552083335" />
+        <AssociationConnector Association="TFCtv.PackagesCategories">
+          <ConnectorPoint PointX="8" PointY="7.7401432291666667" />
+          <ConnectorPoint PointX="7.5" PointY="7.7401432291666667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Users" Width="1.5" PointX="0.75" PointY="4.125" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="TFCtv.Purchases" Width="1.5" PointX="2.25" PointY="2.375" Height="1.5956835937499996" />
+        <AssociationConnector Association="TFCtv.UsersPurchases">
+          <ConnectorPoint PointX="1.4999995" PointY="4.125" />
+          <ConnectorPoint PointX="1.4999995" PointY="3.172841796875" />
+          <ConnectorPoint PointX="2.25" PointY="3.172841796875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Entitlements" Width="1.5" PointX="0.5" PointY="7.125" Height="1.7879850260416674" />
+        <AssociationConnector Association="TFCtv.UsersEntitlements">
+          <ConnectorPoint PointX="1.375" PointY="5.9129850260416665" />
+          <ConnectorPoint PointX="1.375" PointY="7.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.PackagesEntitlements">
+          <ConnectorPoint PointX="8" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="5.645833333333333" PointY="6.3026432291666659" />
+          <ConnectorPoint PointX="5.479166666666667" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="5.333333333333333" PointY="6.3026432291666659" />
+          <ConnectorPoint PointX="5.166666666666667" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="3.7708333333333335" PointY="6.3026432291666659" />
+          <ConnectorPoint PointX="3.6041666666666665" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="1.4583333333333333" PointY="6.3026432291666659" />
+          <ConnectorPoint PointX="1.2916666666666667" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="0.90624750000000009" PointY="6.3026432291666667" />
+          <ConnectorPoint PointX="0.90624750000000009" PointY="7.125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Shows" Width="1.5" PointX="2.25" PointY="9.25" Height="1.4033821614583317" />
+        <AssociationConnector Association="TFCtv.CategoriesShows">
+          <ConnectorPoint PointX="6" PointY="9.9706848144531239" />
+          <ConnectorPoint PointX="4.6458345833333334" PointY="9.9706848144531239" />
+          <ConnectorPoint PointX="4.4791679166666674" PointY="9.9706848144531239" />
+          <ConnectorPoint PointX="3.75" PointY="9.9706848144531239" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Episodes" Width="1.5" PointX="3.5" PointY="13.125" Height="2.1725878906249996" />
+        <AssociationConnector Association="TFCtv.ShowsEpisodes">
+          <ConnectorPoint PointX="2.8749995" PointY="12.191793619791666" />
+          <ConnectorPoint PointX="2.8749995" PointY="14.2112939453125" />
+          <ConnectorPoint PointX="3.5" PointY="14.2112939453125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Countries" Width="1.5" PointX="4.25" PointY="7.25" Height="2.1725878906249996" />
+        <AssociationConnector Association="TFCtv.CountriesPrices">
+          <ConnectorPoint PointX="5.5625" PointY="7.25" />
+          <ConnectorPoint PointX="5.5625" PointY="4.7302864583333326" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.VideoClip" Width="1.5" PointX="5.875" PointY="10.625" Height="3.5186979166666656" />
+        <AssociationConnector Association="TFCtv.VideoClipEpisodes">
+          <ConnectorPoint PointX="5.875" PointY="13.634348958333334" />
+          <ConnectorPoint PointX="5" PointY="13.634348958333334" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.FreeVideoClipEpisodes">
+          <ConnectorPoint PointX="5.875" PointY="13.317174479166667" />
+          <ConnectorPoint PointX="5" PointY="13.317174479166667" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.VideoClipShows">
+          <ConnectorPoint PointX="5.875" PointY="11.377144309895833" />
+          <ConnectorPoint PointX="3.75" PointY="11.377144309895833" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Services" Width="1.5" PointX="10.625" PointY="4.125" Height="1.2110807291666665" />
+        <AssociationConnector Association="TFCtv.ServicesPackages">
+          <ConnectorPoint PointX="12.03125" PointY="5.9129850260416665" />
+          <ConnectorPoint PointX="12.03125" PointY="6.65625" />
+          <ConnectorPoint PointX="11.333333333333334" PointY="6.6562499999999991" />
+          <ConnectorPoint PointX="11.166666666666666" PointY="6.65625" />
+          <ConnectorPoint PointX="9.5" PointY="6.65625" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.ServicesCountries">
+          <ConnectorPoint PointX="10.625" PointY="5.0189925130208337" />
+          <ConnectorPoint PointX="9" PointY="5.0189925130208337" />
+          <ConnectorPoint PointX="9" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="8.4583333333333339" PointY="5.7783821614583326" />
+          <ConnectorPoint PointX="8.2916666666666661" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="5.645833333333333" PointY="5.7783821614583326" />
+          <ConnectorPoint PointX="5.479166666666667" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="5.25" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="5.25" PointY="6.6052864583333335" />
+          <ConnectorPoint PointX="4.874998" PointY="6.6052864583333335" />
+          <ConnectorPoint PointX="4.874998" PointY="7.25" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Carousels" Width="1.5" PointX="10.375" PointY="7.375" Height="1.2110807291666674" />
+        <AssociationConnector Association="TFCtv.CarouselsServices">
+          <ConnectorPoint PointX="11.25" PointY="7.375" />
+          <ConnectorPoint PointX="11.25" PointY="5.9129850260416665" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.CarouselItems" Width="1.5" PointX="8.25" PointY="9.875" Height="1.2110807291666657" />
+        <AssociationConnector Association="TFCtv.CarouselItemsCarousels">
+          <ConnectorPoint PointX="9.65625" PointY="9.875" />
+          <ConnectorPoint PointX="9.65625" PointY="8.5067350260416674" />
+          <ConnectorPoint PointX="10.375" PointY="8.5067350260416674" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.EpisodesCarouselItems">
+          <ConnectorPoint PointX="5" PointY="14.751892903645834" />
+          <ConnectorPoint PointX="9" PointY="14.751892903645834" />
+          <ConnectorPoint PointX="9" PointY="11.855286458333332" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.ShowsCarouselItems">
+          <ConnectorPoint PointX="3.75" PointY="10.531160649007163" />
+          <ConnectorPoint PointX="8.25" PointY="10.531160649007163" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.CategoriesCarouselItems">
+          <ConnectorPoint PointX="7.5" PointY="9.1596150130208329" />
+          <ConnectorPoint PointX="9.6249975" PointY="9.1596150130208329" />
+          <ConnectorPoint PointX="9.6249975" PointY="9.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.CategoriesCategories">
+          <ConnectorPoint PointX="6.5319230769230767" PointY="10.057190755208334" />
+          <ConnectorPoint PointX="6.5319230769230767" PointY="10.307190755208332" />
+          <ConnectorPoint PointX="6.9784615384615378" PointY="10.307190755208332" />
+          <ConnectorPoint PointX="6.9784615384615378" PointY="10.057190755208334" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.AllowedShowsCountries">
+          <ConnectorPoint PointX="3" PointY="9.25" />
+          <ConnectorPoint PointX="3" PointY="9.058" />
+          <ConnectorPoint PointX="4.058" PointY="9.058" />
+          <ConnectorPoint PointX="4.058" PointY="8.3362939453125" />
+          <ConnectorPoint PointX="4.25" PointY="8.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.BlockedShowsCountries">
+          <ConnectorPoint PointX="3.406252" PointY="9.25" />
+          <ConnectorPoint PointX="3.406252" PointY="9.058" />
+          <ConnectorPoint PointX="4.042375" PointY="9.058" />
+          <ConnectorPoint PointX="4.042375" PointY="7.7618949726562487" />
+          <ConnectorPoint PointX="4.25" PointY="7.7618949726562487" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.Celebrities" Width="1.5" PointX="0.5" PointY="9.875" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="TFCtv.CelebrityRoles" Width="1.5" PointX="0.5" PointY="11.625" Height="1.7879850260416657" />
+        <AssociationConnector Association="TFCtv.CelebritiesRoles">
+          <ConnectorPoint PointX="1.25" PointY="11.278382161458332" />
+          <ConnectorPoint PointX="1.25" PointY="11.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.SubscriptionProducts" Width="1.5" PointX="7.25" PointY="4.125" Height="1.4033821614583335" />
+        <InheritanceConnector EntityType="TFCtv.SubscriptionProducts" >
+          <ConnectorPoint PointX="8" PointY="3.59568359375" />
+          <ConnectorPoint PointX="8" PointY="4.125" />
+        </InheritanceConnector>
+        <AssociationConnector Association="TFCtv.PackagesSubscriptionProducts">
+          <ConnectorPoint PointX="8.375" PointY="6" />
+          <ConnectorPoint PointX="8.375" PointY="5.5283821614583335" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.EntitlementRequests" Width="1.5" PointX="2.375" PointY="6.5" Height="1.7879850260416657" />
+        <AssociationConnector Association="TFCtv.EntitlementsEntitlementRequests">
+          <ConnectorPoint PointX="2" PointY="7.7064925130208328" />
+          <ConnectorPoint PointX="2.375" PointY="7.7064925130208328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="TFCtv.PurchasedItems" Width="1.5" PointX="3.5" PointY="4.125" Height="1.9802864583333335" />
+        <AssociationConnector Association="TFCtv.ProductPricesPurchasedItems">
+          <ConnectorPoint PointX="5.375" PointY="4.4276432291666659" />
+          <ConnectorPoint PointX="5" PointY="4.4276432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.PurchasesPurchasedItems">
+          <ConnectorPoint PointX="2.875" PointY="3.9706835937499996" />
+          <ConnectorPoint PointX="2.875" PointY="5.1151432291666667" />
+          <ConnectorPoint PointX="3.5" PointY="5.1151432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.PurchasedItemsEntitlementRequests">
+          <ConnectorPoint PointX="3.6875" PointY="6.1052864583333335" />
+          <ConnectorPoint PointX="3.6875" PointY="6.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.PurchasedItemsUsers">
+          <ConnectorPoint PointX="3.5" PointY="4.5575716145833329" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="4.557571614583332" />
+          <ConnectorPoint PointX="2.7916666666666665" PointY="4.5575716145833329" />
+          <ConnectorPoint PointX="2.25" PointY="4.5575716145833329" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.CelebrityRolesShows">
+          <ConnectorPoint PointX="2" PointY="11.908396809895834" />
+          <ConnectorPoint PointX="2.25" PointY="11.908396809895834" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.CelebrityRolesEpisodes">
+          <ConnectorPoint PointX="2" PointY="12.689646309895835" />
+          <ConnectorPoint PointX="2.7916661666666664" PointY="12.689646309895835" />
+          <ConnectorPoint PointX="2.9583328333333334" PointY="12.689646309895835" />
+          <ConnectorPoint PointX="4.40625" PointY="12.689646309895835" />
+          <ConnectorPoint PointX="4.40625" PointY="13.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.MobileAllowedShowsCountries">
+          <ConnectorPoint PointX="3.75" PointY="9.5861669921875" />
+          <ConnectorPoint PointX="4.25" PointY="9.5861669921875" />
+        </AssociationConnector>
+        <AssociationConnector Association="TFCtv.MobileBlockedShowsCountries">
+          <ConnectorPoint PointX="3.75" PointY="10.187142596028647" />
+          <ConnectorPoint PointX="4.56250125" PointY="10.187142596028647" />
+          <ConnectorPoint PointX="4.56250125" PointY="9.8071907552083335" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

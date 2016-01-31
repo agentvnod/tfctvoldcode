@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Move your TFCnow Subscriptions - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    We need your TFCnow credentials here</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                <div class="rheader" style="padding-left: 15px; padding-right: 15px;">
+                    Tayo na sa TFC.tv! Log in your TFCnow email address and password below to move your
+                    existing account to your new TFC.tv account.
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div>
+                    <form id="nowform" method="post" action="/Migration/_Login">
+                    <div id="SPBody" class="floatLeft">
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                TFCnow Email Address
+                            </div>
+                            <div>
+                                <input type="text" name="TFCnowEmailAddress" class="textbox" id="TFCnowEmailAddress" />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                TFCnow Password
+                            </div>
+                            <div>
+                                <input type="password" name="TFCnowPassword" class="textbox" id="TFCnowPassword" />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="clear breakStandard">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="registerBodyLow">
+                        <div>
+                            <div id="tnc">
+                                <input type="checkbox" id="terms" name="terms" value="0" />
+                                I confirm that I have read and fully understood and accept the @Html.ActionLink("Terms on Modification of TFC Now and Transition to TFC.tv", "Terms", "Migration")<br />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        <div>
+                            <input type="submit" class="btnimage signinbtn" id="regsubmit" value="" /><div id="rsb-load"
+                                class="side-button-loader padLeftStandard">
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                    </div>
+                    @{if (!MyUtility.isUserLoggedIn())
+                      {
+                        <div>
+                            Already registered to TFC.tv? <a href="#" class="orange" id="signintotfctv" rel="#overlay">
+                                SIGN IN</a> first to move your accounts!
+                        </div>
+                      }}
+                    </form>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner" class="register-spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "48", height = "48" })<br />
+        <span id="spannertext" class="register-spanner-text">Your registration is successful!
+            Please wait...</span>
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#nowform').validate({
+                rules: {
+                    TFCnowEmailAddress: {
+                        required: true,
+                        email: true
+                    },
+                    TFCnowPassword: {
+                        required: true
+                    },
+                    terms: { required: true }
+                },
+                messages: {
+                    TFCnowEmailAddress: {
+                        email: 'Must be a valid email address'
+                    },
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#nowform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    $('#message').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", border = 0, height = 20, id = "loading-b", width = 20, style = "position: relative;top: 4px;" }) Please wait while we process your request...');
+                    $.post('/Migration/_Login', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#message').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>');
+                            window.location.href = data.href;
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                        }
+                        $('#rsb-load').empty();
+                    });
+                }
+            });
+
+            $('#signintotfctv').live('click', function () {
+                var slink = $(this).overlay({
+                    mask: 'black',
+                    closeOnClick: false,
+                    onBeforeLoad: function () {
+                        $('#overlay').css('width', '490px');
+                        var wrap = this.getOverlay().find(".contentWrap");
+                        wrap.load('/User');
+                    }
+                });
+                $(this).overlay().load();  //initiates overlay
+                slink.load();  //loads above overlay settings
+                return false;
+            });
+
+        });
+    </script>
+}

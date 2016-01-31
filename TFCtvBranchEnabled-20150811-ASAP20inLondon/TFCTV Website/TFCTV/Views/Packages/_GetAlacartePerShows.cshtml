@@ -1,0 +1,33 @@
+﻿@model List<IPTV2_Model.Show>
+@if (Model != null)
+{
+    foreach (var show in Model)
+    {
+    <div class="clipContainer" class="left">
+        <div class="clipthumbnail">
+            @Html.ImageBuilder(Url, "package/clipthumbnail.jpg", new { height = "98", width = "151", alt = "Clip" })
+        </div>
+        <div class="buyButton">
+            <a href="http://">
+                @Html.ImageBuilder(Url, "package/buy_button.png", new { height = "36", width = "136", alt = "Buy" })
+            </a>
+        </div>
+        <div class="clipInfo"align="left">
+        <div class="infoContainer">
+            <a href="@Url.Action("Details", "Show", new { id= @show.CategoryId })"><b>@show.CategoryName</b></a><br/>                        
+            <i>@show.CategoryClassParentCategories.Select(cat => cat.ParentCategory.CategoryName).FirstOrDefault()</i><br/>
+            <i>@show.Blurb</i><br/>
+
+        </div>
+        </div>
+        @*<div class="clipInfo" align="left">
+            <div class="infoContainer">
+                <b>ACCESS POLICY:</b>
+                <br/>
+                For teleseryes currently airing, all episodes are available for viewing until 15
+                days after the airing of the last episode.
+            </div>
+        </div>*@
+    </div>
+    }
+}

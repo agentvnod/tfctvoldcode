@@ -1,0 +1,14 @@
+#bgLeft {
+background: url('images/themebg/pasko-leftpanel.png') repeat-y left;
+}
+
+#bgRight {
+background: url('images/themebg/pasko-rightpanel.png') repeat-y right;
+}
+
+body {
+background: url('images/themebg/pasko-centerpanel.jpg') no-repeat;
+background-position: center center;
+background-attachment: fixed;
+background-color: #1e67b3;
+}

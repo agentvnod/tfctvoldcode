@@ -1,0 +1,145 @@
+﻿@{
+    List<IPTV2_Model.CategoryClass> categoryList = ViewBag.CategoryList;
+    ViewBag.Title = "Email TFC.tv";
+}
+<div id="SubmitTicketPanel">
+    @*<div class="loginHeader">
+        Problem?
+        <img src="http://27.media.tumblr.com/avatar_6feb8634e3d0_128.png" width="40" height="40" />
+    </div>
+    <div class="breakSmall">
+    </div>*@
+    <div class="genericHeader" style="width: 400px;">
+        <div id="genericHeader_header">
+            <div id="headerTitle" class="sectionHeaderTitle" style="color: #000;">
+                @ViewBag.Title</div>
+            <div id="headerCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div class="breakStandard">
+    </div>
+    <div id="result" class="errors">
+    </div>
+    <div id="credentials">
+        <form id="ticketform" method="post" action="/Help/_SubmitTicket">
+        <div class="editor-row-label">
+            <div class="editor-label floatLeft">
+                From
+            </div>
+        </div>
+        <div>
+            <div class="editor-row">
+                @{if (!String.IsNullOrEmpty(ViewBag.Email))
+                  {
+                    <input id="email" name="email" type="text" value="@ViewBag.Email" class="textbox" readonly="readonly" disabled="disabled" />
+                  }
+                  else
+                  {
+                    <input id="email" name="email" type="text" value="" class="textbox" />
+                  }
+                }
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="editor-row-label">
+            <div class="editor-label floatLeft">
+                Subject
+            </div>
+        </div>
+        <div class="editor-row">
+            <div>
+                @(Html.Telerik().DropDownList()
+                                .Name("subject")
+                                        .HtmlAttributes(new { @class = "t-selector", style = "z-index: 20; height: 20px;" })
+                                                      .BindTo(new SelectList(categoryList, "Description", "Description"))
+
+                                           .HiddenInputHtmlAttributes(new { style = "display: none;" })
+                                    )
+                <br />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="editor-row-label">
+            <div class="editor-label floatLeft">
+                Message
+            </div>
+        </div>
+        <div class="editor-row" style="height: 175px;">
+            <div>
+                <textarea name="message" id="message" class="textbox" style="width: 380px;" cols="10"
+                    rows="10"></textarea>
+                <br />
+                <span class="perrstatus"></span>
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="breakSmall">
+            </div>
+            <input id="submit" class="btnimage submitbtn floatLeft" type="submit" value="Submit" />
+            <div id="rsb-load" class="side-button-loader padLeftStandard">
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="breakStandard">
+            </div>
+            <div id="presult" class="side-button-loader" style="margin-left: -5px;">
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div id="ajax-loading-signin" class="hideElement">
+    <div id="spanner-signin">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "20", height = "20" })
+        <span id="spanner-text-signin" class="spanner-text-valign"></span>
+    </div>
+</div>
+@*@Html.JsBuilder(Url, "jquery.validate.min.js")*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getScript('@Html.ContentBuilder(Url, "scripts/jquery.validate.min.js")').done(function () {
+            var formvalidator = $('form#ticketform').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    message: { required: true }
+                },
+                messages: {
+                    email: {
+                        required: 'This field is required.',
+                        email: 'Invalid email address.'
+                    }
+                , message: {
+                    required: 'This field is required.'
+                }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.perrstatus'));
+                }
+            });
+
+            $('form#ticketform').submit(function (event) {
+                event.preventDefault();
+                if (formvalidator.numberOfInvalids() == 0) {
+                    $('#presult').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", border = 0, id = "loading-b", width = 20, height = 20 })');
+                    $.post($(this).attr('action'), { email: $('#email').val(), subject: $('#subject').val(), message: $('#message').val() }, function (data) {
+                        if (data.errorCode == 0) {
+                            $('.textbox').val('');
+                            $('#presult').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty();
+                        }
+                        else {
+                            $('#presult').html(createError(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty();
+                        }
+
+                    });
+                }
+            });
+        });
+    });
+</script>

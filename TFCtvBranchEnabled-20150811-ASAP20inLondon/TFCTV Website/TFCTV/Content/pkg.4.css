@@ -1,0 +1,195 @@
+﻿/* File Created: December 7, 2012 */
+.btn-ppm
+{
+    width: 417px;
+    height: 59px;
+    color: #FFF;
+    font-size: 30px;
+    font-weight: bold;
+    position: relative;
+    top: -100px;
+    left: 60px;
+    margin-bottom: 10px;
+}
+
+.btn-ppm-1
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-ppm-2
+{
+    background: url('images/package/btn1/btn-ppm-2.png');
+    background-position: 0 100%;
+}
+
+.btn-ppm-3
+{
+    background: url('images/package/btn1/btn-ppm-3.png');
+    background-position: 0 100%;
+}
+
+.btn-ppm-4
+{
+    background: url('images/package/btn1/btn-ppm-4.png');
+    background-position: 0 100%;
+}
+
+.btn-ppm-5
+{
+    background: url('images/package/btn1/btn-ppm-5.png');
+    background-position: 0 100%;
+}
+
+.btn-ppm-6
+{
+    background: url('images/package/btn1/btn-ppm-6.png');
+    background-position: 0 100%;
+}
+
+.btn-premium
+{
+    background: url('images/package/btn1/btn-premium.png');
+    background-position: 0 100%;
+}
+
+.btn-lite
+{
+    background: url('images/package/btn1/btn-lite.png');
+    background-position: 0 100%;
+}
+.btn-moviechannel, .btn-movie
+{
+    background: url('images/package/btn1/btn-moviechannel.png');
+    background-position: 0 100%;
+}
+
+.btn-text
+{
+    position: relative;
+    top: 21px;
+    left: 130px;
+    font-size: 24px;
+}
+
+
+.btn-text a
+{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-text a:hover
+{
+    text-decoration: underline;
+}
+
+.btn-ppm a
+{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-ppm a:hover
+{
+    text-decoration: underline;
+}
+
+.btn-ppm:hover
+{
+    background-position: 0 0;
+}
+
+.btn-uaapseason76
+{
+    background: url('images/package/btn1/btn-ppm-5.png');
+    background-position: 0 100%;
+}
+
+
+.btn-tvpatrol
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-anclive
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-gandanggabiviceuncut
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-thebuzz
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-dzmmteleradyo
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+/* new css styles for product groups */
+.btn-pg-package-1
+{
+    background: url('images/package/btn1/btn-premium.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-package-5
+{
+    background: url('images/package/btn1/btn-lite.png');
+    background-position: 0 100%;
+}
+.btn-pg-package-8
+{
+    background: url('images/package/btn1/btn-moviechannel.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-1
+{
+    background: url('images/package/btn1/btn-ppm-1.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-2
+{
+    background: url('images/package/btn1/btn-ppm-2.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-3
+{
+    background: url('images/package/btn1/btn-ppm-3.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-4
+{
+    background: url('images/package/btn1/btn-ppm-4.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-5
+{
+    background: url('images/package/btn1/btn-ppm-5.png');
+    background-position: 0 100%;
+}
+
+.btn-pg-show-6
+{
+    background: url('images/package/btn1/btn-ppm-6.png');
+    background-position: 0 100%;
+}

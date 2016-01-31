@@ -1,0 +1,70 @@
+﻿@model IPTV2_Model.User
+<div id="aboutMeContainer">
+    <div class="titleContainer">
+        <div id="aboutMeTitle">
+            ABOUT <span style="color: #185695; font-weight: bold;">ME</span>
+            <div id="aboutMeEdit" class="right">
+                Edit</div>
+        </div>
+    </div>
+    <div id="aboutMeContent" class="about-me">
+        <div class="loader-left-profile-about-me">
+            @Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 50, height = 50 })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var viewedUserUserId = '@ViewBag.viewedUserUserId';
+        var isSameUser = true;
+        var prevAboutContent = "";
+
+        if (viewedUserUserId != '@User.Identity.Name') {
+            isSameUser = false;
+            $("#aboutMeEdit").hide();
+        }
+
+        // Call GetUserProfileInfo Method
+        jQuery.get('/SocialEngagement/GetUserProfileInfo', { id: '@ViewBag.viewedUserUserId' }, function (response) {
+            if (response.errorCode == 0) {
+                if ("data" in response && "about" in response.data && response.data.about.length > 0) {
+                    $("#aboutMeContent").html(response.data.about.replace(/\n\r?/g, '<br/>'));
+                    prevAboutContent = response.data.about;
+                }
+                else
+                    $("#aboutMeContent").html("No information yet.");
+            }
+            //prevAboutContent = $("#aboutMeContent").html();
+        });
+
+        $("#aboutMeEdit").click(function () {
+            //var wrap = this.getOverlay().find(".contentWrap");
+            var textArea = '<textarea id="aboutMeTextArea" rows="3" cols="25">';
+            textArea += '</textarea><div class="clear"></div><br />';
+            textArea += '<div class="action-choices">';
+            textArea += '<span id="post-about-me"><b>Submit</b></span><br />';
+            textArea += '</div>';
+
+            $("#aboutMeContent").html(textArea);
+            $("#aboutMeTextArea").val(prevAboutContent);
+            $("#aboutMeEdit").hide();
+        });
+
+        $("#post-about-me").live("click", function () {
+            var aboutMeContent = $("#aboutMeTextArea").val();
+
+            // Call SetUserAboutInfo Method
+            if (prevAboutContent != aboutMeContent) {
+                jQuery.get('/SocialEngagement/SetUserAboutInfo', { id: '@ViewBag.viewedUserUserId', userAboutInfo: aboutMeContent, userName: '@ViewBag.userName' }, function (response) {
+                    if (response.errorCode == 0) {
+                        $("#profileTabButton").click();
+                    }
+                });
+
+                prevAboutContent = aboutMeContent;
+            }
+            $("#aboutMeContent").html(aboutMeContent.replace(/\n\r?/g, '<br/>'));
+            $("#aboutMeEdit").show();
+        });
+    });
+</script>

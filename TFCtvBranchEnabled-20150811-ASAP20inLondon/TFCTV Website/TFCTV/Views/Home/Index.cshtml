@@ -1,0 +1,258 @@
+﻿@{
+    ViewBag.Title = "TFC.tv - Digital Tambayan of the Global Pinoy! - ABS-CBN Entertainment";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    List<IPTV2_Model.Feature> featureList = ViewBag.LatestEpisodeDropdownListIds;
+}
+<div id="mainBody">
+    <div id="columnLeft">
+        <div class="transparentBg">
+            <div id="featuredItems_latestEpisodes" class="featuredItems">
+                <div class="fullHeader">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "features/latest_full_episodes.png", new { alt = "Latest Full Episodes", title = "Latest Full Episodes" })
+                        </div>
+                        <div class="seeAll_container floatRight">
+                            <div>@(Html.DropDownList("EpisodePicker", new SelectList(featureList, "FeatureId", "Description"), new { @class = "t-selector", style = "z-index: 20; height: 20px;" }))
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @Html.Action("BuildFeature", new { id = GlobalConfig.LatestFullEpisodes, itemPerSlide = 4, containerId = "latestEpisode_container", navigationContainerId = "latestEpisode_navigation" })
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div id="featuredItems_freeTV" class="featuredItems">
+                <div class="fullHeader">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "features/free_tv.png", new { alt = "Free TV", title = "Free TV" })
+                        </div>
+                        <div class="floatLeft padLeftSmall">
+                            @Html.ImageBuilder(Url, "features/shows_clip_free.png", new { alt = "Free TV", title = "Free TV" })
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @Html.Action("BuildFeature", new { id = GlobalConfig.FreeTV, itemPerSlide = 4, containerId = "freeTV_container", navigationContainerId = "freeTV_navigation" })
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div id="featuredItems_mostViewed" class="featuredItems">
+                <div class="fullHeader">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "features/most_viewed.png", new { alt = "Most Viewed", title = "Most Viewed" })
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                @Html.Action("BuildFeature", new { id = GlobalConfig.MostViewed, itemPerSlide = 4, containerId = "mostViewed_container", navigationContainerId = "mostViewed_navigation" })
+            </div>
+        </div>
+    </div>
+    <div id="columnRight">
+        <div class="transparentBg">
+            <div class="most-loved" style="padding-top: 5px;">
+                <div class="most-loved-header">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "social/most_loved.png", new { alt = "Most Loved", title = "Most Loved" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                @Html.Partial("_MostLoved")
+            </div>
+        </div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="transparentBg">
+            <div class="top-reviewer" style="padding-top: 5px;">
+                <div class="top-reviewer-header">
+                    <div class="fullHeader_title">
+                        <div class="floatLeft">
+                            @Html.ImageBuilder(Url, "social/top_reviewers.png", new { alt = "Top Reviewers", title = "Top Reviewers" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                @Html.Action("GetReviewers", "SocialEngagement")
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="clear breakSmall">
+    </div>
+    <div id="areaBottom">
+        <div class="transparentBg">
+            <div id="featuredShows">
+                <div id="featuredItems_featuredShows" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/latest_shows.png", new { alt = "Latest Shows", title = "Latest Shows" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", new { id = GlobalConfig.LatestShows, itemPerSlide = 5, containerId = "latestShows_container", navigationContainerId = "latestShows_navigation", featureType = "show" })
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div id="featuredCelebrities">
+                <div id="featuredItems_featuredCelebrities" class="featuredItems">
+                    <div class="fullHeaderFull">
+                        <div class="fullHeader_title">
+                            <div class="floatLeft">
+                                @Html.ImageBuilder(Url, "features/featured_celebrities.png", new { alt = "Featured Celebrities", title = "Featured Celebrities" })
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    @Html.Action("BuildFeature", new { id = GlobalConfig.FeaturedCelebrities, itemPerSlide = 5, containerId = "featuredCelebrities_container", navigationContainerId = "featuredCelebrities_navigation", featureType = "person" })
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ajax-loading" class="hideElement">
+    <div id="spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading...", width = "50", height = "50" })
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "homepage.css")
+    @Html.CssBuilder(Url, "featureditem-1.1.css")
+    @Html.CssBuilder(Url, "mostloved-1.0.css")
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+    <meta name="description" content=" We bring together on one digital platform the social interaction of Filipinos worldwide and the advanced viewing experience of homegrown content. As the official platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium videos from ABS-CBN Global." />
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "helpers.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.itemListing li img[title]').tooltip({ effect: 'fade',
+                onShow: function () {
+                    var tip = this.getTip();
+                    setTimeout(function () {
+                        tip.hide();
+                    }, 10000);
+                }
+            });
+            $('#EpisodePicker').selected(function () {
+                var cId = $("#EpisodePicker option:selected").val();
+                var item = { url: "/Ajax/GetLatestFullEpisodes/" + cId, type: "video", itemperslide: 4, container: "featuredItems_latestEpisodes", nid: "nav-latestep" };
+                generateCarousels(item, true);
+            });
+        });        
+    </script>
+}
+@section featureBody {
+    <div id="featureBody">
+        @Html.Action("BuildCarousel", new { id = GlobalConfig.CarouselEntertainmentId, itemPerSlide = 15, containerId = "featureBanner" })
+        <div id="usefulLinks">
+            @{if (User.Identity.IsAuthenticated)
+              {
+                <text> <a href="@Url.Action("Index", "Profile")">
+                    @Html.ImageBuilder(Url, "my-profile-new.png", new { title = "My Profile", width = "310", height = "82" })
+                </a><a href="@Url.Action("Details", "Subscribe")">
+                    @Html.ImageBuilder(Url, "go-subscribe-new.png", new { title = "Subscribe Now", width = "310", height = "82" })
+                </a>
+                @{
+                  if (GlobalConfig.IsTVERegistrationEnabled)
+                  {
+                      if (MyUtility.IsTVEAllowedInCurrentCountry())
+                      {
+                          if (ViewBag.IsAlreadyTVEverywhere)
+                          {
+                    <a href="/Find-A-Dealer">
+                    @Html.ImageBuilder(Url, "find-a-dealer-new.png", new { title = "Find A Dealer", width = "310", height = "82" })
+                    </a>
+                    
+                          }
+                          else
+                          {
+                    <a href="@Url.Action("RegisterToTFCEverywhere", "User")">
+                    @Html.ImageBuilder(Url, "activate-tfc-everywhere-btn.png", new { title = "Activate your TFC Everywhere", width = "310", height = "82" })
+                    </a>
+                          }
+                      }
+                      else
+                      {                      
+                    <a href="/Find-A-Dealer">
+                    @Html.ImageBuilder(Url, "find-a-dealer-new.png", new { title = "Find A Dealer", width = "310", height = "82" })
+                    </a>
+                      }
+                  }
+                  else
+                  { 
+                    <a href="/Find-A-Dealer">
+                    @Html.ImageBuilder(Url, "find-a-dealer-new.png", new { title = "Find A Dealer", width = "310", height = "82" })
+                    </a>
+                  }
+                  
+                }
+                </text>                
+              }
+              else
+              {
+                <text> <a href="#">
+                    @Html.ImageBuilder(Url, "sign-in-new.png", new { title = "Sign In", width = "310", height = "82", id = "sinew" })
+                </a><a href="@Url.Action("Register", "User")">
+                    @Html.ImageBuilder(Url, "register-freetrial-front.png", new { title = "Register Now", width = "310", height = "82" })
+                </a>
+                @{if (GlobalConfig.IsTVERegistrationEnabled)
+                  {
+                      if (MyUtility.IsTVEAllowedInCurrentCountry())
+                      {
+                    <a href="/TFCEverywhere">
+                    @Html.ImageBuilder(Url, "activate-tfc-everywhere-btn.png", new { title = "Activate your TFC Everywhere", width = "310", height = "82" })
+                    </a>
+                      }
+                      else
+                      {
+                    <a href="/Find-A-Dealer">
+                    @Html.ImageBuilder(Url, "find-a-dealer-new.png", new { title = "Find A Dealer", width = "310", height = "82" })
+                    </a>
+                      }
+                  }
+                  else
+                  { 
+                    <a href="/Find-A-Dealer">
+                    @Html.ImageBuilder(Url, "find-a-dealer-new.png", new { title = "Find A Dealer", width = "310", height = "82" })
+                    </a>
+                  }
+                }
+                <script type="text/javascript">
+                    $('#sinew').click(function () {
+                        $('#signin').click();
+                        return false;
+                    });
+                </script>
+                </text>
+              }                    
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,137 @@
+﻿@model IEnumerable<IPTV2_Model.CategoryRelationship>
+@{
+    ViewBag.Title = "Help Center - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:help-center";
+    List<IPTV2_Model.CategoryClass> Top5 = null;
+    if (ViewBag.Top5Q != null)
+    {
+        Top5 = ViewBag.Top5Q;
+    }
+
+    List<TFCTV.Models.HelpCenterCategoryModel> list = new List<TFCTV.Models.HelpCenterCategoryModel>();
+}
+<section class="page_pagebody">
+    <!-- PAGE BODY SECTION -->
+    <div class="container">
+        <h1 class="page_title">
+            Help Center
+        </h1>
+        <!-- page title -->
+        <div class="row help_sec">
+            <div class="col-sm-9 col-xs-12">
+                <ul class="nav nav-tabs outer hide480">
+                    <!-- outer tabs [Horizontal tab] -->
+                    @{if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            int count = 1;
+                            foreach (var item in Model)
+                            {
+                                string[] array = item.SubCategory.Description.Split(new char[] { ' ' }, 2);
+                                <li @Html.Raw(String.Format("{0}", count == 1 ? "class=\"active\"" : String.Empty))>
+                                    <a href="@String.Format("#{0}", array.First())" data-toggle="tab">
+                                        @Html.Raw(String.Join("<br>", array))
+                                    </a>
+                                </li>
+                                list.Add(new TFCTV.Models.HelpCenterCategoryModel() { id = item.SubCategory.CategoryId, name = array.First() });
+                                count++;
+                            }
+
+                        }
+
+                    }
+                    }
+                </ul>
+                <!-- end outer tabs [Horizontal tab] -->
+                <!-- outer tabs content [Horizontal] -->
+                <div class="tab-content outer hide480">
+                    @{
+                        if (list != null)
+                        {
+                            if (list.Count() > 0)
+                            {
+                                int count = 0;
+                                foreach (var item in list)
+                                {
+                                    @Html.Action("BuildSubCategories", new { id = item.id, name = item.name, IsActive = count == 0 ? true : false })
+                                    count++;
+                                }
+                            }
+                        }
+
+                    }
+                </div>
+                <!-- end outer tabs content [Horizontal] -->
+                <!-- help section for mobile -->
+                <ul class="panel-group mobile_help show480" id="lev1">
+                    @{if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            int count = 1;
+                            foreach (var item in Model)
+                            {
+                                string[] array = item.SubCategory.Description.Split(new char[] { ' ' }, 2);
+                                string item_level = String.Format("lev{0}", item.CategoryId);
+                        <!-- Lev 1 -->
+                                <li class="panel">
+                                    <!-- Lev 1, item 1 -->
+                                    <span data-toggle="collapse" data-parent="#lev1" data-target="@String.Format("#{0}", item_level)">
+                                        <i class="indicator glyphicon glyphicon-chevron-right"></i>@item.SubCategory.Description
+                                    </span>
+                                    @Html.Action("BuildSubCategories", new { id = item.CategoryId, name = item.SubCategory.Description, IsActive = count == 1 ? true : false, partialViewName = "BuildSubCategoriesMobile", item_level = item_level })
+                                </li>
+                        <!-- END Lev 1, item 1-->
+                                list.Add(new TFCTV.Models.HelpCenterCategoryModel() { id = item.SubCategory.CategoryId, name = array.First() });
+                                count++;
+                            }
+
+                        }
+
+                    }
+                    }
+                </ul>
+                <!-- END Lev 1 -->
+                <!-- END mobile help section -->
+            </div>
+            <!-- end left side -->
+            <!-- right widget bar [same in help.html & help-inner.html]-->
+            @Html.Partial("RightWidget")
+            <!-- end right widget bar -->
+        </div>
+        <!-- end help section -->
+    </div>
+    <!-- end container -->
+</section><!-- end page body section -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        var script = document.createElement('script');
+        var active_window = null;
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = '//chatsupport.tfc.tv/uspchat/index.php/chat/create/popup/tfctv';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(script, s);
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (window.location.hash !== "" && $(".nav-tabs").is(":visible")) {
+                $('a[href="#' + $(window.location.hash).closest(".tab-pane").parent().closest(".tab-pane").attr("id") + '"]').click();
+                $(window.location.hash).closest(".tab-pane").parent().closest(".tab-pane").parent().children(".tab-pane").removeClass("active");
+                $(window.location.hash).closest(".tab-pane").parent().closest(".tab-pane").addClass("active");
+                $(window.location.hash).closest(".tab-pane").addClass("active");
+                $(window.location.hash).addClass("in");
+                setTimeout(function () { $('html,body').animate({ scrollTop: 0 }, 0); }, 150);
+            }
+            if (window.location.hash !== "" && $(".mobile_help").is(":visible")) {
+                var fid = window.location.hash.replace("faq", "levvv");
+                $(fid).parent().closest(".panel-group").parent().closest(".panel-group").addClass("in");
+                $(fid).parent().closest(".panel-group").addClass("in");
+                $(fid).addClass("in");
+            }
+        });
+    </script>
+}

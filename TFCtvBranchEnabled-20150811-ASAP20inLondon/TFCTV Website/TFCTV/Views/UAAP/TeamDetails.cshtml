@@ -1,0 +1,227 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Celebrity
+@{
+    ViewBag.Title = String.Format("{0} - UAAP Season 76 - TFC.tv", Model.FullName);
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    string countryCode = MyUtility.GetCurrentCountryCodeOrDefault();
+
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+        bool Loved = false;
+        if (ViewBag.Loved != null)
+        {
+            Loved = (bool)ViewBag.Loved;
+        }
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+
+    }
+    var descfull = Model.Description;
+    if (descfull != "No description yet.")
+    {
+        descfull = "<p>" + descfull.Replace("|", "</p><p>") + "</p>";
+        descfull = descfull.Replace(":", "<br />");
+    }
+
+    string[] desc = descfull.Split('$');
+    
+
+}
+<br />
+<br />
+<div>
+    <div style="width: 940px; display: table; margin: 0 auto;">
+        <div style="width: 940px; height: 141px; background-color: #fff;">
+            <img src="http://res2.abs-cbnip.tv/images/episodeimages/41783/UAAP 76 960x141 UPDATED.png"
+                style="z-index: -11;" width="940" height="141" title="UAAP Season 76" alt="UAAP Season 76" />
+        </div>
+        <div class="transparentBg">
+            <div id="dTopLinks" style="display: table; margin: 0 auto;">
+                @Html.ActionLink("MAIN PAGE", "Index", "UAAP") | @Html.ActionLink("LIVE STREAM", "Live", "UAAP")
+                | @Html.ActionLink("THE TEAMS", "Teams", "UAAP")</div>
+            <div class="dCoverImage">
+                <img src="@Model.ZodiacSign" />
+            </div>
+            <div class="dLeft">
+                <div class="dTeamLogo">
+                    <img src="@Model.ImageUrl" alt="@Model.FullName Logo"/></div>
+                <div class="dLeftTeamList">
+                    <span style="font-size: 16px; font-weight: bold; color: #49a4ff;">View Other Teams</span><br />
+                    @Html.Action("GetFeatureTeamsPR")
+                </div>
+            </div>
+            <div class="dRight">
+                <div class="dTeamData">
+                    <div class="dTeamNameHeader">
+                        @Model.FullName</div>
+                    <div>
+                        @Html.Partial("_NewLovePartial", Model, dictionary)</div>
+                    <div style="padding-top: 7px;">
+                        @Html.Partial("_ShareBarPartial", Model)</div>
+                        <div class="clear breakStandard"></div>
+                    <div>
+                        @(new HtmlString(desc[0]))<br />
+                        <p>
+                            In Elimination: @Model.Height</p>
+                        <p>
+                            In Final Four: @Model.Weight</p>
+                        <p>
+                            <span style="color: orange; font-weight: bold;">See <a class="bprod" data-container=".dRoster" rel="#bs_overlay" style="color: Orange;" id="teamRoster"
+                                href="#">List of Players</a> | <a class="bprod" data-container=".dGameSked" rel="#bs_overlay" style="color: Orange;" id="teamSked" href="#">Game
+                                    Schedules</a></span></p>
+                        <div class="dInvisible"><div class="dRoster">
+                            <img src= @Model.ChineseYear /></div></div>
+                        <div class="dInvisible"><div class="dGameSked" style="border: 15px solid #000; text-align: center;">
+                            <h3>@Model.FullName
+                            </h3>
+                            <h3 style="margin-top: -20px;">
+                                Games Schedule</h3>@(new HtmlString(Model.Birthplace))</div></div>
+                    </div>
+                </div>
+                <div class="dGamesPlayed">
+                    <div style="font-size: 16px; font-weight: bold; font-family: Arial Black">
+                        @Model.FullName Games</div>
+                    <div id="celebrityEpisodes">
+                        <div id="featuredItems_celebrityEpisodes" class="featuredItems">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="ratings-and-review">
+                @Html.Partial("_CelebritiesComments", Model)
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="apple_overlay" style="width:550px;height:630px;" id="bs_overlay">
+    <a class="close"></a>
+    <!-- the external content is loaded inside this tag -->
+    <div class="contentWrap">
+    </div>
+    <div class="contentMessage" style="color: #000">
+    </div>
+</div>
+@section Stylesheet{
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "uaap.3.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri" />
+    <meta property="og:title" content="@HttpUtility.JavaScriptStringEncode(Model.FullName)" />
+    <meta property="og:description" content="@HttpUtility.JavaScriptStringEncode(Model.Description)" />
+    <meta property="og:type" content="UAAP Team" />
+    <meta property="og:image" content="@Model.ImageUrl" />
+    <meta property="og:site_name" content="TFC.tv" />
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "generateCarouselUAAP.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+     @Html.JsBuilder(Url, "package_overlay.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var features = [{ url: "/UAAP/GetTeamGameEpisodes/@Model.CelebrityId", type: "video", itemperslide: 4, container: "featuredItems_celebrityEpisodes", nid: "nav-celebEpisodes"}];
+            $.each(features, function (x, item) {
+                generateCarousel(item, true);
+            });
+            //            $('#teamRoster').live("click", function () {
+            //                $('.dRoster').addClass('dVisible');
+            //                return false;
+            //            });
+            //            $('.dRoster').live("click", function () {
+            //                $(this).toggleClass('dVisible');
+            //                return false;
+            //            });
+
+            //            $('#teamSked').live("click", function () {
+            //                $('.dGameSked').addClass('dVisible');
+            //                return false;
+            //            });
+            //            $('.dGameSked').live("click", function () {
+            //                $(this).toggleClass('dVisible');
+            //                return false;
+            //            });
+
+            $('.bprod').live('click', function (event) {
+                $(this).overlay({
+                    mask: 'black',
+                    fixed: false,
+                    closeOnClick: false,
+                    onBeforeLoad: function () {
+                        $(".apple_overlay").width(640);
+                        var co = this.getTrigger().data("container");
+                        
+                        var te = $(co);
+                        $('.contentWrap').append(te);
+                        //$('.contentWrap').addClass(co);
+                        //var wrap = this.getOverlay().find(".contentWrap");
+                        //wrap.load(this.getTrigger().data("container"));
+                        //                        wrap.load(this.getTrigger().data("container"));
+                    },
+                    onClose: function () {
+                        $('#bs_overlay .contentWrap').empty();
+                        
+                        
+                        //                        if ($('#bought').val() == 1) {
+                        //                            window.location.href = document.URL;
+                        //                        }
+                    },
+                    load: true
+                });
+                event.preventDefault();
+            });
+        });
+
+        function generateCarousel(item, withToolTip) {
+            $.ajax({
+                url: item.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        $('#spanner').addClass('feature_spanner');
+                        $('#spanner').css('height', '130px');
+                        $('#' + item.container + ' .itemListBody .wrapper').empty();
+                        $('#' + item.container + ' .itemListBody .wrapper').prepend($('#ajax-loading').html());
+                    }
+                    , success: function (data) {
+                        if (data.length > 0) {
+                            $("." + item.container).show();
+                            var list = new featureItem({
+                                json_str: data, type: item.type, itemperslide: item.itemperslide, container: item.container, nid: item.nid
+                            }).listing();
+
+                            if (withToolTip)
+                                $('.itemListing li img[title]').tooltip({ effect: 'fade',
+                                    onShow: function () {
+                                        var tip = this.getTip();
+                                        setTimeout(function () {
+                                            tip.hide();
+                                        }, 10000);
+                                    }
+                                });
+                        }
+
+                    }
+            });
+        }
+
+    </script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.list.min.js"></script>
+    @(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+                         .OutputScriptFiles(false))
+}

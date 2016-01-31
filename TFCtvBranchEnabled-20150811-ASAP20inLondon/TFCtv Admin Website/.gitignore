@@ -1,0 +1,9 @@
+# git ignore file
+*.zip
+*.bak
+*.suo
+
+# Build Folders
+obj
+bin
+Visual Studio 2010

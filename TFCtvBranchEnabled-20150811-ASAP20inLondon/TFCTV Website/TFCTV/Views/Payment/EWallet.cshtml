@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = "Pay via E-Wallet - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    var id = Url.RequestContext.RouteData.Values["id"];
+
+    IPTV2_Model.UserWallet Wallet = ViewBag.UserWallet;
+    IPTV2_Model.ProductPrice productPrice = ViewBag.ProductPrice;
+    IPTV2_Model.Product product = ViewBag.Product;
+
+    bool HasError = ViewBag.HasError;
+    var ReturnUrl = HttpUtility.UrlEncode(ViewContext.HttpContext.Request["ReturnUrl"]);
+        
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                SUBSCRIPTION &raquo; PAYMENT &raquo; E-WALLET
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("PaymentSelection", new { pselection = "EWallet", id = id })
+                </div>
+                <div id="payment-main">
+                    @{if (!HasError)
+                      {
+                          using (Html.BeginForm("_EWallet", "Payment", new { ReturnUrl = ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", id = "form1" }))
+                          {                     
+                        <div id="body-summary">
+                            <div class="breakLarge">
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", (object)product.ProductId)
+                                @Html.Hidden("wid", (object)ViewBag.WishlistId)
+                                @Html.Hidden("cpid", (object)ViewBag.CurrentProductId)
+                            </div>
+                            <div class="purchase-summary fold-top">
+                                <div class="breakStandard">
+                                </div>
+                                <div class="title">
+                                    Summary of Purchase</div>
+                                <div class="breakLarge">
+                                </div>
+                                <div class="clear border-bottom">
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                                <div class="breakSmall">
+                                </div>
+                                <div>
+                                    <div class="copy">
+                                        Current Load:
+                                    </div>
+                                    <div class="amount">
+                                        @String.Format("{1} {0:n}", Wallet.Balance, Wallet.Currency)
+                                    </div>
+                                    <div class="clear breakStandard">
+                                    </div>
+                                    <div class="copy">
+                                        Subscription Fee:
+                                    </div>
+                                    <div class="amount">
+                                        @String.Format("{1} {0:n}", productPrice.Amount, productPrice.CurrencyCode)
+                                    </div>
+                                    <div class="clear breakSmall">
+                                    </div>
+                                    <div class="border-bottom">
+                                    </div>
+                                    <div class="clear breakSmall">
+                                    </div>
+                                    <div class="copy">
+                                        Change:
+                                    </div>
+                                    <div class="amount">
+                                        @String.Format("{1} {0:n}", (Wallet.Balance - productPrice.Amount), Wallet.Currency)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear breakLarge">
+                            </div>
+                            <div class="btn-container">
+                                <input type="submit" value="Confirm Payment" class="nbutton" />
+                            </div>
+                        </div>
+                          }
+                      }
+                      else
+                      { 
+                        @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered })
+                      }                        
+                    }
+                    <div id="wait-time">
+                        <div class="breakSmall">
+                            <a id="wait-anchor"></a>
+                        </div>
+                        <div class="purchase-instructions">
+                            <p>
+                                @Html.ImageBuilder(Url, "3.gif", new { style = "position: relative; top: 5px;" })
+                                Please wait while we process your request...</p>
+                        </div>
+                    </div>
+                    <div id="tcomplete" class="hideElement">
+                        <div class="breakSmall">
+                        </div>
+                        <div class="purchase-instructions">
+                            <p>
+                                Congratulations! You have successfully completed this transaction.</p>
+                        </div>
+                    </div>
+                    <div id="errorContainer" class="hideElement">
+                        <div class="msgbox-header">
+                            <p>
+                                Oops! Something went wrong with your transaction.</p>
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div id="msgbox-content" class="msgbox-content ui-state-error">
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div>
+                            <input type="button" id="try-again" value="Click here to try again" class="nbutton try-again btn-container15" />
+                        </div>
+                    </div>
+                </div>
+                <div id="payment-summary">
+                    <div class="breakLarge">
+                    </div>
+                    <div class="title">
+                        Summary of Order</div>
+                    <br />
+                    <div id="summary-body">
+                        @Html.Action("SummaryOfOrder", new { id = id, user = ViewBag.User, product = ViewBag.Product, productPrice = ViewBag.ProductPrice })
+                    </div>
+                    @Html.Action("Reminder")
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form#form1').submit(function (event) {
+                $('#errorContainer').hide();
+                event.preventDefault();
+                $('#body-summary').fadeOut(500, function () {
+                    $('#wait-time').fadeIn();
+                    $('html, body').animate({
+                        scrollTop: $('#entertainmentBtn').offset().top
+                    }, 800);
+                });
+                var form = $(this);
+                $.post($(this).attr('action'), form.find('input, select').serialize(), function (data) {
+                    if (data.StatusCode == 0)
+                        setTimeout(function () { $('#wait-time').hide(); $('#tcomplete').show(); document.location = data.HtmlUri; }, 800);
+                    else {
+                        setTimeout(function () {
+                            $('#msgbox-content').html(data.StatusMessage);
+                            $('#wait-time').fadeOut(500, function () {
+                                $('#errorContainer').fadeIn();
+                                $('html, body').animate({
+                                    scrollTop: $('#entertainmentBtn').offset().top
+                                }, 800);
+                            });
+                        }, 800);
+                    }
+                }).fail(function () {
+                    setTimeout(function () {
+                        $('#msgbox-content').html("Error requesting page: " + form.attr('action'));
+                        $('#wait-time').fadeOut(500, function () {
+                            $('#errorContainer').fadeIn();
+                            $('html, body').animate({
+                                scrollTop: $('#entertainmentBtn').offset().top
+                            }, 800);
+                        });
+                    }, 800);
+                });
+            });
+
+            $('.try-again').click(function () {
+                location.reload();
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        //onbeforeunload
+        window.onbeforeunload = function () {
+            var msg = '';
+            if ($('#wait-time').is(':visible'))
+                msg = 'The system is currently processing your request. Leaving this page might cause some problems.';
+            if (msg != '')
+                return msg;
+        };
+    </script>
+}

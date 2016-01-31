@@ -1,0 +1,28 @@
+# git ignore file
+*.zip
+*.bak
+*.7z
+*.orig
+*.ORIG
+*.20120424-1559
+*.OLDPLAYER
+
+# Build Folders
+
+
+# Static files
+Index_20130218.cshtml
+Index_OldVer.cshtml
+_RegisterBetaVersion.cshtml
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,380 @@
+﻿#menuNavigation
+{
+    z-index: 100;
+    position: relative;
+}
+#menuNavigation li
+{
+    float: left;
+}
+.menuImg
+{
+    margin-top: -3px;
+    background: none;
+}
+#menuEntertainment
+{
+    width: 168px;
+    background: url('images/menuBar/mainmenuNav.png');
+    height: 30px;
+    background-position: 0px -31px;
+    cursor: pointer;
+}
+
+#menuEntertainment.selectedMenu
+{
+    background-position: 0px 0px;
+}
+
+.selectedMenu
+{
+    display: block;
+}
+
+#menuNews
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -168px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuNews.selectedMenu
+{
+    background-position: -168px 0px;
+}
+
+#menuMovies
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -274px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuMovies.selectedMenu
+{
+    background-position: -274px 0px;
+}
+
+#menuLive
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -380px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuLive.selectedMenu
+{
+    background-position: -380px 0px;
+}
+.adjustEnt
+{
+    right: 220px;
+}
+.adjustNews
+{
+    right: 388px;
+}
+.adjustMov
+{
+    right: 494px;
+}
+.adjustLiv
+{
+    right: 600px;
+}
+.iconImage
+{
+    position: relative;
+    z-index: 1000;
+}
+#revSubMenu
+{
+    background-color: #222;
+    width: 940px;
+    position: relative;
+    top: 5px;
+    float: left;
+    display: none;
+    z-index: 100;
+    height: 339px;
+    background-color: #231f20;
+    border-color: #49a4ff;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.menuListHeader
+{
+    font-size: large;
+    font-family: @Arial Unicode MS;
+    width: 100%;
+    float: left;
+    padding-top: 15px;
+    cursor: default;
+    color: #fff;
+    background-color: #000;
+    bottom:0px;
+}
+.menuListheaderPixelbar
+{
+    background-image: url('images/menuBar/menu-pixelbar.jpg');
+    background-repeat: no-repeat;
+    background-position:  0px 5px;
+}
+.menuListHeader h3
+{
+    margin-bottom: 0px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.episodeMenuListHeader
+{
+    width: 470px;
+    position: relative;
+    cursor: default;
+}
+.moreLink a
+{
+    color: #000;
+    text-decoration: none;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: inherit;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.moreEpisodesLink a
+{
+    color: #a7a9ac;
+    text-decoration: none;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: inherit;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.selectedSubMenu
+{
+    background-color: #a7a9ac !important;
+    color: #000 !important;
+}
+
+
+
+
+.liGenre, .liShows
+{
+    display: block;
+    float: left;
+    clear: left;
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: medium;
+    font-weight: bold;
+    width: 225px;
+    color: #49a4ff;
+}
+.liGenre
+{
+    color: #49a4ff;
+}
+.liShows
+{
+    color: #000;
+}
+.liGenre:hover
+{
+    color: #000;
+}
+.liGenre a, .liShows a
+{
+    text-decoration: none;
+    color: #000;
+}
+.liGenre a, .liShows a :visited
+{
+    color: inherit;
+}
+
+
+.dGenre
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: relative;
+    padding-bottom: 5px;
+    min-width: 235px;
+    max-width: 235px;
+    background-color: #231f20;
+    float: left;
+    min-height: 331px;
+    z-index: 5;
+}
+.dShows h3
+{
+    color: #fff;
+}
+.dShows
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: relative;
+    padding-bottom: 5px;
+    min-width: 235px;
+    max-width: 235px;
+    background-color: #a7a9ac;
+    float: left;
+    min-height: 331px;
+    z-index: 1000;
+}
+.dEpisodes
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: relative;
+    padding-bottom: 5px;
+    min-width: 470px;
+    max-width: 470px;
+    background-color: #fff;
+    float: left;
+    min-height: 331px;
+    z-index: 7;
+}
+#invisibleMenuTree
+{
+    display: none;
+}
+.subMenuLeaderboard
+{
+    min-height: 70px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 940px;
+}
+.displayToggle
+{
+    display: block;
+}
+
+.dsourceShows, .dLatestEpisodes
+{
+    display: none;
+}
+.dsourceEpisodes
+{
+    width: 235px;
+    float: left;
+    height: 240px;
+}
+
+.episodeHeader
+{
+    min-width: 470px;
+    color: #fff;
+}
+
+.dsourceEpisodes > a img
+{
+    display: block;
+    margin-top: 10px;
+}
+.dsourceEpisodes > p
+{
+    max-width: 190px;
+    text-align: justify;
+}
+
+
+
+
+.selectedShowMenu
+{
+    background-color: #fff;
+}
+
+.watchnow:hover
+{
+    background-position: 0 0;
+}
+.watchnow
+{
+    display: block;
+    width: 114px;
+    height: 20px;
+    background: url('images/menuBar/WatchNow.png') bottom;
+    text-indent: -99999px;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 40px;
+}
+
+.watchnowmovie
+{
+    float: none;
+    bottom: 20px;
+}
+.posterImage, .blurbWatchNow
+{
+    float: left;
+    width: 235px;
+    position: relative;
+    display: block;
+}
+.posterImage
+{
+    height: 260px;
+}
+.posterImage img
+{
+    padding: 10px;
+}
+.blurbWatchNow
+{
+    height: 260px;
+}
+.blurbWatchNow > p
+{
+    left: 10px;
+    max-width: 190px;
+    text-align: justify;
+}
+.dsourceMovieEpisode
+{
+    min-width: 470px;
+}
+
+.dmenuHeaderTitle
+{
+    color: #000;
+    font-size: 55px;
+    font-weight: bold;
+    float: left;
+    position: absolute;
+    top: 30px;
+}
+
+
+.sourceEpLeft > a img
+{
+    margin-left: 10px;
+}
+.sourceEpLeft > p
+{
+    margin-left: 10px;
+}

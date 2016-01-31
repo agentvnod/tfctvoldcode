@@ -1,0 +1,42 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    int page = ViewBag.page;
+    int pageSize = ViewBag.pageSize;
+    int featureId = ViewBag.featureId;
+}
+<div class="col-xs-12 vp_body movie_sec">
+    <!-- body part -->
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+              foreach (var item in Model)
+              {
+        <div class="row vp_video">
+            <!-- video -->
+            <div class="col-xs-4">
+                <a href="@Url.Action("OnDemand", "UAAP", new { id = item.id })">
+                    <img src="@item.imgurl" alt="@item.name" title="@item.name" class="img100" /></a>
+            </div>
+            <div class="col-xs-8">
+                <h3>
+                    <a href="@Url.Action("OnDemand", "UAAP", new { id = item.id })">@item.name</a></h3>
+                <p>
+                    Date Aired: @item.airdate</p>
+                <a href="@Url.Action("OnDemand", "UAAP", new { id = item.id })">
+                    <input type="button" class="red_button subscribe" value="WATCH NOW"></a>
+            </div>
+        </div>       
+              }
+          }
+      }
+    }
+    <!-- END video -->
+    <div class="sec_footer gray">
+        <!-- section of Load more -->
+        <a href="@Url.Action("GetMoreUAAPFeaturedContent", "UAAP", new { page = page, pageSize = pageSize, featureId = featureId })" class="loadMore">
+            load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more episodes" })
+        </a>
+    </div>
+</div>

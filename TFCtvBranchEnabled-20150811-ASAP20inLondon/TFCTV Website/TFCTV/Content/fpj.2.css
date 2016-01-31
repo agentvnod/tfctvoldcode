@@ -1,0 +1,244 @@
+.fpj-bannerimage
+{
+    width: 940px;
+    height: 300px;
+    background-color: White;
+}
+
+.fpj-titlescontainer
+{
+    width: 940px;
+    height: 400px;
+    padding-top: 5px;
+}
+
+.fpj-title
+{
+    width: 235px;
+    float: left;
+    position: relative;
+}
+
+.mainfeature-image, .feature-image
+{
+    width: 215px;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 260px;
+    background-color: Black;
+}
+
+.mainfeature-title, .feature-title
+{
+    font-size: 26px;
+    color: white;
+    font-weight: bold;
+    width: 215px;
+    height: 35px;
+    text-align: center;
+}
+
+.mainfeature-title a, .feature-title a
+{
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+.wrapper
+{
+    height: 660px;
+}
+#featuredItems_featuredCelebrities
+{
+    height: 670px;
+}
+.itemListing
+{
+    margin-left: 0;
+}
+.itemListBody
+{
+    margin: 0;
+    width: 100%;
+}
+.itemListBody .navigation
+{
+    color: #fff;
+    padding-top: 5px;
+    height: 0px;
+    position: relative;
+    top: -365px;
+    z-index: 1000;
+}
+
+.breakNavi
+{
+    height: 35px;
+}
+
+.subscribeBox
+{
+    width: 360px;
+    height: 42px;
+    display: block;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    line-height: 42px;
+    z-index: 1000;
+    font-weight: bold;
+    font-size: 20px;
+    text-indent: 40px;
+    background-image: url("/content/images/buttons/Subscribe-slider.gif");
+}
+.blackbckground
+{
+    background-color: black;
+    background-image: none !important;
+}
+.fontsize12
+{
+    font-size: 20px;
+}
+.fbanner-link.freposition
+{
+    position: relative;
+    top: -427px;
+    z-index: 1000;
+    width: 360px;
+    float: right;
+}
+.bundlesContainer
+{
+    width: 940px;
+}
+.lib-bundleContainer
+{
+    width: 940px;
+    height: 400px;
+}
+.lib-bundleTitle
+{
+    font-weight: bold;
+    font-size: 32px;
+    border-bottom: 1px solid white;
+    width: 920px;
+    margin-left: 10px;
+    line-height: 32px;
+    color: orange;
+}
+.lib-moviesContainer
+{
+    width: 940px;
+    height: 420;
+    margin-top: 10px;
+}
+.lib-movieContainer
+{
+    width: 235px;
+    float: left;
+    position: relative;
+}
+.lib-feature-image
+{
+    width: 205px;
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 240px;
+    background-color: Black;
+}
+.lib-feature-title a
+{
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+.lib-feature-title
+{
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    width: 205px;
+    height: 30px;
+    text-align: center;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.user-reaction
+{
+    display: inherit;
+    padding-bottom: 0;
+}
+
+.limage
+{
+    padding-top: 1px !important;
+}
+#socialShareContainer
+{
+    padding-top: 7px;
+}
+
+.sortlinks
+{
+    position: relative;
+    float: right;
+    top: 10px;
+    left: -10px;
+    color: white;
+}
+.sortlinks a
+{
+    text-decoration: none;
+    color: Orange;
+}
+.sortlinks a:visited
+{
+    color: Orange;
+}
+.dsitemListing li
+{
+    float: left;
+}
+.dsitemListing
+{
+    top: 15px;
+    position: relative;
+    height: 1440px;
+}
+.chartItem
+{
+    width: 235px;
+    height: 300px;
+}
+.chartImage, .chartInfo
+{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.chartInfo
+{
+}
+.chartInfo a
+{
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+.chartInfo a:visited
+{
+    color: white;
+}
+#featuredItems_featuredCelebrities
+{
+    height: 670px;
+}
+#featuredItems_featuredTitles
+{
+    height: 100%;
+}

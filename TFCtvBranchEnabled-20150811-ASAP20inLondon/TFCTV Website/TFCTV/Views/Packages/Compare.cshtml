@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "TFC.tv - Go Compare";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<br />
+<br />
+<br />
+<div id="container">
+    <div id="bodycontainer">
+        <div class="bcpadding">
+            <div id="compare">
+                <div id="comparebar">
+                    <div id="comparebody">
+                        @Html.ImageBuilder(Url, "package/gocompareback.jpg")
+                        @*<img src="images/backimage.png">*@
+                    </div>
+                    <div id="gobackbutton">
+                        <a href="@Url.Action("Index", "Packages")" >
+                            @Html.ImageBuilder(Url, "package/gocompare/goback.png")
+                            @*<img src="images/goback.png">*@ </a>
+                    </div>
+                </div>
+                @if (ViewBag.HideLitePackage)
+                {
+                    <div id="maintable">
+                        <div id="buttons">
+                            <div class="defaultview">
+                                <a href="/Subscription#GoMovie">
+                                    @Html.ImageBuilder(Url, "package/gocompare/gomovie.png")
+                                    @*<img src="images/gomovie.png">*@ </a>
+                            </div>
+                            <div class="defaultview">
+                                <a href="/Subscription#GoPremium">
+                                    @Html.ImageBuilder(Url, "package/gocompare/gopremium.png")
+                                    @*<img src="images/gopremium.png">*@ </a>
+                            </div>
+                        </div>
+                        <div class="table">@Html.ImageBuilder(Url, "package/gocompare/table_l.png")@*<img src="images/table.png">*@</div>
+                    </div>
+                }
+                else
+                {
+                    <div id="maintable">
+                        <div id="buttons">
+                            <div class="defaultview">
+                                <a href="/Subscription#GoMovie">
+                                    @Html.ImageBuilder(Url, "package/gocompare/gomovie.png")
+                                    @*<img src="images/gomovie.png">*@ </a>
+                            </div>
+                            <div class="defaultview">
+                                <a href="/Subscription#GoLite">
+                                    @Html.ImageBuilder(Url, "package/gocompare/golite.png")
+                                    @*<img src="images/golite.png">*@ </a>
+                            </div>
+                            <div class="defaultview">
+                                <a href="/Subscription#GoPremium">
+                                    @Html.ImageBuilder(Url, "package/gocompare/gopremium.png")
+                                    @*<img src="images/gopremium.png">*@ </a>
+                            </div>
+                        </div>
+                        <div class="table">@Html.ImageBuilder(Url, "package/gocompare/table.png")@*<img src="images/table.png">*@</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "gocomparestylesheet.css")
+}

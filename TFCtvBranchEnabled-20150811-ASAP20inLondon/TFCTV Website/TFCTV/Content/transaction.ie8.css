@@ -1,0 +1,11 @@
+input[type="text"], input[type="password"],  select {
+line-height: 30px;
+}
+
+select {
+padding: 5px;
+}
+
+.textbox-small {
+width: 98px;
+}

@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{32AE5D93-98FF-430C-A087-BDEB12FE6481}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GOMS_TFCtv</RootNamespace>
+    <AssemblyName>GOMS_TFCtv</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GSCSharpSDK">
+      <HintPath>..\..\codes\dll\GSCSharpSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GomsTfctv.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\GomsTfcTvService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CreditCardUtilityCS\CreditCardUtility.csproj">
+      <Project>{C338669E-2BD8-4DD4-843B-2D96A8567F73}</Project>
+      <Name>CreditCardUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPTV2 Model\IPTV2 Model.csproj">
+      <Project>{B3AC1A30-6505-4DE7-AE7C-0C03322076B2}</Project>
+      <Name>IPTV2 Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TFCNowModel\TFCNowModel.csproj">
+      <Project>{8148EC84-7D40-4386-BA1C-FEE4DF33FD65}</Project>
+      <Name>TFCNowModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespAcceptGift.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespActivateService.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespActivateSlave.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespAddSubscription.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespAdjustWalletBalance.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCancelRecurringPayment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespClaimTVE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespConsumePrepaidCard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateOrderFreeTrial.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateOrderRecurringEnrollment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateOrderRecurringPayment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateSupportCase.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespCreateWalletLoad.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespEnrollSmartPitCard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetExchangeRateByCurrency.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetExchangeRates.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetGiftItems.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetGiftsByRecipientServiceId.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetGiftsBySenderServiceId.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetItemById.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetItems.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetPriceInLocalCurrency.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetSmartPitCardListByCustomerId.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetSubscriberInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespGetWallet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespRegisterSubscriber.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespRegisterSubscriber2.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespResendTVEActivationCode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespTestConnectivity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespUpdateSubscriber.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespUpgradeSubscription.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespValidateCreditCard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\GOMS_TFCtv.GomsTfcTvService.RespValidatePrepaidCard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\GomsTfcTvService\servicephoenix.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\GomsTfcTvService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GomsTfcTvService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GomsTfcTvService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GomsTfcTvService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\GomsTfcTvService\servicephoenix.disco" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

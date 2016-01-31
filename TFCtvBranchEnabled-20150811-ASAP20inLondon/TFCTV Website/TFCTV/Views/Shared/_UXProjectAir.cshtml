@@ -1,0 +1,169 @@
+﻿@{
+    try
+    {
+        if (!Request.Cookies.AllKeys.Contains("tuid"))
+        {
+            HttpCookie cookie = new HttpCookie("tuid");
+            cookie.Value = String.Format("_ttm_{0}", Guid.NewGuid().ToString());
+            cookie.Expires = DateTime.Now.AddDays(30);
+            Response.Cookies.Add(cookie);
+        }
+    }
+    catch (Exception) { }
+}
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @Html.Partial("AppIconPartial")
+    @if (IsSectionDefined("MetaTags"))
+    { @RenderSection("MetaTags", false)}
+    @if (IsSectionDefined("OpenGraph"))
+    { @RenderSection("OpenGraph", false)}
+    @Html.CssBuilder(Url, "bootstrap.min.css", ContentSource.Site)
+    @Html.CssBuilder(Url, "style-air.css", ContentSource.Site)
+    @Html.CssBuilder(Url, "style-update-air.css?0.16", ContentSource.Site)
+    @Html.CssBuilder(Url, "bootstrap-ie7.css", ContentSource.Site)
+    @if (IsSectionDefined("Stylesheet"))
+    { @RenderSection("Stylesheet", false)}
+    @if (IsSectionDefined("JScript"))
+    { @RenderSection("JScript", false)}
+    <!--[if gte IE 9]
+    <style type="text/css">
+    .gradient {
+    filter: none;
+    }
+    </style>
+    <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        dataLayer = [];
+        _kmq = [];
+    </script>
+    @if (IsSectionDefined("GAECommerce"))
+    { @RenderSection("GAECommerce", false)}
+</head>
+<body class="project_air">
+    @Html.Partial("_GoogleTagManagerPartial")
+    <!-- Begin comScore Inline Tag 1.1302.13 -->
+    <script type="text/javascript">
+    // <![CDATA[
+        function udm_(e) { var t = "comScore=", n = document, r = n.cookie, i = "", s = "indexOf", o = "substring", u = "length", a = 2048, f, l = "&ns_", c = "&", h, p, d, v, m = window, g = m.encodeURIComponent || escape; if (r[s](t) + 1) for (d = 0, p = r.split(";"), v = p[u]; d < v; d++) h = p[d][s](t), h + 1 && (i = c + unescape(p[d][o](h + t[u]))); e += l + "_t=" + +(new Date) + l + "c=" + (n.characterSet || n.defaultCharset || "") + "&c8=" + g(n.title) + i + "&c7=" + g(n.URL) + "&c9=" + g(n.referrer), e[u] > a && e[s](c) > 0 && (f = e[o](0, a - 8).lastIndexOf(c), e = (e[o](0, f) + l + "cut=" + g(e[o](f + 1)))[o](0, a)), n.images ? (h = new Image, m.ns_p || (ns_p = h), h.src = e) : n.write("<", "p", "><", 'img src="', e, '" height="1" width="1" alt="*"', "><", "/p", ">") };
+        udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&ns_site=tfc-tv&name=@ViewBag.DaxName');
+    // ]]>
+    </script>
+    @{if (Request.IsSecureConnection)
+      { 
+        <noscript>
+            <p>
+                <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=7385337&amp;ns_site=tfc-tv&amp;name=@ViewBag.DaxName"
+                     height="1" width="1" alt="*"></p>
+        </noscript>
+      }
+      else
+      { 
+        <noscript>
+            <p>
+                <img src="http://b.scorecardresearch.com/p?c1=2&amp;c2=7385337&amp;ns_site=tfc-tv&amp;name=@ViewBag.DaxName"
+                     height="1" width="1" alt="*"></p>
+        </noscript>
+      }
+    }
+    <!-- End comScore Inline Tag -->
+    <!-- page top adv -->
+    @if (IsSectionDefined("TopAdSection"))
+    { @RenderSection("TopAdSection", false)}
+    <!-- END page top adv -->
+    <!-- Header Section [logo, main menu, search ] common in all pages -->
+    @Html.Partial("UXHeader")
+    <!-- end header section -->
+    <!--  home page Slider part -->
+    @RenderBody()
+    <!-- END home page body -->
+    <!-- bottom section [common for all pages] -->
+    @Html.Partial("UXFooterTop")
+    <!-- end Bottom section -->
+    <!-- Footer section [common for all pages ] -->
+    @Html.Partial("UXFooterBottom")
+    <!-- end Footer section -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+    <!-- Begin comScore Inline Tag 1.1302.13 -->
+    @{if (Request.IsSecureConnection)
+      { 
+        <script type="text/javascript" src="https://sb.scorecardresearch.com/c2/7385337/cs.js"></script>
+      }
+      else
+      { 
+        <script type="text/javascript" src="http://b.scorecardresearch.com/c2/7385337/cs.js"></script>
+      }
+    }
+    <!-- End comScore Inline Tag -->
+    @Html.JsBuilder(Url, "bootstrap.min.js")
+    @Html.JsBuilder(Url, "validator.min.js")
+    @Html.JsBuilder(Url, "doubletaptogo.min.js")
+    @Html.JsBuilder(Url, "main.js?0.08", ContentSource.Site)
+    @Html.JsBuilder(Url, "jquery.nicescroll.min.js")
+    <!-- gigya.js script should only be included once -->
+    <script type="text/javascript" src="//cdns.gigya.com/js/gigya.js?apiKey=@GlobalConfig.GSapikey">
+    {
+    siteName: 'TFC.tv'
+    ,enabledProviders: '@GlobalConfig.SocialProvidersList'
+    }
+    </script>
+    @*<script type="text/javascript" src="https://cdns.gigya.com/seal/seal.js?apiKey=@GlobalConfig.GigyaSealKey"></script>*@
+    @{if (!User.Identity.IsAuthenticated)
+      {
+        <script type="text/javascript">
+            var login_params =
+            {
+                showTermsLink: 'false'
+                , height: 150
+                , width: 220
+                , containerID: 'loginPanel'
+                //, UIConfig: '<config><body><controls><snbuttons buttonsize="35" /></controls></body></config>'
+                , buttonsStyle: 'fullLogoColored'
+                , lastLoginIndication: 'welcome'
+                , facepilePosition: 'none'
+                , hideGigyaLink: true
+                , showTermsLink: false
+                , redirectURL: '/Social/Socialize'
+                , version: 2
+                , buttonSize: 35
+            }
+            gigya.socialize.showLoginUI(login_params);
+        </script>
+      }      
+    }
+    <script type="text/javascript">
+        function gconnect(e) {
+            //connect
+        }
+        function gremove(e) {
+            $.ajax({ type: "POST", url: "/User/RemoveConnection", data: { provider: e.provider} });
+        }
+        gigya.socialize.addEventHandlers({
+            onConnectionAdded: gconnect,
+            onConnectionRemoved: gremove
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.forgotPasswordLink').click(function (e) { $('#loginForm').addClass('hide'); $('#forgotPasswordForm').removeClass('hide'); $('#resendVerificationForm').addClass('hide'); e.preventDefault(); });
+            $('.signinf').click(function (e) { $('#loginForm').removeClass('hide'); $('#forgotPasswordForm').addClass('hide'); $('#resendVerificationForm').addClass('hide'); e.preventDefault(); });
+            $('.accountNotVerifiedLink').click(function (e) { $('#loginForm').addClass('hide'); ; $('#forgotPasswordForm').addClass('hide'); ; $('#resendVerificationForm').removeClass('hide'); e.preventDefault(); });
+        }
+    );
+    </script>
+    @Html.Partial("MultipleRegistrationBlocking")
+    @if (IsSectionDefined("JScriptBottom"))
+    { @RenderSection("JScriptBottom", false)}
+    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
+</body>
+</html>

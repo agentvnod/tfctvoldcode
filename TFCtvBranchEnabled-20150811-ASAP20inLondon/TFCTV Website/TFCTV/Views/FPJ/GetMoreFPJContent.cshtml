@@ -1,0 +1,37 @@
+﻿@model List<IPTV2_Model.Episode>
+@{
+    int page = ViewBag.page;
+    int pageSize = ViewBag.pageSize;
+}
+<div class="movie_sec">
+    <div class="row celebrities">
+        <!-- video with poster & name -->
+        @{if (Model != null)
+          {
+              if (Model.Count() > 0)
+              {
+                  foreach (var item in Model)
+                  {
+                      string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, item.EpisodeId, item.ImageAssets.ImageBackground);
+        
+            <div class="movie col-md-3 col-sm-4 col-xs-6">
+                <a href="@String.Format("{0}/Episode/Details/{1}", GlobalConfig.baseUrl, item.EpisodeId)">
+                    <img src="@img" alt="celebritie" class="img100"></a>
+                <h3 class="small_header">
+                    <a href="@String.Format("{0}/Episode/Details/{1}", GlobalConfig.baseUrl, item.EpisodeId)">@item.EpisodeName</a></h3>
+            </div>
+                    
+                  }
+              }
+          }
+        }
+        <!-- end video poster -->
+    </div>
+    <div class="sec_footer">
+        <!-- section of Load more -->
+        <a href="@Url.Action("GetMoreFPJContent", "FPJ", new { page = page, pageSize = pageSize })" class="loadMore">
+            load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more episodes" })
+        </a>
+    </div>
+</div>

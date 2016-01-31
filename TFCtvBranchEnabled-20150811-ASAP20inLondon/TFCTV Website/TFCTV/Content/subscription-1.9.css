@@ -1,0 +1,544 @@
+#subscribe-body
+{
+    color: #fff;
+}
+
+#subscribe-body ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#subscribe-body ul li
+{
+    float: left;
+    height: 90px;
+    width: 205px;
+    margin-right: 20px;
+    background-color: #ccc;
+    color: #000;
+    cursor: pointer;
+}
+
+.bo-title
+{
+    text-align: center;
+    border-bottom: 1px dotted #aaa;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    background-color: #00377b;
+    color: #fff;
+}
+
+.bo-desc
+{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.bo-price
+{
+    font-weight: bold;
+}
+
+#subscribe-body .selected
+{
+    background-color: #fff;
+    color: #000;
+}
+
+#pr-container
+{
+    width: 940px;
+    min-height: 120px;
+    background-color: #fff;
+}
+
+#pr-options
+{
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #ebebeb;
+    min-height: 95px;
+    padding: 5px 10px 5px 10px;
+}
+
+.pr-options-body
+{
+    margin-left: 50px;
+    margin-top: 15px;
+}
+
+
+.rb-container
+{
+    float: left;
+    width: 25px;
+    height: 40px;
+    position: relative;
+    top: 5px;
+}
+
+.rb-desc
+{
+    width: 120px;
+}
+
+.rb-box
+{
+    margin-right: 10px;
+    width: 150px;
+}
+
+.pad20
+{
+    padding-left: 20px !important;
+}
+
+#sub-btn-body
+{
+    float: right;
+    margin-right: 30px;
+    position: relative;
+    top: 2px;
+}
+
+#slist-container
+{
+    min-height: 200px;
+    background-color: #fff;
+    color: #000;
+}
+
+#ddselection
+{
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: 5px;
+}
+
+#slist-header
+{
+    background-color: #000;
+    width: 920px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+
+.sitem-container
+{
+    width: 145px;
+    margin-right: 10px;
+    float: left;
+    margin-bottom: 5px;
+}
+
+
+.sitem-container img
+{
+    width: 145px;
+    height: 200px;
+    border: 0;
+}
+
+#slist-list
+{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#slist-tlist
+{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 920px; /*-moz-column-count:5;     -moz-column-gap: 5px;     -moz-column-width: 145px;     -webkit-column-count:5;     -webkit-column-gap: 5px;     -webkit-column-width: 145px;     column-count: 5;     column-gap: 5px;     column-width: 145px;*/
+}
+
+.sitem-name
+{
+    width: 145px;
+    text-align: center;
+    min-height: 45px;
+}
+
+
+.sitem-container a
+{
+    color: #000;
+    text-decoration: none;
+}
+
+.sitem-container a:hover
+{
+    text-decoration: underline;
+}
+
+.slist-selection
+{
+    color: #fff;
+    margin-left: 10px;
+    float: left;
+}
+
+.slist-selection a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.slist-selection a:hover
+{
+    text-decoration: underline;
+}
+
+.tlist-container
+{
+    width: 145px;
+    float: left;
+    border-bottom: 1px dotted #eee;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.t-title
+{
+    font-size: 16px;
+    font-weight: bold;
+    color: #1e67b3;
+}
+
+.t-ul a
+{
+    text-decoration: none;
+    color: #000;
+}
+
+.t-ul a:hover
+{
+    text-decoration: underline;
+}
+
+.t-ul li
+{
+    line-height: 22px;
+}
+
+.s20
+{
+    font-size: 20px !important;
+}
+
+.grid-link
+{
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('images/subscribe-btn-links.png') bottom;
+    text-indent: -99999px;
+    background-position: right top;
+}
+
+.grid-link.link-selected
+{
+    background-position: right bottom;
+}
+
+.list-link.link-selected
+{
+    background-position: left bottom;
+}
+
+.list-link
+{
+    display: block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    background: url('images/subscribe-btn-links.png') bottom;
+    text-indent: -99999px;
+    background-position: left top;
+}
+
+.phighlighted
+{
+    height: 120px !important;
+    width: 240px !important;
+}
+
+.pnormal
+{
+    position: relative;
+    top: 30px;
+}
+
+.pbtext
+{
+    color: #fff;
+    background: #8b0304;
+    height: 25px;
+    font-size: 20px;
+}
+
+.pbdesc
+{
+    margin-top: 25px;
+}
+
+.pr-subscribe-details
+{
+    width: 940px;
+    min-height: 270px;
+    background-color: #fff;
+}
+
+.psd-leftBlock
+{
+    float: left;
+    width: 550px;
+    height: 270px;
+    margin-left: 10px;
+}
+
+.psd-title
+{
+    font-size: 42px;
+    font-family: "Arial Black" , Arial, Helvetica, sans-serif;
+    color: #8b0304;
+}
+
+.psd-desc
+{
+    font-size: 16px;
+    color: #a5a5a5;
+}
+
+.psd-bar
+{
+    width: 550px;
+    border-bottom: 1px solid #8b0304;
+    height: 10px;
+    line-height: 10px;
+}
+
+.psd-prd
+{
+    float: left;
+    width: 390px;
+    color: #8b0304;
+    font-weight: bold;
+}
+
+.psd-prd .amt
+{
+    float: left;
+    font-size: 38px;
+}
+
+.psd-prd .dur
+{
+    float: left;
+    width: 100px;
+    font-size: 14px;
+    position: relative;
+    top: 20px;
+}
+
+.psd-prd-breakdown
+{
+    margin-left: 15px;
+    float: left;
+    color: #000;
+    width: 140px;
+}
+
+.psd-prd-select, .psd-sub-btn
+{
+    float: left;
+}
+
+
+.psd-prd-select
+{
+    width: 200px;
+    color: #000;
+    font-weight: normal;
+    margin-top: -15px;
+}
+
+.psd-divide
+{
+    width: 1px;
+    height: 130px;
+    float: left;
+    background-color: #ccc;
+}
+
+.psd-rightBlock
+{
+    float: left;
+    height: 250px;
+    width: 370px;
+}
+
+.psd-prd-img
+{
+    width: 370px;
+    background-color: #eee;
+    height: 270px;
+}
+
+.psd-prd-img-co
+{
+    float: left;
+    width: 150px;
+}
+
+.psd-prd-img-inner
+{
+    position: relative;
+    top: 35px;
+    left: 38px;
+	z-index: 1;
+}
+
+#psd-prd-content
+{
+    margin: 5px 0 0 5px;
+}
+
+.psd-prd-left
+{
+    margin-right: 10px;
+}
+
+.choose-options
+{
+    color: #49a4ff;
+    font-size: 11px;
+    font-weight: normal;
+    float: left;
+    position: relative;
+    top: 12px;
+    left: 10px;
+}
+
+.choose-options a
+{
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+.choose-options a:hover
+{
+    text-decoration: underline;
+}
+
+.prd-selections
+{
+    width: 120px;
+    height: 57px;
+    float: left;
+    position: relative;
+    top: 3px;
+    left: 5px;
+    cursor: pointer;
+}
+
+#prd-selectors
+{
+    width: 940px;
+    height: 65px;
+    text-align: center;
+    background: #eee;
+}
+
+
+.c-premium
+{
+    display: block;
+    width: 225px;
+    height: 57px;
+    background: url('images/subscribe/spremium.png') bottom;
+    text-indent: -99999px;
+}
+
+.c-premium:hover, .c-moviechannel:hover, .c-lite:hover, .c-alacarte:hover, .c-fpjidolongpilipino:hover
+{
+    background-position: 0 0;
+}
+
+.c-hovered
+{
+    background-position: 0 0 !important;
+}
+
+.c-moviechannel
+{
+    display: block;
+    width: 225px;
+    height: 57px;
+    background: url('images/subscribe/smovie.png') bottom;
+    text-indent: -99999px;
+}
+
+.c-lite
+{
+    display: block;
+    width: 225px;
+    height: 57px;
+    background: url('images/subscribe/slite.png') bottom;
+    text-indent: -99999px;
+}
+
+.c-alacarte
+{
+    display: block;
+    width: 225px;
+    height: 57px;
+    background: url('images/subscribe/salacarte.png') bottom;
+    text-indent: -99999px;
+}
+
+.center-img
+{
+    float: none !important;
+    width: 300px !important;
+    text-align: center;
+}
+
+.psd-prd-black
+{
+    float: left;
+    width: 390px;
+    color: #000;    
+}
+
+.psd-prd .days
+{    
+    font-size: 38px;
+	color: #8b0304;
+}
+
+.psd-prd .daycopy
+{
+    float: left;    
+    font-size: 16px;
+    position: relative;
+    top: 10px;
+	margin-bottom: 10px;
+	color: #000;
+}
+.c-fpjidolongpilipino
+{
+    display: block;
+    width: 225px;
+    height: 57px;
+    background: url('images/subscribe/sfpjidolongpilipino.png') bottom;
+    text-indent: -99999px;
+}

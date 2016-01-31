@@ -1,0 +1,75 @@
+﻿.subMenu
+{
+    z-index: 5;
+}
+
+
+/* Modified Thumbnails */
+#columnLeft
+{
+    width: 100%;
+}
+
+
+/*START Header Title*/
+.fullHeader
+{
+    text-align: left;
+    padding-bottom: 5px;
+    width: 99%;
+    position: relative;
+    line-height: 28px;
+    height: 28px;
+    vertical-align: middle;
+}
+.fullHeaderFull
+{
+    vertical-align: middle;
+    padding-bottom: 8px;
+}
+.basic_section_header_title
+{
+    font-family: Vegur-Light,Arial Narrow,Helvetica,Arial,sans-serif;
+    color: white;
+    float: left;
+    font-size: 25px;
+}
+.seeAll_container
+{
+    padding-top: 10px;
+}
+.customStyleSelectBoxInner
+{
+    background: url("images/selection_arrow.png") no-repeat scroll right center transparent;
+}
+.xxlarge
+{
+    width: 210px !important;
+}
+#shows_full_header_category_dropdown
+{
+    padding-top: 5px;
+    float: right;
+    line-height: 14px;
+}
+
+span.customStyleSelectBox
+{
+    background: none repeat scroll 0 0 #666666 !important;
+    border: medium none;
+    border-radius: 5px 5px 5px 5px;
+    color: #FFFFFF !important;
+    font-size: 12px;
+    padding: 5px 7px;
+}
+
+/*END Header Title*/
+
+#featuredItems_latestEpisodes .wrapper
+{
+    padding-left: 30px;
+}
+#featuredItems_freeTV .wrapper
+{
+    padding-left: 30px;
+}

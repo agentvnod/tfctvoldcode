@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Enroll your Smart Pit Card - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Enroll SmartPit Card Number</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                <div class="rheader">
+                    Maaari na kayong magbayad at mag-load sa pinakamalapit na SmartPit Payment Terminals
+                    ng Lawson at Familymart. I-type lang sa ilalim ang inyong SmartPit Card number para
+                    ma-connect ito sa inyong TFC.tv account.
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div>
+                    <form id="spcform" method="post" action="/User/_CreateSmartPit">
+                    <div id="SPBody" class="floatLeft">
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                Smart Pit Card Number
+                            </div>
+                            <div>
+                                <input type="text" name="SmartPitCardNumber" class="textbox" id="SmartPitCardNumber" />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="clear breakStandard">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="registerBodyLow">
+                        <div>
+                            <input type="submit" class="btnimage registerbtn1" id="regsubmit" value="" /><div
+                                id="rsb-load" class="side-button-loader padLeftStandard">
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        <div>
+                            Wala ka pang SmartPit Card Number? <a href="#" id="gensmartpit" class="orange">Click
+                                here to generate</a></div>
+                        <div id="msg2">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="breakStandard clear">
+                </div>
+                <div style="text-align: left;" class="padLeftLarge rheader">
+                    <div class="formSubHeaders">
+                        Paano gamitin:</div>
+                    <ul>
+                        <li>1. Isulat ang Smart Pit number na ito at dalhin sa pinakamalapit na Lawson o Familymart.</li>
+                        <li>2. I-enter and number na ito sa Smart Pit Payment Terminal ng Lawson o Familymart.</li>
+                        <li>3. Piliin ang load amount na ¥1,000 at i-print ang resibo.</li>
+                        <li>4. Dalhin ang resibo at magbayad sa counter.</li>
+                        <li>5. Sa susunod na log-in mo sa TFC.tv, makikita mo na ang credits na binayaran mo.
+                            Maaari ka nang bumili ng kahit anong show na nais mong panoorin.</li>
+                    </ul>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner" class="register-spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "48", height = "48" })<br />
+        <span id="spannertext" class="register-spanner-text">Your registration is successful!
+            Please wait...</span>
+    </div>
+</div>
+<div class="modal" id="gensmartpit-modal">
+    <h2 class="title">
+        Information</h2>
+    <p class="message">
+    </p>
+    <span class="floatRight"><a class="close">Close this window</a> </span>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")
+    @Html.CssBuilder(Url, "ppc.css")}
+}
+@section JScriptBottom {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#spcform').validate({
+                rules: {
+                    SmartPitCardNumber: {
+                        required: true,
+                        number: true
+                    }
+                },
+                messages: {
+                    SmartPitCardNumber: {
+                        number: 'Must be numeric'
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#spcform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    $('#message').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait while we process your request...');
+                    $.post('/User/_CreateSmartPit', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#gensmartpit-modal .title').html('Success!');
+                            $('#gensmartpit-modal .message').html('Your SmartPit Card No. is <span class="boldText">' + data.spcno + '</strong>');
+                            $("#gensmartpit-modal").overlay().load();
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                        }
+                        $('#rsb-load').empty();
+                    });
+                }
+                //                else {
+                //                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                //                }
+            });
+
+            $('#CountryCode').bind('valueChange', function (e) {
+                jQuery.get('/Ajax/GetCountryState', { id: e.value }, function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        var stateDropDown = $('#StateDD').data('tDropDownList');
+                        stateDropDown.dataBind(data);
+                        $('.StateDD .t-input').text(data[0].Text);
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#freetrial").overlay({
+                top: 120,
+                mask: {
+                    color: '#000',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                closeOnClick: false,
+                load: false,
+                onClose: function () {
+                    redirectToHome();
+                }
+            });
+
+            $("#gensmartpit-modal").overlay({
+                // some mask tweaks suitable for modal dialogs
+                top: 200,
+                mask: {
+                    color: '#000',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                closeOnClick: false,
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+
+            $('#gensmartpit').click(function () {
+                $('#msg2').css('margin-top', '10px');
+                $('#msg2').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait while we process your request...');
+                $.post('/User/_CreateSmartPit', function (data) {
+                    if (data.errorCode == 0) {
+                        $('#gensmartpit-modal .title').html('Success!');
+                        $('#gensmartpit-modal .message').html('Your SmartPit Card No. is <span class="boldText">' + data.spcno + '</strong>');
+                    }
+                    else {
+                        $('#gensmartpit-modal .message').html(data.errorMessage);
+                    }
+                    $("#gensmartpit-modal").overlay().load();
+                    $('#msg2').empty();
+                });
+                return false;
+            });
+        });
+    </script>
+}

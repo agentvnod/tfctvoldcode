@@ -1,0 +1,25 @@
+﻿<div id="UserFriendsActivityFeeds">
+    <div class="scrollbar">
+        <div class="track">
+            <div id="friend-feeds-bar" class="thumb disable">
+                <div class="end">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="viewport">
+        <div id="friendsFeedsHolder" class="overview">
+            <div id="loader-UserActivityFeeds">
+                @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "", width = 50, height = 50 })</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var friendsParams = { userId: '@ViewBag.viewedUserUserId' };
+
+        $("#activitywallTabButton").live("click", function () {
+            loadFriendsFeeds(friendsParams);
+        });
+    });
+</script>

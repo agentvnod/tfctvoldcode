@@ -1,0 +1,74 @@
+﻿@model  List<CategoryShowListDisplay>
+@{
+    ViewBag.Title = "Redeem - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    var targetUserId = ViewBag.targetUserId;
+    int freeProductId = ViewBag.freeProductId;
+    string imagename = string.Empty;
+    if (freeProductId == GlobalConfig.Compensation201411ProductId1Month)
+    { imagename = "3days"; }
+    else if (freeProductId == GlobalConfig.Compensation201411ProductId3and12Month)
+    { imagename = "7days"; }
+}
+<!--  About page body -->
+<section class="page_pagebody">
+    <div class="container ib_center">
+			<div class="inaccessibility">
+				<h3 class="page_title">We're sorry if you had trouble watching TFC.TV </h3>
+				<p class="heading_pt10 heading_pb10">Due to some technical issues, you may have experienced recently some difficulty trying to access TFC.tv. </p>
+				<p class="heading_pt10 heading_pb10">We are sorry for the inconvenience this may have caused. If you attempted to visit TFC.tv the past few days and had some problems with access or were unable to watch your favorite TV episodes or movies, please claim your Complimentary Subscription Extension and Complimentary Access to a selection of Online Premiere movies within the next 7 days. </p>
+				
+				<!-- middle part -->
+				<div class="row middle">
+					<div class="col-sm-6 col-xs-12 left">
+						<div class="inner">
+							@Html.ImageBuilder(Url, String.Format("ux/{0}.jpg", imagename), new { alt = imagename })
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 right">
+						<div class="row">
+                        @{foreach (CategoryShowListDisplay show in Model)
+                          {
+                          <div class="col-xs-6">
+								<img src="@show.ImagePoster" alt="@show.Description">
+								<h4>@show.Description</h4>
+							</div>
+                          }
+                        }
+						</div>
+					</div>
+				</div> <!-- /middle part -->
+				<p class="heading_pt10 heading_pb10">Again, we apologize for the inconvenience and thank you for your patience and understanding. If you need further assistance, please visit the TFC.tv Help Center at <a href="/Help/Index">http://tfc.tv/Help</a> </p>
+				<p class="heading_pt10 heading_pb10">
+                <form id="claimForm" method="post" role="form" action="/Free/_Claim201411">
+                <input type="hidden" id="targetUserId" name="targetUserId" value="@targetUserId">
+                <input id="claimButton" type="submit" type="button" class="red_button" value="REDEEM >>">
+                </input>
+                
+                 </form>
+                </p>
+			</div>
+		</div>
+    <!-- END container -->
+</section>
+<!-- END About page body -->
+@section MetaTags{
+    <meta name="description" content="TFC.tv is an internet-based video-on-demand and live broadcast service featuring television programs and video content from the Philippines' leading channel ABS-CBN. It provides exclusive access to ABS-CBN’s latest news, entertainment & movies that can be viewed using their laptop or personal computer." />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="TFC.tv" />
+    <meta property="og:description" content="TFC.tv is an internet-based video-on-demand and live broadcast service featuring television programs and video content from the Philippines' leading channel ABS-CBN. It provides exclusive access to ABS-CBN’s latest news, entertainment & movies that can be viewed using their laptop or personal computer." />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}
+@section JScriptBottom{
+    <script type="text/javascript">
+        $('#claimForm').submit(function (event) {
+            $('#claimButton').prop('disabled', true);
+        });
+    </script>
+}

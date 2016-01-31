@@ -1,0 +1,7 @@
+# git ignore file
+*.zip
+*.orig
+*.suo
+
+# Build Folders
+!CodeScales.Http.dll

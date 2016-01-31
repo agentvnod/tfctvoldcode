@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Earn promo entries and win!";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    bool isLoggedIn = MyUtility.isUserLoggedIn();
+}
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="main-container">
+            <div class="main-banner-img">
+                @Html.ImageBuilder(Url, "banners/annivpromotopbanner960x141.png", new { style = "z-index: -11;", width = "940", height = "141", title = "FAN MOB", alt = "FAN MOB" })
+            </div>
+            <div class="breakSmall">
+            </div>
+            <div class="main-container-links">
+                @Html.ActionLink("MAIN PAGE", "Index") @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("JOIN", "Mechanics")
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div class="main-container-body">
+                <div class="enter-text-header main-container-title">
+                    HOW TO JOIN
+                </div>
+                <div class="enter-text-steps">
+                    <ol class="enter-steps">
+                        <li>
+                            <p>
+                                CONNECT
+                                @if ((bool)ViewBag.isSociallyConnected)
+                                { <span class="stepComplete"> COMPLETED! Proceed to Step 2.</span>}
+                                else {
+                                <span class="stepComplete" id="step1Msg"></span>
+                                }</p>
+                            <div class="connect-social-large-icons">
+                                @if (!MyUtility.isUserLoggedIn())
+                                {<p>
+                                    Register using your Social Accounts</p>
+                                    <div id="socializePanelPromo">
+                                    </div> }
+                                else
+                                {<p>
+                                    Manage your Social Accounts</p>
+                                    <div style="border: 1px solid #000000" id="manageSocialConnection">
+                                    </div> }
+                            </div>
+                            @if (!MyUtility.isUserLoggedIn())
+                            {<p class="prf-link">
+                                Already have an account? <a href="#" class="signinBtns">Sign In</a> now.</p> }
+                        </li>
+                        <li>
+                            @{using (Html.BeginForm("_EnterPromo", "FanMobPromo", FormMethod.Post, new { id = "regform" }))
+                              { 
+                                <text>
+                                <p>
+                                    ACCEPT <span id="step2" class="stepComplete hideElement">COMPLETED! Click Join Now!
+                                        button.</span></p>
+                                <p class="prf-link">
+                                    <input type="checkbox" id="terms" name="terms" value="0" />I have read and agreed
+                                    to the @Html.ActionLink("Terms and Conditions", "Mechanics", "FanMobPromo", new { id = "termsLink" })<br />
+                                    <span class="errstatus smallfont"></span>
+                                </p>
+                                <br />
+                                <div class="clear">@Html.AntiForgeryToken()</div>
+                                </text>
+                                  if (isLoggedIn)
+                                  {
+                                      if (!((bool)ViewBag.isSociallyConnected))
+                                      {<div class="nbutton no-decor">
+                                          CONNECT A SOCIAL NETWORK TO JOIN</div> }
+                                      else
+                                      {
+                                <input type="submit" class="nbutton no-decor" id="regsubmit" value="Join Now!" />}
+                                  }
+
+                                  else
+                                  { <div id="signinButton" class="nbutton no-decor signinBtns">
+                                      LOG IN TO JOIN</div> }
+                              }
+                            }
+                        </li>
+                    </ol>
+                </div>
+                <div id="notificationMsg" class="hideElement">
+                    <span style="color: Red;">Success!</span> You have now joined the promo. Redirecting
+                    in 5 seconds.
+                </div>
+            </div>
+            <div class="clear breakStandard">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="apple_overlay" id="overlay">
+    <div class="contentWrap">
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    @Html.CssBuilder(Url, "register.1.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "whitelayout-1.2.css")
+}
+@section JScriptBottom{
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    terms: { required: true }
+                },
+                messages: {
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $.post('/FanMobPromo/_EnterPromo', form.find('input, select').serialize(), function (data) {
+                        if (data.StatusCode == 0) {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html('<span style="color: Red;">Congratulations!</span> ' + data.StatusMessage + ' Redirecting in 5 seconds.');
+                            setTimeout(function () { window.location.href = '/FanMobPromo/Profile'; }, 5000);
+                        } else {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html(data.StatusMessage);
+                        }
+                    }).fail(function () {
+                        $('#notificationMsg').removeClass('hideElement');
+                        $('#notificationMsg').html(data.StatusMessage);
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+
+        });
+        $(document).on('click', '.signinBtns', function () {
+            $('#signin').click();
+            return false;
+        });
+        $(document).on('click', '#terms', function () {
+            if ($('#terms').is(':checked'))
+                $('#step2').removeClass("hideElement");
+            else
+                $('#step2').addClass("hideElement");
+        });
+    </script>
+    <script type="text/javascript">
+        $.getScript(socialPluginUrl).done(function () {
+            tfc.Social();
+            var promoparams = { container: 'socializePanelPromo', width: 375, height: 40, style: 'fullLogo', enabledProviders: '@GlobalConfig.SocialProvidersList', buttonSize: 40
+            };
+            tfc.Social.Login(promoparams);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#termsLink').on('click', function () {
+                var windowWidth = 940; var windowHeight = 1200;
+                var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                var windowTop = parseInt((screen.availHeight / 2) - (windowHeight / 2));
+                var mywindow = window.open("/FanMobPromo/Mechanics#promoTextStart", "promotermswindow", "menubar=0,resizable=0,scrollbars=1,width=" + windowWidth + ",height=" + windowHeight + ",left=" + windowLeft + ",top=" + windowTop + ",location=0,directories=0,status=1");
+                mywindow.focus();
+                return false;
+            });
+        });
+    </script>
+}

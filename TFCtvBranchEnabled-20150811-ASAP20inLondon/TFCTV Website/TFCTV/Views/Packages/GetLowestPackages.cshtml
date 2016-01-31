@@ -1,0 +1,33 @@
+﻿@model PackageProductPrices
+<div class="breakLarge clear">
+</div>
+<div style="margin: 0 auto; width: 720px;">
+    @{if (Model != null)
+      {
+          if (Model.ShowPackageGroupProductList != null)
+          {
+              foreach (var item in Model.ShowPackageGroupProductList)
+              {
+                  if (item.Product2 != null)
+                  {
+                      foreach (var product in item.Product2.OrderBy(p => p.ProductPrice.Amount).Take(1))
+                      {
+                          var className = ContextHelper.GetProductName(product.ProductId).Replace("TFC.tv", "").Replace(" ", "").Replace("Channel", "").ToLower();
+                          className = MyUtility.ToUpperFirstLetter(className);
+                          var packageId = ContextHelper.GetPackageFromProductId(product.ProductId);
+        <text> <a href="@String.Format("#Go{0}", className)">
+            <div class="floatLeft" style="margin-right: 10px;"  onclick="GetProductsOnClick(@packageId)">
+                @Html.ImageBuilder(Url, String.Format("package/buttons/img_{0}.png", packageId), new { width = 227 })
+                <div style="background-color: #E95D0A; font-size: 12px; color: #fff; margin-top: -3px;">
+                    SUBSCRIBE FOR AS LOW AS @product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </div>
+        </a>
+        </text>
+                      }
+                  }
+              }
+          }
+      }
+    }
+</div>

@@ -1,0 +1,113 @@
+﻿@{
+    string sslUrl = String.Empty;
+    if (GlobalConfig.IsSSLEnabled)
+    {
+        Uri url = Request.Url;
+        sslUrl = url.GetLeftPart(UriPartial.Authority).Replace("http://", "https://");
+    }
+}
+<div id="prepaidCardContainer" class="padLeftStandard">
+    @*<div class="breakStandard">
+    </div>
+     <div class="formSubHeaders">
+        Enter your Prepaid Card
+    </div>
+    <div class="breakStandard">
+    </div>*@
+    <div class="paymentSubHeaders">
+        Please enter the serial number and pin found at the back of the prepaid card.
+    </div>
+    <div class="breakSmall">
+    </div>
+    <div>
+        <span>Click <a href="/Find-A-Dealer" class="orange">here</a> to locate TFC.tv dealers
+            available in your area.</span></div>
+    <div class="breakStandard">
+    </div>
+    <div id="presult">
+    </div>
+    <div id="enterPin">
+        <form id="rprepaidform" method="post" action="@sslUrl/Reload/ReloadViaPrepaidCard">
+        <div>
+            Serial Number</div>
+        <div>
+            <input id="serialnumber" name="serialnumber" maxlength="16" class="ppinput" />
+            <span class="perrstatus"></span>
+        </div>
+        <div>
+            PIN</div>
+        <div>
+            <input id="pin" name="pin" maxlength="16" class="ppinput" />
+            <span class="perrstatus"></span>
+        </div>
+        <div class="breakSmall">
+        </div>
+        <div>
+            <input type="submit" id="cmdSubmit" class="btnimage submitbtn floatLeft" value="submit"
+                name="submit" /><div id="rsb-load" class="side-button-loader padLeftStandard">
+                </div>
+        </div>
+        </form>
+    </div>
+    <div class="clear breakStandard">
+    </div>
+</div>
+@*@Html.JsBuilder(Url, "jquery.validate.min.js")*@
+<script type="text/javascript">
+    function OnConfirmReload(data) {
+        if (data.errorCode == 0) {
+            $('#enterPin').html('You have now reloaded your E-Wallet.<br />' + data.errorMessage);
+        }
+        else
+            $('#presult').html(data.errorMessage);
+        $('#prepaidCardContainer').show();
+    }
+
+    function hidePrepaidContainer() {
+        $('#prepaidCardContainer').hide();
+    }
+
+    $(document).ready(function () {
+        $.getScript('@Html.ContentBuilder(Url, "scripts/jquery.validate.min.js")').done(function () {
+            var ppcvalidator = $('form#rprepaidform').validate({
+                rules: {
+                    serialnumber: {
+                        required: true
+                    },
+                    pin: { required: true }
+                },
+                messages: {
+                    serialnumber: {
+                        required: 'This field is required.'
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.perrstatus'));
+                }
+            });
+
+            $('form#rprepaidform').submit(function (event) {
+                event.preventDefault();
+                if (ppcvalidator.numberOfInvalids() == 0) {
+                    $('#cmdSubmit').attr('disabled', 'disabled');
+                    $('#presult').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading..." })');
+                    $.post($(this).attr('action'), form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('.ppinput').val('');
+                            $('#presult').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty();
+                            getUserBalance();
+                        }
+                        else {
+                            $('#presult').html(createError(data.errorMessage) + '<div class="breakStandard"></div>'); $('#rsb-load').empty();
+                        }
+                        $('#cmdSubmit').removeAttr('disabled');
+                    });
+                }
+            });
+        });
+    });
+
+</script>

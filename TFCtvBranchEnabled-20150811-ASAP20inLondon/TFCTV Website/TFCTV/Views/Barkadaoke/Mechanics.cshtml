@@ -1,0 +1,282 @@
+﻿@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", "Barkadaoke");
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="breakStandard">
+        </div>
+        <!-- click tayo header -->
+        <div style="margin-top: -10px;">
+            @Html.ImageBuilder(Url, "banners/barkadaoke.jpg", new { title = "Barkadaoke", alt = "Barkadaoke", width = 940 })</div>
+        <div>
+            <a href="@Url.Action("Index", "Barkadaoke")" class="record-btn white">Record</a><a href="@Url.Action("Gallery", "Barkadaoke")" class="gallery-btn white">Gallery</a>
+            <a href="@Url.Action("Mechanics", "Barkadaoke")" class="mechanics-btn white">Mechanics</a><a href="@Url.Action("Prizes", "Barkadaoke")" class="prizes-btn white">
+                Prizes</a>
+        </div>
+        <div id="video-list">
+            <div class="breakLarge">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="yt-videos">
+                <div style="color: #fff; font-size: 18px; font-weight: bold; margin-top: 30px;">
+                    It's your time to shine, Kapamilya!
+                </div>
+                <div>
+                    <div class="breakLarge">
+                    </div>
+                    <div style="color: #49a4ff; font-size: 16px; font-weight: bold;">
+                        Win top of the line Samsung Netbooks weekly and a Samsung Ultrabook Series 5 for
+                        the grand prize!
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="white" style="font-size: 14px; font-weight: bold;">
+                        Instructions
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="white" style="text-align: left; margin-left: 30%; line-height: 18px;">
+                        <ul>
+                            <li>1. Click on the Record tab of the Barkadaoke page</li>
+                            <li>2. Click on Start Now and record your own Click Tayo! music video</li>
+                            <li>3. Submit your video and share it with your friends on Facebook and Twitter</li>
+                            <li>4. Tell your friends to watch, share and love your video on TFC.tv</li>
+                        </ul>
+                    </div>
+                    <p class="white" style="text-align: left; margin-left: 100px; width: 760px;">
+                        Every week, the video entry with the most Loves will get a chance to win Samsung
+                        Netbooks. The most loved and most creative video entry will win the Samsung Ultrabook
+                        Series 5 grand prize by the end of the promo.
+                    </p>
+                    <div>
+                        <a href="#" id="fullmechs" class="light-blue" style="font-size: 15px;">View Full Mechanics
+                            and Terms and Conditions of the TFC.tv Barkadaoke Contest</a></div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div id="fullMechanics" class="hideElement">
+                        <div style="color: #49a4ff; font-size: 16px; font-weight: bold;">
+                            MECHANICS AND TERMS AND CONDITIONS OF THE TFC.tv BARKADAOKE CONTEST
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        <div class="white" style="text-align: left; margin-left: 100px; width: 760px; line-height: 20px;">
+                            <ul>
+                                <li>1. Registered TFC.tv users (the "Participant") may join the TFC.tv Barkadaoke contest
+                                    (the "Contest"). The Contest is organized and conducted by TFC.tv. The objective
+                                    of the Contest is to encourage Participants to creatively develop their own version
+                                    of the Click Tayo! music video that demonstrates the promise of the TFC.tv brand,
+                                    "Saan ka man sa mundo, Click Tayo sa TFC.tv."</li>
+                                <li>2. ABS-CBN employees, service provider and their relatives up to the 2nd degree
+                                    of consanguinity and affinity are not allowed to join the Contest.</li>
+                                <li>3. The Contest shall run from October 10, 2012 to November 28, 2012 ("Contest Period").
+                                </li>
+                                <li>4. To join the Contest, a Participant must visit TFC.tv website at http://TFC.tv
+                                    (the "TFC.tv Website") and click on the Barkadaoke carousel on the TFC.tv Website
+                                    homepage that will direct the Participant to the Barkadaoke webpage. In the Barkadaoke
+                                    webpage, the Participant may record his/her own lip synch video of the song "Barkada"
+                                    by Chocolate Beef (the "Song") by clicking the START NOW button. If the Participant
+                                    has not yet signed in to TFC.tv Website, a message will appear requesting the Participant
+                                    to log in. If the Participant has already signed in to TFC.tv Website, the Participant
+                                    will be directed to a page where the Participant can start recording his/her own
+                                    lip synch video (the "Video"). </li>
+                                <li>5. The Participant will be asked to click the red button at the center of the webpage
+                                    to start the recording of the Video. The lyrics of the song will appear at the bottom
+                                    of the screen similar to a videoke. </li>
+                                <li>6. After the recording is finished, the Participant will be able to preview the
+                                    Video he/she recorded. A message will appear on screen asking the Participant to
+                                    select if he/she will save the Video (Participant will click the SAVE button) or
+                                    record another Video (Participant will click the TRY AGAIN button). If Participant
+                                    will click the TRY AGAIN button, the previous Video will not be saved and Participant
+                                    will be given the chance to record another Video.</li>
+                                <li>7. If Participant saved the Video, a message will appear asking the participant
+                                    if he/she would like to submit the Video. (In such case, Participant will click
+                                    the SUBMIT button) or if participant wants to record another Video (Participant
+                                    will click TRY AGAIN button). If Participant will click the TRY AGAIN button, the
+                                    previous Video will not be saved and Participant will be given the chance to record
+                                    another Video.</li>
+                                <li>8. If the Participant submitted the Video, a message will appear asking the Participant
+                                    to confirm if he/she wants to upload the Video. Before uploading the Video, Participant
+                                    will also be asked to confirm that he/she has read, fully understood and accepted
+                                    the Mechanics and Terms and Conditions of the Barkadaoke contest.</li>
+                                <li>9. Once Participant confirms that he/she wants to upload the Video and has read,
+                                    fully understood and accepted the Mechanics and Terms and Conditions, a message
+                                    will appear informing Participant that his/her Video is being uploaded. Once uploading
+                                    is finished, a message will appear advising Participant that the Video has been
+                                    uploaded and that the Video will be posted in the Gallery section of the Barkadaoke
+                                    page in a short while and that if the Participant wins the contest, he will receive
+                                    an email notice from TFC.tv.</li>
+                                <li>10. The Participant may invite other people who are willing to perform for, and
+                                    have their performances, images and likeness exhibited, portrayed, aired, used and
+                                    recorded in the Video and submitted to and for the Contest under the terms and conditions
+                                    of this Mechanics (the "Other Performers"). </li>
+                                <li>11. To qualify as an entry for the Contest, the Video must show the Participant/with
+                                    the Other Performers singing, performing or doing a lipsynch of the Song for the
+                                    whole duration of the allotted time in the Barkadaoke. The Participant/with the
+                                    Other Performers may dance, act and may be creative in his/her/their performance
+                                    (the "Entry"). Any and all Videos which do not meet any of these requirements shall
+                                    not be qualified as an entry to the Contest.</li>
+                                <li>12. A Participant may submit only one Entry to the Contest. The Other Performers
+                                    may submit their own Entry to the Contest.</li>
+                                <li>13. Other registered TFC.tv users may visit the Gallery section of the Barkadaoke
+                                    page to view the Videos posted by those who joined the Contest and to click the
+                                    "love" button of the Video. For each Video, a registered TFC.tv user can click the
+                                    "love" button only once. </li>
+                                <li>14. Every week during the Contest Period, TFC.tv will choose one (1) Entry from
+                                    all Entries submitted as the winner for that week (the "Weekly Winner'). All Entries
+                                    submitted on or before 11:59 pm (San Francisco Time) on Tuesday of each week shall
+                                    be included in the selection of the Weekly Winner. The Weekly Winner will be announced
+                                    on the Friday following the relevant week on TFC.tv and on the Facebook pages of
+                                    ABS-CBN.</li>
+                                <li>15. The Video with the most number of "loves" as of 11:59 pm (San Francisco Time)
+                                    on Tuesday of each week will be declared by the Board of Judges as the winner. The
+                                    decision of the Board of Judges is final.</li>
+                                <li>16. TFC.tv will choose one (1) Weekly Winner for each of the following weeks during
+                                    the Contest Period:
+                                    <div class="breakStandard">
+                                    </div>
+                                    <div style="margin-left: 50px; width: 500px;" class="white">
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 1</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            October 10, 2012 – October 16, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 2</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            October 17, 2012 – October 23, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 3</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            October 24, 2012 – October 30, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 4</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            October 31, 2012 – November 6, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 5</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            November 7, 2012 – November 13, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 6</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            November 14, 2012 – November 20, 2012</div>
+                                        <div class="floatLeft" style="width: 100px; font-weight: bold;">
+                                            Week 7</div>
+                                        <div class="floatLeft" style="width: 400px;">
+                                            November 21, 2012 – November 27, 2012</div>
+                                    </div>
+                                    <div class="clear breakStandard">
+                                    </div>
+                                </li>
+                                <li>17. The Participant who submitted the winning Entry chosen as the Weekly Winner
+                                    will receive a Samsung Notebook. The Prize is not convertible to cash.</li>
+                                <li>18. On November 28, 2012, the Board of Judges will select one (1) Grand Winner from
+                                    all the Entries submitted during the Contest Period, including the Entries of the
+                                    Weekly Winners. The decision of the Board of Judges is final and not appealable.</li>
+                                <li>19. The Board of Judges will select the Grand Winner based on the following criteria:
+                                    <ul style="margin-left: 50px;">
+                                        <li>50% - Number of “loves” for the Video Entry</li><li>25% - Creativity</li><li>25%
+                                            - Over-all appeal of the Video Entry</li></ul>
+                                </li>
+                                <li>20. The Participant who submitted the Entry chosen as the Grand Winner will receive
+                                    Samsung Ultrabook Series 5. Prize is not convertible to cash.</li>
+                                <li>21. TFC.tv will send a notice will be sent to the registered e-mail address of the
+                                    Participant/s who submitted the Entries adjudged as the Weekly Winners and the Grand
+                                    Winner. The notice will provide instructions on how the prizes for the Weekly and
+                                    Grand winners can be claimed.</li>
+                                <li>22. Any and all taxes or levies which may be imposed in connection with the Prizes
+                                    shall be for the sole account of the Participant who submitted the Weekly Winner/s
+                                    or the Grand Winner, as the case may be.</li>
+                                <li>23. By submitting his/her Video and/or submitting an Entry for the Contest, the
+                                    Participant agrees that:
+                                    <ul style="margin-left: 50px;">
+                                        <li>a.) The Participant warrants that his/her Video/Entry submitted does not contain
+                                            illegal, obscene, defamatory, objectionable or infringing material. The Participant
+                                            understands and agrees that TFC.tv does not support nor endorse any Video/Entry
+                                            submitted by the Participant and such Video/Entry does not necessarily reflect the
+                                            opinion or policies of TFC.tv, nor of their employees, directors, shareholders,
+                                            officers, agents, or representatives.</li>
+                                        <li>b.) The Participant represents and warrants that he owns, and/or has secured any
+                                            and all necessary rights in and to his/her Video/Entry. He/she also represents and
+                                            warrants that his/herVideo/Entry does not violate the right of any party or entity,
+                                            including but not limited to invasion of privacy or infringement of intellectual
+                                            property rights. </li>
+                                        <li>c.) The Participant represents, confirms and warrants that he/she has secured the
+                                            necessary consent of and authorization from any and all of the Other Performers
+                                            or persons appearing or involved in the Video/Entry in connection with the their
+                                            appearance on, performance and involvement in the Video/Entry, the recording, posting,
+                                            submission, exhibition, airing, broadcast, display, preproduction, adaptation, modification,
+                                            translation, publication, distribution and use of their performances, names, images
+                                            and likeness in the Video/Entry for the Contest on TFC.tv, and for and any and all
+                                            programs, channels and platforms now existing or hereafter developed, of ABS-CBN,
+                                            its parent, subsidiaries and affiliates, worldwide and in perpetuity. </li>
+                                        <li>d.) The Participant hereby grants TFC.tv, ABS-CBN and its Subsidiaries and Affiliates
+                                            an unencumbered, perpetual, irrevocable, worldwide, royalty-free, and non-exclusive
+                                            license to use, reproduce, adapt, modify, translate, publish, exhibit, broadcast,
+                                            rebroadcast, encode, compress, encrypt, synchronize, publicly perform and distribute
+                                            his/her Video/Entry, in whole or in part, in any and all media or platform now existing
+                                            or hereinafter developed.</li>
+                                        <li>e.) For avoidance of doubt, the Participant gives his/her consent, without compensation
+                                            to TFC.tv to use his/her Video for publicity and promotional purposes in connection
+                                            with TFC.tv.</li>
+                                        <li>f.) The submission of the Video, in whole or in part, does not establish or create
+                                            by any express or implied relationship betweenTFC.tv, ABS-CBN, its Subsidiaries
+                                            and Affiliates and the Participant including but not limited to any relationship
+                                            of principal and agent.</li>
+                                        <li>g.) TFC.tv will not return the Video to you. Upon submission, it will become the
+                                            property of TFC.tv and may be discarded without notice. TFC.tv, ABS-CBN and its
+                                            Subsidiaries and Affiliates shall not be liable in any way if the Video or part
+                                            of it is lost, misplaced, stolen or destroyed.</li>
+                                        <li>h.) TFC.tv reserves the right, but shall have no obligation, to pre-screen, review,
+                                            edit, modify, flag, refuse, disqualify or remove any Video/Entry submitted for the
+                                            Contest or made available on the Barkadaoke Page upon TFC.tv’s reasonable belief
+                                            that such Video/Entry is offensive, indecent, objectionable, infringes the right
+                                            of a person or entity, or for any reason whatsoever, at any time. </li>
+                                        <li>i.) The Participant agrees to indemnify and hold ABS-CBN, its Subsidiaries and Affiliates,
+                                            their employees, directors, shareholders, officers, agents, or representatives,
+                                            free and harmless from and against any claim, suit, liability or damages which may
+                                            arise out of or in connection his/her Video/Entry and the submission thereof in
+                                            and to the Contest. </li>
+                                        <li>j.) The Participant hereby waives any legal or equitable right or remedy he/she
+                                            may have against ABS-CBN, its Subsidiaries and Affiliates, their employees, directors,
+                                            shareholders, officers, agents, or representatives with respect to the Video/Entry
+                                            he/she submitted for the Contest.</li>
+                                        <li>k.) The foregoing terms and conditions shall apply to any person/entity who submits
+                                            a Video for the Contest, or makes available a Video on the Barkadaoke webpage, even
+                                            if his/her Video does not qualify as an Entry.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear breakLarge">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "barkadaoke.css")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#fullmechs').click(function () {
+                $('#fullMechanics').show();
+                return false;
+            });
+        });
+    </script>
+}

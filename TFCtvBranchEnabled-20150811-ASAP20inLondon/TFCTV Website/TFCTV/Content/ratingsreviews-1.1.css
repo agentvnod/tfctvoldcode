@@ -1,0 +1,139 @@
+﻿.gig-comments-commentList-header
+{
+	padding-top:0px !important;
+}
+
+.gig-comments-commentBox-bottom
+{
+	margin-top:0px !important;
+}
+
+.gig-comments-commentBox
+{
+	background-color:White !important;
+	padding:5px 5px 5px 5px !important;	
+}
+
+.gig-validation-error
+{
+	background-color:Red !important;
+	color:White !important;
+	font-weight:bold;
+}
+
+.gig-comments-comment
+{
+	background-color:transparent !important;
+}
+
+.gig-comments-comment-child
+{
+	background-color:transparent !important;	
+}
+
+.gig-comments-comment-time
+{
+	color:#FFFFFF !important;
+}
+
+.gig-comments-comment-body
+{
+	color:#FFFFFF !important;
+}
+
+.gig-comments-vote-value
+{
+	color:#FFFFFF !important;
+}
+
+.gig-comments-shareTo
+{
+	color:#FFFFFF !important;
+}
+ 
+.gig-comments-commentList-header
+{
+	color:#FFFFFF !important;
+}
+
+.gig-comments-commentBox
+{
+	margin-top:5px !important;
+}
+
+#social_component
+{
+	/*margin-top: 10px;	*/
+}
+
+#ratingDiv
+{
+	width:370px;
+	color:#4E4E4E;
+}
+
+#ShareThisShow
+{
+	float:left;	
+}
+
+#componentDiv
+{
+	float:left;	
+	margin-left: 5px;
+}
+
+.user-reaction
+{
+	display: inline-block;
+	padding-top: 2px;
+}
+
+#celebrity-comment
+{
+	overflow-y: auto;
+	height: auto;
+	/*background-color: #4a4a4a; #FFFFFF; */
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	margin-top: 0px;
+}
+
+#ratings-and-review
+{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.reviews-comments-Header
+{
+	line-height: 28px;
+	height: 28px;
+	width: 900px;
+	border-bottom: 1px solid #5e5e5e;
+}
+
+.gig-comments-commentList-header
+{
+	padding-top:0px;
+}
+
+.comments-header
+{
+	color: #FFFFFF;
+	font-size: 25px;
+}
+
+.h2-comments-header { font-weight:normal; margin: 0; color: #fff; font-size: 25px;}
+
+#episode-ratings-reviews, #category-ratings-reviews, #celebrity-comments
+{	
+	height: auto;
+	width: 900px;
+	margin: 0 auto;
+	background-color: #fff;
+	color: #000;
+}
+
+#commentsDiv { padding: 10px; }

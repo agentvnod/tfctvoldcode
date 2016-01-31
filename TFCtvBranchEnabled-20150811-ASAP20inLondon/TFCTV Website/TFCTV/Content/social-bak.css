@@ -1,0 +1,83 @@
+﻿/* File Created: January 27, 2012 */
+#socialPanel
+{
+    margin: 0;
+    padding: 0; /*background-color: #031b35;*/ /*background-color: #1e67b3;*/
+    font-family: Helvetica Neue, Arial, Helvetica, Sans-Serif;
+    font-size: 12px;
+    color: #fff;
+    height: 240px;
+}
+
+.subtext
+{
+    color: #fff;
+    font-size: 12px;
+    padding-bottom: 20px;
+}
+
+#socialPanel .leftPanel
+{
+    width: 345px;
+    min-height: 100%;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 20px;
+    border-right: 2px dotted #eee;
+}
+
+#socialPanel .rightPanel
+{
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+#socialPanel .input
+{
+    width: 180px;
+    font-size: 12px;
+}
+
+.editor-label
+{
+    width: 100px;
+}
+
+.errors
+{
+    color: #ff0000;
+    font-size: 11px;
+}
+
+.status
+{
+    color: #ff0000;
+    font-size: 11px;
+}
+
+.centerspanner
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 0;
+    color: #000;
+    width: 940px;
+    vertical-align: middle;
+}
+
+.centerspannerimg
+{
+    margin: auto;
+    margin-top: 10%;
+    width: 36px;
+    height: 36px;
+}
+
+.sheader
+{
+    color: #73cff4;
+    font-size: 20px;
+}

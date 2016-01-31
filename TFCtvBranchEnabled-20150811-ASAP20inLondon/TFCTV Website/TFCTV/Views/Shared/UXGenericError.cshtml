@@ -1,0 +1,44 @@
+﻿@model TransactionReturnType
+@{
+    ViewBag.Title = "Something went wrong with your request - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+}
+<!--  Error page body -->
+<section class="page_pagebody termsCond_pagebody">
+    <div class="container">
+        <h1 class="page_title clearfix">
+            Error details</h1>
+        <h5>
+            Date occurred</h5>
+        <p>@DateTime.Now</p>
+        @{if (Request.UrlReferrer != null)
+          {
+            <h5>
+                Referrer
+            </h5>
+            <p>@Request.UrlReferrer.AbsoluteUri</p>
+          }              
+        }
+        <h5>
+            Description
+        </h5>
+        <p>
+            @Html.Raw(Model.StatusMessage)</p>
+        <!-- END container -->
+    </div>
+    <br />
+</section>
+<!-- END Error page body -->
+@section MetaTags{
+    <meta name="description" content="As the official ABS-CBN online platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium subscription based videos from ABS-CBN." />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="TFC.tv" />
+    <meta property="og:description" content="As the official ABS-CBN online platform of The Filipino Channel (TFC), we are the largest, most complete and up-to-date source of free and premium subscription based videos from ABS-CBN." />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--<DiagnosticMonitorConfiguration xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration"
+    configurationChangePollInterval="PT1M"
+    overallQuotaInMB="4080">
+
+    --><!--<DiagnosticInfrastructureLogs bufferQuotaInMB="1024" scheduledTransferLogLevelFilter="Verbose" scheduledTransferPeriod="PT1M" />--><!--
+
+    <Logs bufferQuotaInMB="512"
+       scheduledTransferLogLevelFilter="Verbose"
+       scheduledTransferPeriod="PT1M"  />
+
+    <Directories bufferQuotaInMB="768" scheduledTransferPeriod="PT1M">
+        --><!--<CrashDumps container="wad-crash-dumps" directoryQuotaInMB="256" />--><!--
+        <FailedRequestLogs container="wad-iis-failedreqlogfiles" directoryQuotaInMB="350" />
+        <IISLogs container="wad-iis-logfiles" directoryQuotaInMB="350" />
+
+        --><!--<DataSources>
+            <DirectoryConfiguration container="wad-panther" directoryQuotaInMB="128">                
+                <Absolute expandEnvironment="true" path="%SystemRoot%\system32\sysprep\Panther" />
+            </DirectoryConfiguration>
+            <DirectoryConfiguration container="wad-custom" directoryQuotaInMB="128">                
+                <LocalResource name="DiagnosticStore" relativePath="logs" />
+            </DirectoryConfiguration>
+        </DataSources>--><!--
+    </Directories>
+
+    <PerformanceCounters bufferQuotaInMB="1754" scheduledTransferPeriod="PT1M">
+        <PerformanceCounterConfiguration counterSpecifier="\Processor(_Total)\% Processor Time" sampleRate="PT1M" />
+    </PerformanceCounters>
+
+    <WindowsEventLog bufferQuotaInMB="512" scheduledTransferLogLevelFilter="Verbose" scheduledTransferPeriod="PT1M">
+        <DataSource name="Application!*" />
+    </WindowsEventLog>
+</DiagnosticMonitorConfiguration>-->
+
+<DiagnosticMonitorConfiguration xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration"
+    configurationChangePollInterval="PT1M"
+    overallQuotaInMB="3734">
+
+    <Logs bufferQuotaInMB="512"
+       scheduledTransferLogLevelFilter="Information"
+       scheduledTransferPeriod="PT1M"  />
+
+    <Directories bufferQuotaInMB="768" scheduledTransferPeriod="PT1M">
+        <FailedRequestLogs container="wad-iis-failedreqlogfiles" directoryQuotaInMB="350" />
+        <IISLogs container="wad-iis-logfiles" directoryQuotaInMB="350" />
+    </Directories>
+
+    <PerformanceCounters bufferQuotaInMB="1754" scheduledTransferPeriod="PT1M">
+        <PerformanceCounterConfiguration counterSpecifier="\Processor(_Total)\% Processor Time" sampleRate="PT1M"/>
+    </PerformanceCounters>
+</DiagnosticMonitorConfiguration>

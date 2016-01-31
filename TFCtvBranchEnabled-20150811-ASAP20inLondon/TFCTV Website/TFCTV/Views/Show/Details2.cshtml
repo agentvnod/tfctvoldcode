@@ -1,0 +1,408 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Show
+@{
+    string titleDesc = "Watch Episodes on TFC.tv: Official ABS-CBN Online Channel";
+    if (Model is IPTV2_Model.DailyShow)
+    {
+        titleDesc = "Watch All Episodes on TFC.tv: Official ABS-CBN Online Channel";
+    }
+    ViewBag.Title = String.Format("{0} - {1}", Model.Description, titleDesc);
+
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    int episodeCount = 0;
+    if (ViewBag.EpisodeCount != null)
+    {
+        episodeCount = ViewBag.EpisodeCount;
+    }
+
+    /* ShareBar Metadata */
+    string title = Model.Description;
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Model.ImagePoster);
+    string description = MyUtility.trimmer.Replace(Model.Blurb.Ellipsis(160), " ");
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = description,
+        containerId = "shareDiv",
+        elementType = "show",
+        id = Model.CategoryId
+    };
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}, {1}", title, Model.Blurb);
+    metaDescription = MyUtility.trimmer.Replace(metaDescription, " ");
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "video.tv_show";
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Show_{0}", Model.CategoryId);
+    string categoryID = "Shows";
+
+    /* Robot Crawlability */
+    var noCommentText = String.Format("There are no comments available for {0}", title);
+    bool IsAjaxCrawlable = Request.IsAjaxCrawlingCapable();
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj,
+        IsAjaxCrawlable = IsAjaxCrawlable
+    };
+
+    /* RatingsUI Obj */
+    var RatingsObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        linkedCommentsUI = "commentsDiv",
+        containerId = "ratingDiv",
+        ShareObj = ShareObj
+    };
+
+    /* Reactions Obj */
+    var ReactionsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "reactionsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    string red_button_copy = "start your free trial";
+    string red_button_href = Url.Action("Register", "User").ToString();
+
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+    if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            red_button_copy = "subscribe now";
+            red_button_href = Url.Action("Details", "Subscribe").ToString();
+        }
+    }
+    else
+    {
+        red_button_copy = String.Empty;
+        if (HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+        {
+            red_button_copy = "subscribe now";
+            red_button_href = Url.Action("Details", "Subscribe").ToString();
+        }
+    }
+
+    /* banner */
+    string banner = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Model.ImageBanner);
+    string themedBackground = String.IsNullOrEmpty(Model.ThemeCss) ? String.Empty : String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Uri.EscapeUriString(Model.ThemeCss));
+
+    /* parent categories */
+    string parentCategories = ContextHelper.GetShowParentCategories(Model.CategoryId);
+    //string parentCategories = ContextHelper.GetShowParentCategories(Model.CategoryId, useDescription: false, getSingleParent: false, isUnion: true);
+
+    //get dax    
+    var daxDetail = ContextHelper.BuildDax(parentCategories, MyUtility.GetDaxSlug(Model.Description), null);
+    ViewBag.DaxName = daxDetail;
+}
+<section class="page_pagebody page_videopage page_show">
+    <div class="container">
+        <!-- top full wide video player -->
+        <div class="row show_video_player hide480">
+            @{if (String.IsNullOrEmpty(banner))
+            {
+                @Html.ImageBuilder(Url, "ux/show_video_player.jpg", new { alt = "video player" })
+            }
+            else
+            {
+                <img src="@banner" alt="@title" title="@title" />
+            }
+            }
+        </div>
+        <!-- end video player -->
+        <!-- page body [after video] -->
+        <div class="row">
+            <!-- left part -->
+            <div itemscope itemtype="http://schema.org/TVSeries" class="video_left col-sm-7 col-xs-12">
+                <h1 itemprop="name" class="head480">
+                    @Html.Raw(Model.Description)
+                </h1>
+                <div class="row show_video_player show480">
+                    @{if (String.IsNullOrEmpty(banner))
+                    {
+                        @Html.ImageBuilder(Url, "ux/show_video_player.jpg", new { alt = "video player" })
+                    }
+                    else
+                    {
+                        <img src="@banner" alt="@title" title="@title" />
+                    }
+                    }
+                </div>
+                <!-- end video player -->
+                <div class="post_header video_des clearfix">
+                    <!-- post header -->
+                    @{if (!String.IsNullOrEmpty(red_button_copy))
+                    {
+                        <div class="right show480">
+                            <!-- only on mobile -->
+                            <a href="@red_button_href">
+                                <button type="button" class="btn btn-danger red_button">
+                                    @red_button_copy
+                                </button>
+                            </a>
+                        </div>
+                    }
+                    }
+                    <div class="left">
+                        Date aired: <span itemprop="startDate" content="@Model.StartDate.Value.ToString("yyyy-MM-dd")">@Model.StartDate.Value.ToString("MMMM d, yyyy")</span><br>
+                        Number of episodes: <span itemprop="numberOfEpisodes">@episodeCount</span>
+                    </div>
+                </div>
+                <div class="post_content">
+                    <!-- post content -->
+                    <div class="text-content short-text">
+                        <p itemprop="description">
+                            @Html.Raw(Model.Blurb)
+                        </p>
+                        @Html.Action("GetCastMembersLink", new { show = Model })
+                    </div>
+                    <a class="ib-show-more" href="#">
+                        more <span class="glyphicon glyphicon-chevron-down">
+                        </span>
+                    </a>
+                </div>
+                <div class="clearfix hide480">
+                    <div id="@ReactionsUIObj.containerId">
+                    </div>
+                </div>
+                @{if (!String.IsNullOrEmpty(red_button_copy))
+                {
+                    <div class="post_footer hide480">
+                        <!-- trial button -->
+                        <a href="@red_button_href">
+                            <button type="button" class="btn btn-danger red_button">
+                                @red_button_copy
+                            </button>
+                        </a>
+                    </div>
+                }
+                }
+                <div class="row add page_add width_add hide480">
+                    @{if (!MyUtility.IsAdRestricted(Model.CategoryId))
+                    {<div class="inner">
+                        <div id="div-gpt-ad-1411726308989-1" style="width: 468px; height: 60px;" class="center-block">
+                            <script type="text/javascript">
+                                googletag.display('div-gpt-ad-1411726308989-1');
+                            </script>
+                        </div>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+            <!-- end left part -->
+            <!-- right part -->
+            <div class="video_right col-sm-5 col-xs-12">
+                <!-- rating and share -->
+                <div class="row video_share1 clearfix">
+                    <div class="col-lg-6 col-sm-12 col-xs-6 show_rating hide480">
+                        <div id="@RatingsObj.containerId">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-xs-6 show_share">
+                        <div id="@ShareObj.containerId">
+                        </div>
+                    </div>
+                </div>
+                <!-- end rating -->
+                <!-- small video box with description -->
+                @Html.Action("EpisodeList", new { id = Model.CategoryId, pageSize = 5, partialViewName = "UXEpisodeList" })
+                <div class="row page_add hide480 mleftn50">
+                    <!-- page add -->
+                    @{if (!MyUtility.IsAdRestricted(Model.CategoryId))
+                    { <div class="inner">
+                        <div id="div-gpt-ad-1411726308989-0" style="width: 300px; height: 250px;" class="center-block">
+                            <script type="text/javascript">
+                                googletag.display('div-gpt-ad-1411726308989-0');
+                            </script>
+                        </div>
+                    </div>
+                    }
+                    }
+                </div>
+                <div class="row add page_add hide480 width_add">
+                    @{if (!MyUtility.IsAdRestricted(Model.CategoryId))
+                    { <div class="inner">
+                        <div id="div-gpt-ad-1411726308989-2" style="width: 300px; height: 600px;" class="center-block">
+                            <script type="text/javascript">
+                                googletag.display('div-gpt-ad-1411726308989-2');
+                            </script>
+                        </div>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+            <!-- end page right -->
+            <!-- Review section -->
+            <div class="reviewsec col-sm-7 col-xs-12">
+                <h2>
+                    @String.Format("{0} - Ratings and Reviews", Model.Description)
+                </h2>
+                <!-- post a Review [form] -->
+                <div id="@CommentsUIObj.containerId" class="row post_review clearfix">
+                    @{if (IsAjaxCrawlable)
+                    {
+                        try
+                        {
+                            var responseData = GigyaMethods.GetComments(categoryID, streamID);
+                            if (responseData != null)
+                            {
+                                if (responseData.errorCode == 0)
+                                {
+                                    if (responseData.commentCount > 0)
+                                    {
+                                        @Html.Raw(responseData.comments)
+                                    }
+                                    else
+                                    {
+                                        <span>@noCommentText</span>
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception) { }
+                    }
+                    }
+                </div>
+                <!-- end post a Review -->
+            </div>
+            <!-- end Review section -->
+        </div>
+        <!-- end page body [after video] -->
+    </div>
+</section><!-- end page body section -->
+@{if (Request.Browser.IsMobileDevice && !User.Identity.IsAuthenticated)
+{
+    <!-- "Start your Free Trial!" -->
+    <div class="str_free_trial show480">
+        <a href="@Url.Action("Register", "User")">
+            <button class="btn btn-danger red_button" type="button">
+                start your free trial
+            </button>
+        </a>
+    </div>
+}
+}
+
+<!-- /2744311/TFCtv_InsidePages_OutOfPage -->
+<div id="div-gpt-ad-1433229775286-0">
+    <script type="text/javascript">
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1433229775286-0'); });
+    </script>
+</div>
+
+<!-- /2744311/TFCtv_InsidePages_1x1 -->
+<div id="div-gpt-ad-1433229775286-1">
+    <script type="text/javascript">
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1433229775286-1'); });
+    </script>
+</div>
+
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.small_video_list').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+    @Html.Partial("_UXShareUI", ShareObj)
+    @Html.Partial("_UXRatingsUI", RatingsObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    @Html.Partial("_UXReactionsUI", ReactionsUIObj)
+    @*@{if (!String.IsNullOrEmpty(themedBackground))
+          {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('body').css('background', 'url(@themedBackground) no-repeat center 0');
+                });
+            </script>
+          }
+        }*@
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="@img">
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}
+@section JScript {
+    <!-- Google Ads -->
+    <script type='text/javascript'>
+        (function () {
+            var useSSL = 'https:' == document.location.protocol;
+            var src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+        })();
+    </script>
+    <script type="text/javascript">
+        googletag.pubads()
+            .setTargeting("Show", "@Model.CategoryId")
+            .setTargeting("Category", "@parentCategories");
+    </script>
+
+    <script type='text/javascript'>
+        googletag.cmd.push(function () {
+            googletag.defineSlot('/2744311/Test_468x60', [468, 60], 'div-gpt-ad-1411726308989-1').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/Test_300x600', [300, 600], 'div-gpt-ad-1411726308989-2').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/Test_1x1', [1, 1], 'div-gpt-ad-1433229775286-1').addService(googletag.pubads());
+            googletag.defineOutOfPageSlot('/2744311/Test_OutOfPageAdSlot', 'div-gpt-ad-1433229775286-0').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/Test_MediumRec_300x250', [300, 250], 'div-gpt-ad-1411726308989-0').addService(googletag.pubads());
+            googletag.pubads().collapseEmptyDivs();
+            googletag.pubads().enableSyncRendering();
+            googletag.enableServices();
+        });
+    </script>
+    @*<script type="text/javascript">
+        googletag.cmd.push(function () {
+            googletag.defineOutOfPageSlot('/2744311/TFCtv_InsidePages_OutOfPage', 'div-gpt-ad-1433229775286-0').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_InsidePages_1x1', [1, 1], 'div-gpt-ad-1433229775286-1').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_ShowPages_Banner', [468, 60], 'div-gpt-ad-1411726308989-1').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_ShowPages_HalfPage', [300, 600], 'div-gpt-ad-1411726308989-2').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_MediumRectangle_300x250', [300, 250], 'div-gpt-ad-1411726308989-0').addService(googletag.pubads());
+            googletag.pubads().collapseEmptyDivs();
+            googletag.pubads().enableSyncRendering();
+            googletag.enableServices();
+        });
+    </script>*@
+
+    @*<script type='text/javascript'>
+            googletag.defineSlot('/2744311/TFCtv_MediumRectangle_300x250', [300, 250], 'div-gpt-ad-1411726308989-0').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_ShowPages_Banner', [468, 60], 'div-gpt-ad-1411726308989-1').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_ShowPages_HalfPage', [300, 600], 'div-gpt-ad-1411726308989-2').addService(googletag.pubads());
+            googletag.pubads().enableSyncRendering();
+            googletag.enableServices();
+        </script>*@
+    <!-- End of Google Ads -->
+}

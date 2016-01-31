@@ -1,0 +1,39 @@
+﻿@{    
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var listofCategoryIds = MyUtility.StringToIntList(GlobalConfig.NewsCategoryIds);
+    string href = String.Format("{0}/Category/News", GlobalConfig.baseUrl);
+    string title = "News - TFC.tv";
+    ViewBag.Title = title;
+    ViewBag.DaxName = "tfc-tv:news:home";
+}
+<section class="page_pagebody home480">
+    <div class="container category_section">
+        <!-- page top -->
+        <h1 class="page_title">
+            NEWS</h1>
+        <div class="page_description">
+            Stay updated of the latest events happening in the Philippines and around the world.
+            Get to know the real story and the most influential personalities behind pressing
+            issues that affect Filipinos across the globe.
+        </div>
+        @{foreach (var i in listofCategoryIds)
+          { 
+            @Html.Action("BuildSectionCategory", new { id = i, featureType = "show", pageSize = 12 })  
+          }
+        }
+    </div>
+    <br />
+    <br />
+</section><!-- end page body section -->
+@section MetaTags{
+    <meta name="description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <meta property="og:type" content="website" />
+    @*<meta property="og:image" content="@open_graph_img" />*@
+}

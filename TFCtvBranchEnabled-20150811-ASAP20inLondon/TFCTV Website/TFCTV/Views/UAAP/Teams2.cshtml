@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "UAAP Season 77 - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:uaap:teams:home";
+}
+<!-- uaap Theteams page body  -->
+<section class="page_pagebody uaap_main">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+           @Html.ImageBuilder(Url, String.Format("banners/uaap_{0}.jpg", GlobalConfig.UAAPMainCategoryId.ToString()), new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li><a href="@Url.Action("Index", "UAAP")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Live", "UAAP")">LIVE STREAM</a></li>
+                <li class="active"><a href="@Url.Action("Teams", "UAAP")">THE TEAMS</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="row">
+            <!-- right [sort by] -->
+            <div class="col-xs-12 shorby_box_outer">
+                <div class="clearfix">
+                    <div class="shorby_box">
+                        @*<form role="form" method="post">
+                            <label for="sortby">
+                                Sort by :</label>
+                            <div class="select_bg">
+                                <select name="sortby" id="sortby" class="">
+                                    <option value="relevance">Rank</option>
+                                    <option value="example2">Name</option>
+                                    <option value="example3">Most Loved</option>
+                                    <option value="example4">Most Commented</option>
+                                </select>
+                            </div>
+                            </form>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END right [sort by] -->
+        <!-- block -->
+        <div class="row top_vedio">
+            <!-- movies -->
+            <!-- video with poster & name -->
+            @Html.Action("GetFeaturedTeams", "UAAP", new { partialViewName = "GetTeams" })
+        </div>
+        <!-- END movies -->
+        <!-- END block -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- END uaap Theteams page body  -->

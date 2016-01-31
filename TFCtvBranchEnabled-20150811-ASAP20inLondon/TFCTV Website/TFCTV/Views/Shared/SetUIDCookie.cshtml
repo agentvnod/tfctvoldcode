@@ -1,0 +1,25 @@
+﻿@{            
+    try
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            if (!Request.Cookies.AllKeys.Contains("uid"))
+            {
+                HttpCookie cookie = new HttpCookie("uid");
+                cookie.Value = User.Identity.Name;
+                cookie.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(cookie);
+            }
+        }
+        else
+        {
+            if (Request.Cookies.AllKeys.Contains("uid"))
+            {
+                HttpCookie myCookie = new HttpCookie("uid");
+                myCookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(myCookie);
+            }
+        }
+    }
+    catch (Exception e) { MyUtility.LogException(e); }    
+}

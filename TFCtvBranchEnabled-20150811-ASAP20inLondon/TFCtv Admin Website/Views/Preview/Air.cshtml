@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Air";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string img = String.Empty;
+}
+<div id="playerContainer" class="video_part">
+</div>
+@section JScriptBottom{
+    <script type="text/javascript" src="http://jwpsrv.com/library/I6r41iyqEeS3LiIAC0MJiQ.js"></script>
+    <script type="text/javascript">
+        function CreatePlayerJW(uri) {
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.StatusCode == 0) {
+                            console.log(data.data.Url);
+                            var type = data.data.Url.split('?').shift().split('.').pop();
+                            jwplayer("playerContainer").setup({
+                                file: data.data.Url,
+                                image: "http://res2.abs-cbnip.tv/images/categoryimages/310/MMK-Banner-960x300.jpg",
+                                width: "100%",
+                                aspectratio: "16:9",
+                                stretching: "uniform",
+                                fallback: true,
+                                type: type,
+                                abouttext: 'TFC.tv',
+                                androidhls: true
+                            })
+                            .onError(function () {
+                            });
+                        }
+                    }
+            });
+        }        
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '/Ajax/GetAsset/55089';
+            CreatePlayerJW(uri);
+        });
+    </script>
+}

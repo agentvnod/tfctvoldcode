@@ -1,0 +1,66 @@
+﻿@model GigyaWidgetUIObj
+@{
+    string streamID = Model.streamID;    
+}
+<!-- ReactionsBar UI -->
+<script type="text/javascript">
+    var _LOVE = 12;
+
+    function log_action(c) {
+        //log action
+        $.post('/Ajax/CreateInteraction', { reactionId: _LOVE, type: type, id: id, click: c }, function (data) { get_count(); });
+    }
+
+    function get_count() {
+        //$.get('/Ajax/GetReactionCount', { reactionId: _LOVE, type: type, id: id }, function (data) { setTimeout(function () { $('span[id^=@Model.containerId]').html(data.StatusMessage); }, 2000); });
+    }
+
+    function onLoad(event) {
+        get_count();
+    }
+
+    function onReactionUnclicked(event) {
+        log_action(0);
+    }
+
+    function onReactionClicked(event) {
+        // on reaction click
+
+        //publish useraction
+        var publishUserAction_params = {
+            userAction: act,
+            scope: 'internal',
+            privacy: 'public',
+            feedID: 'UserAction'
+        };
+        gigya.socialize.publishUserAction(publishUserAction_params);
+
+        //log action
+        log_action(1);
+    }
+
+
+    var reactions = [
+            {
+                ID: 'love',
+                iconImgUp: '@Html.ContentBuilder(Url, "content/images/social/Love-2.png")',
+                iconImgDown: '@Html.ContentBuilder(Url, "content/images/social/Loved-2.png")',
+                noButtonBorders: true
+            }
+        ];
+
+    var params =
+        {
+            barID: "@streamID",
+            containerID: '@Model.containerId',
+            reactions: reactions,
+            userAction: act,
+            showCounts: "right",
+            bodyText: "Share it with your friends",
+            onReactionClicked: onReactionClicked,
+            onReactionUnclicked: onReactionUnclicked,
+            onLoad: onLoad,
+            cid: "@Model.ShareObj.title"
+        };
+    gigya.socialize.showReactionsBarUI(params);
+</script>

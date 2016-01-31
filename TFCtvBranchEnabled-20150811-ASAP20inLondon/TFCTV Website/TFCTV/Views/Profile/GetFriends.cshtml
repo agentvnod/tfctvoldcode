@@ -1,0 +1,34 @@
+﻿@model GigyaFriendsInfo
+<div class="widget sec_friends">
+    <!-- My Friends widget -->
+    <h3>
+        My Friends</h3>
+    <div class="row">
+        @{if (Model != null)
+          {
+              if (Model.friends != null)
+              {
+                  if (Model.friends.Count() > 0)
+                  {
+                      foreach (var item in Model.friends.OrderBy(f => Guid.NewGuid()))
+                      { 
+            <div class="col-md-3 col-sm-4 col-xs-3 feed_item">
+                <img src="@item.thumbnailURL" alt="@item.nickname" title="@item.nickname" class="pgallary"/>
+            </div>
+                      }                        
+            <div class="sec_footer">
+                <!-- section of Load more -->
+                <a href="#" class="loadMore">load more<br>
+                    @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+            </div>
+                  }
+                  else
+                  { 
+            <p>
+                You have no friends! Keep up!</p>
+                  }
+              }
+          }    
+        }
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model List<FPJThematicBundle>
+<!-- Wrapper for slides -->
+<div class="carousel-inner">
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+        <!-- video with poster & name -->
+              foreach (var item in Model)
+              {
+                  if (Model.IndexOf(item) == 0)
+                  {       <div class="item active">
+                      <a href="/FPJ/Library#@item.featureId">
+                          <img src="@item.featureBanner" alt="@item.BundleDescription" class="img100" width="940" height="300"/></a>
+                  </div>}
+                  else
+                  {
+        <div class="item">
+            <a href="/FPJ/Library#@item.featureId">
+                <img src="@item.featureBanner" alt="@item.BundleDescription" class="img100" width="940" height="300"/></a>
+        </div>}
+
+              }
+          }
+      }
+    }
+</div>
+<!-- Indicators -->
+<ol class="carousel-indicators">
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                if (Model.IndexOf(item) == 0)
+                {
+        <li data-target="#fpjslider" data-slide-to="@Model.IndexOf(item)" class="active">
+        </li>
+                }
+                else
+                {
+        <li data-target="#fpjslider" data-slide-to="@Model.IndexOf(item)"></li>
+                }
+            }
+        }
+    }
+</ol>

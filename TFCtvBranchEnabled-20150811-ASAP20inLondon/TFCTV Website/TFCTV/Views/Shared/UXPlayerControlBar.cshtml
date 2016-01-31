@@ -1,0 +1,135 @@
+﻿@model TFCTV.Models.PlayerControlBarModel
+@{               
+    string href = String.Format("/Ajax/GetMedia/{0}", Model.EpisodeId);
+    string isHD = String.Empty;
+    if (Model.HasHD)
+    {
+        isHD = "&q=1";
+
+    }
+}
+@{if (Model.IsUserEntitled && GlobalConfig.IsPMDPlayerEnabled && !Akamai.IsIos(Request))
+  {      
+    <ul class="video_play_opt hide786" id="playmode_container">
+        @{if (GlobalConfig.IsHDPlaybackEnabled)
+          {
+              if (Model.HasHD)
+              { 
+            <li><a href="#" class="playmode" data-mode="3" data-href="@String.Format("{0}?p=3", href)">
+                PLAY HD</a></li>  
+              }
+              else
+              { 
+            <li><a href="#" class="playmode" data-mode="0" data-href="@String.Format("{0}?p=0", href)">
+                PLAY NOW</a></li>
+              }
+          }                
+        }
+        <li><a href="#" class="playmode" data-mode="2" data-href="@Html.Raw(String.Format("{0}?p=2{1}", href, isHD))">
+            PLAY HIGH</a></li>
+        <li><a href="#" class="playmode" data-mode="1" data-href="@Html.Raw(String.Format("{0}?p=1{1}", href, isHD))">
+            PLAY LOW</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#conLearnMore">LEARN MORE</a></li>
+    </ul>
+@*<div class="player_botton clearfix hide480 hide" id="playmode_container">
+        <div class="right">
+            <button type="button" class="btn btn-default playmode" data-mode="0" data-href="@href">
+                WATCH NOW</button>
+            <button type="button" class="btn btn-default playmode" data-mode="1" data-href="@href">
+                PLAY HIGH</button>
+            <button type="button" class="btn btn-default playmode" data-mode="2" data-href="@href">
+                PLAY LOW</button>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#conLearnMore">
+                LEARN MORE</button>
+        </div>
+    </div>*@
+    
+    <!-- popup Landing feedback -->
+    <div class="modal fade conPopup conLearnMore" id="conLearnMore" tabindex="-1" role="dialog"
+        aria-labelledby="conLearnMoreMsgLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X</button>
+                    <h1 class="page_title_sm">
+                        Choose your video playing option</h1>
+                    <!-- page title -->
+                    <p>
+                        In our commitment to provide you with the best viewing experience you deserve,
+                    we have expanded our video playing options to suit your online needs. Get to know
+                    your options and choose the right one for you!
+                    @{if (GlobalConfig.IsHDPlaybackEnabled)
+                      {
+                          if (Model.HasHD)
+                          {                         
+                        <p>
+                            <button type="button" class="btn btn-default">
+                                PLAY HD</button>
+                            Programs and movies available in <span class="hl">High Definition</span> will play
+                            in 720p for users with high-speed internet connection of at least 5mbps.
+                        </p>
+                        <p>
+                            Click
+                            <button type="button" class="btn btn-default">
+                                PLAY HD</button>
+                            and watch video in High Definition quality.</p>
+                        <br />
+                          }
+                          else
+                          { 
+                        <p>
+                            <button type="button" class="btn btn-default">
+                                PLAY NOW</button>
+                            For users with reliable internet connection (recommended speed is 2Mbps and minimum
+                            requirement is 512kbps), we provide <span class="hl">adaptive streaming</span> in
+                            Standard Definition (SD) that adjusts automatically the quality of the video you
+                            are watching to match the speed of your internet.
+                        </p>
+                        <p>
+                            Click
+                            <button type="button" class="btn btn-default">
+                                PLAY NOW</button>
+                            and stream the video instantly.</p>
+                        <br />
+                          }
+                      }
+                    }
+                    @{if (Model.HasHD)
+                      {
+                        <p>
+                            <button type="button" class="btn btn-default">
+                                PLAY HIGH</button>
+                            <button type="button" class="btn btn-default">
+                                PLAY LOW</button>
+                            For users with less than the recommended internet connection, we offer <span class="hl">
+                                progressive download</span> that lets you choose and preload the video in 800kbps
+                            High-Definition or a 500kbps High-Definition.</p>
+                      }
+                      else
+                      {
+                        <p>
+                            <button type="button" class="btn btn-default">
+                                PLAY HIGH</button>
+                            <button type="button" class="btn btn-default">
+                                PLAY LOW</button>
+                            For users with less than the recommended internet connection, we offer <span class="hl">
+                                progressive download</span> that lets you choose and preload an 800kbps (HIGH
+                            SD) or a 500kbps (LOW SD) version of the video in standard definition.</p>                    
+                      }
+                    }
+                    <p>
+                        Click
+                        <button type="button" class="btn btn-default">
+                            PLAY HIGH</button>
+                        <button type="button" class="btn btn-default">
+                            PLAY LOW</button>
+                        and watch the video in consistent quality.</p>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+  }
+}

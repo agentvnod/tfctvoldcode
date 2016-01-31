@@ -1,0 +1,106 @@
+﻿@model IPTV2_Model.UserWallet
+@{   
+    bool HasError = ViewBag.HasError;
+    int NumberOfSubscriptions = 0;
+    if (ViewBag.NumberOfSubscriptions != null)
+    {
+        NumberOfSubscriptions = ViewBag.NumberOfSubscriptions;
+    }
+    string UserCountryCode = String.Empty;
+    string balance = String.Empty;
+    if (!HasError)
+    {
+        UserCountryCode = Model.User.CountryCode;
+        balance = String.Format("{0} {1:n}", Model.Currency, Model.Balance);
+    }
+}
+<div id="usercredits" class="floatLeft">
+    <ul>
+        <li class="padLeftSmall"><a class="user-credits" id="credit-balance" href="#" rel="#overlay">
+            My Credits @Html.Raw(balance)</a></li></ul>
+</div>
+<div id="wallet-container">
+    <div class="wallet-box">
+        @{if (!HasError)
+          {
+            <div>
+                <div class="link-to-right">
+                    @Html.ActionLink("View Transactions", "Transactions", "User", null, new { @class = "wallet-container-link" })</div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="breakSmall">
+            </div>
+            <div>
+                Your current balance is <span class="underline">@Html.Raw(balance)</span>.</div>
+            <div class="breakStandard">
+            </div>
+            <div>
+                Reload through the following</div>
+            <div class="wallet-payment-options" id="wallet-payment-options">
+                @{if (String.Compare(UserCountryCode, GlobalConfig.JapanCountryCode) == 0)
+                  {          
+                    @Html.ActionLink("SmartPit", "SmartPit", "Load", null, new { @class = "wallet-btn-link" })
+                  }
+                }
+                @{if (GlobalConfig.IsPpcReloadModeEnabled)
+                  {
+                    @Html.ActionLink("Prepaid Card", "PrepaidCard", "Load", null, new { @class = "wallet-btn-link" })
+                  }
+                }
+                @{if (GlobalConfig.IsCreditCardReloadModeEnabled)
+                  {
+                      if (ViewBag.CreditCardList != null)
+                      { 
+                    @Html.ActionLink("Credit Card", "CreditCard", "Load", null, new { @class = "wallet-btn-link" })
+                      }
+                  }
+                }
+                @{if (GlobalConfig.IsPaypalReloadModeEnabled && ViewBag.IsPayPalSupported)
+                  {
+                    @Html.ActionLink("PayPal", "PayPal", "Load", null, new { @class = "wallet-btn-link" })
+                  }
+                }
+                @{if (GlobalConfig.IsMopayReloadModeEnabled && ViewBag.IsMopaySupported)
+                  {
+                    @Html.ActionLink("mopay", "Mopay", "Load", null, new { @class = "wallet-btn-link" })
+                  }
+                }
+            </div>
+            <div class="breakSmall clear">
+            </div>
+            <div>
+                <h4 class="floatLeft">
+                    My Subscriptions</h4>
+                <div class="link-to-right">
+                    @Html.ActionLink("Add Subscription", "Details", "Subscribe", null, new { @class = "wallet-container-link" })</div>
+                <div class="clear">
+                </div>
+            </div>
+            <div>
+                You have @NumberOfSubscriptions current subscription/s.</div>
+            <div class="breakLarge">
+            </div>
+            <div class="close-window">
+                <a href="#" id="close-this" class="wallet-container-link">Close window</a></div>
+            <div class="clear">
+            </div>
+          }
+          else
+          { 
+            @Html.Action("ErrorEncountered", new { error = ViewBag.ErrorEncountered, errormessage = ViewBag.ErrorMessage })
+          }  
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $('#credit-balance').click(function () {
+        $('#wallet-container').toggle();
+        return false;
+    });
+
+    $('#close-this').click(function () {
+        $('#wallet-container').hide();
+        return false;
+    });
+</script>

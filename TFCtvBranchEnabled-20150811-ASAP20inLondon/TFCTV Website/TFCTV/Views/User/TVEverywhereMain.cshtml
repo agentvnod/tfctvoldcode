@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "TFC Everywhere - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:tv-everywhere:home";
+}
+<!--  TVE Activation page body -->
+<section class="page_pagebody changepass_pagebody reg_pagebody">
+    <div class="container">
+        <div class="row">
+            <!-- page header -->
+            @Html.ImageBuilder(Url, "register/tfc_everywhere_landing_page_03.jpg", new { title = "TFC Everywhere", alt = "TFC Everywhere", width = 940 })
+        </div> <!-- END page header -->
+
+        <h1 class="page_title not_cap">Begin TFC Everywhere Activation</h1>
+        <!-- form  -->
+        <div class="page_description">Bitbitin ang saya kasama ang buong Kapamilya!   Now all TFC Premium Subscribers  can enjoy  and watch the same movies,  television shows, music videos, sporting events, news and other TFC shows from anywhere - on their TVs at home, plus on their laptop, tablet and cell phone.  At NO EXTRA CHARGE! (Limited online programming  due to online rights)</div>
+        <div class="row jk_tfc_every_box">
+            <div class="left col-md-5 col-md-offset-1 col-sm-6 col-sm-offset-0  col-xs-10 col-xs-offset-1">
+                <div>
+                    <h3>Don't have an account yet?</h3>
+                    <a href="@Url.Action("Registration", "User")" class="orange">REGISTER HERE <span>></span> </a>
+                </div>
+            </div>
+            <div class="right col-md-5 col-md-offset-0 col-sm-6 col-sm-offset-0  col-xs-10 col-xs-offset-1">
+                <div>
+                    <h3>Already registered?</h3>
+                    <a href="@Url.Action("Login", "User")" class="green">START ACTIVATION <span>></span> </a>
+                </div>
+            </div>
+        </div>
+    </div>   <!-- END container -->
+</section>
+<!-- end of list -->
+<!-- popup message [Guide to get your Smart Card Number] -->
+<div class="modal fade conPopup" id="guideSmartcMsg" tabindex="-1" role="dialog" aria-labelledby="guideSmartcMsgLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <p class="heading_cbkc heading23 heading_bb3">GUIDE TO GET YOUR SMART CARD NUMBER</p>
+                <div>
+                    <p><br>For Direct To Home (DTH) Subscribers, pick the model of your Set Top Box from those listed on the left for more instructions on how to locate your Smart Card Number.<br><br></p>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 ib_left">
+                            <!-- content left side -->
+                            <ul class="nav" role="tablist">
+                                <!-- Nav tabs -->
+                                <li class="active">
+                                    <a href="#img1" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "ux/gen_code1.jpg", new { @class = "img100", alt = "gen_code" })
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#img2" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "ux/gen_code2.jpg", new { @class = "img100", alt = "gen_code" })
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#img3" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "ux/gen_code3.jpg", new { @class = "img100", alt = "gen_code" })
+                                    </a>
+                                </li>
+                            </ul>   <!-- END Nav tabs -->
+                        </div>  <!-- END content left side -->
+                        <div class="col-sm-6 col-xs-12 ib_right tab-content">
+                            <!-- content right side -->
+                            <div class="tab-pane active" id="img1">
+                                <!-- 1st tab body -->
+                                <h6 class="heading45">IR58</h6>
+                                <p><br>If you have the IR58 model, follow the steps below :<br></p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select System Settings</li>
+                                    <li>Select CA Function</li>
+                                    <li>Select Information</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="img2">
+                                <!-- 2nd tab body -->
+                                <h6 class="heading45">IR-XXXX</h6>
+                                <p><br>If you have the IR58 model, follow the steps below :<br></p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select System Settings</li>
+                                    <li>Select CA Function</li>
+                                    <li>Select Information</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="img3">
+                                <!-- 3rd tab body -->
+                                <h6 class="heading45">TS-3000</h6>
+                                <p><br>If you have the IR58 model, follow the steps below :<br></p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select System Settings</li>
+                                    <li>Select CA Function</li>
+                                    <li>Select Information</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                        </div> <!-- END content right side -->
+                    </div>
+                </div>
+            </div>  <!-- END box body -->
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" aria-hidden="true">Close this window</a>
+            </div>
+        </div>
+    </div>
+</div>  <!-- END message [Guide to get your Smart Card Number] -->
+<!-- popup message [generate and claim your TFC Activation Code] -->
+<div class="modal fade conPopup" id="genActCodeMsg" tabindex="-1" role="dialog" aria-labelledby="genActCodeMsgLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X</span>
+                </button>
+                <p class="boxHead heading_bb3">Generate Activation Code</p>
+                <div>
+                    <p class="des">Something here ... </p>
+                    <form role="form" method="post">
+                        <div class="form-group">
+                            <label for="subject">Example 1</label>
+                            <input type="text" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Example 2</label>
+                            <input type="text" class="form-control" id="code" name="email" required>
+                        </div>
+                        <button type="submit" class="red_button">Submit</button>
+                    </form>
+                </div>
+            </div>  <!-- END box body -->
+        </div>
+    </div>
+</div>  <!-- END message [generate and claim your TFC Activation Code] -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")
+    @Html.CssBuilder(Url, "tve.css?v1.12")
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.validate.min.1.11.js")
+    @Html.JsBuilder(Url, "additional-methods.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var btn = $(this);
+            $.post('/User/_SetTVE', function (data) {
+                if (data.errorCode == 0) {
+                    //do something
+                }
+                else {
+                    //do something
+                }
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,74 @@
+﻿@{
+    string CountryCode = String.Empty;
+    try
+    {
+        CountryCode = MyUtility.GetCountryCodeViaIpAddressWithoutProxy();
+    }
+    catch (Exception) { }
+}
+<section class="bottomsec">
+    <div class="container">
+        <div class="row">
+            <!-- Get started [1st col] -->
+            <div class="menu col-md-3 col-sm-6 col-xs-12" id="footer_get_started">
+                <h2>
+                    Get Started</h2>
+                <ul>
+                    <li class="footer_homepage_li"><a href="/" title="Go to Homepage">Go to Homepage</a></li>
+                    <li><a href="@Url.Action("Index", "About")">About Us</a></li>
+                    @{if (User.Identity.IsAuthenticated)
+                      { 
+                        <li><a href="@Url.Action("Index", "Profile")">Visit My Profile Page</a></li>
+                      }
+                      else
+                      { 
+                        <li><a class="sign_in_footer_link" href="@Url.Action("Login", "User")">Sign In</a></li>
+                        <li class="footer_register_li register_link"><a href="@Url.Action("Register", "User")">Register</a></li>
+                      }                  
+                    }
+                    @{if (User.Identity.IsAuthenticated)
+                      { 
+                        <li><a href="@Url.Action("Details", "Subscribe")">Subscribe</a></li>
+                          if (MyUtility.IsTVEAllowedInCurrentCountry())
+                          { 
+                        <li><a href="@Url.Action("RegisterToTFCEverywhere", "User")">Activate TFC Everywhere</a></li>
+                          }
+                      }
+                    }
+                    <li><a href="@Url.Action("Index", "StoreLocator")">Find A Dealer</a></li>
+                    <li><a href="@Url.Action("ContactUs", "Home")" title="Contact Us">Contact Us</a></li>
+                    <li><a href="@Url.Action("Index", "Help")">Help Center</a></li>
+                    @*<li><a href="#">Advertise with Us</a></li>*@
+                </ul>
+            </div>
+            <!-- end [1st col] -->
+            <!-- Top Reviews [2nd col] -->
+            @Html.Action("BuildReviews", "Home", new { id = GlobalConfig.UXReviewParentCategoryId })
+            <!-- end [2nd col] -->
+            <!-- Popular on TFC [3rd col] -->
+            @Html.Action("BuildSection", "Home", new { id = GlobalConfig.MostViewed, sectionTitle = "Popular on TFC", containerId = "popular_episodes_footer", featureType = "episode", removeShowAll = false, isFeature = true, partialViewName = "BuildSectionFooter" })
+            <!-- end [3rd col] -->
+            <!-- Legal Info [4rd col] -->
+            <div class="info col-md-3 col-sm-6 col-xs-12">
+                <h2>
+                    Legal Info</h2>
+                <div>
+                    <a href="@Url.Action("TermsAndConditions", "Home")">Terms and Conditions</a>
+                    <br>
+                    This site uses cookies. Read more about our <a href="@Url.Action("CookiePolicy", "Home")">
+                        Cookie Policy</a><br>
+                    @{if (String.Compare(CountryCode, GlobalConfig.JapanCountryCode, true) == 0)
+                      {
+                        <text> Compliance to Japan<br>
+                        E-Commerce Law<br>
+                        <a href="@Url.Action("JapanECommerceLawCompliance", "Home", new { id = "EN" })">English</a>
+                        | <a href="@Url.Action("JapanECommerceLawCompliance", "Home", new { id = "JP" })">日本語</a>
+                        </text>
+                      }                          
+                    }
+                </div>
+            </div>
+            <!-- end [4rd col] -->
+        </div>
+    </div>
+</section>

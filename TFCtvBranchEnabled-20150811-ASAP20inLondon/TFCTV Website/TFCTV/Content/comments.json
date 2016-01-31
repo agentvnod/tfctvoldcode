@@ -1,0 +1,578 @@
+{
+    "callId": "8ab1abaf7cf94a849cad1e3cca3a2853",
+    "commentCount": 25,
+    "comments": [
+        {
+            "commentText": "TEST",
+            "flagCount": 0,
+            "ID": "de9817c30a2e44c1a8ebfdb8b35f32cc",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Rayneil Molas",
+                "UID": "f7f739e3-e072-4ed3-b4a9-6d8c8ffddb20"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1344651792053,
+            "timestamp": 1344651792053
+        },
+        {
+            "commentText": "Test",
+            "flagCount": 0,
+            "ID": "31b718bf0054434c99409e50f6c81a21",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Gelo del Rosario",
+                "UID": "3b45407b-819c-4bd9-af38-fe3688a690ed"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1343005194984,
+            "timestamp": 1343005194984
+        },
+        {
+            "commentText": "test din:P",
+            "flagCount": 0,
+            "ID": "da53a99ff6784966a16f0c07265bdb94",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Mitho Sheila Manganaan",
+                "UID": "9ca60f4a-1e5e-48fd-bee1-ed307e0a9c21"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342681480255,
+            "timestamp": 1342681480255
+        },
+        {
+            "commentText": "Test!!!!!",
+            "flagCount": 0,
+            "ID": "b63403604a504843830d1105fd55ff28",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Ma.Stella  Chua",
+                "UID": "a3da8f4c-7a31-45f8-88c3-c4f53bdd69f5"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342675631764,
+            "timestamp": 1342675631764
+        },
+        {
+            "commentText": "hey\n\n",
+            "flagCount": 0,
+            "ID": "20997ad7e7ad4de19d8794ef4e611b50",
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Jefferson Desacada",
+                "UID": "ebe4ff51-389c-47a0-be0e-9f89603b5810"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342675610175,
+            "timestamp": 1342675610175
+        },
+        {
+            "commentText": "test chuk",
+            "flagCount": 0,
+            "ID": "8613b8b4ac4246e9b805c2b676110ab0",
+            "ratings": {
+                "_overall": 1
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Mitchie Sanado",
+                "UID": "cfe9125c-8275-474d-b619-cc2baf1c4e60"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1342673643891,
+            "timestamp": 1342673643891
+        },
+        {
+            "commentText": "test 1",
+            "descendantsCount": 1,
+            "flagCount": 0,
+            "ID": "20713ed2a8bd4a3f9e094a024788aad6",
+            "ratings": {
+                "_overall": 1
+            },
+            "replies": [
+                {
+                    "commentText": "test 2",
+                    "flagCount": 0,
+                    "ID": "15be046b82a24893b86b0f559269a28a",
+                    "parentID": "20713ed2a8bd4a3f9e094a024788aad6",
+                    "sender": {
+                        "isSelf": false,
+                        "loginProvider": "Site",
+                        "name": "Cielo Castro",
+                        "photoURL": "http://graph.facebook.com/100003786137091/picture?type=square",
+                        "profileURL": "http://www.facebook.com/profile.php?id=100003786137091",
+                        "UID": "04a9ac1c-e034-4518-bd35-4f9564885786"
+                    },
+                    "status": "published",
+                    "streamId": "Show_310",
+                    "threadID": "20713ed2a8bd4a3f9e094a024788aad6",
+                    "threadTimestamp": 0,
+                    "timestamp": 1337135622991
+                }
+            ],
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Cielo Castro",
+                "photoURL": "http://graph.facebook.com/100003786137091/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003786137091",
+                "UID": "04a9ac1c-e034-4518-bd35-4f9564885786"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1337135622991,
+            "timestamp": 1337135598077
+        },
+        {
+            "commentText": "hi",
+            "flagCount": 0,
+            "ID": "44717a7876294e58b90c9aa75f98a31c",
+            "ratings": {
+                "_overall": 3
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Roland Cabanilla",
+                "photoURL": "http://graph.facebook.com/100003771559922/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003771559922",
+                "UID": "4a8143c0-4fa5-49ac-834f-3ff1b59e0a6b"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1337135556405,
+            "timestamp": 1337135556405
+        },
+        {
+            "commentText": "pwede",
+            "descendantsCount": 1,
+            "flagCount": 0,
+            "ID": "778fcfd782544186a5c61521f07af742",
+            "providerPostIDs": {
+                "facebook": "{id:100003800133037_101786246624713}"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "replies": [
+                {
+                    "commentText": "pwede",
+                    "flagCount": 0,
+                    "ID": "597a105f50ce4ad9ab65db203e14fa6e",
+                    "parentID": "778fcfd782544186a5c61521f07af742",
+                    "providerPostIDs": {
+                        "facebook": "{id:100003800133037_101786356624702}"
+                    },
+                    "sender": {
+                        "isSelf": false,
+                        "loginProvider": "Site",
+                        "name": "Rubick Sintos ",
+                        "photoURL": "http://graph.facebook.com/100003800133037/picture?type=square",
+                        "profileURL": "http://www.facebook.com/profile.php?id=100003800133037",
+                        "UID": "f14ff9cf-15e4-4ee1-bef3-faf5d35ef1ee"
+                    },
+                    "status": "published",
+                    "streamId": "Show_310",
+                    "threadID": "778fcfd782544186a5c61521f07af742",
+                    "threadTimestamp": 0,
+                    "timestamp": 1335770395717
+                }
+            ],
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Rubick Sintos ",
+                "photoURL": "http://graph.facebook.com/100003800133037/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003800133037",
+                "UID": "f14ff9cf-15e4-4ee1-bef3-faf5d35ef1ee"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335770395717,
+            "timestamp": 1335770365467
+        },
+        {
+            "commentText": "Da best!.",
+            "descendantsCount": 1,
+            "flagCount": 0,
+            "ID": "fc03bd24577443b089d16c2891a5dbc1",
+            "providerPostIDs": {
+                "facebook": "{id:100003822543042_101764289960989}"
+            },
+            "ratings": {
+                "_overall": 5
+            },
+            "replies": [
+                {
+                    "commentText": "ok",
+                    "flagCount": 0,
+                    "ID": "fd320119e7b24cd0bae530153bafb4a3",
+                    "parentID": "fc03bd24577443b089d16c2891a5dbc1",
+                    "providerPostIDs": {
+                        "facebook": "{id:100003822543042_101765309960887}"
+                    },
+                    "sender": {
+                        "isSelf": false,
+                        "loginProvider": "Site",
+                        "name": "Louie Lim",
+                        "photoURL": "http://graph.facebook.com/100003822543042/picture?type=square",
+                        "profileURL": "http://www.facebook.com/profile.php?id=100003822543042",
+                        "UID": "7b0324d8-0801-49c9-a15f-73baa0911559"
+                    },
+                    "status": "published",
+                    "streamId": "Show_310",
+                    "threadID": "fc03bd24577443b089d16c2891a5dbc1",
+                    "threadTimestamp": 0,
+                    "timestamp": 1335770252908
+                }
+            ],
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Louie Lim",
+                "photoURL": "http://graph.facebook.com/100003822543042/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003822543042",
+                "UID": "7b0324d8-0801-49c9-a15f-73baa0911559"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335770252908,
+            "timestamp": 1335769883978
+        },
+        {
+            "commentText": "MMK",
+            "flagCount": 0,
+            "ID": "544f2227756b427d929774f4d015c364",
+            "providerPostIDs": {
+                "facebook": "{id:100003792295489_114001355402940}"
+            },
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Jeloboi Bautista",
+                "photoURL": "http://graph.facebook.com/100003792295489/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003792295489",
+                "UID": "bcb21711-8500-48bb-8ebc-4e35311b1308"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335769817199,
+            "timestamp": 1335769817199
+        },
+        {
+            "commentText": "we? :P",
+            "flagCount": 0,
+            "ID": "1f9eda29ac7c4014bfcfdc5264038b7f",
+            "providerPostIDs": {
+                "facebook": "{id:100003801423027_101778186625562}"
+            },
+            "ratings": {
+                "_overall": 3
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Jordan Guillermo",
+                "photoURL": "http://graph.facebook.com/100003801423027/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003801423027",
+                "UID": "fb0002b5-a5b9-4ce1-96c9-1feeff1065f7"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335763270203,
+            "timestamp": 1335763270203
+        },
+        {
+            "commentText": "test",
+            "flagCount": 0,
+            "ID": "4ec1c5babe484543ba77d5b058ea931f",
+            "providerPostIDs": {
+                "facebook": "100003737577781_116211695180082"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Gilbert Veragolfer",
+                "photoURL": "http://graph.facebook.com/100003737577781/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003737577781",
+                "UID": "837edba7-0ea4-4323-b041-31d11ae78b2e"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335198879445,
+            "timestamp": 1335198879445
+        },
+        {
+            "commentText": "nakakaiyak!",
+            "flagCount": 0,
+            "ID": "39b4d9c445504f2497fef28166d92b8d",
+            "providerPostIDs": {
+                "facebook": "100003468478010_160713467387601"
+            },
+            "ratings": {
+                "_overall": 3
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Site",
+                "name": "Mulan Rivera",
+                "photoURL": "http://graph.facebook.com/100003468478010/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003468478010",
+                "UID": "a7ed55c4-c76f-49c1-8162-288a0ceecd52"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1335073245711,
+            "timestamp": 1335073245711
+        },
+        {
+            "commentText": "test",
+            "flagCount": 0,
+            "ID": "7e9f893006d7426b889714949146fc8e",
+            "providerPostIDs": {
+                "facebook": "100003772021674_101590286643372"
+            },
+            "ratings": {
+                "_overall": 5
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Veronica Twinkle",
+                "photoURL": "http://graph.facebook.com/100003772021674/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003772021674",
+                "UID": "f6929aa0-a830-4206-b823-62eca86a1c67"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1334595653472,
+            "timestamp": 1334595653472
+        },
+        {
+            "commentText": "yey",
+            "flagCount": 0,
+            "ID": "ca64dff2511f493891e4005e2138dd42",
+            "providerPostIDs": {
+                "facebook": "100002875880496_212160232223171",
+                "twitter": "187382754957209601"
+            },
+            "ratings": {
+                "_overall": 3
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Eugene Paden",
+                "photoURL": "http://graph.facebook.com/100002875880496/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100002875880496",
+                "UID": "d9720726-217c-4431-aeab-468e818132a8"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1333510504422,
+            "timestamp": 1333510504422
+        },
+        {
+            "commentText": "kakaiyak na ito. ",
+            "flagCount": 0,
+            "ID": "243dcb9c4a11415ba7e688140555848e",
+            "providerPostIDs": {
+                "facebook": "100003707170360_104994452967460"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Katerina Montenegro",
+                "photoURL": "http://graph.facebook.com/100003707170360/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003707170360",
+                "UID": "14ec228a-e5b9-4597-ad05-89194be1d465"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1332905515403,
+            "timestamp": 1332905515403
+        },
+        {
+            "commentText": "sugoi",
+            "flagCount": 0,
+            "ID": "afe3d2d372bf4437aff492bb8fdc5c0f",
+            "providerPostIDs": {
+                "facebook": "100003610531857_117998051663879"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Evotest Olives",
+                "photoURL": "http://graph.facebook.com/100003610531857/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003610531857",
+                "UID": "76d236cb-0e15-4c2f-a546-b9db6460bf9b"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1332483403022,
+            "timestamp": 1332483403022
+        },
+        {
+            "commentText": "fgfagbjaf",
+            "flagCount": 0,
+            "ID": "e0b6f4ca47d14131b431df19a0e54c50",
+            "providerPostIDs": {
+                "facebook": "100003374647042_149952388460582"
+            },
+            "ratings": {
+                "_overall": 3
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Johnny Black",
+                "photoURL": "http://graph.facebook.com/100003374647042/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003374647042"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1331894435749,
+            "timestamp": 1331894435749
+        },
+        {
+            "commentText": "hindi ko na maalala",
+            "flagCount": 0,
+            "ID": "575542ac4f034afcabbe8f16b77b115c",
+            "providerPostIDs": {
+                "facebook": "100002881372728_203004339805610"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Jojo Ines",
+                "photoURL": "http://graph.facebook.com/100002881372728/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100002881372728",
+                "UID": "bd4ce991-2496-414c-aad1-05e7aa0e425c"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1331772464241,
+            "timestamp": 1331772464241
+        },
+        {
+            "commentText": "test",
+            "flagCount": 0,
+            "ID": "22611bf979bd4ae88d7108e544ec41f4",
+            "providerPostIDs": {
+                "facebook": "100003511946996_123477957779268"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Dhantfcca Roman",
+                "photoURL": "http://graph.facebook.com/100003511946996/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003511946996",
+                "UID": "f96c1b67-497c-4db6-bf73-43f8badbb2dc"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1330629858203,
+            "timestamp": 1330629858203
+        },
+        {
+            "commentText": "I enjoyed it.",
+            "flagCount": 0,
+            "ID": "efca7fe04b04480287e4423143a303ef",
+            "providerPostIDs": {
+                "facebook": "100003503964168_121478407978957"
+            },
+            "ratings": {
+                "_overall": 4
+            },
+            "sender": {
+                "isSelf": false,
+                "loginProvider": "Facebook",
+                "name": "Holiday Maine",
+                "photoURL": "http://graph.facebook.com/100003503964168/picture?type=square",
+                "profileURL": "http://www.facebook.com/profile.php?id=100003503964168",
+                "UID": "647e3cd7-b15c-44dd-8930-7cd16d3a8789"
+            },
+            "status": "published",
+            "streamId": "Show_310",
+            "threadID": "",
+            "threadTimestamp": 1330431548940,
+            "timestamp": 1330431548940
+        }
+    ],
+    "errorCode": 0,
+    "hasMore": false,
+    "next": "ts_1330431548940",
+    "nextTS": 1330431548940,
+    "statusCode": 200,
+    "statusReason": "OK",
+    "threadCount": 22,
+    "userComments": []
+}

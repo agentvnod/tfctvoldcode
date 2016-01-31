@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Registration Complete for TFC Everywhere - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div>@Html.ImageBuilder(Url, "register/tve-banner-orange-long.jpg", new { title = "TFC Everywhere", alt = "TFC Everywhere", width = 940 })</div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Activate TFC Everywhere</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="rheader">
+                        Congratulations!
+                    </div>
+                    <div id="freetrial01">
+                        <div style="padding-top: 20px;">
+                            <center>
+                                <span style="font-size: 42px; font-weight: bolder;">YOUR TFC EVERYWHERE
+                                    <br />
+                                    IS NOW ACTIVATED! </span>
+                            </center>
+                        </div>
+                        <div class="breakLarge clear">
+                        </div>
+                        <div class="trial2-text2" style="font-size: 18px;">
+                            Pwede ka nang manood ng piling Kapamilya shows at<br />
+                            movies mula sa paborito niyong TFC Channels.
+                            <div class="breakLarge">
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        <div>
+                            <center>
+                                <a href="@Url.Action("TVE", "Packages")" class="start-watching-btn white">TVE</a></center>
+                        </div>
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.1.css?v1.10")}
+@section JScript {
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6006354635910';
+        fb_param.value = '0.00';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>
+}
+@section JScriptBottom {
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6006354635910&amp;value=0" /></noscript>
+}

@@ -1,0 +1,582 @@
+#dTopLinks a
+{
+    font-size: 30px;
+    font-weight: bold;
+    color: Orange;
+    text-decoration: none;
+}
+
+#dTopLinks
+{
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 2px solid Orange;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.fullHeader
+{
+    margin: 5px 0 0 5px;
+    line-height: 28px;
+    height: 24px;
+}
+
+#featuredItems_latestEpisodes
+{
+    /*padding-top: 5px;*/
+}
+
+.seeAll_container
+{
+    margin-top: -8px;
+}
+.seeAllItems
+{
+    color: #49a4ff;
+    font-size: 13px;
+    vertical-align: top;
+}
+.seeAllItems a
+{
+    font-size: 11px;
+    vertical-align: top;
+    color: #49a4ff;
+}
+
+.seeAllItems a:hover
+{
+    text-decoration: underline;
+}
+
+.itemListBody
+{
+    margin: 5px 0 0 5px;
+    width: 100%;
+}
+
+.imgShowThumbBg
+{
+    background: url('images/features/shows_full_thumbnail_bg.png') no-repeat;
+    width: 165px;
+    height: 113px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.imgShowThumbBg img
+{
+    margin-left: -2px;
+    margin-top: -2px;
+}
+
+.featuredItems .itemInfo
+{
+    width: 165px;
+}
+
+.featuredItems .showTitle
+{
+    font-size: 12px;
+    font-weight: bold;
+    color: #49a4ff;
+    text-decoration: none;
+}
+.showTitle a
+{
+    font-size: 12px;
+    font-weight: bold;
+    color: #49a4ff;
+    text-decoration: none;
+}
+.showTitle a:hover
+{
+    font-size: 12px;
+    font-weight: bold;
+    color: #49a4ff;
+    text-decoration: underline;
+}
+
+.white
+{
+    color: #fff;
+}
+
+.itemListBody .navigation
+{
+    color: #fff;
+    padding-top: 5px;
+    height: 0px;
+}
+
+.navigation a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.navigation a:hover
+{
+    text-decoration: underline;
+}
+
+#featuredItems_freeTV
+{
+    /*padding-top: 5px;*/
+}
+
+.featuredItems
+{
+    padding-top: 5px;
+}
+
+.fullHeaderFull
+{
+    margin: 5px 0 0 5px;
+    line-height: 28px;
+    height: 24px;
+    width: 930px;
+}
+.fullHeaderFull h1
+{
+    color: Orange;
+}
+
+.itemListing li
+{
+    float: left;
+    width: 23%;
+    position: relative;
+}
+.itemListing
+{
+    width: 940px;
+    padding-left: 50px;
+}
+
+.imgShowThumbBg_1
+{
+    width: 178px;
+    height: 257px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 5px;
+}
+.showItem_preview a
+{
+    text-decoration: none;
+    color: #49a4ff;
+}
+.showItem_preview
+{
+    color: #fff;
+}
+.imgShowThumbBg_1 img
+{
+    width: 178px;
+    height: 257px;
+    border: 1px solid white;
+}
+
+.wrapper
+{
+    width: 100% !important;
+}
+
+.featuredItems .itemInfo_1
+{
+    width: 178px;
+}
+
+.navigation
+{
+    text-align: center;
+}
+
+.itemListBody .navigation .prev
+{
+    background: url('images/features/prev_arrow.png') no-repeat;
+    width: 10px;
+    height: 19px;
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+}
+
+.itemListBody .navigation .next
+{
+    background: url('images/features/next_arrow.png') no-repeat;
+    width: 10px;
+    height: 19px;
+    text-indent: -1000px;
+    display: inline-block;
+    position: relative;
+    margin-left: 5px;
+}
+
+.itemListBody .navigation .bullet
+{
+    background: url('images/features/grey_dot.png') no-repeat;
+    width: 9px;
+    height: 9px;
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    margin: 0 3px 0 3px;
+}
+
+.itemListBody .navigation .selected
+{
+    background: url('images/features/blue_dot.png') no-repeat;
+}
+
+.itemListBody .navigation .activeSlide
+{
+    background: url('images/features/blue_dot.png') no-repeat;
+}
+
+#teamContent .navigation .prev, #teamContent .navigation .next
+{
+    width: 28px;
+    height: 42px;
+    position: relative;
+    top: 150px;
+    z-index: 10;
+    background-image: none;
+}
+#teamContent .navigation .prev
+{
+    left: -440px;
+}
+#teamContent .navigation .next
+{
+    left: 930px;
+}
+.dLatestandPackage
+{
+    margin-left: 10px;
+    height: 300px;
+}
+.dSubscribeHeader
+{
+    width: 303px;
+}
+.dLatest, .dLatestHeader
+{
+    width: 617px;
+}
+.dLatest a, .dPackages a
+{
+    color: Orange;
+}
+.dPackages
+{
+    margin-left: 10px;
+    width: 303px;
+}
+.dPackages, .dLatest
+{
+    height: 280px;
+    float: left;
+    color: #fff;
+}
+.dLatestMatch
+{
+    background-color: #000;
+    height: 250px;
+}
+
+.dCoverItLive, .dListofGamesExclusives
+{
+    margin-top: 72px;
+    height: 528px;
+    float: left;
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+.dCoverItLive a, .dListofGamesExclusives a
+{
+    color: Orange;
+    padding-left: 5px;
+}
+.dListofGamesExclusives
+{
+    width: 554px;
+}
+.dCoverItLive
+{
+    margin-left: 10px;
+    width: 350px;
+    background-color: #000;
+    margin-right: 10px;
+    padding-left: 0px;
+}
+.dListGames
+{
+}
+#dGList, #dEList
+{
+    height: 475px;
+    margin-left: 5px;
+}
+.watchnow:hover
+{
+    background-position: 0 0;
+}
+.watchnow
+{
+    display: block;
+    width: 114px;
+    height: 20px;
+    background: url('images/menuBar/watchnow.png') bottom;
+    text-indent: -99999px;
+    margin-top: 20px;
+    bottom: 40px;
+}
+.dLatestMatch1, .dLatestMatch2
+{
+    width: 100%;
+    padding-top: 10px;
+    padding-left: 15px;
+}
+.dLatestMatch1
+{
+    height: 130px;
+}
+.dLatestMatch2
+{
+    border-top: 1px solid;
+    height: 120px;
+    width: 602px;
+}
+.dLatestMatchImage1, .dLatestMatchDescriptionLink1
+{
+    height: 140px;
+    float: left;
+    font-size: 16px;
+}
+.dLatestMatchImage1
+{
+    width: 35%;
+}
+.dLatestMatchDescriptionLink1
+{
+    width: 65%;
+}
+.dLatestMatchDescriptionLink1 a
+{
+    color: #49a4ff;
+    text-decoration: none;
+    font-size: 20px;
+}
+.dLatestMatchImage2, .dLatestMatchImage3, .dLatestMatchImage4
+{
+    width: 151px;
+    height: 98px;
+    float: left;
+    padding-left: 30px;
+}
+
+
+.showItem_preview
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    float: left;
+    min-height: 365px;
+}
+.dTeamsList
+{
+    text-align: center;
+    padding-left: 30px;
+}
+.dCoverImage
+{
+    width: 940px;
+    height: 296px;
+}
+
+.dLeft, .dRight
+{
+    float: left;
+    min-height: 650px;
+    color: #fff;
+}
+.dLeft
+{
+    padding-left: 20px;
+    width: 230px;
+}
+.dRight
+{
+    width: 650px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.dRight a, .dLeft a
+{
+    color: #fff;
+}
+.dRoster, .dGameSked
+{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 520px;
+    height: 600px;
+    margin: -100px 0 0 -300px;
+    top: 50%;
+    left: 50%;
+    color: #000;
+    font-family: Arial Black;
+    font-size: 16px;
+    text-align: justify;
+}
+
+.dGameSked h3
+{
+    color: #49a4ff;
+    font-size: 20px;
+}
+.dGameSked h3
+{
+    font-weight: lighter;
+}
+.dVisible
+{
+    display: block !important;
+}
+.dInvisible
+{
+    display: none !important;
+}
+.comments-header
+{
+    color: #FFFFFF;
+    font-size: 25px;
+    padding-left: 30px;
+}
+
+.dTeamNameHeader
+{
+    color: #49a4ff;
+    font-size: 30px;
+    font-family: Arial Black;
+}
+.dTeamLogo
+{
+    position: relative;
+    top: -134px;
+}
+.dLeftTeamList
+{
+    position: relative;
+    top: -124px;
+}
+#aboutEpisodes
+{
+    display: block !important;
+}
+
+#aboutEpisodes > .genericHeader
+{
+}
+.genericHeader
+{
+    padding-top: 10px;
+    margin: 0 auto;
+    line-height: 28px;
+    height: 28px;
+    width: 350px !important;
+    border-bottom: none;
+}
+
+.t-grid-header
+{
+    display: none;
+}
+
+#dPlaylistGame
+{
+}
+
+#dPlaylistAll
+{
+}
+
+.gig-button-text
+{
+    background-color: #d7d7d7 !important;
+    height: 24px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 25px;
+    border-top: #aaaaaa 1px solid;
+    border-right: #aaaaaa 1px solid;
+    border-bottom: #aaaaaa 1px solid;
+    position: relative;
+    right: 1px;
+    top: 1px;
+}
+
+.gig-bar-container img
+{
+    top: 1px;
+    position: relative;
+}
+#aboutPackage
+{
+    background-color: #000;
+    width: 290px;
+    min-height: 260px;
+}
+#packageContainer
+{
+    margin-top: -15px;
+    padding-left: 25px;
+}
+.dTeamData p
+{
+    text-align: justify;
+}
+.dGameSked p
+{
+     text-align: center;
+}
+#leftfloatlistheader
+{
+    width: 770px;
+    padding-left: 15px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    float: left;
+}
+#leftfloatlistheader a
+{
+    text-decoration: none;
+    color: Orange;
+}
+
+#sort_container
+{
+    margin-right: 20px;
+    text-align: right;
+    color: #fff;
+    padding-top: 5px;
+}
+
+#sort_container a
+{
+    text-decoration: none;
+    color: #49a4ff;
+}
+.t-grid td
+{
+    border: 1px solid #454545;
+    background-color: #000;
+}

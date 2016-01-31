@@ -1,0 +1,57 @@
+﻿@model IPTV2_Model.CategoryClass
+@{
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    int id = ViewBag.id;
+    string sectionTitle = ViewBag.SectionTitle;
+    string description = String.Format("Your favorite ABS-CBN {0}, movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!", sectionTitle);
+    string title = String.Format("{0} from ABS-CBN on TFC.tv", sectionTitle);
+    string href = String.Format("{0}/Category/List/{1}/{2}", GlobalConfig.baseUrl, id, MyUtility.GetSlug(Model.Description));
+    string parent = "entertainment";
+    try
+    {
+        if (!String.IsNullOrEmpty(ViewBag.ParentCategory))
+        {
+            parent = ViewBag.ParentCategory;   
+        }        
+    }
+    catch (Exception e) { parent = e.Message; }
+    ViewBag.DaxName = String.Format("tfc-tv:{0}:{1}:home", MyUtility.GetDaxSlug(parent), MyUtility.GetDaxSlug(Model.Description));
+
+    string open_graph_img = String.Empty;
+    if (!String.IsNullOrEmpty(Model.ImagePoster))
+    {
+        open_graph_img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Model.ImagePoster);
+    }
+
+    ViewBag.Title = title;
+}
+<section class="page_pagebody home480">
+    <div class="container category_section_list">
+        <!-- page top -->
+        <h1 class="page_title">
+            @sectionTitle
+        </h1>
+        <div class="page_description">
+            @Html.Raw(Model.Blurb)
+        </div>
+        @Html.Action("BuildSectionCategory", new { id = id, featureType = "show", partialViewName = "BuildSectionNoTitle", pageSize = GlobalConfig.GenericListContentSize, removeShowAll = true, containerId = String.Format("bseccat_{0}", id) })
+        <br />
+        <br />
+    </div>
+</section><!-- end page body section -->
+@section MetaTags{
+    <meta name="description" content="@String.Format("Your favorite ABS-CBN {0} movies and shows are just a click away. Satisfy your craving for homegrown Pinoy TV entertainment!",sectionTitle)" />
+    <link rel="canonical" href="@href" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="Your favorite ABS-CBN movies and shows are just a click away. Satisfy you craving for homegrown Pinoy TV entertainment!" />
+    <meta property="og:type" content="website" />
+    @{if (!String.IsNullOrEmpty(open_graph_img))
+    {
+        <meta property="og:image" content="@open_graph_img" />
+    }
+    }
+}

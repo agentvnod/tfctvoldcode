@@ -1,0 +1,38 @@
+﻿/* File Created: July 27, 2012 */
+
+.shadow
+{
+    width: 258px;
+    height: 294px;
+    text-align: center;
+    margin-right: 25px;
+}
+
+#ams_shadow
+{
+    background-image: url('images/onlinepremiere/ams_shadow.png');
+}
+
+#ebyt_shadow
+{
+    background-image: url('images/onlinepremiere/ebyt_shadow.png');
+}
+
+#uy_shadow
+{
+    background-image: url('images/onlinepremiere/uy_shadow.png');
+}
+
+#asmk_shadow
+{
+    background-image: url('images/onlinepremiere/asmk_shadow.png');
+}
+
+#srr13_shadow
+{
+    background-image: url('images/onlinepremiere/srr13_shadow.png');
+}
+.promo_blue_text
+{
+    color: #49a4ff;
+}

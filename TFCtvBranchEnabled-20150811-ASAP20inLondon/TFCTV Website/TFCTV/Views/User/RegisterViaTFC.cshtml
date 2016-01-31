@@ -1,0 +1,445 @@
+﻿@model TFCTV.Models.SignUpModel
+@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IEnumerable<IPTV2_Model.Country> cList = ViewBag.ListOfCountries;
+
+    //var userHostAddress = MyUtility.GetClientIpAddress();
+
+
+    string cState = "";
+    var cCity = "";
+    string userCountry = GlobalConfig.DefaultCountry;
+
+    var isConnectedToGigya = false;
+    if (ViewBag.isConnectedToGigya != null)
+    {
+        isConnectedToGigya = (bool)ViewBag.isConnectedToGigya;
+    }
+
+    var stateCount = 0;
+
+    IPTV2_Model.Country cCountry = null;
+    IEnumerable<IPTV2_Model.State> listOfStates = null;
+    var context = new IPTV2_Model.IPTV2Entities();
+    string cCode = userCountry;
+    var userHostAddress = Request.GetUserHostAddressFromCloudflare();
+    try
+    {
+        cCode = MyUtility.getCountry(userHostAddress).getCode();
+        var location = MyUtility.getLocation(userHostAddress);
+
+        cCountry = ViewBag.UserCountry;
+        stateCount = cCountry != null ? cCountry.States.Count() : 0;
+        int stateCount1 = (int)ViewBag.StateCount;
+
+        if (location != null)
+        {
+            if (stateCount1 > 0)
+            {
+                if (cCountry.States.Count(s => s.StateCode == location.region) > 0)
+                {
+                    cState = location.region;
+                }
+                else if (cCountry.States.Count(s => s.Name.Contains(location.regionName)) > 0)
+                {
+                    var theState = cCountry.States.FirstOrDefault(s => s.Name.Contains(location.regionName));
+                    if (theState != null)
+                    {
+                        cState = theState.StateCode;
+                    }
+                    else
+                    {
+                        cState = location.regionName;
+                    }
+                }
+                else
+                {
+                    if (stateCount > 0)
+                    {
+                        cState = cCountry.States.First().StateCode;
+                    }
+                }
+            }
+            else
+            {
+                cState = location.regionName;
+            }
+            cCity = location.city;
+        }
+
+        if (stateCount > 0)
+        {
+            listOfStates = cCountry.States.OrderBy(s => s.Name).ToList();
+        }
+
+        userCountry = cCode == "--" ? GlobalConfig.DefaultCountry : cCode;
+
+        if (stateCount == 0 && userCountry == GlobalConfig.DefaultCountry)
+        {
+            listOfStates = context.States.Where(s => s.CountryCode == GlobalConfig.DefaultCountry).OrderBy(s => s.Name).ToList();
+            stateCount = listOfStates.Count();
+        }
+
+    }
+    catch (Exception e)
+    {
+        if (stateCount > 0)
+        {
+            listOfStates = context.States.Where(s => s.CountryCode == GlobalConfig.DefaultCountry).OrderBy(s => s.Name).ToList();
+            stateCount = listOfStates.Count();
+        }
+        else
+        {
+            if (userCountry == GlobalConfig.DefaultCountry)
+            {
+                listOfStates = context.States.Where(s => s.CountryCode == GlobalConfig.DefaultCountry).OrderBy(s => s.Name).ToList();
+                stateCount = listOfStates.Count();
+            }
+        }
+    }
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        @{if (MyUtility.isTVECookieValid())
+          {
+            <div>
+                @Html.ImageBuilder(Url, "register/tve-banner-green-long.jpg", new { title = "TFC Everywhere", alt = "TFC Everywhere", width = 940 })</div>
+          }
+          else
+          {
+              if (isConnectedToGigya)
+              {
+            <div>@Html.ImageBuilder(Url, "register/REGISTRATION-1b.jpg", new { wdith = 940 })</div>
+              }
+              else
+              {
+            <div>@Html.ImageBuilder(Url, "register/REGISTRATION-2a.jpg", new { wdith = 940 })</div>
+              }
+          }
+        }
+        @*@{if (isConnectedToGigya)
+          {
+            <div>@Html.ImageBuilder(Url, "register/REGISTRATION-1b.jpg", new { wdith = 940 })</div>
+          }
+          else
+          {<div>@Html.ImageBuilder(Url, "register/REGISTRATION-2a.jpg", new { wdith = 940 })</div> }}*@
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                @{if (isConnectedToGigya)
+                  {
+@*<div id="register-header">
+                        By signing with your social networking account, you earned <span class="orange boldText">
+                            7 DAYS FREE TRIAL</span>!
+                    </div>*@
+                    <div class="breakStandard">
+                    </div>
+                    <div id="register-subheader">
+                        Complete your registration by confirming your account information below.
+                    </div>
+                  }
+                  else
+                  {
+                    <div id="register-subheader">
+                        Register by filling in the fields below with your personal information.
+                    </div>
+                  }}
+                <div class="breakLarge">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div>
+                    <form id="regform" method="post" action="/User/_RegisterUser">
+                    <div id="registerBody" class="floatLeft">
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "textbox", maxlength = 64 })<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div>
+                                @Html.PasswordFor(m => m.Password, new { @class = "textbox" })<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.ConfirmPassword)
+                            </div>
+                            <div>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "textbox" })<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.FirstName)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "textbox", maxlength = 32 })<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.LastName)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "textbox", maxlength = 32 })<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.City)
+                            </div>
+                            <div>
+                                @Html.TextBox("City", cCity, new { @class = "textbox", maxlength = 50 })
+                                @*@Html.TextBoxFor(m => m.City, new { @class = "textbox", @Value = cCity })*@<br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.State)
+                            </div>
+                            <div>
+                                @{if (stateCount > 0)
+                                  {
+                                    @(Html.DropDownList("StateDD", new SelectList(listOfStates, "StateCode", "Name", cState), new { @class = "textbox StateDD t-dropdown" }))
+                                  }
+                                  else
+                                  {
+                                    <select id="StateDD" class="textbox StateDD t-dropdown">
+                                    </select>
+                                  }
+                                }
+                                @Html.TextBox("State", cState, new { @class = "textbox", maxlength = 30 })
+                                <br />
+                                <span class="errstatus eps"></span>
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft">
+                                @Html.LabelFor(m => m.CountryCode)
+                            </div>
+                            <div>@(Html.DropDownList("CountryCode", new SelectList(cList, "Code", "Description", userCountry), new { @class = "textbox t-dropdown" }))
+                                <br />
+                                <span class="errstatus eps"></span>@*@Html.TextBoxFor(m => m.CountryCode, new { @class = "textbox required" })*@
+                            </div>
+                        </div>
+                        <div class="clear breakStandard">
+                        </div>
+                    </div>
+                    @{if (!MyUtility.isTVECookieValid())
+                      {
+                        <div id="ft-register" class="floatLeft">
+                            @Html.ImageBuilder(Url, "register/7-Day-Free-Trial-BOX-B.png")
+                            @*@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE-1B_15.png")*@
+                        </div>
+                      }
+                      else
+                      {
+                        <div class="clear">
+                        </div>
+                        <div>
+                            <div style="text-align: center; font-weight: bold; font-size: 16px; color: #e95d0a;">
+                                IMPORTANT:</div>
+                            Please be advised that the last name you have entered above should be the same as
+                            the last name indicated on your TFC DTH or iPTV account.<br />
+                            <span style="text-decoration: underline;">This is required in requesting your TFC Activation
+                                Code</span>.</div>
+                        <div class="breakStandard clear">
+                        </div>
+                      }
+                    }
+                    <div class="clear">
+                    </div>
+                    <div id="registerBodyLow">
+                        <div>
+                            <div id="tnc">
+                                <input type="checkbox" id="terms" name="terms" value="0" />
+                                I confirm that I have read and fully understand and accept the @Html.ActionLink("Terms and Conditions of the Subscription and/or Use", "TermsAndConditions", "Home")
+                                of TFC.tv<br />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div>
+                            <input type="submit" class="btnimage1 registerbtn" id="regsubmit" value="" /><div
+                                id="rsb-load" class="side-button-loader padLeftStandard">
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner" class="register-spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "48", height = "48" })<br />
+        <span id="spannertext" class="register-spanner-text">Your registration is successful!
+            Please wait...</span>
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.1.css?Asd")}
+@section JScriptBottom {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    @Html.JsBuilder(Url, "helpers.js")
+    <script type="text/javascript">
+        function redirectToHome() {
+            window.location = "/";
+        }
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 8
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: '#Password'
+                    },
+                    FirstName: { required: true },
+                    LastName: { required: true },
+                    CountryCode: { required: true },
+                    terms: { required: true }
+                },
+                messages: {
+                    Email: {
+                        required: 'Email address is required.',
+                        email: 'Invalid email address',
+                        minlength: 'Invalid email address.'
+                    },
+                    FirstName: {
+                        required: 'First name is required.'
+                    },
+                    LastName: {
+                        required: 'Last name is required.'
+                    },
+                    Password: {
+                        required: 'Please provide a password.',
+                        minlength: $.format('Enter at least {0} characters.')
+                    },
+                    ConfirmPassword: {
+                        required: 'Please confirm password.',
+                        minlength: $.format('Enter at least {0} characters.'),
+                        equalTo: 'Password mismatch!'
+                    },
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    $('#message').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait. while we process your request...');
+                    $.post('/User/_RegisterUser', form.find('input, select').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#message').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('.register-spanner-text').css('margin-left', '-102px');
+                            $('#registerContainer').addClass('register-container-center-span');
+                            $('#registerContainer').html($('#ajaxloading').html());
+                            window.location.href = data.href;
+                            $('#cmsg').html(data.errorMessage);
+                            //                            _gaq.push(['t2._trackEvent', 'User', 'Register', data.info.toString()]);
+                            ga('send', 'event', 'button', 'click', 'register');
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('#rsb-load').empty();
+                        }
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+
+            $('#CountryCode').change(function () {
+                var cId = $("#CountryCode option:selected").val();
+                $('#City').val('');
+                jQuery.get('/Ajax/GetCountryState', { id: cId }, function (data) {
+
+                }).done(function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        $('#StateDD').empty();
+                        $.each(data, function () {
+                            $('#StateDD').append($("<option />").val(this.Value).text(this.Text));
+                        });
+                        $('#StateDD').show();
+                        $('#State').val($('#StateDD').val());
+                    }
+                });
+            });
+
+            $('#StateDD').on('change', function () {
+                $('#State').val($('#StateDD').val());
+            })
+
+        });
+    </script>
+    <script type="text/javascript">
+        function toggleState(stateCount) {            
+            if (stateCount > 0) {
+                $('.StateDD').show();
+                $('#State').hide();
+            }
+            else {
+                if($('#State').is(':hidden'))
+                    $('#State').val('');
+                $('.StateDD').hide();
+                $('#State').show();
+            }
+        }
+        $(document).ready(function () {
+            toggleState(@stateCount);
+        });
+    </script>
+    <script type="text/javascript">toggleState(@stateCount);</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#StateDD').val() != '') {
+                $('#State').val($('#StateDD').val());
+            }
+        });
+    </script>
+}

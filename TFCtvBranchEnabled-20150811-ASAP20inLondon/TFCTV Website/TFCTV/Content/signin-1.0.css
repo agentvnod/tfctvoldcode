@@ -1,0 +1,157 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica Neue, Arial, Helvetica, Sans-Serif;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.header
+{
+    font-size: 14px;
+    color: #000;
+}
+
+.breakStandard
+{
+    height: 10px;
+}
+
+
+.breakSmall
+{
+    height: 5px;
+}
+
+.breakLarge
+{
+    height: 20px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.floatLeft
+{
+    float: left;
+}
+
+#leftBlock
+{
+    width: 260px;
+    min-height: 290px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 10px;
+    border-right: 1px dotted #ccc;
+}
+
+
+#rightBlock
+{
+    padding-left: 25px;
+    margin-top: 20px;
+}
+
+
+#registerBlock
+{
+    width: 100%;
+    min-height: 30px;
+    background-color: #eee;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#registerBlock a
+{
+    color: #ff0000;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#registerBlock a:hover
+{
+    text-decoration: underline;
+}
+
+#LoginPanel
+{
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica Neue, Arial, Helvetica, Sans-Serif;
+    font-size: 12px;
+    color: #000;
+    height: 200px;
+}
+
+
+.errstatus
+{
+    color: #ff0000;
+    font-size: 11px;
+}
+
+.message
+{
+    color: #ff0000;
+}
+
+.hideElement
+{
+    display: none;
+}
+
+.usefulLinks a
+{
+    color: #49a4ff;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.usefulLinks a:hover
+{
+    text-decoration: underline;
+}
+
+.subheader
+{
+    font-size: 11px;
+}
+
+.haloCenter
+{
+    text-align: center;
+    position: relative;
+    top: 140px;
+}
+
+#leftBlock .header
+{
+    margin-left: 20px;
+}
+
+#socializePanel
+{
+    margin-top: 25px;
+}
+
+.rbText
+{
+    position: relative;
+    top: 5px;
+}
+
+.no-transform
+{
+    text-transform: none !important;
+}
+
+#socializePanel_welcome
+{
+    margin-left: 20px !important;
+    margin-top: -20px !important;
+}

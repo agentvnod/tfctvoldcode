@@ -1,0 +1,80 @@
+﻿@using StackExchange.Profiling;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />
+    @{if (GlobalConfig.isUAT)
+      {
+        <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
+      }
+    }
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <link rel="Shortcut Icon" href="@Html.ContentBuilder(Url, "content/images/favicon.ico", removeProtocol: true)" />
+    <script src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+    @{if (GlobalConfig.isUAT || Request.IsLocal)
+      {
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.js" type="text/javascript"></script>
+      }
+      else
+      { 
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+      }
+    }
+    @Html.JsBuilder(Url, "jquery.tools/1.2.7/all/jquery.tools.min.js", removeProtocol: true)
+    @if (IsSectionDefined("Stylesheet"))
+    { @RenderSection("Stylesheet", false)}
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css", removeProtocol: true)
+    <![endif]-->
+    <script type="text/javascript">
+        if (!(window.console && console.log)) {
+            console = {
+                log: function () { },
+                debug: function () { },
+                info: function () { },
+                warn: function () { },
+                error: function () { }
+            };
+        }
+        var protocol = document.location.protocol;
+    </script>
+    @if (IsSectionDefined("StylesheetSpecial"))
+    { @RenderSection("StylesheetSpecial", false)}
+    @if (IsSectionDefined("JScript"))
+    { @RenderSection("JScript", false)}
+    <script type="text/javascript">    
+        var tfc = {};
+        var config = {};
+        var apikey = '@GlobalConfig.GSapikey';
+        var socializeUrl = protocol + '//cdns.gigya.com/JS/socialize.js?apikey=' + apikey;
+        var socialPluginUrl = '@Html.ContentBuilder(Url, "scripts/tfc.social.plugin.3.1.annivpromo.js", removeProtocol: true)';
+        var providers = '@GlobalConfig.SocialProvidersList';
+        var chatCategoryId = @GlobalConfig.ChatId;
+        var chatStatus = @GlobalConfig.IsChatEnabled.ToString().ToLower();
+    </script>
+    <script type="text/javascript" src="//cdns.gigya.com/JS/socialize.js?apikey=@GlobalConfig.GSapikey">
+        { connectWithoutLoginBehavior: 'alwaysLogin' }
+    </script>
+    @Html.Partial("_GoogleAnalyticsPartial")
+    @{if (GlobalConfig.IsAdditionalCssEnabled)
+      { 
+        @Html.CssBuilder(Url, String.Format("extra.css?{0}", Guid.NewGuid().ToString()), removeProtocol: true)        
+      }
+    }
+</head>
+<body>
+    @Html.Partial("_GoogleTagManagerPartial")
+    @{if (GlobalConfig.IsEffectiveMeasureEnabled)
+      {
+        @Html.Partial("_EffectiveMeasurePartial")
+      }
+    }
+    <div id="mainContainer">
+        @RenderBody()
+    </div>
+    @if (IsSectionDefined("JScriptBottom"))
+    { @RenderSection("JScriptBottom", false)}
+    @MiniProfiler.RenderIncludes()
+</body>
+</html>

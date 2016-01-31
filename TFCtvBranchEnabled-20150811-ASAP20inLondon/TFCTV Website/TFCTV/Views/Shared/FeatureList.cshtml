@@ -1,0 +1,23 @@
+﻿@model IPTV2_Model.Feature
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", Model.Description);
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = String.Format("tfc-tv:{0}:home", MyUtility.GetDaxSlug(Model.Title));
+    string featureType = "episode";
+    if (ViewBag.featureType != null)
+    {
+        featureType = ViewBag.featureType;
+    }
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+}
+<section class="page_pagebody">
+    <div class="container category_section_list">
+        @Html.Action("BuildSection", "Home", new { id = Model.FeatureId, sectionTitle = Model.Title, containerId = "content_list", featureType = featureType, removeShowAll = true, isFeature = true, ShowAllItems = true })
+        <br />
+        <br />
+    </div>
+</section>
+@section MetaTags{
+    <meta name="description" content="@Model.Description" />
+    <link rel="canonical" href="@href" />
+}

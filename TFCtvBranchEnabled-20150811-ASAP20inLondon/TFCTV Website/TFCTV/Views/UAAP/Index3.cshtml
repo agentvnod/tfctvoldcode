@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "UAAP Season 78 - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var altcastcode = GlobalConfig.UAAPCoverItLiveAltCastCode;
+    string cilContainerId = String.Format("cil-root-{0}", altcastcode);
+    string cilScriptId = String.Format("cilScript-{0}", altcastcode);
+    ViewBag.DaxName = "tfc-tv:uaap:home";
+}
+<!-- uaap main page body  -->
+<section class="page_pagebody uaap_main">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+            @Html.ImageBuilder(Url, String.Format("banners/uaap_{0}.jpg",GlobalConfig.UAAPMainCategoryId.ToString()), new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li class="active"><a href="@Url.Action("Index", "UAAP")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Live", "UAAP")">LIVE STREAM</a></li>
+                <li><a href="@Url.Action("Teams", "UAAP")">THE TEAMS</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <!-- block -->
+        <div class="sec_header">
+            <!-- head -->
+            <h2 class="section_title clearfix">
+                Participating Teams</h2>
+        </div>
+        <!-- end head -->
+        <div class="row top_vedio">
+            <!-- movies -->
+            <div class="bxslider">
+                @Html.Action("GetFeaturedTeams", "UAAP")
+            </div>
+        </div>
+        <!-- END movies -->
+        <!-- END block -->
+        <!-- 2nd block -->
+        <div class="sec_header mid_videoh">
+            <!-- head -->
+            <h2 class="section_title">
+                <a href="#latest_game" class="mv_h1 latest_tab active">Latest Game</a> <a href="#see_all"
+                    class="mv_h1 seeall_tab">SEE ALL GAMES</a> <a href="#exclusive" class="mv_h1 exclu_tab">
+                        EXCLUSIVE VIDEOS</a>
+            </h2>
+        </div>
+        <!-- end head -->
+        <div class="tab-content mid_video">
+            <!-- Tab panes -->
+            @Html.Action("GetUAAPContent", "UAAP", new { partialViewName = "GetUAAPContentSliderBigThumb", pageSize = GlobalConfig.FeatureItemsPageSize + 1, id = "latest_game" })
+            <!-- END Latest Game tab body -->
+            @Html.Action("GetUAAPContent", "UAAP", new { partialViewName = "GetUAAPContentSlider", pageSize = GlobalConfig.FeatureItemsPageSize * 5, id = "see_all" })
+            <!-- END SEE ALL GAMES tab body -->
+            @Html.Action("GetUAAPFeaturedContent", "UAAP", new { partialViewName = "GetUAAPFeaturedContentSlider", pageSize = 4, id = "exclusive", featureId = GlobalConfig.UAAPExclusiveFeaturesId })
+            <!-- END SEE ALL GAMES tab body -->
+        </div>
+        <!-- END Tab panes -->
+        <!-- END 2nd block -->
+        @*<div class="row uaap_extra">
+            <div class="row live_box">
+                <!-- right top box -->
+                <div class="hide">
+                    UAAP Season 77</div>
+                <div id='@cilContainerId' class='cil-root'>
+                    <span class='cil-config-data' title='{"altcastCode":"@altcastcode","server":"www.coveritlive.com","geometry":{"width":"fit","height":550},"configuration":{"newEntryLocation":"bottom","commentLocation":"bottom","replayContentOrder":"chronological","pinsGrowSize":"on","titlePage":"off","skinOverride":""}}'>
+                        &nbsp;</span></div>
+                <script type="text/javascript">                    window.cilAsyncInit = function () { cilEmbedManager.init() }; (function () { if (window.cilVwRand === undefined) { window.cilVwRand = Math.floor(Math.random() * 10000000); } var e = document.createElement('script'); e.async = true; var domain = (document.location.protocol == 'http:' || document.location.protocol == 'file:') ? 'http://cdnsl.coveritlive.com' : 'https://cdnslssl.coveritlive.com'; e.src = domain + '/vw.js?v=' + window.cilVwRand; e.id = '@cilScriptId'; document.getElementById('@cilContainerId').appendChild(e); } ());</script>
+            </div>
+            <!-- end right top box -->
+        </div>*@
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- END uaap main page body  -->
+@section Stylesheet {
+    @Html.CssBuilder(Url, "jquery.bxslider.css")
+}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    @Html.JsBuilder(Url, "jquery.bxslider.min.js")
+    <script type="text/javascript">
+        /* for responsive the movie slide */
+        $(document).ready(function () {
+            /* for responsive the movie slide [in page top] */
+            ib_movie_slider(); // call function top slider  [func 1]
+            ib_lg_slider(); // call function latest game  [func 2]
+            ib_sa_slider();  // call function See All game  [func 3]
+            ib_ex_slider();  // call function See All game  [func 3]
+
+            $('.mv_h1').click(function () {
+                $('.mv_h1').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            var mid_videoH = $('#latest_game').height(); // get inner div height
+            $('.mid_video').css('height', mid_videoH); // set outer div height
+
+            $('.latest_tab').click(function (e) {  // for 1st tab [mid video]
+                e.preventDefault();
+                $('.latest_game').css('z-index', -1);
+                $('#latest_game').css('z-index', 10);
+                mid_videoH = $('#latest_game').height();
+                $('.mid_video').css('height', mid_videoH);
+            });
+
+            $('.seeall_tab').click(function (e) {  // for 2nd tab [mid video]
+                e.preventDefault();
+                $('.latest_game').css('z-index', -1);
+                $('#see_all').css('z-index', 10);
+                mid_videoH = $('#see_all').height();
+                $('.mid_video').css('height', mid_videoH);
+            });
+
+            $('.exclu_tab').click(function (e) {  // for 3rd tab [mid video]
+                e.preventDefault();
+                $('.latest_game').css('z-index', -1);
+                $('#exclusive').css('z-index', 10);
+                mid_videoH = $('#exclusive').height();
+                $('.mid_video').css('height', mid_videoH);
+            });
+
+            // on resize call back functions 
+            $(window).resize(function () {
+                var mid_videoH = $('.latest_game').height(); // get inner div height
+                $('.mid_video').css('height', mid_videoH); // set outer div height
+            });
+
+        });
+
+        /* =================  functions ================   */
+        function ib_movie_slider() {  // function body top slider [func 1]
+            var ipage_width = $(".top_vedio").width();
+            var ibx_num = 1;
+            if (ipage_width > 991) {
+                var ibx_num = 4;
+            } else if (ipage_width > 768) {
+                var ibx_num = 3;
+            } else if (ipage_width > 480) {
+                var ibx_num = 2;
+            }
+
+            var ibx_width = ipage_width / ibx_num;
+            $('.bxslider').bxSlider({
+                slideWidth: ibx_width,
+                minSlides: ibx_num,
+                maxSlides: ibx_num
+            });
+        }
+
+
+        function ib_lg_slider() {  // function body [func 2]
+            var ipage_width = $("#latest_game .right").width() + 30;
+            //alert(ipage_width);
+            var ibx_num = 2;
+            if (ipage_width < 350) {
+                var ibx_num = 1;
+            }
+
+            var ibx_width = Math.ceil(ipage_width / ibx_num);
+            $('.lg_bxslider').bxSlider({
+                slideWidth: ibx_width,
+                minSlides: 1,
+                maxSlides: ibx_num,
+                startSlide: 0,
+                infiniteLoop: false,
+                hideControlOnEnd: true
+            });
+        }
+
+        function ib_sa_slider() {  // function body [func 3]
+            var ipage_width = $("#see_all").width() + 30;
+            //alert(ipage_width);
+            var ibx_num = 1;
+            if (ipage_width > 991) {
+                var ibx_num = 4;
+            } else if (ipage_width > 768) {
+                var ibx_num = 3;
+            } else if (ipage_width > 480) {
+                var ibx_num = 2;
+            }
+
+            var ibx_width = Math.ceil(ipage_width / ibx_num);
+            $('.sa_bxslider').bxSlider({
+                slideWidth: ibx_width,
+                minSlides: 1,
+                maxSlides: ibx_num,
+                startSlide: 0,
+                infiniteLoop: false,
+                hideControlOnEnd: true
+            });
+        }
+
+        function ib_ex_slider() {  // function body [func 4]
+            var ipage_width = $("#exclusive").width() + 30;
+            //alert(ipage_width);
+            var ibx_num = 1;
+            if (ipage_width > 991) {
+                var ibx_num = 4;
+            } else if (ipage_width > 768) {
+                var ibx_num = 3;
+            } else if (ipage_width > 480) {
+                var ibx_num = 2;
+            }
+
+            var ibx_width = Math.ceil(ipage_width / ibx_num);
+            $('.ex_bxslider').bxSlider({
+                slideWidth: ibx_width,
+                minSlides: 1,
+                maxSlides: ibx_num,
+                startSlide: 0,
+                infiniteLoop: false,
+                hideControlOnEnd: true
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer gray jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.cilIframe').css('width', '1170px');
+            }, 5000);
+        });
+    </script>
+}

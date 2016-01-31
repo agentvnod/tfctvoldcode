@@ -1,0 +1,205 @@
+﻿/* File Created: February 1, 2012 */
+#reloadContainer
+{
+    color: #fff;
+}
+.subtext
+{
+    color: #fff;
+}
+
+.formSubHeaders
+{
+    border-bottom: 1px dotted #eee;
+    margin-bottom: 10px;
+    width: 90%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #49A4FF;
+}
+
+.info-row
+{
+    line-height: 25px;
+}
+
+.info-row-label
+{
+    width: 100px;
+}
+
+.miniText
+{
+    position: relative;
+    top: -1px;
+}
+.miniText a
+{
+    color: #fff;
+    font-weight: normal;
+    font-size: 10px;
+    text-decoration: none;
+}
+.miniText a:hover
+{
+    font-size: 10px;
+    text-decoration: underline;
+}
+
+#spanner
+{
+    width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 0;
+    min-height: 180px;
+    color: #fff;
+    display: none;
+    vertical-align: middle;
+}
+
+#spanner img
+{
+    margin: auto;
+    margin-top: 7%;
+}
+
+#walletContainer
+{
+    font-size: 16px;
+    min-height: 180px;
+    width: 890px;
+}
+
+#walletContainer a
+{
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+#walletContainer a:hover
+{
+    text-decoration: underline;
+}
+
+#prepaidCardContainer
+{
+    font-size: 16px;
+    min-height: 180px;
+    width: 890px;
+}
+
+.paymentSubHeaders
+{
+    font-size: 16px;
+    width: 890px;
+}
+
+.ppinput
+{
+    font-size: 16px;
+    width: 200px;
+    border: 1px solid #aaa;
+}
+
+#PayPalContainer
+{
+    font-size: 16px;
+    min-height: 180px;
+    width: 890px;
+}
+
+#currentbalance
+{
+    color: #49A4FF;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#transactionid
+{
+    color: #49A4FF;
+    font-weight: bold;
+}
+
+.textbuttons
+{
+    vertical-align: bottom;
+    overflow: visible;
+    font-size: 1em;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: #49a4ff;
+    cursor: pointer;
+    background: transparent;
+}
+
+.textbuttons:hover
+{
+    text-decoration: underline;
+}
+
+.rinput
+{
+    width: 50px;
+}
+
+.poptions li a
+{
+    display: inline;
+    float: left;
+    height: 25px;
+    padding-top: 10px;
+    background: #030910;
+}
+
+.poptions li:hover a
+{
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: none;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #49a4ff;
+}
+
+#paymentMethod a
+{
+    color: #fff;
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: none;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #49a4ff;
+}
+
+/*#paymentMethod a:hover
+{
+    background-color: #49A4FF;
+    color: #0F1A25;
+}*/
+
+#paymentMethod a.current
+{
+    background-color: #49A4FF;
+    color: #0F1A25;
+}
+
+#CreditCardContainer
+{
+    font-size: 16px;
+    min-height: 180px;
+    width: 890px;
+}
+
+#spanner
+{
+    min-height: 180px;
+    width: 900px;
+    background: url('images/transBg.png') repeat;
+    margin: 0;
+}

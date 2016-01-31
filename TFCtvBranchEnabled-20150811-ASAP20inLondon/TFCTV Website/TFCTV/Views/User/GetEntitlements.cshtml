@@ -1,0 +1,65 @@
+﻿@model List<EntitlementDisplay>
+<div class="table_cont table_subscriptions">
+    <div class="table-responsive">
+        <table class="table table-striped subscription_table">
+            <thead>
+                <!-- table header -->
+                <tr>
+                    <th>
+                        Eid
+                    </th>
+                    <th>
+                        CONTENT
+                    </th>
+                    <th>
+                        EXPIRY DATE
+                    </th>
+                </tr>
+            </thead>
+            <!-- END table header -->
+            <tbody>
+                @{if (Model != null)
+                  {
+
+                      if (Model.Count() > 0)
+                      {
+                          foreach (var item in Model)
+                          { 
+                    <tr>
+                        <td>
+                            @item.EntitlementId
+                        </td>
+                        <td>
+                            @item.Content
+                        </td>
+                        <td>
+                            @item.ExpiryDateStr
+                        </td>
+                    </tr>
+                          }
+
+                      }
+                  }
+                  else
+                  {
+                    <tr>
+                        <td colspan="3">
+                            <p>
+                                No entitlements found.</p>
+                        </td>
+                    </tr>
+                  }
+                }
+                <!-- table body -->
+            </tbody>
+            <!-- END table body -->
+        </table>
+        <!-- End table -->
+    </div>
+    <!-- end .table-responsive [responsive table container]-->
+    <div class="sec_footer">
+        <!-- load more -->
+        <a href="#" class="loadMore">load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+    </div>
+</div>

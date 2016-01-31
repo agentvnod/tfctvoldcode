@@ -1,0 +1,16 @@
+#subscribePrompt_1
+{
+    background: url('images/go-watch-new.jpg');
+    width: 540px;
+    height: 406px;
+    margin: 0 auto;
+    z-index: 30;
+    text-align: center;
+    position: relative;    
+}
+
+#subscribePrompt_1 > div
+{
+    position: relative;
+    top: 270px;
+}

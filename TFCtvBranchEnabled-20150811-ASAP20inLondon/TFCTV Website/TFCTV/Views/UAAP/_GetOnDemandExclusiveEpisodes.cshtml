@@ -1,0 +1,49 @@
+﻿<div id="aboutEpisodes">
+    <div class="genericHeader">
+        <div class="genericHeader_header">
+            <div style="padding-left: 10px;" id="epSubHeaderCategoryName" class="sectionHeader">
+                Exclusive Videos
+            </div>
+        </div>
+    </div>
+    <div id="episodesContainerAll">
+        <br />
+        @(Html.Telerik().Grid<EpisodeDisplayMiniImage>()
+        .Name("GridAll")
+        .Columns(columns =>
+        {
+
+            columns.Bound(t => t.ImageSmall).Visible(false);
+            columns.Bound(t => t.EpisodeName).Visible(false);
+            columns.Bound(t => t.DateAiredStr).Visible(false);
+            columns.Bound(t => t.EpisodeId).Visible(false);
+            columns.Bound(t => t.Description).Visible(false);
+            //columns.Bound(t => t.Description)
+            //    .Width(140)
+            //    .Title("Title");
+            //columns.Bound(t => t.DateAired).Format("{0:MMM. dd, yyyy}").Width(363).Title("Date Aired").HtmlAttributes(new { style = "width: 363px;" });
+            //columns.Bound(t => t.EpisodeId).ClientTemplate("<a href=\"" + Url.Action("OnDemand", "UAAP", new { id = "<#= EpisodeId #>" }) + "\"><img src=\"<#= ImageSmall #>\"></img></a>").Title("").Width(151).HtmlAttributes(new { style = "width: 151px;height:100px;" });
+            //columns.Bound(t => t.EpisodeId).ClientTemplate("<a href=\"" + Url.Action("OnDemand", "UAAP", new { id = "<#= EpisodeId #>" }) + "\"><#= EpisodeName #></a><br><br><#= DateAiredStr #><br>").Title("").Width(250).HtmlAttributes(new { style = "width: 151px;height:100px;" });
+            columns.Bound(t => t.EpisodeId).ClientTemplate("<a href=\"" + Url.Action("OnDemand", "UAAP", new { id = "<#= EpisodeId #>" }) + "\"><img style=\"margin-left: -10px;\" src=\"<#= ImageSmall #>\" /></a>").Title("").Width(151).HtmlAttributes(new { style = "padding-left: 12px; padding-top: 5px; line-height: 10px;" });
+            columns.Bound(t => t.EpisodeId).ClientTemplate("<a href=\"" + Url.Action("OnDemand", "UAAP", new { id = "<#= EpisodeId #>" }) + "\"><div class=\"log-title-2\"><#= EpisodeName #></div></a><br /><div class=\"log-subhead\">Date Aired: <#= DateAiredStr #></div><br /><div rel=\"<#= EpisodeId #>\" class=\"uaap_watchnow\"></div>").Width(178);
+
+            //columns.Bound(t => t.DateAiredStr).Width(363).Title("Name/Date Aired").HtmlAttributes(new { style = "width: 363px;" });
+            //columns.Bound(t => t.EpLength).Width(241).Title("Duration").HtmlAttributes(new { style = "width: 241px;" });
+
+        })
+                .DataBinding(dataBinding => dataBinding.Ajax().Select("_ExclusiveEpisodes", "UAAP", new RouteValueDictionary { { "sid", ViewBag.ShowId } }))
+             .Pageable(paging =>
+                 paging.PageSize(20).Style(GridPagerStyles.NextPrevious))
+        .Sortable()
+        .Scrollable(c => c.Height("570px"))
+        .HtmlAttributes(new { style = "width:100%;" })
+        )
+    </div>
+</div>
+<script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.common.min.js"></script>
+<script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.grid.min.js"></script>
+@(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+    )

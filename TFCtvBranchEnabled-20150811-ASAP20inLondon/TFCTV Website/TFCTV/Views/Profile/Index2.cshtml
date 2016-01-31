@@ -1,0 +1,193 @@
+﻿@model IPTV2_Model.User
+@{
+    ViewBag.Title = "User Profile - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:profile";
+
+    string livesIn = String.Format("Lives in {0}, {1}", Model.City, Model.Country.Description);
+    TFCTV.Helpers.UserData UserData = null;
+    bool IsPagePrivate = false;
+    try {
+        if (ViewBag.UserData != null)
+        {
+            UserData = ViewBag.UserData;
+            if (UserData.IsProfilePrivate.Contains("true"))
+            {
+                IsPagePrivate = true;
+            }
+        }
+    }
+    catch (Exception) { }    
+    
+    FeedObj feedObj = null;
+    if (ViewBag.FeedObj != null)
+    {
+        feedObj = ViewBag.FeedObj;
+    }
+
+    GetUserInfoObj userInfoObj = null;
+    string photoUrl = String.Empty;
+    if (ViewBag.UserInfoObj != null)
+    {
+        userInfoObj = ViewBag.UserInfoObj;
+        if (!String.IsNullOrEmpty(userInfoObj.photoURL))
+        {
+            photoUrl = userInfoObj.photoURL.Replace("type=large", "width=189&height=189");
+        }
+    }
+
+    string FullName = String.Format("{0} {1}", Model.FirstName, Model.LastName);
+
+    TransactionReturnType ErrorMessage = null;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+    }
+    catch (Exception) { }
+}
+<section class="page_pagebody">
+    <!-- PAGE BODY SECTON  -->
+    <div class="container">
+        <div class="profile_sec">
+            <div class="row">
+                <!-- ourter left slie [page left] -->
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <!-- top left [user image & info] -->
+                    <div class="row userinfo">
+                        <div class="col-sm-3 col-xs-4 big_avater">
+                            @if (!String.IsNullOrEmpty(photoUrl))
+                            {
+                                <img src="@photoUrl" alt="@FullName" title="@FullName" />
+                            }
+                        </div>
+                        <div class="col-sm-9  col-xs-8">
+                            <h1 class="page_title no_line">
+                                @FullName
+                            </h1>
+                            <p>
+                                @Html.Raw(livesIn)
+                            </p>
+                            <a href="@Url.Action("EditProfile", "User")">Edit Profile</a>
+                        </div>
+                        <div class="border">
+                        </div>
+                    </div>
+                    <!-- END top left [user image & info] -->
+                    <!-- container of left widget & mid -->
+                    <div class="row profile_body">
+                        <!-- left widget -->
+                        <div class="col-md-4 col-sm-4 col-xs-12 widget_bar">
+                            @*@Html.Action("AboutMe", Model)*@
+                            <!-- emd about widget -->
+                            @Html.Action("GetFriends", Model)
+                            <!-- end My Friends widget -->
+                            @Html.Action("GetUserLovedShows", Model)
+                            <!-- end Loved Shows widget -->
+                            @Html.Action("GetUserLovedCelebrities", Model)
+                            <!-- end Loved Celebrities widget -->
+                        </div>
+                        <!-- end left widget -->
+                        <!-- mid part [profile, friends' feees ....] -->
+                        <div class="col-md-8  col-sm-8 col-xs-12 profile_feed">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <!-- tabs for profile page medial part -->
+                                    <ul class="nav nav-tabs profile_tab">
+                                        <li><a href="#profile" data-toggle="tab">Profile</a></li>
+                                        <li class="active"><a href="#friends_feed" data-toggle="tab">Friends' Feeds</a></li>
+                                        <li class="hide"><a href="#wishlist" data-toggle="tab">Wishlist</a></li>
+                                    </ul>
+                                    <!-- END tabs -->
+                                </div>
+                            </div>
+                            <!-- tabs body [tab-content] -->
+                            <div class="tab-content profile_tab">
+                                <div class="tab-pane" id="profile">
+                                    @Html.Action("GetFeed", new { user = Model, useTabTemplate = true, group = "me", feedObj = feedObj })
+                                </div>
+                                <!-- 1st tab body -->
+                                <div class="tab-pane active" id="friends_feed">
+                                    <!-- 2nd tab body -->
+                                    <!-- feeds box -->
+                                    @Html.Action("GetFeed", new { user = Model, useTabTemplate = true, group = "friends", feedObj = feedObj })
+                                    <!-- end feeds box -->
+                                    <!-- end Duplicat of "feeds box" -->
+                                </div>
+                                <!-- END 2nd tab body -->
+                                <div class="tab-pane" id="wishlist">
+                                    Wishlist
+                                </div>
+                                <!-- 3rd tab body -->
+                            </div>
+                            <!-- END tabs body [tab-content] -->
+                        </div>
+                        <!-- END mid part [profile, friends' feees ....] -->
+                    </div>
+                    <!-- END container of left widget & mid -->
+                </div>
+                <!-- END ourter left slie [page left] -->
+                <!-- ourter right slie [Everyones' Activity] -->
+                <div class="col-md-3 col-sm-4 col-xs-12 profile_right">
+                    @Html.Action("GetFeed", new { user = Model, feedObj = feedObj })
+                    <!-- END 1st widget [feeds] like mid part -->
+                    <div class="widget">
+                        <!-- 2nd widget [add] -->
+                        @Html.ImageBuilder(Url, "ux/add3.jpg", new { alt = "add", @class = "img-responsive" })
+                    </div>
+                    <!-- end 2nd widget [add] -->
+                </div>
+                <!-- END ourter right slie [Everyones' Activity] -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end profile sec -->
+    </div>
+    <!-- end container -->
+</section><!-- end page body section -->
+@{if (ErrorMessage != null)
+{
+    <!-- popup successful message -->
+    <div class="modal fade" id="regSceMsg" tabindex="-1" role="dialog" aria-labelledby="regSceMsgLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <p class="boxHead">
+                        @ErrorMessage.StatusHeader
+                    </p>
+                    <p>
+                        @ErrorMessage.StatusMessage
+                    </p>
+                    <p>
+                        @Html.Raw(ErrorMessage.StatusMessage2)
+                    </p>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+    <!-- END popup successful message -->
+}
+}
+@section JScriptBottom {
+    @{if (ErrorMessage != null)
+    {
+        <script type="text/javascript">
+            $('#regSceMsg').modal('show');
+        </script>
+    }
+    }
+}
+@section MetaTags {
+    @if (IsPagePrivate)
+    {
+        <meta name="robots" content="nofollow" />
+    }
+}

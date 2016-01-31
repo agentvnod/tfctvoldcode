@@ -1,0 +1,306 @@
+﻿@{
+
+    ViewBag.Title = "Check Your Bandwidth - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    var idx = Guid.NewGuid().ToString();
+
+}
+<div id="mainBody">
+    <div class="transparentBg floatLeft">
+        <div id="latestShows_bodyContainer">
+            <div class="clear">
+            </div>
+            <div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        Welcome to TFC.tv Bandwidth Checker
+                    </div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div id="result" class="white hideElement">
+            </div>
+            <div id="user-display" class="white hideElement" style="border-bottom: 1px solid #ccc;
+                width: 500px;">
+                <div class="breakStandard" style="border-bottom: 1px solid #ccc;">
+                </div>
+                <div class="breakSmall">
+                </div>
+                <div style="color: #E95D0A;">
+                    Bandwidth Checker Result</div>
+                <div class="breakSmall">
+                </div>
+                <div id="bwresult">
+                </div>
+                <div class="breakStandard">
+                </div>
+            </div>
+            <div class="white">
+                <p>
+                    In order for us to help you, we would like to know your current bandwidth.</p>
+                <ul>
+                    <li>1. Click on the play button on the video.</li>
+                    <li>2. Let the video finish playing until the end.</li>
+                    <li>3. When the video finishes, results will be sent to TFC.tv team for investigation.</li>
+                    <li>4. To check your bandwidth again, kindly reload the page or click <a href="#"
+                        class="orange" id="reloadpage">here</a>.</li>
+                </ul>
+            </div>
+            <div class="breakLarge">
+            </div>
+            <div class="white" style="font-size: 10px;">
+                * When you stop the video, partial results will be sent to TFC.tv team.
+            </div>
+        </div>
+    </div>
+</div>
+@section featureBody {
+    <br />
+    <br />
+    <br />
+    <div id="featureBanner">
+        <div id="playerContainer">
+        </div>
+    </div>
+}
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+    @Html.CssBuilder(Url, "promo.css")
+    @Html.CssBuilder(Url, "episode.css")
+}
+@section JScript{
+    @Html.JsBuilder(Url, "flowplayer-3.2.11.min.js")
+    @Html.JsBuilder(Url, "flowplayer.ipad-3.2.10.min.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var result = '';
+        var url;
+        var currentBitRate = 0;
+        var playerContainer = 'playerContainer';
+        var ctr = 0;
+        var totalBitRate = 0;
+        var maxBitRate = 0;
+        var minBitRate = 0;
+
+        //        $.ajax({
+        //            url: '/Episode/_CheckVideo/14321'
+        //            , success: function (data) {
+        //                if (data.errorCode == 0) {
+        //                    url = data.data.Url;
+        //                }
+        //            }
+        //        });
+        url = 'http://stream.flowplayer.org/httpstreaming/sample1.f4m?id=@idx';
+
+        function removeUrl(url, returnNumberOnly) {
+            if (returnNumberOnly)
+                return url.replace('http://stream.flowplayer.org/httpstreaming/sample1_', '').replace('kbps', '');
+            else
+                return url.replace('http://stream.flowplayer.org/httpstreaming/sample1_', '');
+        }
+
+        function setMinBitRate(bitRate) {
+            if (minBitRate == 0)
+                minBitRate = bitRate;
+            if (minBitRate > bitRate)
+                minBitRate = bitRate;
+        }
+
+        function setMaxBitRate(bitRate) {
+            if (bitRate > maxBitRate)
+                maxBitRate = bitRate;
+        }
+        function stripHTML(obj) {
+            return obj.replace(/<(?:.|\n)*?>/gm, '');
+        }
+
+        $(document).ready(function () {
+            $('#reloadpage').click(function () {
+                window.location.reload();
+                return false;
+            });
+            flowplayer(playerContainer, { src: '@Html.ContentBuilder(Url, "swf/flowplayer.bw.swf", removeProtocol: false)', wmode: 'opaque' }, {
+                key: '#@@bfe1f785f0bf6f5b369',
+                clip: {
+                    url: url,
+                    urlResolvers: ['f4m', 'bwcheck'],
+                    provider: 'httpstreaming',
+                    autoPlay: false,
+                    onStart: function () {
+                        $f(playerContainer).getPlugin("bwcheck").setBitrate(500);
+                        currentBitRate = $f(playerContainer).getPlugin("bwcheck").getBitrate();
+                        $f(playerContainer).getPlugin("bwcheck").enableDynamic(true);
+                        $f(playerContainer).getPlugin("bwcheck").checkBandwidth();
+                        var loading = '@Html.ImageBuilder(Url, "ajax-loader.gif", new { height = 20, title = "loading...", width = 20, alt = "loading...", border = 0 })';
+                        $('#result').html('We are currently checking your bandwidth...' + loading);
+                        $('#result').show();
+                        $('#user-display').show();
+                    },
+                    onFinish: function () {
+                        var avgBitrate = totalBitRate / ctr;
+                        var bwr = '<span>Average video bitrate: ' + avgBitrate + 'kbps<br /># of times bitrate switched: ' + ctr + '<br />Minimum video bitrate: ' + minBitRate + 'kbps<br />Maximum video bitrate:' + maxBitRate + 'kbps</span><br />';
+                        result += '------------\r\n\r\n' + stripHTML(bwr.replace(/<br \/>/g, '\r\n\r\n')) + "\r\n\r\n";
+                        $(bwr).appendTo('#bwresult').hide().fadeIn();
+                        $.post('/Help/SubmitBandwidthCheckResults', { result: result });
+                        $('#result').html('Results have been sent to TFC.tv Support for checking. Thank you.');
+                        result = null;
+                    },
+                    onStop: function () {
+                        var avgBitrate = totalBitRate / ctr;
+                        var bwr = '<div class="breakSmall"></div><span>Average video bitrate: ' + avgBitrate + 'kbps<br /># of times bitrate switched: ' + ctr + '<br />Minimum video bitrate: ' + minBitRate + 'kbps<br />Maximum video bitrate:' + maxBitRate + 'kbps</span><br />';
+                        result += '------------\r\n\r\n' + stripHTML(bwr.replace(/<br \/>/g, '\r\n\r\n')) + "\r\n\r\n";
+                        $(bwr).appendTo('#bwresult').hide().fadeIn();
+                        $.post('/Help/SubmitBandwidthCheckResults', { result: result });
+                        result = null;
+                        $('#result').html('Partial results have been sent to TFC.tv Support for checking. Thank you.');
+                    }
+                },
+                screen:
+                {
+                    height: '100pct',
+                    width: '940px',
+                    top: 0
+                },
+                play:
+                {
+                    url: '@Html.ContentBuilder(Url, "content/images/logo/play-button.png", removeProtocol: false)',
+                    replayLabel: 'Play again',
+                    fadeSpeed: 500,
+                    rotateSpeed: 50,
+                    width: 50,
+                    height: 50
+                },
+                logo:
+                {
+                    url: '@Html.ContentBuilder(Url, "content/images/logo/player-logo.png", removeProtocol: false)',
+                    fullscreenOnly: false,
+                    displayTime: 2000
+                },
+                contextMenu: ['TFC.tv Video Player v1.0'],
+                plugins: {
+                    f4m: {
+                        url: '@Html.ContentBuilder(Url, "swf/flowplayer.f4m.swf", removeProtocol: false)'
+                    },
+                    httpstreaming: {
+                        url: '@Html.ContentBuilder(Url, "swf/flowplayer.httpstreaming.swf", removeProtocol: false)'
+                    },
+                    controls: {
+                        buttonOffColor: 'rgba(130,130,130,1)',
+                        borderRadius: '0px',
+                        timeColor: '#ffffff',
+                        stop: true,
+                        bufferGradient: 'none',
+                        sliderColor: '#000000',
+                        zIndex: 45,
+                        backgroundColor: '#111000',
+                        scrubberHeightRatio: 0.6,
+                        volumeSliderGradient: 'none',
+                        tooltipTextColor: '#ffffff',
+                        sliderGradient: 'none',
+                        spacing:
+                                {
+                                    time: 6,
+                                    volume: 8,
+                                    all: 2
+                                },
+                        timeBorderRadius: 20,
+                        timeBgHeightRatio: 0.8,
+                        volumeSliderHeightRatio: 0.6,
+                        progressGradient: 'none',
+                        height: 26,
+                        time: true,
+                        volumeColor: '#4599ff',
+                        tooltips:
+                                {
+                                    marginBottom: 5,
+                                    buttons: false
+                                },
+                        timeSeparator: ' ',
+                        name: 'controls',
+                        volumeBarHeightRatio: 0.2,
+                        opacity: 1,
+                        timeFontSize: 12,
+                        left: '50pct',
+                        tooltipColor: 'rgba(0, 0, 0, 0)',
+                        volumeSliderColor: '#ffffff',
+                        border: '0px',
+                        bufferColor: '#a3a3a3',
+                        buttonColor: '#ffffff',
+                        durationColor: '#b8d9ff',
+                        autoHide:
+                                {
+                                    enabled: true,
+                                    hideDelay: 500,
+                                    hideStyle: 'fade',
+                                    mouseOutDelay: 500,
+                                    hideDuration: 400,
+                                    fullscreenOnly: false
+                                },
+                        backgroundGradient: 'none',
+                        width: '100pct',
+                        sliderBorder: '1px solid rgba(128, 128, 128, 0.7)',
+                        display: 'block',
+                        buttonOverColor: '#ffffff',
+                        url: '@Html.ContentBuilder(Url, "swf/flowplayer.controls.swf", removeProtocol: false)',
+                        timeBorder: '0px solid rgba(0, 0, 0, 0.3)',
+                        progressColor: '#4599ff',
+                        timeBgColor: 'rgb(0, 0, 0, 0)',
+                        scrubberBarHeightRatio: 0.2,
+                        bottom: 0,
+                        builtIn: false,
+                        volumeBorder: '1px solid rgba(128, 128, 128, 0.7)',
+                        margins: [2, 12, 2, 12]
+                    },
+
+                    bwcheck: {
+                        url: '@Html.ContentBuilder(Url, "swf/flowplayer.bwcheck-httpstreaming.swf", removeProtocol: false)',
+                        dynamic: true,
+                        onStreamSwitchBegin: function (newItem, currentItem) {
+                            //var content = $f(playerContainer).getPlugin('content');
+                            var message = 'Will switch to: ' +
+                               newItem.streamName +
+                                ' from ' +
+                                currentItem.streamName;
+                            //content.setHtml(message);
+                            //result += message + "\r\n\r\n";
+
+                            var bwr = '<span>Will try switching from ' + removeUrl(currentItem.streamName) + ' to ' + removeUrl(newItem.streamName) + ' bitrate.</span><br />';
+                            result += stripHTML(bwr) + "\r\n\r\n";
+                            $(bwr).appendTo('#bwresult').hide().fadeIn();
+                            //$('#bwresult').append(bwr);
+                        },
+                        onStreamSwitch: function (newItem) {
+                            //var content = $f(playerContainer).getPlugin('content');
+                            var message = 'Switched to: ' + newItem.streamName;
+                            //content.setHtml(message);
+                            //result += message + "\r\n\r\n";
+                            var bwr = '<span>Successfully switched to' + removeUrl(newItem.streamName) + ' bitrate.</span><br />';
+                            result += stripHTML(bwr) + "\r\n\r\n";
+                            ctr++;
+                            var newBitRate = parseInt(removeUrl(newItem.streamName, true));
+                            setMaxBitRate(newBitRate); setMinBitRate(newBitRate);
+                            totalBitRate += newBitRate;
+                            $(bwr).appendTo('#bwresult').hide().fadeIn();
+                            //$('#bwresult').append(bwr);
+                        },
+                        onBwDone: function (item, bitrate) {
+                            //var content = $f(playerContainer).getPlugin('content');
+                            var message = "Your speed is: " + bitrate + "<br/>Available bandwidth: " + item.bitrate + "<br />Url: " + item.url + "<br/> Width:" + item.width;
+                            //content.setHtml(message);
+                            $('#result').html('Checking your bandwidth...');
+
+                        }
+                    }
+                }
+            }).ipad();
+
+        });
+    </script>
+}

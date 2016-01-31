@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Pixel";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<html>
+<body>
+    <style type="text/css">
+        td
+        {
+            border: 1px solid #ddd;
+        }
+    </style>
+    <br />
+    <br />
+    <div id="playerContainer">
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    Device Model
+                </td>
+                <td>
+                    @Request.Browser.MobileDeviceModel
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Device Manufacturer
+                </td>
+                <td>
+                    @Request.Browser.MobileDeviceManufacturer
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Mobile Device
+                </td>
+                <td>
+                    @Request.Browser.IsMobileDevice
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Screen Bit Depth
+                </td>
+                <td>
+                    @Request.Browser.ScreenBitDepth
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Screen Pixel Width
+                </td>
+                <td>
+                    @Request.Browser.ScreenPixelsWidth
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Screen Pixel Height
+                </td>
+                <td>
+                    @Request.Browser.ScreenPixelsHeight
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    User Agent
+                </td>
+                <td>
+                    @Request.UserAgent
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+@section JScriptBottom {
+    <script type="text/javascript" src="http://jwpsrv.com/library/I6r41iyqEeS3LiIAC0MJiQ.js"></script>
+    @{if (Request.IsLocal)
+      {
+        @Html.JsBuilder(Url, "jwp6.js", ContentSource.Site)
+      }
+      else
+      {
+        @Html.JsBuilder(Url, "obfplyr.js", ContentSource.Site)
+      }
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var player = new Jwp("playerContainer", "/Ajax/GetMedia/55089", "http://res2.abs-cbnip.tv/images/categoryimages/2554/FREETFC-TV_SNS600x315.jpg", false, 55089, "http://pubads.g.doubleclick.net/gampad/ads?sz=1140x641&iu=/2744311/TFCtv_FreePage_VideoPlayer&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=&description_url=&correlator=", "Air");
+            player.GenerateUri().done(function (data) {
+                if (data.errorCode == 0) {
+                    player.Initialize(data);
+                    var player_instance = player
+                    .CreateObject()
+                    .onReady(function () { console.log("PLAYER LOADED"); })
+                    .onSetupError(function () { })
+                    .onError(function () { });
+                }
+            });
+        });
+    </script>
+}

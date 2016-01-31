@@ -1,0 +1,17 @@
+﻿<div id="WishListActivityFeeds">
+    <div id="loader-WishListFeeds">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "", width = 50, height = 50 })</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#wishlistTabButton").click(function () {
+            var url = '/Wishlist/List/@ViewBag.viewedUserUserId';
+            jQuery.ajax({
+                url: url, type: "get"
+                , success: function (data) {
+                    $("#WishListActivityFeeds").html(data);
+                }
+            });
+        });
+    });
+</script>

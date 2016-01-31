@@ -1,0 +1,114 @@
+﻿@{
+    string email = String.Empty;
+    try
+    {
+        if (ViewBag.EmailAddress != null)
+        {
+            email = ViewBag.EmailAddress;
+        }
+    }
+    catch (Exception) { }
+}
+<div class="col-sm-3 col-xs-12 help_right">
+    @*<div class="gray">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                <!-- 1st widget box -->
+                <h3>
+                    Top Questions</h3>
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        if (item is IPTV2_Model.Show)
+                        {
+                            var show = (IPTV2_Model.Show)item;
+                        <li><a href="@Url.Action("Question", new { id = show.CategoryId })">@show.Description</a></li>
+                        }
+                    }
+                </ul>
+                  }
+              }
+            }
+        </div>*@
+    <div class="contact1 clearfix">
+        <!-- 2nd widget box -->
+        <div>
+            <p>
+                Need more help?
+                <br>
+                Email our
+                <br>
+                24-hour Support Team
+            </p>
+            <a href="#" class="red_button" data-toggle="modal" data-target="#conFeedback">
+                Email
+                Us
+            </a>
+        </div>
+    </div>
+    <div class="contact2 clearfix">
+        <!-- 3rd widget box -->
+        <div>
+            <p>
+                LIVE
+                <br>
+                SUPPORT
+            </p>
+            <a id="uspchatHolder" class="red_button">
+                Click HERE
+            </a>
+            @*<a href="http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390" target="_blank" onclick="this.newWindow = window.open('http://c.velaro.com/visitor/requestchat.aspx?siteid=8395&showwhen=inqueue&deptid=15390', 'LiveChatSoftware', 'toolbar=no,location=no,directories=no,menubar=no,status=no,scrollbars=no,resizable=yes,replace=no');this.newWindow.focus();this.newWindow.opener=window;return false;" class="red_button">Click HERE</a>*@
+        </div>
+    </div>
+</div>
+<!-- popup Landing feedback -->
+<div class="modal fade conPopup" id="conFeedback" tabindex="-1" role="dialog" aria-labelledby="conFeedbackMsgLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <h1 class="page_title">
+                    Send us your Feedback
+                </h1>
+                <!-- page title -->
+                <p class="des">
+                    Do you have comments and suggestions on how to improve TFC.tv? Let us know your
+                    thoughts. Email us your concerns or your questions.
+                </p>
+                <form role="form" method="post" action="@Url.Action("SubmitFeedback", "Home")">
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <label>
+                                From
+                            </label>
+                            <input type="email" class="form-control" id="email" name="email" value="@email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <label for="subject">
+                                Subject
+                            </label>
+                            <input type="text" class="form-control" id="subject" name="subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Your Message Here."
+                                  required></textarea>
+                    </div>
+                    <button type="submit" class="red_button">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <!-- END box body -->
+        </div>
+    </div>
+</div>
+<!-- END popup Landing feedback -->

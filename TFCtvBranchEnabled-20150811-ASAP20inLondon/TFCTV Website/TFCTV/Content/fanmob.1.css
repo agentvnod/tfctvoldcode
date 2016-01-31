@@ -1,0 +1,78 @@
+.winner-container-title
+{
+    font-size: 34px;
+    font-weight: bold;
+    margin-left: 15px;
+    font-family: Arial Black;
+}
+.winners-text
+{
+    text-align: center;
+}
+.winners-instructions
+{
+    margin-left: 15px;
+    font-style: italic;
+    font-weight: bold;
+}
+.winners-text-content
+{
+    text-align: center;
+}
+.winners-grandprize-text
+{
+    font-size: 30px;
+    font-weight: bold;
+}
+.winners-grandprize-text li
+{
+    font-size: 28;
+    font-weight: normal;
+}
+.winners-monthlyprize-text
+{
+    font-size: 26px;
+    font-weight: bold;
+}
+.winners-monthlyprize-text li
+{
+    font-size: 24px;
+    font-weight: normal;
+}
+.winners-weeklyprize-text
+{
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.winners-weeklyprize-text li
+{
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.fanmob-prize-text
+{
+    font-style: italic;
+}
+.winners-grandprize-text .fanmob-prize-text
+{
+    font-size: 16px;
+    font-weight: normal;
+}
+.winners-monthlyprize-text .fanmob-prize-text
+{
+    font-size: 16px;
+    font-weight: normal;
+}
+.winners-weeklyprize-text .fanmob-prize-text
+{
+    font-size: 16px;
+    font-weight: normal;
+}
+.weekly-column
+{
+    width: 50%;
+    float: left;
+    position: relative;
+}

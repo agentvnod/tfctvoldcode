@@ -1,0 +1,357 @@
+﻿@model IPTV2_Model.EpisodeCategory
+@{
+    string pageTitle = String.Format("{0} Episode", Model.Episode.EpisodeName);
+    IPTV2_Model.Show show = Model.Show;
+
+    /* ShareBar Metadata */
+    string title = String.Format("{0}", Model.Episode.EpisodeName);
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.Episode.ImageAssets.ImageVideo);
+    string description = Model.Episode.Synopsis.Replace("\r\n", String.Empty).Replace("\t", String.Empty).Ellipsis(160);
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = description,
+        containerId = "shareDiv",
+        elementType = "episode",
+        id = Model.EpisodeId
+    };
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}, {1}", title, Model.Episode.Synopsis);
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "video.episode";
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Episode_{0}", Model.EpisodeId);
+    string categoryID = "Episodes";
+    if (show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow || show is IPTV2_Model.LiveEvent)
+    {
+        title = String.Format("{0} - {1}", show.Description, Model.Episode.EpisodeName);
+        pageTitle = title;
+        /* Change the type to Show & id to CategoryId if found to be a Movie/Special/LiveEvent */
+        ShareObj.elementType = "show";
+        ShareObj.id = show.CategoryId;
+
+        /* Change the meta description if it is a movie */
+        metaDescription = String.Format("{0}, {1}", show.Description, show.Blurb);
+
+        /* Change Open Graph data */
+        og_type = "video.movie";
+    }
+
+    /* Robot Crawlability */
+    var noCommentText = String.Format("There are no comments available for {0}", title);
+    bool IsAjaxCrawlable = Request.IsAjaxCrawlingCapable();
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj,
+        IsAjaxCrawlable = IsAjaxCrawlable
+    };
+
+    /* Reactions Obj */
+    var ReactionsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "reactionsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    ViewBag.Title = String.Format("{0} - TFC.tv", pageTitle);
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    var synopsis = MyUtility.FormatUrls(Model.Episode.Synopsis);
+
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+    string ScreenText = "Click play to watch the full video";
+    if (!(HasActiveSubscriptionBasedOnCategoryId.HasSubscription))
+    {
+        if (Request.Browser.IsMobileDevice)
+        {
+            ScreenText = "Preview of this video is not available on your device";
+        }
+        else
+        {
+            ScreenText = "Click play to watch preview of this video";
+        }
+    }
+
+    //instantiate flowplayerobj
+    var flowplayerObj = new FlowPlayerObj() { IsLiveStream = false, IsMobileDeviceHtml5Capable = false };
+    var playbackUri = String.Format("/Ajax/GetMedia/{0}", Model.EpisodeId);
+    Html5CapableObj html5capableObj = MyUtility.IsDeviceHtml5Capable(Request, Model.EpisodeId);
+    Mp4CapableObj mp4capableObj = MyUtility.CheckIfMp4Compatible(Request, Model.EpisodeId, "4.4");
+    playbackUri = html5capableObj.playbackUri;
+    flowplayerObj.IsMobileDeviceHtml5Capable = html5capableObj.IsMobileDeviceHtml5Capable;
+
+    /* show and category parent categories */
+    string showParentCategories = ContextHelper.GetShowParentCategories(show.CategoryId);
+    //Jwp    
+    string ScreenImage = "http://az332173.vo.msecnd.net/content/images/ux/screen5.jpg";
+
+    bool HasHD = ContextHelper.DoesEpisodeHaveAkamaiHDCdnReferenceBasedOnAsset(Model.Episode);
+    if (mp4capableObj.UseMp4ForPlayback)
+    {
+        playbackUri = mp4capableObj.playbackUri;
+    }
+    if (HasHD)
+    {
+        if (mp4capableObj.UseMp4ForPlayback)
+        {
+            playbackUri += (playbackUri.IndexOf('?') > 0 ? "&" : "?") + "q=1";
+        }
+        else
+        {
+            playbackUri = String.Format("/Ajax/GetMedia/{0}?p=3", Model.EpisodeId);
+        }
+    }
+
+    playbackUri += (playbackUri.IndexOf('?') > 0 ? "&" : "?") + "j=1";
+    string ts = String.Format("{0}", (int)MyUtility.ConvertToTimestamp(DateTime.Now));
+    var jwpObj = new JWPObject()
+    {
+        clipType = "vod",
+        EpisodeId = Model.EpisodeId,
+        playbackUri = playbackUri,
+        ScreenImage = ScreenImage,
+        title = title,
+        show = show,
+        ErrorFontSize = "22px",
+        ErrorMessage = "Ooops! The video didn't load properly. Please contact Customer Support.",
+        HasSubscription = HasActiveSubscriptionBasedOnCategoryId.HasSubscription
+    };
+}
+<!-- halo halo click page body  -->
+<section class="page_pagebody page_videopage halohalo">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+            @Html.ImageBuilder(Url, "ux/hhc.jpg", new { title = Model.Show.Description, alt = Model.Show.Description, @class = "img100" })
+        </div>
+        <!-- END page header -->
+        <div class="row">
+            <!-- page left side -->
+            <div class="video_left col-sm-7 col-xs-12">
+                <!-- video player section -->
+                <div class="video_player_outer">
+                    <div class="video_player video_player_small">
+                        <!-- video player -->
+                        <div class="video_part">
+                            <div id="floating_videodiv">
+                                <div class="bs-play">
+                                    @{if (showParentCategories.Contains(GlobalConfig.AdultContentCategoryId.ToString()))
+                                      {
+                                        <div class="bs-parental">
+                                            <span>PARENTAL ADVISORY: This video contains mature scenes, language and theme that
+                                                are not suitable for young viewers aged 17 years and below.</span>
+                                        </div>      
+                                      }
+                                    }
+                                </div>
+                                <div class="bs_screentext bs_screentext_live">
+                                    @ScreenText</div>
+                            </div>
+                            <div id="playerContainer" class="regular_video">
+                            </div>
+                            @{if (!User.Identity.IsAuthenticated)
+                              {
+                                  if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                                  { 
+                                <div class="bs-sbar">
+                                    <span>@Html.ActionLink("SUBSCRIBE", "Details", "Subscribe", new { id = show.CategoryId, ReturnUrl = href }, new { @class = "bs-subscribe bs-atag bs-box bs-box-subscribe" })
+                                        to watch full video or <a href="#" class="bs-atag bs-close">close</a> this bar to
+                                        subscribe later.</span></div>  
+                                  }
+                              }
+                              else
+                              {
+                                  if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription && HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+                                  {                   
+                                <div class="bs-sbar">
+                                    <span>Your subscription will expire in @HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft
+                                        @(HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft > 1 ? "days" : "day").
+                                        @Html.ActionLink("RENEW", "Details", "Subscribe", new { id = show.CategoryId, ReturnUrl = href }, new { @class = "bs-atag bs-box bs-box-renew" })
+                                        to extend your subscription or <a href="#" class="bs-atag bs-close">close</a> this
+                                        bar to renew later.</span></div>  
+                                  }
+                                  else if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                                  { 
+                                <div class="bs-sbar">
+                                    <span>@Html.ActionLink("SUBSCRIBE", "Details", "Subscribe", new { id = show.CategoryId, ReturnUrl = href }, new { @class = "bs-atag bs-box bs-box-subscribe" })
+                                        to watch full video or <a href="#" class="bs-atag bs-close">close</a> this bar to
+                                        subscribe later.</span></div>  
+                                  }
+                              }
+                            }
+                        </div>
+                    </div>
+                    @Html.Partial("PlayerSwitcher")
+                    <!-- end video player -->
+                    <div class="video_des " itemscope itemtype="http://schema.org/Episode">
+                        <!-- description for video -->
+                        <h1 class="halohalo_h1" itemprop="name">
+                            @Model.Episode.EpisodeName</h1>
+                        <p>
+                            Posted on @Model.Episode.DateAired.Value.ToString("MMMM d, yyyy")</p>
+                        <br>
+                        <p itemprop="description">
+                            @Html.Raw(synopsis)</p>
+                    </div>
+                    <!-- end description -->
+                    <div class="video_share clearfix">
+                        <!-- Social media share part -->
+                        <div id="@ShareObj.containerId" class="col-xs-6 clearfix show_share">
+                        </div>
+                        <p>
+                            If you are having problems viewing this video, please visit our <a href="@Url.Action("Index", "Help")">
+                                Help Center.</a> Is your video buffering? <a href="#">Check your bandwidth.</a></p>
+                    </div>
+                    <div class="clearfix">
+                        <div id="@ReactionsUIObj.containerId">
+                        </div>
+                    </div>
+                    <!-- end social -->
+                </div>
+                <!-- end video player section -->
+                <div class="row vp_bottom_video">
+                    <!-- page's bottom videos -->
+                    <div class="col-xs-12 vp_head halohalo_div">
+                        <!-- head part -->
+                        <ul>
+                            <li class="active">
+                                <h2>
+                                    <a href="#hhc_recently" data-toggle="tab">RECENTLY ADDED</a></h2>
+                            </li>
+                            <li>
+                                <h2>
+                                    <a href="#hhc_viewed" data-toggle="tab">MOST VIEWED</a></h2>
+                            </li>
+                            <li>
+                                <h2>
+                                    <a href="#hhc_shared" data-toggle="tab">MOST SHARED</a></h2>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END head part -->
+                    <div class="col-xs-12 vp_body tab-content">
+                        @Html.Action("GetFeatures", "HaloHalo", new { id = 66, containerId = "hhc_recently", IsActive = true })
+                        @Html.Action("GetFeatures", "HaloHalo", new { id = 63, containerId = "hhc_viewed" })
+                        @Html.Action("GetFeatures", "HaloHalo", new { id = 65, containerId = "hhc_shared" })
+                    </div>
+                    <!-- END body part -->
+                </div>
+                <!-- end page bottom videos -->
+            </div>
+            <!-- end page left -->
+            <!-- page right side -->
+            <div class="video_right halo_right col-sm-5 col-xs-12">
+                @*<div class="row">
+                    <div class="col-xs-12 vp_head">
+                        <!-- head part -->
+                        <ul>
+                            <li class="active"><a href="#">COMMENTS</a></li>
+                            <li><a href="#">POST A COMMENT</a></li>
+                        </ul>
+                    </div>
+                </div>*@
+                <br />
+                <!-- END head part -->
+                <div id="@CommentsUIObj.containerId" class="row feed_item clearfix">
+                    @{if (IsAjaxCrawlable)
+                      {
+                          try
+                          {
+                              var responseData = GigyaMethods.GetComments(categoryID, streamID);
+                              if (responseData != null)
+                              {
+                                  if (responseData.errorCode == 0)
+                                  {
+                                      if (responseData.commentCount > 0)
+                                      {
+                        @Html.Raw(responseData.comments)
+                                      }
+                                      else
+                                      { 
+                        <span>@noCommentText</span>
+                                      }
+                                  }
+                              }
+                          }
+                          catch (Exception) { }
+                      }
+                    }
+                </div>
+                <!-- end feeds box -->
+                <div class="row page_add">
+                    <!-- page add -->
+                    @Html.ImageBuilder(Url, "ux/add.jpg", new { alt = "advertisement" })
+                </div>
+            </div>
+            <!-- end page right -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- end halo halo click section -->
+@section JScriptBottom {
+    @Html.Partial("_UXShareUI", ShareObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    @Html.Partial("_UXReactionsUI", ReactionsUIObj)
+    @{if ((show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow))
+      { 
+        <script type="text/javascript">
+            var gmessage = 'I just watched @HttpUtility.JavaScriptStringEncode(show.Description)';
+            var gtitle = '@HttpUtility.JavaScriptStringEncode(title)';
+            var gdescription = '@HttpUtility.JavaScriptStringEncode(show.Blurb)';
+            var gimg = '@img';
+            var ghref = '@href';
+        </script>
+      }
+      else
+      {      
+        <script type="text/javascript">
+            var gmessage = 'I just watched an episode of @Ajax.JavaScriptStringEncode(show.Description)';
+            var gtitle = '@Ajax.JavaScriptStringEncode(title)';
+            var gdescription = '@Ajax.JavaScriptStringEncode(Model.Episode.Synopsis)';
+            var gimg = '@img';
+            var ghref = '@href';
+        </script>
+      }
+    }
+    @Html.Partial("FlowHLSPartial", jwpObj)
+    <script type="text/javascript">
+        $('.bs-close').on('click', function () {
+            $('.bs-sbar').fadeOut(800);
+            return false;
+        });
+    </script>
+    @Html.Partial("PlayerSwitcherJS")
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta name="keywords" content="@Model.Episode.Metadata" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="@img">
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}

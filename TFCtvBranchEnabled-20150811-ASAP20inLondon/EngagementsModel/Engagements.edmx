@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EngagementsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="EngagementsModelStoreContainer">
+          <EntitySet Name="CelebrityReactions" EntityType="EngagementsModel.Store.CelebrityReactions" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="CelebrityReactionSummary" EntityType="EngagementsModel.Store.CelebrityReactionSummary" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ChannelReactions" EntityType="EngagementsModel.Store.ChannelReactions" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ChannelReactionSummary" EntityType="EngagementsModel.Store.ChannelReactionSummary" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EpisodeReactions" EntityType="EngagementsModel.Store.EpisodeReactions" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EpisodeReactionSummary" EntityType="EngagementsModel.Store.EpisodeReactionSummary" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ShowReactions" EntityType="EngagementsModel.Store.ShowReactions" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ShowReactionSummary" EntityType="EngagementsModel.Store.ShowReactionSummary" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="YouTubeReactions" EntityType="EngagementsModel.Store.YouTubeReactions" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="YouTubeReactionSummary" EntityType="EngagementsModel.Store.YouTubeReactionSummary" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+        </EntityContainer>
+        <EntityType Name="CelebrityReactions">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="CelebrityId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CelebrityReactionSummary">
+          <Key>
+            <PropertyRef Name="CelebrityId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Name="CelebrityId" Type="int" Nullable="false" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Total7Days" Type="int" Nullable="false" />
+          <Property Name="Total30Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChannelReactions">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="ChannelId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChannelReactionSummary">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Name="ChannelId" Type="int" Nullable="false" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Total7Days" Type="int" Nullable="false" />
+          <Property Name="Total30Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodeReactions">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodeReactionSummary">
+          <Key>
+            <PropertyRef Name="EpisodeId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Name="EpisodeId" Type="int" Nullable="false" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Total7Days" Type="int" Nullable="false" />
+          <Property Name="Total30Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShowReactions">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShowReactionSummary">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Total7Days" Type="int" Nullable="false" />
+          <Property Name="Total30Days" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YouTubeReactions">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="YouTubeId" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YouTubeReactionSummary">
+          <Key>
+            <PropertyRef Name="YouTubeId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Name="YouTubeId" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ReactionTypeId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="Total7Days" Type="int" Nullable="false" />
+          <Property Name="Total30Days" Type="int" Nullable="false" />
+        </EntityType>
+        <Function Name="CelebrityReactionSummary30Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CelebrityReactionSummary7Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CelebrityReactionSummaryTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EpisodeReactionSummary30Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EpisodeReactionSummary7Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EpisodeReactionSummaryTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ShowReactionSummary30Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ShowReactionSummary7Days" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ShowReactionSummaryTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EngagementsModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EngagementsEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="CelebrityReactions" EntityType="EngagementsModel.CelebrityReaction" />
+          <EntitySet Name="EpisodeReactions" EntityType="EngagementsModel.EpisodeReaction" />
+          <EntitySet Name="ShowReactions" EntityType="EngagementsModel.ShowReaction" />
+          <EntitySet Name="CelebrityReactionSummaries" EntityType="EngagementsModel.CelebrityReactionSummary" />
+          <EntitySet Name="EpisodeReactionSummaries" EntityType="EngagementsModel.EpisodeReactionSummary" />
+          <EntitySet Name="ShowReactionSummaries" EntityType="EngagementsModel.ShowReactionSummary" />
+          <EntitySet Name="ChannelReactions" EntityType="EngagementsModel.ChannelReaction" />
+          <EntitySet Name="ChannelReactionSummaries" EntityType="EngagementsModel.ChannelReactionSummary" />
+          <EntitySet Name="YouTubeReactions" EntityType="EngagementsModel.YouTubeReaction" />
+          <EntitySet Name="YouTubeReactionSummaries" EntityType="EngagementsModel.YouTubeReactionSummary" />
+        </EntityContainer>
+        <EntityType Name="CelebrityReaction">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ReactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CelebrityId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodeReaction">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ReactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="EpisodeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShowReaction">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Name="Reactionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ReactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CelebrityReactionSummary">
+          <Key>
+            <PropertyRef Name="CelebrityId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Type="Int32" Name="CelebrityId" Nullable="false" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Total7Days" Nullable="false" />
+          <Property Type="Int32" Name="Total30Days" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EpisodeReactionSummary">
+          <Key>
+            <PropertyRef Name="EpisodeId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Type="Int32" Name="EpisodeId" Nullable="false" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Total7Days" Nullable="false" />
+          <Property Type="Int32" Name="Total30Days" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShowReactionSummary">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Type="Int32" Name="CategoryId" Nullable="false" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Total7Days" Nullable="false" />
+          <Property Type="Int32" Name="Total30Days" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChannelReaction">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Type="Int32" Name="Reactionid" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="ChannelId" Nullable="false" />
+          <Property Type="Guid" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChannelReactionSummary">
+          <Key>
+            <PropertyRef Name="ChannelId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Type="Int32" Name="ChannelId" Nullable="false" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Total7Days" Nullable="false" />
+          <Property Type="Int32" Name="Total30Days" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YouTubeReaction">
+          <Key>
+            <PropertyRef Name="Reactionid" />
+          </Key>
+          <Property Type="Int32" Name="Reactionid" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="String" Name="YouTubeId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YouTubeReactionSummary">
+          <Key>
+            <PropertyRef Name="YouTubeId" />
+            <PropertyRef Name="ReactionTypeId" />
+          </Key>
+          <Property Type="String" Name="YouTubeId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ReactionTypeId" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Total7Days" Nullable="false" />
+          <Property Type="Int32" Name="Total30Days" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EngagementsModelStoreContainer" CdmEntityContainer="EngagementsEntities">
+          <EntitySetMapping Name="CelebrityReactions"><EntityTypeMapping TypeName="EngagementsModel.CelebrityReaction"><MappingFragment StoreEntitySet="CelebrityReactions">
+            <ScalarProperty Name="Reactionid" ColumnName="Reactionid" />
+            <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+            <ScalarProperty Name="CelebrityId" ColumnName="CelebrityId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="EpisodeReactions"><EntityTypeMapping TypeName="EngagementsModel.EpisodeReaction"><MappingFragment StoreEntitySet="EpisodeReactions">
+            <ScalarProperty Name="Reactionid" ColumnName="Reactionid" />
+            <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+            <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ShowReactions"><EntityTypeMapping TypeName="EngagementsModel.ShowReaction"><MappingFragment StoreEntitySet="ShowReactions">
+            <ScalarProperty Name="Reactionid" ColumnName="Reactionid" />
+            <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+            <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CelebrityReactionSummaries">
+            <EntityTypeMapping TypeName="EngagementsModel.CelebrityReactionSummary">
+              <MappingFragment StoreEntitySet="CelebrityReactionSummary">
+                <ScalarProperty Name="Total30Days" ColumnName="Total30Days" />
+                <ScalarProperty Name="Total7Days" ColumnName="Total7Days" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="CelebrityId" ColumnName="CelebrityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EpisodeReactionSummaries">
+            <EntityTypeMapping TypeName="EngagementsModel.EpisodeReactionSummary">
+              <MappingFragment StoreEntitySet="EpisodeReactionSummary">
+                <ScalarProperty Name="Total30Days" ColumnName="Total30Days" />
+                <ScalarProperty Name="Total7Days" ColumnName="Total7Days" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="EpisodeId" ColumnName="EpisodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShowReactionSummaries">
+            <EntityTypeMapping TypeName="EngagementsModel.ShowReactionSummary">
+              <MappingFragment StoreEntitySet="ShowReactionSummary">
+                <ScalarProperty Name="Total30Days" ColumnName="Total30Days" />
+                <ScalarProperty Name="Total7Days" ColumnName="Total7Days" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChannelReactions">
+            <EntityTypeMapping TypeName="EngagementsModel.ChannelReaction">
+              <MappingFragment StoreEntitySet="ChannelReactions">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="Reactionid" ColumnName="Reactionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChannelReactionSummaries">
+            <EntityTypeMapping TypeName="EngagementsModel.ChannelReactionSummary">
+              <MappingFragment StoreEntitySet="ChannelReactionSummary">
+                <ScalarProperty Name="Total30Days" ColumnName="Total30Days" />
+                <ScalarProperty Name="Total7Days" ColumnName="Total7Days" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="ChannelId" ColumnName="ChannelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YouTubeReactions">
+            <EntityTypeMapping TypeName="EngagementsModel.YouTubeReaction">
+              <MappingFragment StoreEntitySet="YouTubeReactions">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="YouTubeId" ColumnName="YouTubeId" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="Reactionid" ColumnName="Reactionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YouTubeReactionSummaries">
+            <EntityTypeMapping TypeName="EngagementsModel.YouTubeReactionSummary">
+              <MappingFragment StoreEntitySet="YouTubeReactionSummary">
+                <ScalarProperty Name="Total30Days" ColumnName="Total30Days" />
+                <ScalarProperty Name="Total7Days" ColumnName="Total7Days" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ReactionTypeId" ColumnName="ReactionTypeId" />
+                <ScalarProperty Name="YouTubeId" ColumnName="YouTubeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Engagements">
+        <EntityTypeShape EntityType="EngagementsModel.CelebrityReaction" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333331" IsExpanded="true" />
+        <EntityTypeShape EntityType="EngagementsModel.EpisodeReaction" Width="1.5" PointX="5.125" PointY="0.875" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="EngagementsModel.ShowReaction" Width="1.5" PointX="2" PointY="3.375" Height="1.9802864583333322" IsExpanded="true" />
+        <EntityTypeShape EntityType="EngagementsModel.CelebrityReactionSummary" Width="1.5" PointX="2.625" PointY="0.75" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="EngagementsModel.EpisodeReactionSummary" Width="1.5" PointX="6.875" PointY="0.875" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EngagementsModel.ShowReactionSummary" Width="1.5" PointX="3.875" PointY="3.375" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EngagementsModel.ChannelReaction" Width="1.5" PointX="0.75" PointY="6.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EngagementsModel.ChannelReactionSummary" Width="1.5" PointX="2.75" PointY="6.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EngagementsModel.YouTubeReaction" Width="1.5" PointX="5.375" PointY="6.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="EngagementsModel.YouTubeReactionSummary" Width="1.5" PointX="7.25" PointY="6.75" Height="1.9802864583333317" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

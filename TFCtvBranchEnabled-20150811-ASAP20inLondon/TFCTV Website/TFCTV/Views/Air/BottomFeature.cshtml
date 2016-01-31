@@ -1,0 +1,51 @@
+﻿@model List<IPTV2_Model.CategoryClass>
+@{if (Model != null)
+  {
+      if (Model.Count() > 0 && Model.Count() >= 7)
+      {
+          int ctr = 0;
+    <!-- row three -->
+    <div class="row row3">
+        <div class="col-xs-12">
+            <h2 class="section_title clearfix">
+                Watch Online Premiere Now!</h2>
+        </div>
+        @{foreach (var item in Model.Skip(5).Take(2))
+          {
+              string href = String.Format("/Show/Details/{0}/{1}", item.CategoryId, MyUtility.GetSlug(item.Description));
+              if (ctr == 0)
+              {
+                  string img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, item.CategoryId, item.ImageSocialNetwork);                  
+            <div class="col-sm-9 left">
+                <div class="clearfix">
+                    <a href="@href">
+                        <img src="@img" alt="@HttpUtility.HtmlEncode(item.Description)" title="@HttpUtility.HtmlEncode(item.Description)" class="img-responsive pull-left" /></a>
+                    <div class="cont heading24">
+                        <b>@Html.Raw(item.Description)</b>
+                        <p>
+                            @Html.Raw(item.Blurb.Ellipsis(112))<br>
+                            @*<b>Download: $ 00.00</b>*@</p>
+                        <p>
+                            @Html.ActionLink("BUY NOW", "Details", "Subscribe", new { id = item.CategoryId }, new { @class = "heading_red" })
+                        </p>
+                    </div>
+                </div>
+            </div>                  
+              }
+              else
+              {
+                  string img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, item.CategoryId, item.ImagePoster);
+            <div class="col-sm-3 right">
+                <a href="@href">
+                    <img src="@img" alt="@HttpUtility.HtmlEncode(item.Description)" title="@HttpUtility.HtmlEncode(item.Description)" class="img100 p321" /></a>
+            </div>
+              }
+              ctr = ctr + 1;
+          }            
+        }
+    </div>
+    <!-- row three -->
+      }
+  }
+    
+}

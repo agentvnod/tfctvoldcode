@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tfc.tv/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tfc.tv/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This is the TFC.tv API</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tfc.tv/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TogglePpc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="req" type="tns:ReqActivatePpc" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqActivatePpc">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PpcStart" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PpcEnd" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ActivatedBy" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ActivatedOn" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="StatusId" nillable="true" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TogglePpcResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TogglePpcResult" type="tns:TFCtvResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TFCtvResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Code" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="ReloadWalletViaSmartPit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="req" type="tns:ReqReloadWalletViaSmartPit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqReloadWalletViaSmartPit">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GomsWalletId" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsCustomerId" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionId" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" nillable="true" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReloadWalletViaSmartPitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReloadWalletViaSmartPitResult" type="tns:TFCtvResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateSmartPit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="req" type="tns:ReqUpdateSmartPit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqUpdateSmartPit">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GomsCustomerId" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmartPitCardNo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateSmartPitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateSmartPitResult" type="tns:TFCtvResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTFCtvEverywhereEntitlement">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="req" type="tns:ReqCreateTFCtvEverywhereEntitlement" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateTFCtvEverywhereEntitlement">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GomsProductId" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsProductQuantity" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsCustomerId" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionId" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTFCEverywhereStartDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTFCEverywhereEndDate" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateTFCtvEverywhereEntitlementResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateTFCtvEverywhereEntitlementResult" type="tns:TFCtvResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UnassociateTVEverywhere">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="req" type="tns:ReqUnassociateTVEverywhere" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqUnassociateTVEverywhere">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GomsCustomerId" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionId" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Reference" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UnassociateTVEverywhereResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UnassociateTVEverywhereResult" type="tns:TFCtvResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="TogglePpcSoapIn">
+    <wsdl:part name="parameters" element="tns:TogglePpc" />
+  </wsdl:message>
+  <wsdl:message name="TogglePpcSoapOut">
+    <wsdl:part name="parameters" element="tns:TogglePpcResponse" />
+  </wsdl:message>
+  <wsdl:message name="TogglePpcAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReloadWalletViaSmartPitSoapIn">
+    <wsdl:part name="parameters" element="tns:ReloadWalletViaSmartPit" />
+  </wsdl:message>
+  <wsdl:message name="ReloadWalletViaSmartPitSoapOut">
+    <wsdl:part name="parameters" element="tns:ReloadWalletViaSmartPitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReloadWalletViaSmartPitAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSmartPitSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSmartPit" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSmartPitSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSmartPitResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSmartPitAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateTFCtvEverywhereEntitlementSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateTFCtvEverywhereEntitlement" />
+  </wsdl:message>
+  <wsdl:message name="CreateTFCtvEverywhereEntitlementSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateTFCtvEverywhereEntitlementResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateTFCtvEverywhereEntitlementAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UnassociateTVEverywhereSoapIn">
+    <wsdl:part name="parameters" element="tns:UnassociateTVEverywhere" />
+  </wsdl:message>
+  <wsdl:message name="UnassociateTVEverywhereSoapOut">
+    <wsdl:part name="parameters" element="tns:UnassociateTVEverywhereResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnassociateTVEverywhereAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:portType name="TFCtv_x0020_APISoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Typical computer-generated function thrown by MS.Net</wsdl:documentation>
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TogglePpc">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Activate a range of Ppcs</wsdl:documentation>
+      <wsdl:input message="tns:TogglePpcSoapIn" />
+      <wsdl:output message="tns:TogglePpcSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReloadWalletViaSmartPit">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Reload via SmartPit</wsdl:documentation>
+      <wsdl:input message="tns:ReloadWalletViaSmartPitSoapIn" />
+      <wsdl:output message="tns:ReloadWalletViaSmartPitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSmartPit">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Update user's SmartPit</wsdl:documentation>
+      <wsdl:input message="tns:UpdateSmartPitSoapIn" />
+      <wsdl:output message="tns:UpdateSmartPitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTFCtvEverywhereEntitlement">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Create TFC.tv Everywhere Entitlement</wsdl:documentation>
+      <wsdl:input message="tns:CreateTFCtvEverywhereEntitlementSoapIn" />
+      <wsdl:output message="tns:CreateTFCtvEverywhereEntitlementSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UnassociateTVEverywhere">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Unassociate TFC.tv Everywhere</wsdl:documentation>
+      <wsdl:input message="tns:UnassociateTVEverywhereSoapIn" />
+      <wsdl:output message="tns:UnassociateTVEverywhereSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TFCtv_x0020_APISoap" type="tns:TFCtv_x0020_APISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tfc.tv/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TogglePpc">
+      <soap:operation soapAction="http://tfc.tv/TogglePpc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:TogglePpcAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadWalletViaSmartPit">
+      <soap:operation soapAction="http://tfc.tv/ReloadWalletViaSmartPit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReloadWalletViaSmartPitAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSmartPit">
+      <soap:operation soapAction="http://tfc.tv/UpdateSmartPit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateSmartPitAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTFCtvEverywhereEntitlement">
+      <soap:operation soapAction="http://tfc.tv/CreateTFCtvEverywhereEntitlement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateTFCtvEverywhereEntitlementAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnassociateTVEverywhere">
+      <soap:operation soapAction="http://tfc.tv/UnassociateTVEverywhere" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UnassociateTVEverywhereAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TFCtv_x0020_APISoap12" type="tns:TFCtv_x0020_APISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tfc.tv/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TogglePpc">
+      <soap12:operation soapAction="http://tfc.tv/TogglePpc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:TogglePpcAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadWalletViaSmartPit">
+      <soap12:operation soapAction="http://tfc.tv/ReloadWalletViaSmartPit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReloadWalletViaSmartPitAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSmartPit">
+      <soap12:operation soapAction="http://tfc.tv/UpdateSmartPit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateSmartPitAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTFCtvEverywhereEntitlement">
+      <soap12:operation soapAction="http://tfc.tv/CreateTFCtvEverywhereEntitlement" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateTFCtvEverywhereEntitlementAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnassociateTVEverywhere">
+      <soap12:operation soapAction="http://tfc.tv/UnassociateTVEverywhere" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UnassociateTVEverywhereAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TFCtv_x0020_API">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This is the TFC.tv API</wsdl:documentation>
+    <wsdl:port name="TFCtv_x0020_APISoap" binding="tns:TFCtv_x0020_APISoap">
+      <soap:address location="http://localhost:60225/TFCtvAPI.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TFCtv_x0020_APISoap12" binding="tns:TFCtv_x0020_APISoap12">
+      <soap12:address location="http://localhost:60225/TFCtvAPI.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

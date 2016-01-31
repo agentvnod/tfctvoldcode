@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Overseas Absentee Voting FAQ - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="left sectionHeaderTitle">
+                    Frequently Asked Questions about Overseas Absentee Voting</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div id="halalan-faq" class="padLeftLarge">
+            <div class="white">
+                <h3>
+                    Who can vote in the coming 2013 elections?</h3>
+                <p>
+                    All duly-registered Filipino citizens (based on the Certified List of Voters) may
+                    now participate in the Philippine national elections per Overseas Absentee Voting
+                    Act of 2003 (Republic Act 9189). The Certified List of Voters are available the
+                    official <a href="http://www.comelec.gov.ph/oav" target="_blank" class="orange">Commission on Election</a> website.
+                </p>
+                <h3>
+                    Where or how can duly registered Filipinos vote?
+                </h3>
+                <p>
+                    Filipinos all over the world can also visit the official Commission on Election
+                    website to check their modes of voting. Registered voters who are to vote via personal,
+                    automated election system or modified postal voting can vote at the nearest Embassy,
+                    Consulate, Mission and Manila Economic and Cultural Affairs Office. Visit available
+                    the official <a href="http://www.dfa-oavs.gov.ph" target="_blank" class="orange">Department of Foreign Affairs</a> website for more information.
+                </p>
+                <h3>
+                    Where can they vote?
+                </h3>
+                <p>
+                    Duly registered Filipinos can vote between April 13 to May 13, 2013 (until 7 p.m.
+                    Manila Time)
+                </p>
+                <h3>
+                    What are the elective positions?
+                </h3>
+                <p>
+                    They can vote for Senators and a Party-List Representative
+                </p>
+                <h3>
+                    What are the requirements that registered Filipinos should bring?
+                </h3>
+                <p>
+                    Duly registered Filipinos should bring a valid ID and/or Philippine passport. Seafarers
+                    may also present their seaman’s book.
+                </p>
+                <div class="breakLarge">
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="http://www.comelec.gov.ph/oav" target="_blank">@Html.ImageBuilder(Url, "logo/halalan/comelec-logo.png", new { title = "Comelec" })</a>
+                <a href="http://www.dfa-oavs.gov.ph" target="_blank">@Html.ImageBuilder(Url, "logo/halalan/dfa-oav-logo.png", new { title = "DFA" })</a></div>
+        </div>
+        <div class="breakStandard clear">
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+    @Html.CssBuilder(Url, "halalan-2013.css?v1.0.1")
+}
+@section JScriptBottom {
+}

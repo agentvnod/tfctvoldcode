@@ -1,0 +1,33 @@
+﻿@{if (!Request.Browser.IsMobileDevice)
+{
+    bool allowed = false;
+    var code = Request.GetUserHostCountryFromCloudflare();
+    var countries = GlobalConfig.BackgroundTakeoverAllowedCountries;
+    if (!String.IsNullOrEmpty(countries))
+    {
+        if (String.Compare(countries, "--", true) == 0)
+        {
+            allowed = true;
+        }
+        else
+        {
+            var listOfCountries = countries.Split(',');
+            if (listOfCountries.Contains(code))
+            {
+                allowed = true;
+            }
+        }
+    }
+    if (MyUtility.IsWhiteListed(String.Empty))
+    {
+        allowed = true;
+    }
+    if (allowed)
+    {
+        <script type="text/javascript">
+            var toJS = '@Html.ContentBuilder(Url, "scripts/takeoverJS.js", removeProtocol: false)';
+            $.getScript(toJS).done(function () { });
+        </script>
+
+    }
+}}

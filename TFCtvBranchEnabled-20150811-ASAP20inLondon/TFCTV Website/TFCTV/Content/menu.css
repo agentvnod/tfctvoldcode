@@ -1,0 +1,183 @@
+﻿#menuNavigation li
+{
+    float: left;
+}
+.menuImg
+{
+    margin-top: -3px;
+    background: none;
+}
+#menuEntertainment
+{
+    width: 168px;
+    background: url('images/menuBar/mainmenuNav.png');
+    height: 30px;
+    background-position: 0px -31px;
+    cursor: pointer;
+}
+
+#menuEntertainment.selectedMenu
+{
+    background-position: 0px 0px;
+}
+
+#menuNews
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -168px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuNews.selectedMenu
+{
+    background-position: -168px 0px;
+}
+
+#menuMovies
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -274px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuMovies.selectedMenu
+{
+    background-position: -274px 0px;
+}
+
+#menuLive
+{
+    width: 106px;
+    background: url('images/menuBar/mainmenuNav.png');
+    background-position: -380px -31px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuLive.selectedMenu
+{
+    background-position: -380px 0px;
+}
+
+.subMenu
+{
+    background-color: #222;
+    min-width: 345px;
+    max-width: 350px;
+    position: relative;
+    top: 30px;
+    display: none;
+    z-index: 5;
+}
+
+.subMenuContent
+{
+    color: #fff;
+}
+
+.categbtn
+{
+    width: 100px;
+    height: 21px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.showList
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    padding-bottom: 15px;
+    width: 100%;
+}
+
+.showList .categoryTitle
+{
+    font-size: 20px;
+    width: 110px;
+    color: #49a4ff;
+    text-decoration: none;
+    vertical-align: middle;
+    padding: 10px 10px 0px 10px;
+}
+
+.showList .categoryTitle a
+{
+    font-size: 20px;
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+.showList .showListItem_container
+{
+    color: #fff;
+    font-size: 12px;
+    border-left: 1px solid #666;
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 205px;
+}
+
+.showList .showListItem
+{
+    display: block;
+    line-height: 18px;
+}
+
+.showList .showListItem a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.showList .showListItem a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.showList .showListItem a:hover
+{
+    text-decoration: underline;
+}
+
+#menuNavigation
+{
+    z-index: 100;
+    position: relative;
+}
+
+.showList .showListItem .more
+{
+    color: #e95d0a;
+}
+
+.showList .showListItem .button
+{
+    top: 5px;
+    position: relative;
+    width: 30x;
+    height: 16px;
+    background-color: #e95d0a;
+    padding: 4px 10px 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.showList .showListItem .button a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+.showList .showListItem .button a:hover
+{
+    text-decoration: underline;
+}

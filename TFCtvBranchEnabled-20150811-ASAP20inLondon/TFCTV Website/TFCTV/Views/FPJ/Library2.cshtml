@@ -1,0 +1,69 @@
+﻿@using TFCTV.Helpers
+@model List<FPJThematicBundle>
+@{
+    ViewBag.Title = "FPJ: Idolo ng Pilipino - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<!--  FPJ Movie Library packages body -->
+<section class="page_pagebody page_fpj">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header img -->
+            @Html.ImageBuilder(Url, "ux/fpj_main_head.jpg", new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header img -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li><a href="@Url.Action("Index", "FPJ")">MAIN PAGE</a></li>
+                <li class="active"><a href="@Url.Action("Library", "FPJ")">MOVIE LIBRARY</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="row">
+            <!-- right [sort by] -->
+            <div class="col-xs-12 shorby_box_outer">
+                <div class="clearfix">
+                    <div class="shorby_box">
+                        <ul>
+                            <li>View by :</li>
+                            <li class="active"><a href="@Url.Action("Library", "FPJ")">Bundle</a></li>
+                            <li><a href="@Url.Action("LibraryA", "FPJ")">Title</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END right [sort by] -->
+        <!-- block 1 [Hari ng Aksyon] -->
+        @foreach (FPJThematicBundle bundle in Model)
+        { 
+            <div class="sec_header" id="@bundle.featureId">
+                <!-- head -->
+                <h2 class="section_title clearfix">
+                    @bundle.BundleDescription</h2>
+            </div>
+            <!-- end head -->
+            <div class="row celebrities">
+                <!-- movies -->
+                <!-- video with poster & name -->
+                @foreach (FPJFeaturedMovie movie in bundle.featuredTitles)
+                {
+                    <div class="movie col-md-3 col-sm-4 col-xs-6">
+                        <a href="@String.Format("{0}/Episode/Details/{1}",GlobalConfig.baseUrl,movie.movieEpisodeID)">
+                            <img src="@movie.movieImage" alt="celebritie"></a>
+                        <h3 class="small_header">
+                            <a href="@String.Format("{0}/Episode/Details/{1}",GlobalConfig.baseUrl,movie.movieEpisodeID)">@movie.movieTitle</a></h3>
+                    </div>
+                }
+                <!-- end video poster -->
+                <!-- Duplicate -->
+            </div>
+            
+            <!-- END movies -->
+            <!-- END block 1 [Hari ng Aksyon] -->
+        }
+    </div>
+    <!-- end container -->
+</section>
+<!--  END FPJ Movie Library packages body -->

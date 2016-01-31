@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "FlowplayerFlashTest";
+    Layout = "~/Views/Shared/_ProbeLayout.cshtml";
+}
+
+<h2>Flowplayer Flash Test Page</h2>
+<div class="uri"></div>
+<div class="error"></div>
+<div id="playerTarget" style="height: 406px; width: 50%;">
+</div>
+
+@section JScript{
+    @Html.JsBuilder(Url, "flowplayer-3.2.11.min.js")
+    @Html.JsBuilder(Url, "flowplayer.ipad-3.2.12.min.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var fp;
+    </script>
+
+    @{if (Request.Browser.IsMobileDevice || MyUtility.IsDeviceHtml5Capable(Request))
+    {
+        <script type="text/javascript">
+            var hash = window.location.hash;
+            function relp(uri) {
+                $.ajax({
+                    url: uri
+                    , dataType: 'json'
+                }).done(function (data) {
+                    var u = (window.location.hash === "#vod") ? data.data.Url : data.info;
+                    var tp = u.split('?').shift().split('.').pop();
+                    $(".uri").text(u);
+                    console.log(u);
+
+                    fp = flowplayer("playerTarget", {
+                        src: "http://az332173.vo.msecnd.net/swf/flowplayer.cml-3.2.7.swf"
+                        , version: [10, 1]
+                        , onFail: function () { $(".error").text("You need at least Flash version 10.1 to play this video"); }
+                    },
+                        {
+                            key: "#@@bfe1f785f0bf6f5b369"
+                            , clip: {
+                                provider: "akamai"
+                                , url: u
+                                , ipadUrl: encodeURIComponent(u)
+                                , autoPlay: false
+                            }
+                            , onError: function (e) {
+                                $(".error").text(e.errorMessage);
+                            }
+                            , screen: {
+                                height: '100pct',
+                                width: '100pct',
+                                top: 0
+                            }
+                            , plugins: {
+                                controls: { url: "http://az332173.vo.msecnd.net/swf/flowplayer.ctr-3.2.5.swf" }
+                                , akamai: { url: "http://az332173.vo.msecnd.net/swf/AkamaiFlowPlugin-2.11.swf" }
+                            }
+                        }).ipad({ simulateiDevice: true, controls: true });
+
+                    console.log("LOADED");
+                });
+            }
+        </script>
+    }
+      else
+      {
+        <script type="text/javascript">
+            var hash = window.location.hash;
+            function relp(uri) {
+                $.ajax({
+                    url: uri
+                    , dataType: 'json'
+                }).done(function (data) {
+                    var u = (window.location.hash === "#vod") ? data.data.Url : data.info;
+                    var tp = u.split('?').shift().split('.').pop();
+                    $(".uri").text(u);
+                    console.log(u);
+
+                    fp = flowplayer("playerTarget", {
+                        src: "http://az332173.vo.msecnd.net/swf/flowplayer.cml-3.2.7.swf"
+                        , version: [10, 1]
+                        , onFail: function () { $(".error").text("You need at least Flash version 10.1 to play this video"); }
+                    },
+                        {
+                            key: "#@@bfe1f785f0bf6f5b369"
+                            , clip: {
+                                provider: "akamai"
+                                , url: u
+                                , ipadUrl: encodeURIComponent(u)
+                                , autoPlay: false
+                            }
+                            , onError: function (e) {
+                                $(".error").text(e.errorMessage);
+                            }
+                            , screen: {
+                                height: '100pct',
+                                width: '100pct',
+                                top: 0
+                            }
+                            , plugins: {
+                                controls: { url: "http://az332173.vo.msecnd.net/swf/flowplayer.ctr-3.2.5.swf" }
+                                , akamai: { url: "http://az332173.vo.msecnd.net/swf/AkamaiFlowPlugin-2.11.swf" }
+                            }
+                        });
+
+                    console.log("LOADED");
+                });
+            }
+        </script>
+      }
+}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var relp_uri = "/iwantv/asap20";
+            if (window.location.hash === "#vod")
+                relp_uri = "/ajax/getmedia/28300";
+            relp(relp_uri);
+        });
+    </script>
+}
+

@@ -1,0 +1,147 @@
+
+.weeklyChallengeContainer
+{
+    margin-top: 20px;
+    height: 137px;
+}
+.weeklyChallengeHeader
+{
+    text-align: center;
+}
+#midLeaderBoard
+{
+    width: 728px;
+    height: 90px;
+    background-color: #fff;
+    position: relative;
+    left: 50%;
+    margin-left: -364px;
+}
+.mechanicsImage
+{
+    width: 720px;
+    height: 209px;
+    background-color: #fff;
+    position: relative;
+    left: 50%;
+    margin-left: -360px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mechanicsText
+{
+    margin: 0 20px 20px 20px;
+    color: #fff;
+}
+.watchnowtfckat:hover
+{
+    background-position: 0 0;
+}
+.watchnowtfckat
+{
+    display: block;
+    width: 114px;
+    height: 20px;
+    background: url('images/menuBar/WatchNow.png') bottom;
+    text-indent: -99999px;
+    margin: 0;
+    bottom: 40px;
+    cursor: pointer;
+}
+.TFCKatLoves
+{
+    left: 50px;
+    height: 40px;
+    width: 80px;
+    background-image: url('images/social/Love-1.png');
+    background-repeat: no-repeat;
+    position: relative;
+    float: left;
+    cursor: pointer;
+}
+.TFCKatLovesNumber
+{
+    left: 50px;
+    height: 24px;
+    margin-top: 7px;
+    width: 40px;
+    position: relative;
+    float: left;
+    text-align: center;
+    line-height: 24px;
+    background-color: #d7d7d7;
+    cursor: pointer;
+    color: Black;
+}
+.carouseliteminfo
+{
+    color: #fff;
+    text-align: center;
+    left: -25px;
+    position: relative;
+}
+#mechanicsContainer
+{
+    font-size: 16px;
+}
+#mechanicsContainer a
+{
+    color: orange;
+}
+
+.dLeft
+{
+    top: 140px;
+    position: relative;
+}
+
+.t-grid td
+{
+    line-height: 14px !important;
+}
+.log-date
+{
+    position: relative;
+    margin-top: 10px;
+}
+.ktitle a
+{
+    color: #49a4ff !important;
+    font-weight: bold;
+    padding-left: 0 !important;
+}
+.dLeft, .dRight
+{
+    min-height: 0 !important;
+}
+.regionList
+{
+    width: 810px;
+    float: left;
+}
+.regionName
+{
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#dTopLinksFour a
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: orange;
+    text-decoration: none;
+}
+#dTopLinksFour
+{
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 2px solid orange;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

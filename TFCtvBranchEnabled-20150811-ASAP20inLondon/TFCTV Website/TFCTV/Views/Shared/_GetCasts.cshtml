@@ -1,0 +1,23 @@
+﻿@model IEnumerable<IPTV2_Model.Celebrity>
+@{
+    int x = 0;
+}
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="cast_container">
+        <span id="aboutCast">Cast: </span>
+        @foreach (var item in Model.Where(n => n.StatusId == 1))
+        {
+            x++;
+            <span class="castTitle">
+                @if (x < Model.Count())
+                {<a href="@Url.Action("Profile", "Celebrity", new { id = item.CelebrityId })">@item.FullName</a><b>,</b>}
+                else
+                {<a href="@Url.Action("Profile", "Celebrity", new { id = item.CelebrityId })">@item.FullName</a>}</span>
+        }</div>
+    <div class="castinfo" style="display:none" castcount="@Model.Count()" >
+    </div>
+}
+else
+{ <div class="castinfo" style="display: none" castcount="0">
+    </div> }

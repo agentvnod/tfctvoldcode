@@ -1,0 +1,93 @@
+﻿@model List<IPTV2_Model.Category>
+@{
+    ViewBag.Title = "TFC Everywhere - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<section class="page_pagebody">
+    <!-- PAGE BODY SECTION -->
+    <div class="container">
+        <h1 class="page_title clearfix">
+            TFC EVERYWHERE @*<div class="shorby_box">
+                <!-- right [sort by] -->
+                <form role="form" method="post">
+                <label for="sortby">
+                    Sort by :</label>
+                <div class="select_bg">
+                    <select name="sortby" id="sortby" class="">
+                        <option value="relevance">Relevance</option>
+                        <option value="example2">Example2</option>
+                        <option value="example3">Example3</option>
+                    </select>
+                </div>
+                </form>
+            </div>*@
+        </h1>
+        <!-- end page title -->
+        <div class="row help_sec everywhere_sec">
+            <div class="col-xs-12">
+                @{if (Model != null)
+                  {
+                      if (Model.Count() > 0)
+                      {
+                          int ctr = 0;
+                    <ul class="nav nav-tabs outer">
+                        @foreach (var item in Model)
+                        {                                                          
+                            <li @Html.Raw(String.Format("{0}", ctr == 0 ? " class=\"active\"" : String.Empty))>
+                                <h2 class="tve_selection_h2">
+                                    <a href="@String.Format("#{0}", item.CategoryId)" data-toggle="tab">@item.Description</a></h2>
+                            </li>
+                            ctr++;
+                        }
+                    </ul>
+                      }
+                  }
+              
+                }
+                @*<!-- outer tabs [Horizontal tab] -->
+                <li><a href="#lifestyle_net" data-toggle="tab">LIFESTYLE NETWORK</a></li>
+                <li><a href="#cinema_one" data-toggle="tab">CINEMA ONE</a></li>
+                <li><a href="#bro" data-toggle="tab">BRO</a></li>
+                <li><a href="#anc" data-toggle="tab">ANC</a></li>*@
+                <!-- end outer tabs [Horizontal tab] -->
+                <!-- outer tabs content [Horizontal] -->
+                <div class="tab-content outer">
+                    @{if (Model != null)
+                      {
+                          if (Model.Count() > 0)
+                          {
+                              int ctr = 0;
+                              foreach (var item in Model)
+                              {
+                        @Html.Action("BuildTVEContentList", new { category = item, ctr = ctr })
+                                  ctr++;
+                              }
+                          }
+                      }
+                    }
+                    <!-- END outer tab c 1 -->
+                    <div class="tab-pane fade" id="lifestyle_net">
+                        LIFESTYLE NETWORK</div>
+                    <!-- outer tab c 2 -->
+                    <div class="tab-pane fade" id="cinema_one">
+                        CINEMA ONE</div>
+                    <!-- outer tab c 3 -->
+                    <div class="tab-pane fade" id="bro">
+                        BRO</div>
+                    <!-- outer tab c 4 -->
+                    <div class="tab-pane fade" id="anc">
+                        ANC</div>
+                    <!-- outer tab c 5 -->
+                </div>
+                <!-- end outer tabs content [Horizontal] -->
+            </div>
+            <!-- end left side -->
+        </div>
+        <!-- end tfc everywhere section -->
+    </div>
+    <!-- end container -->
+</section><!-- end page body section -->
+@section MetaTags {
+    <meta name="description" content="Your vital link to everything Filipino with its 24-hour all Filipino programming featuring the Philippines' highest-rating news and current affairs programs, dramas, comedies, reality shows, musical varieties, talk shows and lifestyle programs." />
+    <link rel="canonical" href="@String.Format("{0}/TFCChannel", GlobalConfig.baseUrl)" />
+}

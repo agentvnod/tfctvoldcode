@@ -1,0 +1,302 @@
+﻿@{
+    ViewBag.Title = "Earn promo entries and win!";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    bool isLoggedIn = MyUtility.isUserLoggedIn();
+}
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="main-container">
+            <div class="main-banner-img">
+                @Html.ImageBuilder(Url, "banners/annivpromotopbanner960x141.png", new { style = "z-index: -11;", width = "940", height = "141", title = "FAN MOB", alt = "FAN MOB" })
+            </div>
+            <div class="breakSmall">
+            </div>
+            <div class="main-container-links">
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div class="main-container-body">
+                <div class="breakLarge">
+                </div>
+                <div class="winners-text">
+                    <div class="winner-container-title">
+                        FANMOB PROMO WINNERS
+                    </div>
+                    <div class="winners-instructions">
+                        Winners will receive a notification via their registered TFC.tv email address containing
+                        the details on how to claim their prizes.
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="winners-text-content">
+                        <ul>
+                            <li>
+                                <div class="winners-grandprize-text">
+                                    <div>
+                                        Grand Prize Winner</div>
+                                    <div class="fanmob-prize-text">
+                                        Roundtrip tickets to the Philippines</div>
+                                    <div class="breakStandard">
+                                    </div>
+                                    <ul>
+                                        <li>Kenn Mabagos, AU </li>
+                                    </ul>
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="winners-monthlyprize-text">
+                                    <div>
+                                        Monthly Prize Winners</div>
+                                    <div class="fanmob-prize-text">
+                                        Samsung Netbook</div>
+                                    <div class="breakStandard">
+                                    </div>
+                                    <ul>
+                                        <li>Anisah Jensen, US </li>
+                                        <li>Ruen Arnett, US </li>
+                                        <li>Winnie Romo, DK </li>
+                                    </ul>
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                                <div class="breakLarge">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="winners-weeklyprize-text">
+                                    <div>
+                                        Weekly Prize Winners</div>
+                                    <div class="fanmob-prize-text">
+                                        TFC.tv PPV PINS</div>
+                                    <div class="weekly-column">
+                                        <div class="breakStandard">
+                                        </div>
+                                        <ul>
+                                            <li>Liz A, US</li>
+                                            <li>Maria Cristina Abestado, CA</li>
+                                            <li>Susana Ablaza, CA</li>
+                                            <li>Sheila Aitchison, GB</li>
+                                            <li>Trixia Alba, US</li>
+                                            <li>Eve Alindogan-Meram, US</li>
+                                            <li>John Rome Andres, GB</li>
+                                            <li>Nanette Angala, US</li>
+                                            <li>Ryan Aquino, CA</li>
+                                            <li>Redempta Arana, CA</li>
+                                            <li>Maria Corazon Årsnes, NO</li>
+                                            <li>Pia Pamela Atanacio, ES</li>
+                                            <li>Jenifer Balabis, SE</li>
+                                            <li>Eunice Kim Bambalan, AW</li>
+                                            <li>Ruvie May Baniqued Raña, ES</li>
+                                            <li>Neferson Basilio, GB</li>
+                                            <li>Susan Bautista, US</li>
+                                            <li>Arnold Bautista, CA</li>
+                                            <li>Elgin Benesa, GB</li>
+                                            <li>Marlon Berino, GB</li>
+                                            <li>Renante Bermudez, GB</li>
+                                            <li>Teresita Bolanos, US</li>
+                                            <li>Rhea Bugayong, GB</li>
+                                            <li>Jae C, CA</li>
+                                            <li>Kathleine Shayne Calayco, GB</li>
+                                            <li>Melissa Calupas, US</li>
+                                            <li>Miss Canada, CA</li>
+                                            <li>Ma. Eleonor Canalda, US</li>
+                                            <li>Connie Capinpin, US</li>
+                                            <li>Purification Caponpon, FR</li>
+                                            <li>Libby Carr, US</li>
+                                            <li>Evelyn Casongsong, CA</li>
+                                            <li>Peddy Castillo, IT</li>
+                                            <li>Arlaine Castillo, GB</li>
+                                            <li>Loida Castro, GB</li>
+                                            <li>Ver Celindro, GB</li>
+                                            <li>Jr Ceria, FR</li>
+                                            <li>Marlie Conson, US</li>
+                                            <li>Eileen Corpuz, US</li>
+                                            <li>Robert Cross, US</li>
+                                            <li>Tess D, CA</li>
+                                            <li>Gani D, US</li>
+                                            <li>Janette Dalaguiado, US</li>
+                                            <li>Ziagra Dano, JP</li>
+                                            <li>Chit Day, US</li>
+                                            <li>Alita De Leon, GB</li>
+                                            <li>Angiellen De Mesa, JP</li>
+                                            <li>Annabel Debarr, US</li>
+                                            <li>Leoncia Deguzman, GB</li>
+                                            <li>Virgilio Dela Cruz, US</li>
+                                            <li>Katherine Diangson, CA</li>
+                                            <li>Rita Doneza, GB</li>
+                                            <li>Merelow Doyon, US</li>
+                                            <li>Ac E, CA</li>
+                                            <li>Razz Estus, US</li>
+                                            <li>Aldwin Fabian, CA</li>
+                                            <li>Peter Fernandez, CH</li>
+                                            <li>Emie Fernandez, US</li>
+                                            <li>Mary Mitzi Ferrer, GB</li>
+                                            <li>Felilia Fronda, US</li>
+                                            <li>Mary Grace Garcia, GB</li>
+                                            <li>Joselito Garcia, AE</li>
+                                            <li>Zita Gomez, MX</li>
+                                            <li>Clarissa Gragasin, GB</li>
+                                            <li>Judith Grant, US</li>
+                                            <li>Jesse Guijo, US</li>
+                                            <li>Judith Heinz, AT</li>
+                                            <li>Arlene Isaiyas, US</li>
+                                            <li>Andrea Lea Isip, CA</li>
+                                            <li>Teresa Javier, BE</li>
+                                            <li>Gina Jonsson, NO</li>
+                                            <li>Edgar Justiniano, CA</li>
+                                            <li>Janice Kawamura, JP</li>
+                                            <li>Alice Labesores, NZ</li>
+                                            <li>Ariel Labinghisa, US</li>
+                                        </ul>
+                                    </div>
+                                    <div class="weekly-column">
+                                        <ul>
+                                            <li>Maria Sol Lanicia, US</li>
+                                            <li>Giovanni Ledesma, US</li>
+                                            <li>Carmensita Lerias, US</li>
+                                            <li>Manuel Liangco, US</li>
+                                            <li>Grace Libres, AT</li>
+                                            <li>Marisol Lico, US</li>
+                                            <li>Joseph Limpin, US</li>
+                                            <li>Mylz Little, GB</li>
+                                            <li>Criselyn Macaraig, CA</li>
+                                            <li>Rodel Macatangay, AT</li>
+                                            <li>Jaime Magnaye, CA</li>
+                                            <li>Elena Manuel, US</li>
+                                            <li>Michelle Mckay, CA</li>
+                                            <li>J Mend, CA</li>
+                                            <li>Maria Shirley Mendiola, GB</li>
+                                            <li>Mark Joel Mia Mercado, AU</li>
+                                            <li>Angelita Mikrut, US</li>
+                                            <li>Antonio Millonado, US</li>
+                                            <li>Mildred Molina, GB</li>
+                                            <li>Aki Moto, JP</li>
+                                            <li>Jhen Munar, GB</li>
+                                            <li>Marites Naluz, AT</li>
+                                            <li>Allan Narvaez, MY</li>
+                                            <li>Rubie O, US</li>
+                                            <li>Mylyn Ogar, US</li>
+                                            <li>Dzann Onarres, AU</li>
+                                            <li>Myrna Oroc, CA</li>
+                                            <li>Flordeliza Page, US</li>
+                                            <li>Aubrey Peralta, US</li>
+                                            <li>Cathy Perez, IT</li>
+                                            <li>Lilia Pilas, US</li>
+                                            <li>Dee Pollen, CA</li>
+                                            <li>Jing Pontila, US</li>
+                                            <li>Darreljohn Posing, US</li>
+                                            <li>Jose Marcelino Prudencio, GB</li>
+                                            <li>Zenaida Resubal, NL</li>
+                                            <li>Ailene Reyes, GB</li>
+                                            <li>Floralyn Reyes, CA</li>
+                                            <li>Eva Reyes, US</li>
+                                            <li>Laurence Ricasata, US</li>
+                                            <li>Maria Salome Rieser, CH</li>
+                                            <li>Alexa Rombano, GB</li>
+                                            <li>Jevris Allen Romero, US</li>
+                                            <li>Juvy Romero, GB</li>
+                                            <li>Sophia Ruznam, US</li>
+                                            <li>Ina S, CA</li>
+                                            <li>Jeanet Shepherd, GB</li>
+                                            <li>Liza Shigeta, JP</li>
+                                            <li>Desiree Rose Sim, US</li>
+                                            <li>Marilyn Sorensen, NO</li>
+                                            <li>Jeannie Soriano, JP</li>
+                                            <li>Maritess Sulit, FR</li>
+                                            <li>Angela Sumalinog, GB</li>
+                                            <li>Marubyruthigold Taggueg, AE</li>
+                                            <li>Apple Tan, CA</li>
+                                            <li>Joseph Tano, IE</li>
+                                            <li>Jennifer Tecson, US</li>
+                                            <li>Jr Tecson, BE</li>
+                                            <li>Rodelene Trimmel, AT</li>
+                                            <li>Beverly Tuboro, US</li>
+                                            <li>Joemar Turingan, CA</li>
+                                            <li>Miki Ueyama, JP</li>
+                                            <li>Venus Ulang, US</li>
+                                            <li>Arnel Urbano, AU</li>
+                                            <li>Evangeline Valencia, US</li>
+                                            <li>Marianne Viado, US</li>
+                                            <li>Erlita Villamayor, GB</li>
+                                            <li>Joshua Villanueva, CA</li>
+                                            <li>Rebecca Villejo, US</li>
+                                            <li>Emerita Vionnet, CH</li>
+                                            <li>Rosario Walker, US</li>
+                                            <li>Shayla Woodson, US</li>
+                                            <li>Belen Yabut-Tan, US</li>
+                                            <li>Clarisa Yap, GB</li>
+                                            <li>Joel Ylagan, US</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="clear breakLarge">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.4.css")
+    @Html.CssBuilder(Url, "whitelayout-1.2.css")
+    @Html.CssBuilder(Url, "fanmob.1.css")
+}
+@section JScriptBottom{
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    terms: { required: true }
+                },
+                messages: {
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $.post('/FanMobPromo/_EnterPromo', form.find('input, select').serialize(), function (data) {
+                        if (data.StatusCode == 0) {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html('<span style="color: Red;">Congratulations!</span> ' + data.StatusMessage + ' Redirecting in 5 seconds.');
+                            setTimeout(function () { window.location.href = '/FanMobPromo/Profile'; }, 5000);
+                        } else {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html(data.StatusMessage);
+                        }
+                    }).fail(function () {
+                        $('#notificationMsg').removeClass('hideElement');
+                        $('#notificationMsg').html(data.StatusMessage);
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+            $(document).on('click', '.signinBtns', function () {
+                $('#signin').click();
+                return false;
+            });
+
+        });
+    </script>
+}

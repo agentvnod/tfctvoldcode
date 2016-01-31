@@ -1,0 +1,585 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Episode
+@{
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IPTV2_Model.Show show = (IPTV2_Model.Show)ViewBag.Show;
+
+    ViewBag.Title = String.Format("TFCkat, {0} - TFC.tv", Model.EpisodeName);
+    string trackingLabel = String.Format("{0}|{1}|{2}|{3}|{4}|{5}", Model.EpisodeId, show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"), ViewBag.CategoryType, ViewBag.EmailAddress, Request.GetUserHostAddressFromCloudflare());
+    IPTV2_Model.EpisodeCategory Previous = ViewBag.GetPrevious;
+    IPTV2_Model.EpisodeCategory Next = ViewBag.GetNext;
+
+
+    var EpNum = ViewBag.EpisodeNumber;
+
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+
+
+    string TFCTvDownloadPlayerFullUrl = String.Empty;
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+        bool Loved = false;
+        if (ViewBag.Loved != null)
+        {
+            Loved = (bool)ViewBag.Loved;
+        }
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+
+        if (GlobalConfig.IsDownloadPlayerEnabled)
+        {
+            string TFCTvPlayerEncryptedToken = MyUtility.Encrypt(String.Format("{0}&{1}", Model.EpisodeId, User.Identity.Name), GlobalConfig.TFCTVPlayerDownloadSalt);
+            TFCTvDownloadPlayerFullUrl = String.Format("{0}{1}", GlobalConfig.TFCTvDownloadPlayerUrl, HttpUtility.UrlEncode(TFCTvPlayerEncryptedToken));
+        }
+    }
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+
+    //Build PlayerContorlBarModel
+    var playerControlBarModel = new TFCTV.Models.PlayerControlBarModel() { EpisodeId = Model.EpisodeId, IsUserEntitled = HasActiveSubscriptionBasedOnCategoryId.HasSubscription, TFCTvDownloadPlayerFullUrl = TFCTvDownloadPlayerFullUrl };
+
+    var streamID = "Episode_" + Model.EpisodeId;
+    var categoryID = "Comments";
+
+    //ShareMedia
+    string title = String.Empty;
+    var image = Html.ContentBuilder(Url, "/content/images/blank-image.jpg").ToString();
+    try
+    {
+        title = String.Format("{0}, {1}", show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"));
+        image = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.ImageAssets.ImageVideo);
+    }
+    catch (Exception) { }
+
+    string showParentCategories = ContextHelper.GetShowParentCategories(show.CategoryId);
+    string parentCategories = ContextHelper.GetEpisodeParentCategories(Model.EpisodeId);
+
+    var ReturnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery;
+
+    //TEXT
+    string BarText = String.Empty;
+    string ScreenText = String.Empty;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        if (!(HasActiveSubscriptionBasedOnCategoryId.HasSubscription))
+        {
+            if (Request.Browser.IsMobileDevice)
+            {
+                ScreenText = "Preview of this video is not available on your device";
+            }
+            else
+            {
+                ScreenText = "Click play to watch preview of this video";
+            }
+        }
+        else
+        {
+            ScreenText = "Click play to watch the full video";
+        }
+    }
+    else
+    {
+        ScreenText = "You are currently not logged in";
+    }
+    int attribActionId;
+    if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+    { attribActionId = (int)AnniversaryPromo.AnnivPromo_ViewingFREE; }
+    else
+    { attribActionId = (int)AnniversaryPromo.AnnivPromo_ViewingPAID; }
+    string attribDescription = String.Format("You watched <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Compare(Model.EpisodeCode, Model.EpisodeName, true) == 0 ? String.Format("{0} - {1}", show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy")) : Model.EpisodeName);
+
+    //string parentCategory = ContextHelper.GetShowParentCategories(show.CategoryId, useDescription: true, getSingleParent: true);
+}
+<br />
+<br />
+<div id="mainBody">
+    <form id="form1" name="form1" method="post" action="#">
+    <div style="width: 940px; height: 141px; background-color: #fff;">
+        <img src="http://cdnassets.tfc.tv/content/images/banners/tfckat2013.png" style="z-index: -11;"
+            width="940" height="141" title="TFCkat" alt="TFCkat" />
+    </div>
+    <div class="transparentBg">
+        <div id="dTopLinksFour" style="display: table; margin: 0 auto;">
+            @Html.ActionLink("MAIN PAGE", "Index", "TFCkat") | @Html.ActionLink("PROMO MECHANICS", "Mechanics", "TFCkat")
+            | @Html.ActionLink("THE CONTENDERS", "Finalists", "TFCkat") | @Html.ActionLink("GRAND WINNERS", "GrandWinners", "TFCkat")</div>
+        <!-- Video and Menu -->
+        <div id="videoPlayerMenu" style="min-height: 0;">
+            <div id="videoPlayer" style="width: 940px;">
+                <div id="videoEmbed" style="width: 540px; height: 406px; float: left;">
+                    @{if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription && Request.Browser.IsMobileDevice)
+                      {
+                          if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription && HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+                          {                   
+                        <div class="bs-sbar switch-to-540 bs-sbar-mobile">
+                            <span>Your subscription will expire in @HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft
+                                @(HasActiveSubscriptionBasedOnCategoryId.NumberOfDaysLeft > 1 ? "days" : "day").
+                                @Html.ActionLink("RENEW", "Details", "Subscribe", new { id = show.CategoryId, ReturnUrl = ReturnUrl }, new { @class = "bs-atag bs-box bs-box-renew" })
+                                now to extend or <a href="#" class="bs-atag bs-close">close</a> this bar to renew
+                                later.</span></div>  
+                          }
+                      }
+                      else
+                      {                         
+                        <div class="black-screen-940x406 switch-to-540">
+                            <div class="bs-play">
+                                @{if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription || !Request.Browser.IsMobileDevice)
+                                  {
+                                    @Html.ImageBuilder(Url, "entrypoint/playbtn-silver.png", new { id = "pbtn-silver" })
+                                  }
+                                  else
+                                  {
+                                    <div class="breakLarge">
+                                    </div>
+                                    <div class="breakLarge">
+                                    </div>
+                                  }
+                                }
+                                <div class="bs-watch">
+                                    @Html.Raw(ScreenText)
+                                </div>
+                            </div>
+                        </div>
+                        
+                      }
+                    }
+                    <div id="playerContainer" style="width: 540px; height: 406px;">
+                    </div>
+                    @Html.Partial("_PlayerControlBar", playerControlBarModel)
+                </div>
+                <div id="videoDetails" style="width: 370px; height: 406px; float: left; margin-top: 20px;
+                    margin-left: 10px;">
+                    <div id="videoCurrentInfo">
+                        <div class="videoTitle">@Model.EpisodeName
+                        </div>
+                        <div class="breakSmall clear">
+                        </div>
+                        <div>
+                            @Html.Partial("_NewLovePartial", Model, dictionary)</div>
+                        <div style="padding-top: 7px;">
+                            @Html.Partial("_ShareBarPartial", Model)</div>
+                        <div>
+                            <div class="breakStandard clear">
+                            </div>
+                            <div id="right-block">
+                                <div class="videoDescription">
+                                    <div class="more-less">
+                                        <div class="more-block" style="margin-right: 10px;">@Model.Synopsis</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @Html.ImageBuilder(Url, "clicktayo/videoDivider.png", new { alt = "" })
+                    </div>
+                    <div class="review-selector">
+                        <a href="#" id="write-review">Post a comment</a> | <a href="#" id="show-review" class="active">
+                            See comments</a>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="show-reviews">
+                        <div id="commentDiv">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="write-a-review hideElement">
+                        <div id="result" class="hideElement">
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div>
+                            <textarea rows="4" maxlength="5000" id="tComment" name="tComment" style="width: 340px;
+                                height: 170px;"></textarea></div>
+                        <div class="breakStandard">
+                        </div>
+                        <div class="floatRight">
+                            <input id="cmdSubmit" type="submit" name="submit" value="Post" /></div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakSmall">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div id="latestShows_bodyContainer" style="margin-top: -5px;">
+            <div id="leftfloatlistheader">
+                @if (GlobalConfig.TFCkatShowExclusives == "false")
+                {<h3>
+                    <a id="AllGamesClick" href="#">All Episodes </a>
+                </h3>}
+                else
+                {<h3>
+                    <a id="AllGamesClick" href="#">All Episodes </a>| <a id="ExclusivesClick" href="#">Exclusive
+                        Videos</a>
+                </h3>}
+            </div>
+            <div id="dsFeatureItems">
+                <div id="itemListBody" class="dVisible itemListBody">
+                    <div class="wrapper transparentBg listVOD">
+                        <ul class="dsitemListing">
+                        </ul>
+                        <div class="clear" style="border-bottom: 1px solid #393939; width: 930px;">
+                        </div>
+                        @Html.ActionLink("SEE MORE VIDEOS", "ListAllEpisodes", null, new { style = "float: right; margin-right: 20px; text-decoration: none; color: #49a4ff; font-weight: bold; text-transform: uppercase; margin-top: -20px;" })
+                    </div>
+                </div>
+                <div id="exclusiveListBody" class="dInvisible itemListBody">
+                    <div class="wrapper  transparentBg listVOD">
+                        <ul class="exclusiveitemListing">
+                        </ul>
+                        <div class="clear" style="border-bottom: 1px solid #393939; width: 930px;">
+                        </div>
+                        @Html.ActionLink("SEE MORE EXCLUSIVES", "ListAllExclusives", null, new { style = "float: right; margin-right: 20px; text-decoration: none; color: #49a4ff; font-weight: bold; text-transform: uppercase; margin-top: -20px;" })
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div id="user-comments">
+            <div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        User Comments
+                    </div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+            <div id="load-more" class="hideElement">
+                load more comments</div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+    </div>
+    </form>
+</div>
+<div class="apple_overlay" id="bs_overlay">
+    <div class="contentWrap">
+    </div>
+</div>
+@{using (Html.BeginForm(String.Empty, String.Empty, FormMethod.Post, new { id = "naformW", style = "display: none;" }))
+  {                  
+    <div class="hideElement">@Html.AntiForgeryToken()</div>
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+  }
+}
+@section StyleSheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.2-1.css")
+    @Html.CssBuilder(Url, "ratingsreviews-1.1.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "prompt.css")
+    @Html.CssBuilder(Url, "pkg.3.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "entrypoint-1.4.css")
+    @Html.CssBuilder(Url, "player-menu.small.css")
+    @Html.CssBuilder(Url, "uaap.5.css")
+    @Html.CssBuilder(Url, "tfckat.6.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@HttpUtility.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")"/>
+    <meta property="og:description" content="@HttpUtility.JavaScriptStringEncode(show.Description) - @Model.DateAired.Value.ToString("MMM d, yyyy")"/>
+    <meta property="og:type" content="Episode" />
+    <meta property="og:image" content="@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo"/>
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta name="description" content="@HttpUtility.JavaScriptStringEncode(Model.Synopsis)" />
+}
+@section JScriptBottom{
+    @Html.Partial("FlowPlayerPartialUAAP", false)
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "jquery.timeago.js")
+    @Html.JsBuilder(Url, "commentsGenerator.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator-1.2.js")
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        var socializePluginUrl = '@Html.ContentBuilder(Url, "scripts/socialize.3.js")';        
+    </script>
+    <script type="text/javascript">
+        var userActionURL = '@HttpContext.Current.Request.Url.AbsoluteUri';
+        var playerContainer = 'playerContainer';        
+        var label = '@trackingLabel';
+        var eid = null;
+        var sid = null;
+        var playbackId = @Model.EpisodeId;
+        var playbackType = 1; // Episode
+        var flow = {}; var config = {};
+        var categoryType = 'episode';
+        var time = true;
+        var isClip = false;
+    </script>
+    <script type="text/javascript">
+        var gmessage = 'I just watched an episode of @Ajax.JavaScriptStringEncode(show.Description)';
+        var gtitle = '@Ajax.JavaScriptStringEncode(title)';
+        var gdescription = '@Ajax.JavaScriptStringEncode(Model.Synopsis)';
+        var gimg = '@image';
+        var ghref = '@HttpContext.Current.Request.Url.AbsoluteUri';
+    </script>
+    @*<script type="text/javascript">
+        var solaObj = {
+            category: '@MyUtility.RemoveNonAlphaNumericCharacters(parentCategory)',
+            subCategory: null,
+            show: '@MyUtility.RemoveNonAlphaNumericCharacters(show.Description)',
+            episode: '@MyUtility.RemoveNonAlphaNumericCharacters(title)',
+            pageUrl: document.URL,
+            pageReferrer: document.referrer,
+            browser: navigator.userAgent
+        }
+    </script>*@
+    <script type="text/javascript">
+        //CreatePlayer()
+        function CreatePlayer(uri) {
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            $.getScript(playerJS).done(function () {
+                                var akObj = { url: Afp };
+                                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, csmaPluginSWF: csmaPluginSWF, csmaConfig: csmaConfig, apObj: akObj, scaling: 'fit', url: data.data.Url, categoryType: categoryType, label: label, sid: sid, eid: eid, isClip: isClip, trackerSWF: trackerSWF, trackerID: trackerID, userActionURL: userActionURL, uri: uri, time: time, ipadUrl: data.data.Url, allowShare: true, playbackType: playbackType, playbackId: playbackId, analyticsSWF: analyticsSWF, subscribe: data.data.PromptToSubscribe, gmessage: gmessage, gtitle: gtitle, gdescription: gdescription, gimg: gimg, ghref: ghref, streamType: isSelectedMode };
+                                flow.Player.Create(config);
+                            });
+                        }
+                        else if (data.errorCode == -704)
+                            $('#' + playerContainer).append($('#subscribePromptcontainer_1').html());
+                        else {
+                            $('.player-menu-container').remove();
+                            $('#' + playerContainer).html($('#not-available').html());
+                        }
+                    }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '/Ajax/GetMedia/@Model.EpisodeId';
+            CreatePlayer(uri);
+        });
+    </script>
+    <script type="text/javascript">
+        // destroy!
+        $(document).ready(function () {
+            $('#AllGamesClick').on('click', function () {
+                $('#itemListBody').removeClass('dInvisible');
+                $('#exclusiveListBody').removeClass('dVisible');
+                $('#itemListBody').addClass('dVisible');
+                $('#exclusiveListBody').addClass('dInvisible');
+                return false;
+
+            });
+
+            $('#ExclusivesClick').on('click', function () {
+                $('#itemListBody').addClass('dInvisible');
+                $('#exclusiveListBody').addClass('dVisible');
+                $('#itemListBody').removeClass('dVisible');
+                $('#exclusiveListBody').removeClass('dInvisible');
+                return false;
+            });
+            $(document).on('click', '.uaap_watchnow', function () {
+                var epid = $(this).attr('rel');
+                window.location.href = "/UAAP/OnDemand/" + epid;
+                return false;
+            });
+
+            $('#chat-bar').remove();
+        });
+    </script>
+    <script type="text/javascript">
+        $('#playerFAQ').css('left', '250px').css('top', '10px');
+    </script>
+    <script type="text/javascript">
+
+
+        $(this).load(function () {
+
+            jQuery.get("/TFCkat/GetPaginatedEpisodeList", function (data) {
+
+                var html = '';
+                $.each(data, function () {
+                    html += '<li><div class="chartItem"><div class="chartImage"><div class="chartImageHolder">';
+                    html += '<a href="/TFCkat/OnDemand/' + this.EpisodeId + '"><img src="' + this.EpisodeImageUrl + '" height="98" width="151" /></a></div></div>';
+                    html += '<div class="chartInfo"><div class="chartInfoTitle"><a href="/UAAP/OnDemand/' + this.EpisodeId + '">' + this.EpisodeName + '</a></div>';
+                    html += '<div class="chartInfoDate">' + this.EpisodeDescription + '</div></div><div class="clear"></div></div><div class="clear"></div></li>';
+
+                });
+
+                $('.dsitemListing').html(html);
+            });
+
+            jQuery.get("/TFCkat/GetPaginatedExclusiveList", function (data) {
+
+                var html = '';
+                $.each(data, function () {
+                    html += '<li><div class="chartItem"><div class="chartImage"><div class="chartImageHolder">';
+                    html += '<a href="/TFCkat/OnDemand/' + this.EpisodeId + '"><img src="' + this.EpisodeImageUrl + '" height="98" width="151" /></a></div></div>';
+                    html += '<div class="chartInfo"><div class="chartInfoTitle"><a href="/UAAP/OnDemand/' + this.EpisodeId + '">' + this.EpisodeName + '</a></div>';
+                    html += '<div class="chartInfoDate">' + this.EpisodeDescription + '</div></div><div class="clear"></div></div><div class="clear"></div></li>';
+
+                });
+
+                $('.exclusiveitemListing').html(html);
+            });
+        });
+
+
+        
+    </script>
+    <script type="text/javascript">
+        var nextTS = '';
+        var hasMore = true;
+        var limit = 5;
+        var paginated = '';
+        var commentCount = 0;
+        var loadMore = $('#load-more');
+        function toggleLoadMore() {
+            if (hasMore)
+                loadMore.show();
+            else
+                loadMore.hide();
+        }
+        function loadComments(paginated) {
+            $.ajax({
+                url: paginated.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        loadMore.text('loading comments...');
+                    }
+                    , success: function (data) {
+                        if (data.commentCount > 0) {
+                            var list = new comments({ json_str: data.comments, container: paginated.container, append: paginated.append }).paginated();
+                            nextTS = data.next;
+                            hasMore = data.hasMore;
+                            loadMore.text('load more comments');
+                            toggleLoadMore();
+                        }
+                        else {
+                            $('#' + paginated.container + ' .itemListBody .wrapper').addClass('white').addClass('padLeftLarge');
+                            $('#' + paginated.container + ' .itemListBody .wrapper').html('<br />Be the first to comment on this video!');
+                        }
+                    }
+                    , complete: function () {
+                        //loadMore.removeClass('activate');
+                    }
+            });
+        }
+
+        function loadCommentTicker() {
+            var commentsTicker = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&callId=" + Math.random(), container: "commentDiv", itemperslide: 2 };
+            $.ajax({
+                url: commentsTicker.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                    }
+                    , success: function (data) {
+                        commentCount = data.commentCount;
+                        if (data.commentCount > 0)
+                            var list = new comments({ json_str: data.comments, itemperslide: commentsTicker.itemperslide, container: commentsTicker.container }).listing();
+                        else {
+                            $('#' + commentsTicker.container + ' .itemListBody .wrapper').addClass('white');
+                            $('#' + commentsTicker.container + ' .itemListBody .wrapper').html('Be the first to comment on this video!');
+                        }
+                    }
+            });
+        }
+        $(document).ready(function () {
+            loadCommentTicker();
+            paginated = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&limit=" + limit + "&start=" + nextTS, container: "user-comments", append: false };
+            loadComments(paginated);
+
+            $('#load-more').click(function () {
+                paginated = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&limit=" + limit + "&start=" + nextTS, container: "user-comments", append: true };
+                loadComments(paginated);
+                return false;
+            });
+
+            if (commentCount > 0) {
+                $('#commentDiv').hover(function () {
+                    $('#commentDiv .itemListBody .wrapper').cycle('pause');
+                }, function () {
+                    $('#commentDiv .itemListBody .wrapper').cycle('resume');
+                });
+            }
+            $('#write-review').click(function () { $('.show-reviews').hide(); $('.write-a-review').show(); $('#write-review').addClass('active'); $('#show-review').removeClass('active'); return false; });
+            $('#show-review').click(function () { $('.show-reviews').show(); $('.write-a-review').hide(); $('#show-review').addClass('active'); $('#write-review').removeClass('active'); return false; });
+        });        
+    </script>
+    <script type="text/javascript">
+        $('#pbtn-silver').on('click', function () {
+            $('.black-screen-940x406').fadeOut(800);
+            if ($f() != undefined)
+                $f().play();
+            setTimeout(function () { $('.bs-sbar').fadeOut(800); }, 15000);
+        });
+
+        $('.player-mode').on('click', function () {
+            $('.black-screen-940x406').fadeOut(800);
+        });
+    </script>
+    @{if (!HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+      { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $f().onFinish(function () {
+                        if (isClip) {
+                            var nform = $('form#naformW');
+                            $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+                                //do something
+                            });
+                        }
+                    });
+                }, 15000);
+            });            
+        </script>
+      }   
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+                if (!isClip) {
+                    $f().onCuepoint([300000], function (clip, cuepoint) {
+                        var nform = $('form#naformW');
+                        $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+                            //do something
+                        });
+                    });
+                }
+            }, 15000);
+        });
+    </script>
+    @{if (Request.Browser.IsMobileDevice && HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+      {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () { $('.bs-sbar').fadeOut(800); }, 15000);
+            });            
+        </script>      
+      }
+    }
+}

@@ -1,0 +1,388 @@
+﻿@{
+    ViewBag.Title = "Register to TFC Everywhere - TFC.tv: Official ABS-CBN Online Channel";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    TransactionReturnType ErrorMessage = null;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+    }
+    catch (Exception) { }
+
+    string href = String.Format("{0}/User/RegisterToTFCEverywhere", GlobalConfig.baseUrl);
+
+    ViewBag.DaxName = "tfc-tv:user:activate-tfc-everywhere";
+}
+<!--  TVE Activation page body -->
+<section class="page_pagebody changepass_pagebody reg_pagebody">
+    <div class="container">
+        <div class="row reg_eve">
+            <!-- page header -->
+            @*<div class="col-sm-6 col-xs-12 left">
+                @Html.ImageBuilder(Url, "ux/tve_activation_header.png", new { @class = "img100", alt = "" })
+            </div>
+            <div class="col-lg-4 col-lg-offset-1 col-sm-6 col-xs-12 right">
+                <br />
+                <span class="tve_blurb">At Home Anywhere</span><br />
+                <br />
+                <p>
+                    Bring the warmth of Kapamilya Entertainment wherever you go. Enjoy all your favorite
+                    TFC shows on your TV, PC, smartphone or tablet.
+                </p>
+            </div>*@
+            <div>@Html.ImageBuilder(Url, "ux/tve_reg_header.jpg", new { @class = "img100", alt = "" })</div>
+        </div>
+        <!-- END page header -->
+        <h1 class="page_title">
+            REGISTER TO TFC EVERYWHERE
+        </h1>
+        <!-- form  -->
+        <form method="post" role="form" action="@Url.Action("_RegisterTFCEverywhere", "User")">
+            @Html.AntiForgeryToken()
+            @{if (ErrorMessage != null)
+            {
+            if (ErrorMessage.StatusCode == 0)
+            {
+            <div class="alert alert-success">
+                <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+            </div>
+            }
+            else
+            {
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+            </div>
+            }
+
+            }
+            }
+            <div class="row steps">
+                <!-- row 1 [step 1 box 1&2] -->
+                <div class="col-md-5 col-sm-5 col-xs-12 step box1">
+                    <b>STEP 1.</b>
+                    <h2 class="reg_tve_h2">
+                        Enter your TFC Set Top Box / Smart Card Number
+                    </h2>
+                    <h3 class="reg_tve_h3">
+                        <label for="smartCardNum">
+                            Set Top Box / Smart Card Number
+                        </label>
+                    </h3>
+                    <input class="form-control pay_optg" type="text" id="smartCardNum" name="smartCardNum"
+                           required>
+                    <p class="inp_cap">
+                        Set Top Box MAC ID or Smart Card Number can be found in yout Set Top Box or by going
+                        to System Settings
+                    </p>
+                    <p class="inp_cap">
+                        <a href="#guideSmartcMsg" data-toggle="modal">Guide to get your Smart Card Number</a>
+                    </p>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 step_or">
+                    <span>OR</span>
+                    <div class="line">
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-12 step box2">
+                    <b>&nbsp;</b>
+                    <h2 class="reg_tve_h2">
+                        Enter your TFC Account Number
+                    </h2>
+                    <h3 class="reg_tve_h3">
+                        <label for="cusAccount">
+                            Customer Account
+                        </label>
+                    </h3>
+                    <input class="form-control pay_optg" type="text" id="cusAccount" name="cusAccount"
+                           required>
+                    <p class="inp_cap">
+                        You can easily find your Customer Number on your TFC Monthly Billing Statement
+                    </p>
+                </div>
+            </div>
+            <div class="row steps">
+                <!-- row 2 [step 2 box3] -->
+                <div class="col-sm-5 col-xs-12 step box3">
+                    <b>STEP 2.</b>
+                    <h2 class="reg_tve_h2">
+                        Enter your TFC Activation Code
+                    </h2>
+                    <h3 class="reg_tve_h3">
+                        <label for="actCode">
+                            Activation Code
+                        </label>
+                    </h3>
+                    <input class="form-control" type="text" id="actCode" name="actCode" required>
+                    <p class="inp_cap">
+                        <a href="#" id="genActCodeMsgT">
+                            To generate and claim your TFC Activation Code, click
+                            here
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="row steps">
+                <!-- row 3 [check & active button] -->
+                <div class="col-sm-6 col-xs-12 step box4">
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <input type="checkbox" required id="confirm" class="form-control css-checkbox">
+                            <label class="css-label klaus" for="confirm">
+                            </label>
+                        </div>
+                        <div class="col-xs-11">
+                            <label for="confirm">
+                                I confirm that i have read and fully understand and accept the TFC Everywhere <a href="@Url.Action("TermsAndConditionsTFCEverywhere", "Home")">
+                                    Terms of Service and
+                                    Acceptability Use Policy
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                    <input class="red_button" type="submit" name="submit" value="ACTIVATE NOW">
+                </div>
+            </div>
+        </form>
+        <!-- END form -->
+    </div>
+    <!-- END container -->
+</section>
+<!-- END CHANGE PASSWORD page body -->
+<!-- popup message [Guide to get your Smart Card Number] -->
+<div class="modal fade conPopup" id="guideSmartcMsg" tabindex="-1" role="dialog"
+     aria-labelledby="guideSmartcMsgLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <p class="heading_cbkc heading23 heading_bb3">
+                    GUIDE TO GET YOUR SMART CARD NUMBER
+                </p>
+                <div>
+                    <p>
+                        <br>
+                        For Direct To Home (DTH) Subscribers, pick the model of your Set Top Box from those
+                        listed on the left for more instructions on how to locate your Smart Card Number.<br>
+                        <br>
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 ib_left">
+                            <!-- content left side -->
+                            <ul class="nav" role="tablist">
+                                <!-- Nav tabs -->
+                                <li class="active">
+                                    <a href="#img1" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "tve/box/uir58.jpg", new { @class = "img100" })
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#img2" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "tve/box/usmp.jpg", new { @class = "img100" })
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#img3" role="tab" data-toggle="tab">
+                                        @Html.ImageBuilder(Url, "tve/box/uts.jpg", new { @class = "img100" })
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- END Nav tabs -->
+                        </div>
+                        <!-- END content left side -->
+                        <div class="col-sm-6 col-xs-12 ib_right tab-content">
+                            <!-- content right side -->
+                            <div class="tab-pane active" id="img1">
+                                <!-- 1st tab body -->
+                                <h6 class="heading45">
+                                    IR58
+                                </h6>
+                                <p>
+                                    <br>
+                                    If you have the IR58 model, follow the steps below :<br>
+                                </p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select System Settings</li>
+                                    <li>Select CA Function</li>
+                                    <li>Select Information</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="img2">
+                                <!-- 2nd tab body -->
+                                <h6 class="heading45">
+                                    SMP
+                                </h6>
+                                <p>
+                                    <br>
+                                    If you have the SMP model, follow the steps below:<br>
+                                </p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select System Information</li>
+                                    <li>Select IRD Status</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane" id="img3">
+                                <!-- 3rd tab body -->
+                                <h6 class="heading45">
+                                    TS
+                                </h6>
+                                <p>
+                                    <br>
+                                    If you have the TS model, follow the steps below:<br>
+                                </p>
+                                <ul type="1">
+                                    <li>Press Menu</li>
+                                    <li>Select Information</li>
+                                    <li>Select IRD Information</li>
+                                    <li>Check SC Number</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- END content right side -->
+                    </div>
+                </div>
+            </div>
+            <!-- END box body -->
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" aria-hidden="true">Close this window</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END message [Guide to get your Smart Card Number] -->
+<!-- popup message [generate and claim your TFC Activation Code] -->
+<div class="modal fade conPopup" id="genActCodeMsg" tabindex="-1" role="dialog" aria-labelledby="genActCodeMsgLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <p class="boxHead heading_bb3">
+                    Generate Activation Code
+                </p>
+                <div class="succ">
+                    <p class="des">
+                    <p>
+                        <b>
+                            Congratulations! Your TFC Activation Code has been successfully sent to you. You
+                            may view your Activation Code from any of the following options:
+                        </b>
+                    </p>
+                    <p>
+                        <b>Check your email inbox.</b> A message with your TFC Activation Code has been
+                        sent to the email address that you have registered to TFC.tv and to any existing
+                        email address you submitted for your TFC Service. If this message is not in your
+                        inbox, kindly check the spam or junk folder of your email, as the email with the
+                        TFC Activation Code may have been sent there accidentally.
+                    </p>
+                    <p>
+                        <b>Turn on your TFC Service.</b> Your TFC Everywhere Activation will be sent to
+                        the Messaging Mailbox under My Account. Kindly wait for the message with your TFC
+                        Everywhere activation code to appear on your box (Applies to IPTV Set Top Box only).
+                    </p>
+                    </p>
+                </div>
+                <div class="fail">
+                    <p>
+                        <b>Sorry! Your request for TFC Activation Code failed.</b>
+                    </p>
+                    <p class="err">
+                    </p>
+                </div>
+                <div class="load">
+                    <p>
+                        <b>We are currently processing your request.</b>
+                    </p>
+                    <p class="lerr">
+                        Please wait while we process your request.
+                    </p>
+                </div>
+            </div>
+            <!-- END box body -->
+        </div>
+    </div>
+</div>
+<!-- END message [generate and claim your TFC Activation Code] -->
+@section JScriptBottom {
+<script type="text/javascript">
+    // one of two is required [tve-activation.html]
+    $('.pay_optg').keyup(function () {
+        var name = $(this).attr('name');
+        var value = $(this).val();
+        if (name == "smartCardNum" && value != "") {
+            $("#cusAccount").removeAttr("required");
+            $("#cusAccount").val("");
+        } else if (name == "cusAccount" && value != "") {
+            $("#smartCardNum").removeAttr("required");
+            $("#smartCardNum").val("");
+        }
+
+        if (name == "smartCardNum" && value == "") {
+            $("#cusAccount").attr("required", "required");
+        } else if (name == "cusAccount" && value == "") {
+            $("#smartCardNum").attr("required", "required");
+        }
+    });
+    // END required ...
+
+    $('input').keyup(function () {
+        $('input:invalid').css('box-shadow', '0  0 3px rgba(255,0,0,0.5)');
+        $('input:valid, #genActCodeMsg input:invalid').css('box-shadow', 'none');
+    });
+
+
+    // chack validetion on [To generate and claim your TFC Activation Code, click here]
+    $('#genActCodeMsgT').click(function (e) {
+        e.preventDefault();
+        if ($('#smartCardNum').val() != "" || $('#cusAccount').val() != "") {
+            var form = $('form');
+            $('#genActCodeMsg .err').empty();
+            $('.succ').hide();
+            $('.fail').hide();
+            $('.load').show();
+            $('#genActCodeMsg').modal('show');
+            $.post('/User/ResendTVEActivationCode', form.find('input').serialize(), function (data) {
+                if (data.StatusCode == 0) {
+                    $('.succ').show();
+                    $('.fail').hide();
+                    $('.load').hide();
+                }
+                else {
+                    $('#genActCodeMsg .err').html(data.StatusMessage);
+                    $('.succ').hide();
+                    $('.load').hide();
+                    $('.fail').show();
+                }
+            }).done(function () {
+                $('#genActCodeMsg').modal('show');
+            });
+        }
+        else {
+            $('#smartCardNum').css('box-shadow', '0  0 3px rgba(255,0,0,0.5)');
+            $('#cusAccount').css('box-shadow', '0  0 3px rgba(255,0,0,0.5)');
+            $('#smartCardNum').focus();
+        }
+    });
+    // check submit
+    $('#page_submit').click(function () {
+        $('input:invalid').css('box-shadow', '0  0 3px rgba(255,0,0,0.5)');
+        $('input:valid, #genActCodeMsg input:invalid').css('box-shadow', 'none');
+    });
+</script>
+}
+@section MetaTags{
+<meta name="description" content="Bring the warmth of Kapamilya Entertainment wherever you go. enjoy all your favorite TFC shows on your TV, PC, smartphone or tablet." />
+<link rel="canonical" href="@href" />
+}

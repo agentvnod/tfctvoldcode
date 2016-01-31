@@ -1,0 +1,176 @@
+﻿@model IPTV2_Model.Celebrity
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", Model.FullName);
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Celebrity_{0}", Model.CelebrityId);
+    string categoryID = "Celebrities";
+
+    /* ShareBar Metadata */
+    string title = String.Format("Learn more about {0} on TFC.tv", Model.FullName);
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = Model.ImageUrl;
+    string description = Model.Description.Ellipsis(160);
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = description,
+        containerId = "shareDiv",
+        elementType = "celebrity",
+        id = Model.CelebrityId
+    };
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}, {1}", title, Model.Description);
+    string[] sentences = null;
+    try
+    {
+        sentences = System.Text.RegularExpressions.Regex.Split(Model.Description, @"(?<=[\.!\?])\s+");
+        if (sentences != null)
+        {
+            string metaSentences = String.Empty;
+            int ctr = 0;
+            foreach (string sentence in sentences)
+            {
+                metaSentences += sentence;
+                if (ctr > 1)
+                {
+                    break;
+                }
+                ctr++;
+            }
+            metaDescription = String.Format("{0}. {1}", title, metaSentences);
+        }
+    }
+    catch (Exception) { }
+
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "profile";
+
+    /* Robot Crawlability */
+    var noCommentText = String.Format("There are no comments available for {0}", title);
+    bool IsAjaxCrawlable = Request.IsAjaxCrawlingCapable();
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj,
+        IsAjaxCrawlable = IsAjaxCrawlable
+    };
+
+    /* Reactions Obj */
+    var ReactionsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "reactionsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    ViewBag.DaxName = String.Format("tfc-tv:featured-celebrities:{0}", MyUtility.GetDaxSlug(Model.FullName));
+     
+}
+<section class="page_pagebody cele_ppage">
+    <!-- celebrity_profile_page -->
+    <div class="container celebrity_section">
+        <!-- Celebrity info [top left part] -->
+        <div itemscope itemtype="http://schema.org/People" class="row celebrity_description">
+            <div class="col-sm-3 col-xs-4">
+                <img src="@Model.ImageUrl" alt="@Model.FullName" title="@Model.FullName" class="cele_image" />
+            </div>
+            <div class="col-sm-9 col-xs-8">
+                <h1 itemprop="name" class="page_title">
+                    @Model.FullName</h1>
+                <div id="@ShareObj.containerId">
+                </div>
+                <div id="@ReactionsUIObj.containerId">
+                </div>
+                <h2>
+                    Celebrity Info</h2>
+                <p >
+                    Birthday: @Model.Birthday<br>
+                    Birthplace: @Model.Birthplace</p>
+                <p itemprop="description">
+                    @Html.Raw(Model.Description)</p>
+            </div>
+        </div>
+        <!-- end Celebrity info  -->
+        <!-- Movie sec -->
+        @Html.Action("BuildCelebrityContent", new { id = Model.CelebrityId, featureType = "show", pageSize = 6, removeShowAll = true, sectionTitle = "Movies", contentType = CelebrityContentType.MOVIES, containerId = "bseccat_movies" })
+        <!-- end movie sec -->
+        <!-- Shows sec -->
+        @Html.Action("BuildCelebrityContent", new { id = Model.CelebrityId, featureType = "show", pageSize = 6, removeShowAll = true, sectionTitle = "Shows", containerId = "bseccat_shows" })
+        <!-- end Shows sec -->
+        <!-- episode sec -->
+        @Html.Action("BuildCelebrityContent", new { id = Model.CelebrityId, featureType = "show", pageSize = 6, removeShowAll = true, sectionTitle = "Episodes", contentType = CelebrityContentType.EPISODES, containerId = "bseccat_episodes" })
+        <!-- end Shows sec -->
+        <!-- review section [comment section] -->
+        <div class="reviewsec">
+            <div class="sec_header">
+                <!-- section head -->
+                <h3 class="section_title clearfix">
+                    Comments</h3>
+            </div>
+            <!-- end head -->
+            <br />
+            <div class="reviewsec_inner" id="@CommentsUIObj.containerId">
+                @{if (IsAjaxCrawlable)
+                  {
+                      try
+                      {
+                          var responseData = GigyaMethods.GetComments(categoryID, streamID);
+                          if (responseData != null)
+                          {
+                              if (responseData.errorCode == 0)
+                              {
+                                  if (responseData.commentCount > 0)
+                                  {
+                    @Html.Raw(responseData.comments)
+                                  }
+                                  else
+                                  { 
+                    <span>@noCommentText</span>
+                                  }
+                              }
+                          }
+                      }
+                      catch (Exception) { }
+                  }
+                }
+            </div>
+            <!-- end inner  -->
+        </div>
+        <!-- end Review section -->
+    </div>
+    <!-- end container -->
+</section><!-- end page body section -->
+@section JScriptBottom {
+    @Html.Partial("_UXShareUI", ShareObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    @Html.Partial("_UXReactionsUI", ReactionsUIObj)
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="@img" />
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(Model.Description)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}

@@ -1,0 +1,67 @@
+﻿@{
+
+    int nextPage = ViewBag.NextPage;
+    int previousPage = ViewBag.PreviousPage;
+
+    int current = 0;
+    string currentPage = Request.QueryString["page"];
+    int currentPagei = String.IsNullOrEmpty(currentPage) ? 0 : Convert.ToInt32(currentPage) - 1;
+    currentPagei = currentPagei < 0 ? 0 : currentPagei;
+    int initialCountDisplay = 5;
+    int initialNumberDisplay = 0;
+
+    int displayCount = Convert.ToInt32(ViewBag.DisplayCount);
+    int resultCount = Convert.ToInt32(ViewBag.ResultCount);
+
+    int searchResultPages = resultCount / displayCount;
+}
+@{if (ViewBag.TotalPages > 0)
+  {
+    <text>
+    <div class="pagination">
+        <ul class="pagelinks">
+            @{
+
+      int startCount = ((currentPagei - initialCountDisplay) + 1) < 0 ? initialNumberDisplay : (currentPagei - initialCountDisplay) + 1;
+      int totalOffsetDifference = Math.Abs(ViewBag.TotalPages - ViewBag.Offset);
+
+      int endCount = (totalOffsetDifference < displayCount) ? currentPagei + 1 : (currentPagei + initialCountDisplay);
+      if (endCount > searchResultPages)
+      {
+          endCount = searchResultPages;
+      }
+      if (previousPage > 0)
+      {
+                <text><li>@Html.ActionLink("Prev", "Results", "Search", new { query = Request.QueryString["query"], page = currentPagei - 1 }, new { @class = "pagination_linksP" })</li></text>
+      }
+
+      for (int i = startCount; i < endCount; i++)
+      {
+          if (i == 0 && String.IsNullOrEmpty(currentPage))
+          {
+                <text><li><a class="pagination_linksC">@(i + 1)</a></li></text>
+          }
+          else
+          {
+              if (currentPagei + 1 == i + 1)
+              {
+                <text><li><a class="pagination_linksC">@(currentPagei + 1)</a></li></text>
+              }
+              else
+              {
+                <text><li>@Html.ActionLink((i + 1).ToString(), "Results", "Search", new { query = Request.QueryString["query"], page = i + 1 }, new { @class = "pagination_links" })</li></text>
+              }
+          }
+
+          current = i;
+      }
+      if (nextPage > 0)
+      {
+                <text><li>@Html.ActionLink("Next", "Results", "Search", new { query = Request.QueryString["query"], page = (currentPagei + 1) + 1 }, new { @class = "pagination_linksN" })</li></text>
+      }
+            }
+        </ul>
+    </div>
+    </text>
+  }
+}

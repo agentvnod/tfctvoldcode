@@ -1,0 +1,47 @@
+﻿@model JWPObject
+@{
+    JWPObject2 obj = new JWPObject2()
+    {
+        EpisodeId = Model.EpisodeId,
+        type = Model.clipType,
+        playbackUri = Model.playbackUri,
+        highUri = Model.playbackHigh,
+        lowUri = Model.playbackLow,
+        preview = !Model.HasSubscription,
+        ScreenImage = Model.ScreenImage,
+        ScreenText = Model.ScreenText,
+        title = Model.title,
+        free = Model.IsFree,
+        lastpos = Model.LastPosition,
+        mobile = Request.Browser.IsMobileDevice
+    };
+}
+@Html.JsBuilder(Url, "jwp/jwplayer.js")
+<script type="text/javascript">
+    jwplayer.key = "e5fCJaiUhg7exm7VY3A5ZzyNtcMWClxJmB3oWg==";
+</script>
+
+<div>
+    <script type="text/javascript">
+        @Html.Raw(String.Format("var jwpObj = {0}", Newtonsoft.Json.JsonConvert.SerializeObject(obj)))
+    </script>
+</div>
+@{if (GlobalConfig.StreamSenseEnabled)
+{
+    @Html.JsBuilder(Url, "jwp_streamsense.js?v0.0.2", ContentSource.Site)
+}
+else
+{
+    @Html.JsBuilder(Url, "jwp.js?v1.0.0.9", ContentSource.Site)
+}
+}
+<script type="text/javascript">
+    loadp();
+</script>
+@{if (!Request.Browser.IsMobileDevice)
+{
+    <script type="text/javascript">
+        var minimizePlayerJS = '@Html.ContentBuilder(Url, "scripts/minimizejwp.js", removeProtocol: false)';
+        $.getScript(minimizePlayerJS).done(function () { });
+    </script>
+}}

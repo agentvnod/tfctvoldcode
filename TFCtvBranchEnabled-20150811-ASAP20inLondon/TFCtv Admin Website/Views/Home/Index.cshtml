@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = String.Format("TFC.tv cPanel - {0}", "Home");    
+}
+<h2>@ViewBag.Message</h2>
+<p>
+    Today is @DateTime.Now.ToString("MMMM dd yyyy, hh:mm:ss tt")
+</p>
+<blockquote id="quote" class="post">
+    <div>
+        <p>@ViewBag.QuotableQuote</p>
+    </div>
+</blockquote>

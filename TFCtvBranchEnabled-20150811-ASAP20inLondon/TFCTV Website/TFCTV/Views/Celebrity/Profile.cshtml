@@ -1,0 +1,205 @@
+﻿@model IPTV2_Model.Celebrity
+@{
+    ViewBag.Title = @Model.FullName + " - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    bool IsDolphySkinEnabled = Convert.ToBoolean(ViewBag.IsDolphySkinEnabled);
+}
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="celebrityProfile">
+            <div id="profileImage">
+                <div class="floatLeft">
+                    <img src="@Model.ImageUrl" width = "182" alt = "" border = "0" height = "245" alt="" />
+                </div>
+            </div>
+            <div id="profileInfo">
+                <br />
+                <br />
+                <h1 class="celebrity-name">@Html.DisplayFor(model => model.FullName)</h1>
+                &nbsp;&nbsp;&nbsp;
+                <div class="celebrity-love">
+                    @Html.Partial("_CelebritiesReactions", Model)
+                </div>
+                <br />
+                <br />
+                <div class="celebrityInfoHeader">
+                    <h2 class="categoryTitle">
+                        Celebrity Info</h2>
+                </div>
+                <div class="celebrityDescription">
+                    <br />
+                    @Html.DisplayFor(model => model.Description)
+                    <br />
+                    <br />
+                    <div class="birthday">
+                        @ViewBag.BirthDate<br />
+                        @ViewBag.BirthPlace<br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="bottompane">
+            <div id="leftpane" style="display: none">
+                <div id="celebrityPhoto">
+                    <div class="celebrityPhoto">
+                        <div class="categoryTitle">
+                            Photos</div>
+                    </div>
+                    <br />
+                    <div id="photoContainer">
+                        <div class="photolist_container">
+                            Photos here
+                        </div>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div id="celebrityFriend">
+                    <div class="celebrityFriend">
+                        <div class="categoryTitle">
+                            Featured friends</div>
+                    </div>
+                    <br />
+                    <div id="friendContainer">
+                        <div class="friendlist_container">
+                            Friends here
+                        </div>
+                    </div>
+                </div>
+                @*<div id="adBlock" style="height: 250px; width: 250px">
+                </div>*@
+                <br />
+            </div>
+            <div id="rightpane">
+                <div class="movieInfoHeader featuredItems_celebrityMovies" style="display: none">
+                    <h2 class="categoryTitle">
+                        Movies</h2>
+                </div>
+                <div class="transparentBgs">
+                    <div id="celebrityMovies">
+                        <div id="featuredItems_celebrityMovies" class="featuredItems">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="movieInfoHeader featuredItems_celebrityShows" style="display: none">
+                    <h2 class="categoryTitle">
+                        Shows</h2>
+                </div>
+                <div class="transparentBgs">
+                    <div id="celebrityShows">
+                        <div id="featuredItems_celebrityShows" class="featuredItems">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="movieInfoHeader featuredItems_celebrityShows" style="display: none">
+                    <h2 class="categoryTitle">
+                        Episodes</h2>
+                </div>
+                <div class="transparentBgs">
+                    <div id="celebrityEpisodes">
+                        <div id="featuredItems_celebrityEpisodes" class="featuredItems">
+                            <div class="itemListBody">
+                                <div class="wrapper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ratings-and-review">
+            @Html.Partial("_CelebritiesComments", Model)
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "celebrity-0.1.css")
+    @Html.CssBuilder(Url, "homepage.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "movies.css")
+    @Html.CssBuilder(Url, "ratingsreviews-1.1.css")
+    <!--[if IE ]>
+        @Html.CssBuilder(Url, "ie_ratingsreviews.css")
+    <![endif]-->
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri">
+    <meta property="og:title" content="@Model.FullName">
+    <meta property="og:description" content="@Model.FullName">
+    <meta property="og:type" content="Celebrity">
+    <meta property="og:image" content="@GlobalConfig.CelebrityImgPath@Model.CelebrityId/@Model.ImageUrl">
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta name="fragment" content="!">
+    <link rel="canonical" href="@String.Format("{2}/Celebrity/Profile/{0}/{1}", Model.CelebrityId, ViewBag.dbSlug, GlobalConfig.baseUrl)" />
+}
+@section StylesheetSpecial {
+    <!-- Extra Stylings -->
+    @{if (IsDolphySkinEnabled)
+      {
+        @Html.CssBuilder(Url, "dolphy.css")
+      }
+    }
+}
+@section JScript {
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "featureItemsGenerator.js")
+    @Html.JsBuilder(Url, "carouselGenerator.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var features = [
+             { url: "/celebrity/GetCelebrityMovies/@Model.CelebrityId", type: "show", itemperslide: 3, container: "featuredItems_celebrityMovies", nid: "nav-celebMovies" }
+            , { url: "/celebrity/GetCelebrityShows/@Model.CelebrityId", type: "show", itemperslide: 3, container: "featuredItems_celebrityShows", nid: "nav-celebShows" }
+            , { url: "/celebrity/GetCelebrityEpisodes/@Model.CelebrityId", type: "video", itemperslide: 3, container: "featuredItems_celebrityEpisodes", nid: "nav-celebEpisodes" }
+        ];
+            $.each(features, function (x, item) {
+                generateCarousel(item, true);
+            });
+
+            //$('#bottompane').show();
+        });
+
+        function generateCarousel(item, withToolTip) {
+            $.ajax({
+                url: item.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        $('#spanner').addClass('feature_spanner');
+                        $('#spanner').css('height', '130px');
+                        $('#' + item.container + ' .itemListBody .wrapper').empty();
+                        $('#' + item.container + ' .itemListBody .wrapper').prepend($('#ajax-loading').html());
+                    }
+                    , success: function (data) {
+                        if (data.length > 0) {
+                            $("." + item.container).show();
+                            var list = new featureItem({
+                                json_str: data, type: item.type, itemperslide: item.itemperslide, container: item.container, nid: item.nid
+                            }).listing();
+
+                            if (withToolTip)
+                                $('.itemListing li img[title]').tooltip({ effect: 'fade',
+                                    onShow: function () {
+                                        var tip = this.getTip();
+                                        setTimeout(function () {
+                                            tip.hide();
+                                        }, 10000);
+                                    }
+                                });
+                        }
+
+                    }
+            });
+        }
+    </script>
+}

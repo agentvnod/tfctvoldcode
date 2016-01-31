@@ -1,0 +1,7 @@
+﻿@{if (GlobalConfig.PinoyPride30TakeoverStartDt < DateTime.Now && GlobalConfig.PinoyPride30TakeoverEndDt > DateTime.Now && !Request.Browser.IsMobileDevice)
+{
+    <script type="text/javascript">
+        var bgJS = '@Html.ContentBuilder(Url, "scripts/bgJS.js", removeProtocol: false)';
+        $.getScript(bgJS).done(function () { });
+    </script>
+}}

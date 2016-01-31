@@ -1,0 +1,120 @@
+﻿/* File Created: September 12, 2012 */
+
+#commentDiv
+{
+    width: 350px;
+}
+.commentContainer
+{
+    width: 350px;
+    height: 120px;
+}
+
+.commentContainer .imgBox
+{
+    margin-left: 5px;
+    margin-top: 5px;
+    border: 0px;
+}
+
+.commentContainer .commentBox
+{
+    margin: 5px 5px 5px 10px;
+    font-size: 12px;
+    color: #eeeeee;
+    width: 280px;
+    text-align: justify;
+}
+
+.commentContainer .commentName
+{
+    color: #49a4ff;
+}
+
+.commentContainer .commentDate
+{
+    font-size: 10px;
+    color: #bbbbbb;
+}
+.commentContainer .commentBody
+{
+    color: #eeeeee;
+}
+
+
+
+
+/*** comment-container-full ***/
+#user-comments
+{
+    color: #fff;
+}
+.comment-container-full
+{
+    margin-top: 20px;
+    width: 940px;
+}
+
+.comment-container-full .imgBox
+{
+    margin-left: 20px;
+    margin-top: 5px;
+    border: 0px;
+}
+
+.comment-container-full .commentBox
+{
+    margin: 5px 5px 5px 10px;
+    font-size: 12px;
+    color: #eeeeee;
+    width: 840px;
+    text-align: justify;
+}
+
+.comment-container-full .commentName
+{
+    color: #49a4ff;
+}
+
+.comment-container-full .commentDate
+{
+    font-size: 10px;
+    color: #bbbbbb;
+}
+.comment-container-full .commentBody
+{
+    color: #eeeeee;
+}
+
+#user-comments #load-more
+{
+    margin-top: 20px;
+    margin-left: 20px;
+    background: url('images/transBg.png');
+    width: 900px;
+    color: #49a4ff;    
+    text-align: center;
+    padding: 5px 0;
+    cursor: pointer;
+}
+#user-comments #load-more:hover
+{
+    text-decoration: underline;
+}
+
+#user-comments .activate
+{
+    background: url('images/ajax-loader.gif') 140px 9px no-repeat #eee;
+}
+
+.comment-container-full .imgBox img
+{
+    width: 50px;
+    height: 50px;    
+}
+
+.commentContainer .imgBox img
+{
+    width: 50px;
+    height: 50px; 
+}

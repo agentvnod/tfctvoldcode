@@ -1,0 +1,296 @@
+﻿s/* File Created: February 6, 2012 */
+
+body
+{
+}
+
+#menuBar_search .searchField
+{
+    top: -8px;
+    position: relative;
+}
+
+#userStatusBar_right
+{
+    position: relative;
+    top: -18px;
+}
+
+#footerContents
+{
+    padding-top: 23px;
+}
+
+.fullHeader
+{
+    position: relative;
+    left: 5px;
+}
+
+.fullHeaderFull
+{
+    position: relative;
+    left: 5px;
+}
+
+.seeAll_container
+{
+    position: relative;
+    top: 3px;
+}
+
+.imgShowThumbBg img
+{
+    margin-left: -2px;
+    margin-top: -2px;
+    position: relative;
+    top: 8px;
+}
+
+.bannerInfo
+{
+    position: absolute;
+    background: url('images/transBg.png') repeat;
+    height: 300px;
+    width: 300px;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    margin-left: 580px;
+    color: #fff;
+    display: block;
+}
+
+#featureBody_container
+{
+    margin-top: -10px;
+}
+
+#featureBody #featureBanner .navigation
+{
+    margin: 0;
+    width: 200px;
+}
+
+#adBlock
+{
+    margin: 0 auto;
+    width: 310px;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-right: 20px;
+    position: relative;
+    left: 300px;
+}
+
+#aboutTheShow
+{
+    /*position: relative;*/
+    top: -250px; /*margin-bottom: 100px;*/
+}
+
+#featureBody .navigation .next
+{
+    left: 812px;
+}
+
+#featureBody .navigation .prev
+{
+    left: -72px;
+}
+
+.seeAll_container .t-input
+{
+    position: relative;
+    top: -7px;
+}
+
+.btnimage
+{
+    line-height: 100px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    text-indent: 0px;
+}
+
+#account-menu
+{
+    display: none;
+    position: absolute;
+    margin-top: 9px;
+    top: 9px;
+    z-index: 90;
+    margin-left: -100px;
+    width: 160px;
+    padding: 5px 0px 10px 10px;
+    height: 120px;
+}
+
+#menuBar_search .searchField
+{
+    position: static;
+    margin-bottom: 7px;
+    z-index: 1;
+}
+
+.submit-row
+{
+    position: relative;
+    left: -120px;
+}
+
+/*#aboutTheShow
+{
+    position: relative;
+    top: 0px;
+    margin-bottom: 0px;
+}
+
+#showAds
+{
+    position: absolute;
+    left: 10px;
+    top: 50px;
+}
+*/
+.wl-option
+{
+    position: relative;
+    top: -15px;
+}
+
+.topicMenu
+{
+    position: relative;
+    top: 20px;
+}
+
+#helpContents
+{
+    position: relative;
+}
+
+#payment-container .sectionHeaderTitle
+{
+    color: black;
+}
+#payment-container .genericHeader
+{
+    width: 640px;
+}
+
+#body_container
+{
+    width: 980px;
+}
+#topContainer
+{
+    margin-top: 20px;
+}
+.clip
+{
+    text-decoration: none;
+}
+#bottomWrap a:hover
+{
+    cursor: pointer;
+}
+
+.jotform-feedback-link
+{
+    margin-top: -45px;
+}
+
+.tooltip2
+{
+    margin-top: 65px;
+}
+
+#helpContents
+{
+    width: 910px;
+    height: auto;
+    margin: 0px 10px;
+}
+
+ul#icons li
+{
+    width: 85px;
+    background-color: #ff0000;
+    margin-right: 20px;
+}
+
+#account-menu
+{
+    z-index: 100;
+}
+
+#userProfileContainer
+{
+    position: static;
+}
+
+.featureBannerItems .wrapper
+{
+    /*  position: absolute;*/
+    z-index: 0;
+}
+
+.bInfo .cbtn
+{
+    position: relative;
+    top: -4px;
+}
+
+#result
+{
+    margin-bottom: -10px;
+}
+
+#my-account-menu
+{
+    position: relative;
+    z-index: 465;
+}
+
+.acc-menu
+{
+    margin: 0;
+    margin-left: 5px;
+    padding: 0;
+    z-index: 9999;
+}
+
+.acc-menu li ul
+{
+    position: absolute;
+    z-index: 9999;
+}
+
+#socialPanel
+{
+    height: 400px;
+}
+
+.btnimage1
+{
+    line-height: 100px;
+    height: 67px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    text-indent: 0px;
+}
+#submitBtn
+{
+    position: relative;
+    top: 0;
+}
+#menuBar_search
+{
+    margin-top: 12px;
+}

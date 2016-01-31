@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0 MvcSiteMapSchema.xsd"
+            enableLocalization="true">
+
+    <mvcSiteMapNode title="Home" controller="Home" action="Index" changeFrequency="Daily" updatePriority="Critical">
+        <mvcSiteMapNode title="About" controller="About" action="Index" changeFrequency="Monthly" updatePriority="Normal" />
+
+        <mvcSiteMapNode title="Profiles" controller="Profile" action="Index" clickable="false">
+            <mvcSiteMapNode title="Show Details" changeFrequency="Daily" updatePriority="Normal" dynamicNodeProvider="TFCTV.Helpers.ProfileSiteMap, TFCTV" />
+        </mvcSiteMapNode>
+
+        <mvcSiteMapNode title="Shows" controller="Show" clickable="false">
+            <mvcSiteMapNode title="Show Details" action="Details" changeFrequency="Daily" updatePriority="High" dynamicNodeProvider="TFCTV.Helpers.ShowSiteMap, TFCTV" />
+        </mvcSiteMapNode>
+
+        <mvcSiteMapNode title="News" controller="News" action="Index" changeFrequency="Daily" updatePriority="Normal">
+
+        </mvcSiteMapNode>
+
+        <mvcSiteMapNode title="Movies" controller="Movies" action="Index" changeFrequency="Daily" updatePriority="Normal">
+
+        </mvcSiteMapNode>
+
+        <mvcSiteMapNode title="Celebrities" controller="Celebrity" action="Index">
+            <mvcSiteMapNode title="Celebrity Profiles" action="Profile" changeFrequency="Weekly" updatePriority="Normal" dynamicNodeProvider="TFCTV.Helpers.CelebritySiteMap, TFCTV" />
+        </mvcSiteMapNode>
+
+    </mvcSiteMapNode>
+</mvcSiteMap>

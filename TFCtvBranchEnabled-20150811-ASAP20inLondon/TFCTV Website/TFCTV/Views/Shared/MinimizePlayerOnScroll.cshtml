@@ -1,0 +1,7 @@
+﻿@{if (!Request.Browser.IsMobileDevice)
+{
+    <script type="text/javascript">
+        var minimizePlayerJS = '@Html.ContentBuilder(Url, "scripts/minimizeplayer.js", removeProtocol: false)';
+        $.getScript(minimizePlayerJS).done(function () { });
+    </script>
+}}

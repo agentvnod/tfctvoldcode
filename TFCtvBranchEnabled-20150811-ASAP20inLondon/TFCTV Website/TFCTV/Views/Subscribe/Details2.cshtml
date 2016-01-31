@@ -1,0 +1,304 @@
+﻿@model List<SubscriptionProductA>
+@{
+    ViewBag.Title = "Subscribe - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<section class="page_pagebody page_registration page_sub">
+    <!--  subscription page body -->
+    <div class="container">
+        <!-- subscription page top -->
+        <div class="row">
+            <div class="reg_hleft col-md-9 col-sm-8 col-xs-12">
+                <h1 class="page_title_black">
+                    Start your subscription today!</h1>
+            </div>
+            <div class="reg_hright col-md-3 col-sm-4 hidden-xs">
+                <span class="siteseal">
+                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                </span>
+            </div>
+            <div class="col-xs-12 page_description">
+                Be part of the official online community of The Filipino Channel (TFC) and enjoy
+                the largest, most up-to-date source on the web for free and premium Kapamilya videos.
+            </div>
+        </div>
+        <!-- end top -->
+        <div class="row offerboxs active">
+            <div class="col-xs-12">
+                <!-- sub title -->
+                <h2 class="graw_subtitle">
+                    <span class="glyphicon glyphicon-chevron-right bgi"></span>Select a plan that works
+                    for you:</h2>
+            </div>
+            <!-- END sub title -->
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      foreach (var item in Model)
+                      {
+                          string custom = String.Format("{0}&{1}&{2}&{3}&{4}", item.product.ProductId, ViewBag.SubscriptionType, ViewBag.WishlistId, ViewBag.CurrentProductId, User.Identity.Name);
+                          string amount = item.productPrice.Amount.ToString("F");
+                <div class="col-sm-4 col-xs-12 offerbox" data-pid="@item.product.ProductId" data-custom="@custom" data-item_name="@item.product.Description" data-amount="@amount" data-currency_code="@item.productPrice.CurrencyCode">
+                    <!-- box 1 -->
+                    <div class="inner">
+                        <h3 class="box_title">
+                            @Html.Raw(item.product.Description)</h3>
+                        <p>
+                            @item.contentDescription Titles<br>
+                            @*and<br>
+                            300+ Movie Channels*@</p>
+                        <div class="box_border">
+                        </div>
+                        <p>
+                            @String.Format("{0} {1} for {2}", item.productPrice.CurrencyCode, amount, MyUtility.FormatDuration(item.product.DurationType, item.product.Duration))</p>
+                        <p class="highlight">
+                            First week is FREE</p>
+                    </div>
+                </div>
+                      }
+                  }
+              }
+              
+            }
+            <!-- END box 1 -->
+        </div>
+        <!-- end box container -->
+        <div class="row credit_card">
+            <!-- Credit card section -->
+            <form method="post" name="credit_card_form">
+            <div class="col-xs-12">
+                <!-- sub title -->
+                <h2 class="graw_subtitle">
+                    <span class="glyphicon glyphicon-chevron-right bgi"></span>Credit Card
+                    @Html.ImageBuilder(Url, "ux/visa.jpg", new { alt = "Credit card" })</h2>
+            </div>
+            <!-- END sub title -->
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="first_name">
+                                First Name</label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="last_name">
+                                Last Name</label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="card_name">
+                                Card Name</label>
+                            <input type="text" class="form-control" name="card_name" id="card_name" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="zip_cord">
+                                Zip Card</label>
+                            <input type="text" class="form-control" name="zip_cord" id="zip_cord" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="expiration_date">
+                                Expiration Date</label>
+                            <select class="form-control" name="expiration_date" id="expiration_date" required>
+                                <option value=""></option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select><span class="desh"></span><select class="form-control" name="expiration_date1"
+                                id="expiration_date1" required>
+                                <option value=""></option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3">
+                        <div class="form-group security_codec">
+                            <label for="security_code">
+                                Security Code</label>
+                            <input type="text" class="form-control" name="security_code" id="security_code" required><a
+                                href="#"><span class="glyphicon glyphicon-question-sign"></span></a> <span class="glyphicon glyphicon-lock bgi">
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row options">
+                    <!-- options [check boxs] -->
+                    <div class="col-xs-12">
+                        <p>
+                            <b>Service Agreement. Please place a check mark on each box below by clicking on the
+                                box to signify your agreement to our service terms.</b></p>
+                        <p>
+                            <input type="checkbox" name="condition1" id="condition1">
+                            <label for="condition1">
+                                I hereby certify that my computer meets the system requirements and I can view the
+                                free videos.</label></p>
+                        <p>
+                            <input type="checkbox" name="condition2" id="condition2">
+                            <label for="condition2">
+                                I hereby certify that the above information is correct.</label></p>
+                        <p>
+                            <input type="checkbox" name="condition3" id="condition3">
+                            <label for="condition3">
+                                I hereby authorize ABS-CBN International to deduct payments in connection with my
+                                subscription to TFC.tv. I also agree that said payments are non-refundable.</label></p>
+                        <p>
+                            <input type="checkbox" name="condition4" id="condition4">
+                            <label for="condition4">
+                                Automatic Renewal. I want to automatically renew my subscription when it expires
+                                using the same credit card information used in this transaction. I understand that
+                                I need to opt out at least three (3) days prior to the expiration of my current
+                                subscription to discontinue the automatic renewal for the next subscription duration.
+                                To opt-out I can visit Edit Your Profile page.</label></p>
+                        <p>
+                            <input type="checkbox" name="condition5" id="condition5">
+                            <label for="condition5">
+                                I confirm that I have read and fully understand and accept the Terms and Conditions
+                                of the Subscription and/or Use of TFC.tv</label></p>
+                        <input type="submit" value="SUBSCRIBE  Now!" class="btn btn-primary blue_button">
+                        <p>
+                            <span class="siteseal">
+                                <script type="text/javascript" src="https://seal.godaddy.com/f?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <!-- END options [check boxs] -->
+            </div>
+            <!-- END col -->
+            <input name="pid" value="" type="hidden" />
+            </form>
+            <!-- END bottom form -->
+        </div>
+        <!-- END Credit card section -->
+        <div class="row pay_pal">
+            <!-- Pay pal section -->
+            <form id="paypal_form" name="paypal_form" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+            <div class="col-xs-12">
+                <!-- sub title -->
+                <h2 class="graw_subtitle">
+                    <span class="glyphicon glyphicon-chevron-right bgi"></span>Pay Pal
+                    @Html.ImageBuilder(Url, "ux/paypal.jpg", new { alt = "Paypal" })
+                </h2>
+            </div>
+            <!-- END sub title -->
+            <div class="col-xs-12">
+                <p>
+                    <b>To finish sign-up, click on the "Continue to PayPal" button and log on to PayPal
+                        using your email and password.</b></p>
+                <input type="submit" value="Continue to PayPal" class="btn btn-primary blue_button">
+                <p>
+                    <span class="siteseal">
+                        <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                    </span>
+                </p>
+                <p class="note">
+                    By purchasing this subscription, your PayPal account shall be enrolled to Automatic
+                    Renewal. For more information about Automatic<br>
+                    Renewal, please check our help center. To cancel Automatic Renewal, please visit
+                    Edit My Profile Page.
+                </p>
+            </div>
+            <input name="pid" value="" type="hidden" />
+            <input type="hidden" name="cmd" value="_xclick" />
+            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+            <input type="hidden" name="item_name" value="" />
+            <input type="hidden" name="amount" value="" />
+            <input type="hidden" name="currency_code" value="" />
+            <input type="hidden" name="return" value="@GlobalConfig.PayPalReturnUrl" />
+            <input type="hidden" name="custom" value="" />
+            <input type="hidden" name="no_shipping" value="1" />
+            </form>
+            <!-- END bottom form -->
+        </div>
+        <!-- END Pay pal section -->
+        <div class="row prepaid_card">
+            <!-- Prepaid card section -->
+            <form method="post" name="prepadi_card_form" action="@Url.Action("_PrepaidCard", "Subscribe", null, "http")">
+            @Html.AntiForgeryToken()
+            <!-- bottom form -->
+            <div class="col-xs-12">
+                <!-- sub title -->
+                <h2 class="graw_subtitle">
+                    <span class="glyphicon glyphicon-chevron-right bgi"></span>Prepaid Card</h2>
+            </div>
+            <!-- END sub title -->
+            <div class="col-xs-12 reg_left">
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        <label for="serial_number">
+                            Serial Number</label>
+                        <input type="text" class="form-control" id="serial" name="serial" required>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        <label for="pin">
+                            PIN</label>
+                        <input type="text" class="form-control" id="pin" name="pin" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <input type="submit" value="SUBSCRIBE  Now!" class="btn btn-primary blue_button">
+                <p>
+                    <span class="siteseal">
+                        <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                    </span>
+                </p>
+            </div>
+            <input name="pid" value="" type="hidden" />
+            </form>
+            <!-- END bottom form -->
+        </div>
+        <!-- END Prepaid card section -->
+    </div>
+    <!-- END Container -->
+</section>
+<!-- end page body section -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.each($('.offerbox').first().data(), function (x, y) {
+                $("input[name='" + x + "']").val(y);
+            });
+            $('.offerbox').click(function (e) {
+                e.preventDefault();
+                $('.offerbox').removeClass('active');
+                $(this).addClass('active');
+                $.each($(this).data(), function (x, y) {
+                    $("input[name='" + x + "']").val(y);
+                });
+            });
+        });
+    </script>
+}

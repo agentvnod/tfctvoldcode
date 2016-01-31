@@ -1,0 +1,247 @@
+.subtext {
+font-size: 12px;
+color: #49a4ff;
+}
+
+.textbox {
+width: 240px;
+font-size: 12px;
+border: 0;
+z-index: 20;
+position: relative;	
+}
+
+.frmContainer {
+float: left; width: 240px; color: #fff;
+}
+
+.frmTitle {
+color: #fff; font-size: 14px; font-weight: bold;
+}
+
+.subheader {
+font-size: 18px;
+font-weight: bold;
+margin-left: -180px;
+}
+
+.registerbtn
+{
+    width: 248px;
+    background: url('images/buttons/tve/complete-registration.png') no-repeat;
+}
+
+.btnimage1
+{
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    text-indent: -999px;
+}
+
+#mainContainer {margin-left: 23%;}
+
+.mainBox {
+margin-left: -95px;
+margin-top: -20px;
+}
+
+.ansubheader{
+margin-left: 50px;}
+
+#ActivateNum {margin-left: 100px;}
+
+#tnc {margin-left: -130px;}
+
+.ORBreak {float: left; width: 100px;color: #fff;margin-top: 30px;margin-left: 70px;font-size: 20px;font-weight: bold;}
+
+.ffmargin {margin-left: 55px;}
+
+.eps {margin-left: -120px;}
+
+.eps1 {margin-left: 22px;}
+
+.centerText { text-align: center; }
+
+.lmargin { margin-top: 70px;}
+
+#spanner {color: #fff;}
+
+#loading-xs { position: relative; top: 5px; }
+
+.redhigh {color:#ff0000; font-weight: bold;}
+
+
+.sign-in-now-tve-btn {
+width: 304px;
+height: 43px;
+background: url('images/buttons/sign-in-now-tve.png') bottom;
+display: block;
+text-indent: -99999px;
+}
+
+.sign-in-now-tve-btn:hover{
+background-position: 0 0;
+}
+
+.register-now-tve-btn {
+width: 304px;
+height: 43px;
+background: url('images/buttons/register-now-tve.png') bottom;
+display: block;
+text-indent: -99999px;
+}
+
+.register-now-tve-btn:hover{
+background-position: 0 0;
+}
+
+.start-activation-tve-btn {
+width: 304px;
+height: 43px;
+background: url('images/buttons/start-activation-tve.png') bottom;
+display: block;
+text-indent: -99999px;
+}
+
+.start-activation-tve-btn:hover{
+background-position: 0 0;
+}
+.bigTitle { color: #49a4ff; font-size: 38px; font-weight: bolder;}
+
+.tmargin {margin-left: 15px;}
+
+#mainContainerTwo {margin-left: 21%;}
+
+.frmContainerTwo {
+float: left; width: 310px; color: #fff;
+}
+
+.mainBoxTwo {
+margin-left: -145px;
+margin-top: -20px;
+}
+.ORBreakTwo {float: left; width: 100px;color: #fff;margin-top: 30px;margin-left: 50px;font-size: 20px;font-weight: bold;}
+
+.tve-row {
+position: relative; left: 230px;
+}
+
+.activate-now-tve-btn {
+width: 353px;
+height: 50px;
+background: url('images/buttons/activate-now-tve.png') bottom;
+display: block;
+text-indent: -99999px;
+border: 0;
+}
+
+.activate-now-tve-btn:hover{
+background-position: 0 0;
+}
+
+.sfmargin { margin-left: 65px;}
+
+
+.blurb-body {
+text-align: left;
+width: 680px;
+color: #fff;
+}
+
+
+.stb-ir58 {
+width: 302px;
+height: 96px;
+background: url('images/tve/box/ir58.jpg') top;
+display: block;
+text-indent: -99999px;
+border: 0;
+}
+
+.stb-ir58:hover{
+background-position: bottom;
+}
+
+.stb-smp {
+width: 302px;
+height: 96px;
+background: url('images/tve/box/smp.jpg') top;
+display: block;
+text-indent: -99999px;
+border: 0;
+}
+
+.stb-smp:hover{
+background-position: bottom;
+}
+
+.stb-ts {
+width: 302px;
+height: 96px;
+background: url('images/tve/box/ts.jpg') top;
+display: block;
+text-indent: -99999px;
+border: 0;
+}
+
+.stb-ts:hover{
+background-position: bottom;
+}
+
+.stb-selected {
+background-position: bottom;
+}
+
+
+#stb-instructions {
+border: 2px solid #000;
+background-color: #eee;
+height: 284px;
+}
+
+.stb-copies {margin-left: 20px; float: left;width: 300px; font-size: 14px;}
+
+.stb-copies h1 {font-size:32px;}
+
+.stb-list li {line-height: 22px;}
+
+.stb-images {width:302px;}
+
+.subtext-main {
+font-size: 15px;
+margin-left: -195px;
+width: 900px;
+color: #fff;
+}
+
+.watch-livestream-tve-btn {
+width: 304px;
+height: 43px;
+background: url('images/buttons/watch-livestream-tve.png') bottom;
+display: block;
+text-indent: -99999px;
+border: 0;
+}
+
+.watch-livestream-tve-btn:hover{
+background-position: 0 0;
+}
+
+#ANumber { margin-left: 20px; }
+
+.chat-live-now-btn {
+width: 225px;
+height: 32px;
+background: url('images/chat-live-now.png') bottom;
+display: block;
+text-indent: -99999px;
+border: 0;
+margin:0 auto;
+}
+
+.chat-live-now-btn:hover{
+background-position: 0 0;
+}

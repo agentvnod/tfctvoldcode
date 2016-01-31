@@ -1,0 +1,53 @@
+﻿@model List<TFCTV.Models.HelpCenterCategoryModel>
+@{
+    string sectionTitle = String.Empty;
+    bool IsActive = false;
+    if (ViewBag.SectionTitle != null)
+    {
+        sectionTitle = ViewBag.SectionTitle;
+    }
+    if (ViewBag.IsActive != null)
+    {
+        IsActive = ViewBag.IsActive;
+    }
+}
+<div class="row tab-pane fade in @String.Format("{0}", IsActive ? "active" : String.Empty)" id="@sectionTitle">
+    <!-- outer tab c 1 -->
+    <!-- inner tabs [vertical tab] -->
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+              int count = 1;
+        <ul class="nav nav-tabs inner col-sm-4 col-xs-4">
+            @{foreach (var item in Model)
+              { 
+                <li @Html.Raw(String.Format("{0}", count == 1 ? "class=\"active\"" : String.Empty))>
+                    <a href="@String.Format("#a{0}", item.id)" data-toggle="tab">@item.name</a></li>
+                  count++;
+              }
+            }
+        </ul>
+        <!-- end inner tabs [vertical tab] -->
+        <!-- inner tabs content [vertical] -->
+        <div class="tab-content inner col-sm-8 col-xs-8">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      count = 0;
+                      foreach (var item in Model)
+                      {                       
+                @Html.Action("BuildQuestions", new { id = item.id, IsActive = count == 0 ? true : false })
+                          count++;
+                      }
+                  }
+              }
+            }
+            <!-- inner t 6 -->
+        </div>
+        <!-- end inner tabs content [vertical] -->          
+          }
+      }      
+    }
+</div>

@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Claim your free ABS-CBN Free Live Stream entitlement - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div>@*@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C.jpg", new { width = 940 })*@</div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="rheader">
+                        Congratulations! You have successfully claimed a free entitlement.
+                    </div>
+                    <div id="freetrial01">
+                        <div style="padding-top: 20px;">
+                            <center>
+                                @{if ((bool)ViewBag.ActivationSuccess)
+                                  { 
+                                    <span style="font-size: 42px; font-weight: bolder;">YOUR 14-DAY ABS-CBN LIVE
+                                        STREAMING<br />
+                                        STARTS NOW!</span>
+                                  }
+                                  else if ((bool)ViewBag.UserHasClaimed)
+                                  { 
+                                    <span style="font-size: 42px; font-weight: bolder;">YOUR 14-DAY ABS-CBN LIVE
+                                        STREAMING<br />
+                                        HAS ALREADY BEEN ACTIVATED</span>
+                                  }
+                                }
+                            </center>
+                        </div>
+                        <div class="breakLarge clear">
+                        </div>
+                        <div class="trial2-text2" style="font-size: 18px;">
+                            Pumunta lang sa ABS-CBN Live page at panoorin ang paborito mong shows!
+                            <div class="breakLarge">
+                            </div>
+                        </div>
+                        <div style="margin: 0 auto; text-align: center; width: 100%; padding-top: 20px;">
+                            <a href="/">@Html.ImageBuilder(Url, "register/REGISTRATION-HOMEPAGE.png", new { alt = "Visit TFC.tv Homepage", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Subscribe/FreeTrial">@Html.ImageBuilder(Url, "register/REGISTRATION-FREETRIAL.png", new { alt = "Check the Free Trial Content!", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Profile">@Html.ImageBuilder(Url, "register/REGISTRATION-PROFILE.png", new { alt = "View your Profile", title = "View your Profile" })</a>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}

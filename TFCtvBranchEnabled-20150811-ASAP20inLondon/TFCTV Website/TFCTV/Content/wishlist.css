@@ -1,0 +1,42 @@
+﻿/* File Created: February 10, 2012 */
+#wishlistPanel
+{
+    color: #000;
+    background: #eee;
+    margin: auto;
+    font-size: 11px;
+    padding: 5px 10px 5px 10px;
+}
+
+#wishlistContainer
+{
+    width: 468px; /*100%;*/
+}
+
+#wishlistPanel .darkBlue
+{
+    color: #031b35;
+}
+
+#wishlistPanel .lightBlue
+{
+    color: #1e67b3;
+}
+
+#wishlistPanel ul li
+{
+    border-bottom: 1px dotted #999;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
+
+#wishlistPanel a
+{
+    color: #1e67b3;
+    text-decoration: none;
+}
+
+#wishlistPanel a:hover
+{
+    text-decoration: underline;
+}

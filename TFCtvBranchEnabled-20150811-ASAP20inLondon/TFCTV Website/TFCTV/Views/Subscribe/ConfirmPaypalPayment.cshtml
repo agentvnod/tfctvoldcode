@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Confirm Payment for Paypal - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        window.opener.location.href = "/";
+        window.close();
+    </script>
+}

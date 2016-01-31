@@ -1,0 +1,40 @@
+﻿<div id="reviewers-body">
+</div>
+<div class="clear">
+</div>
+<script type="text/javascript">
+    //Get Top Reviewers
+    var url = '/SocialEngagement/GetTopReviewers1';
+    var htmlReviewer = "";
+    jQuery.get(url, function (data) {
+        var counter = 0;
+        var starUrl = '';
+
+        $.each(data, function (x, y) {
+            if (y.totalReview < 5)
+                starUrl = '@GlobalConfig.AssetsBaseUrl/content/images/social/stars_' + y.totalReview + '.png';
+            else
+                starUrl = '@Html.ContentBuilder(Url, "content/images/social/stars_5.png")';
+
+            htmlReviewer += '<div class="reviewer-row">';
+            htmlReviewer += '<div class="personPhoto left">';
+            htmlReviewer += '<a href="">';
+            htmlReviewer += '<img width="40" border="0" title="' + y.userName + '" src="' + y.userPhoto + '"></a>';
+            htmlReviewer += '</div>';
+            htmlReviewer += '<ul class="reviewer_info">';
+            htmlReviewer += '<li><strong><a href="/Profile/' + y.userId + '"' + '>' + y.userName + '</a></strong></li>';
+            htmlReviewer += '<li class="ratingSpace">';
+            htmlReviewer += '<ul>';
+            htmlReviewer += '<li class="reviewStars">';
+            htmlReviewer += '<img align="top" width="75" height="15" alt="" src="' + starUrl + '" />';
+            htmlReviewer += '</li>';
+            htmlReviewer += '<li class="usefulCount">&nbsp;<span>' + y.totalReview + ' Reviews</span></li>';
+            htmlReviewer += '</ul>';
+            htmlReviewer += '</li>';
+            htmlReviewer += '</ul>';
+            htmlReviewer += '</div>';
+        });
+
+        $("#reviewers-body").html(htmlReviewer);
+    }, 'json');
+</script>

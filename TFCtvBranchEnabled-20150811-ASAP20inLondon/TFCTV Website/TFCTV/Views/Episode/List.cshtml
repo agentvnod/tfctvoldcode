@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "TFC.tv - Episodes";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    int ctr = 1;
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Episodes</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="latestShows_bodyContainer">
+            <!-- start of showDetails -->
+            @*<div class="showItem_preview">
+                    <div class="imgShowThumbBg">
+                        <img alt="" src="http://asset1.tfctvapp.com/images/angelito/20120113-angelito-151x98.jpg">
+                    </div>
+
+                    <div class="showItem_info">
+                        <span class="showTitle"><a href="/Show/Details/1">CategoryName</a></span>
+                        <br />
+                        <span class="showAirdate">Year: </span>
+                        <br />
+                        <span class="showCast">Cast: <a href="#">Kim Chiu</a>
+                            <br />
+                        </span>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>*@
+            <div class="clear">
+            </div>
+        </div>
+        <!-- end of list -->
+        <div id="navigation">
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "category.css")
+    @Html.CssBuilder(Url, "pagination.css")
+}
+@section JScript {
+    @Html.JsBuilder(Url, "pagination.js")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        //initialize
+        var url = 'http://localhost:50696/Episode/GetEpisodes?page=1&pagesize=20';
+        jQuery.get(url, function (data) {
+            var list = new pagination({
+                json_str: data, container: 'latestShows_bodyContainer'
+            }).listing();
+        }, 'json');
+
+        function paginate(page, prev, next) {
+            if (next == 1) {
+                page += 1;
+            }
+            if (prev == 1) {
+                page -= 1;
+            }
+            var url = 'http://localhost:50696/Episode/GetEpisodes?page=' + page + '&pagesize=20';
+            jQuery.get(url, function (data) {
+                var list = new pagination({
+                    json_str: data, container: 'latestShows_bodyContainer'
+                }).listing();
+            }, 'json');
+            $('#navigation').focus();
+        }
+    </script>
+}

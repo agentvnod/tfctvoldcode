@@ -1,0 +1,41 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    string id = ViewBag.id;
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {
+          int ctr = 0;
+          var lastItem = Model.Last();
+    <div class="latest_game" id="@id">
+        <!-- SEE ALL GAMES tab body -->
+        <div class="col-xs-12 sa_bxslider">
+            @{foreach (var item in Model)
+              {
+                  bool ctr_eval = ctr % 2 == 0;
+                  ctr++;
+                @Html.Raw(String.Format("{0}", ctr_eval ? "<div class=\"slide\">" : String.Empty))
+                <div class="movie">
+                    <div class="video_cover">
+                        <!-- play button cover -->
+                        <a href="@String.Format("{0}/pinoy-big-brother", GlobalConfig.baseUrl)">
+                            <img src="@item.imgurl" alt="@item.name" title="@item.name" class="img100" /><div
+                                class="video_play_button">
+                            </div>
+                            <!-- play button -->
+                        </a>
+                        <!-- play button -->
+                    </div>
+                    <h3>
+                        <a href="@String.Format("{0}/pinoy-big-brother", GlobalConfig.baseUrl)">@item.name</a></h3>
+                </div>                  
+                @Html.Raw(String.Format("{0}", ctr % 2 == 0 || (Model.IndexOf(item) == Model.Count()) ? "</div>" : String.Empty))
+                  if (ctr % 2 == 0) { ctr = 0; }
+              }
+            }
+        </div>
+    </div>
+      }
+  }
+}

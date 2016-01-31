@@ -1,0 +1,89 @@
+﻿@model List<HomepageFeatureItem>
+@{    
+    string containerId = ViewBag.containerId;
+    string featureType = ViewBag.FeatureType;
+    string sectionTitle = ViewBag.SectionTitle;
+    string linkSlug = String.Empty;
+    int id = ViewBag.id;
+    int pageSize = ViewBag.pageSize;
+    bool removeShowAll = false;
+    bool isFeature = false;
+    if (ViewBag.RemoveShowAll != null)
+    {
+        removeShowAll = ViewBag.RemoveShowAll;
+    }
+    if (ViewBag.IsFeature != null)
+    {
+        isFeature = ViewBag.IsFeature;
+    }
+    if (ViewBag.LinkSlug != null)
+    {
+        linkSlug = ViewBag.LinkSlug;
+    }
+    CelebrityContentType contentType = CelebrityContentType.SHOWS;
+    if (ViewBag.ContentType != null)
+    {
+        contentType = ViewBag.ContentType;
+    }
+    IPTV2_Model.CategoryClass category = null;
+    if (ViewBag.CategoryClass != null)
+    {
+        category = ViewBag.CategoryClass;
+    }
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {
+          if (String.Compare(featureType, "celebrity", true) == 0)
+          {   
+    <!-- 6 column section -->
+    <div class="row movie_sec @containerId">
+        <div class="sec_header">
+            <!-- section head -->
+            
+            <h1 class="section_title clearfix h1withh2style">
+                @ViewBag.SectionTitle</h1>
+        </div>
+        <!-- end head -->
+        <!-- section body -->
+        <div class="row sec_body">
+            @{if (Model != null)
+              {
+                  if (Model.Count() > 0)
+                  {
+                      foreach (var item in Model)
+                      {
+                          string href = String.Format("/Celebrity/Profile/{0}/{1}", item.id, item.slug);
+                <!-- video with poster & name -->
+                <div class="movie col-md-2 col-sm-3 col-xs-6">
+                    <a href="@href" title="@item.name">
+                        <img src="@Html.Raw(item.imgurl)" alt="@Html.Raw(item.name)"></a>
+                    <h2 class="small_header h2withh3style">
+                        <a href="@href" title="@item.name">@Html.Raw(item.name)</a>
+                    </h2>
+                </div>
+                <!-- end video poster -->
+                      }
+                  }
+              }
+            }
+            <!-- load more for mobile -->
+            <div class="movie col-md-3 col-sm-4 col-xs-6 show480">
+                <a href="#" class="loadMore">
+                    @Html.ImageBuilder(Url, "ux/mobile_loadmoreP.jpg", new { alt = "Load more episodes" })
+                </a>
+            </div>
+        </div>
+        <!-- end section body -->
+        <div class="sec_footer hide480">
+            <!-- load more -->
+            <a href="#" class="loadMore">load more<br>
+                @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = String.Format("Load more {0}", featureType) })
+            </a>
+        </div>
+    </div>  <!-- end 6 column section -->
+          }
+      }
+  }
+}

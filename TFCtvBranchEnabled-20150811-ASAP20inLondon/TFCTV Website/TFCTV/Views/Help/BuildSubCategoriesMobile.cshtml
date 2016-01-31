@@ -1,0 +1,38 @@
+﻿@model List<TFCTV.Models.HelpCenterCategoryModel>
+@{
+    string sectionTitle = String.Empty;
+    bool IsActive = false;
+    string item_level = String.Empty;
+    if (ViewBag.SectionTitle != null)
+    {
+        sectionTitle = ViewBag.SectionTitle;
+    }
+    if (ViewBag.IsActive != null)
+    {
+        IsActive = ViewBag.IsActive;
+    }
+    if (ViewBag.item_level != null)
+    {
+        item_level = ViewBag.item_level;
+    }
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {          
+    <ul class="panel-group collapse" id="@item_level">
+        @{foreach (var item in Model)
+          {
+              string subitem_level = String.Format("levv{0}", item.id);
+            <li class="panel">
+                <!-- Lev 11, item 1 -->
+                <span data-toggle="collapse" data-parent="@String.Format("#{0}", item_level)" data-target="@String.Format("#{0}", subitem_level)">
+                    <i class="indicator glyphicon glyphicon-chevron-right"></i>@item.name</span>
+                @Html.Action("BuildQuestions", new { id = item.id, IsActive = false, subitem_level = subitem_level, partialViewName = "BuildQuestionsMobile" })
+            </li>
+          }
+        }
+    </ul>
+      }
+  }
+}

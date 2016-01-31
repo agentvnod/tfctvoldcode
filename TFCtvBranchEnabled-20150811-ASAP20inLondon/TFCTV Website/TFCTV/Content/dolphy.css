@@ -1,0 +1,7 @@
+﻿#bgLeft {
+background: url('images/themebg/dolphy-leftpanel.png') repeat-y left;
+}
+
+#bgRight {
+background: url('images/themebg/dolphy-rightpanel.png') repeat-y right;
+}

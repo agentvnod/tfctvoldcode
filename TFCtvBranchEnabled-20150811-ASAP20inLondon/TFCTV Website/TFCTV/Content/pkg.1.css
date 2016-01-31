@@ -1,0 +1,88 @@
+﻿.btn-ppm
+{
+    width: 417px;
+    height: 58px;
+    color: #FFF;
+    font-size: 30px;
+    font-weight: bold;
+    position: relative;
+    top: -100px;
+    left: 60px;
+    margin-bottom: 10px;
+}
+
+.btn-ppm-1
+{
+    background: url('images/package/btn/btn-ppm-1.jpg');
+}
+
+.btn-ppm-2
+{
+    background: url('images/package/btn/btn-ppm-2.jpg');
+}
+
+.btn-ppm-3
+{
+    background: url('images/package/btn/btn-ppm-3.jpg');
+}
+
+.btn-ppm-4
+{
+    background: url('images/package/btn/btn-ppm-4.jpg');
+}
+
+.btn-ppm-5
+{
+    background: url('images/package/btn/btn-ppm-5.jpg');
+}
+
+.btn-ppm-6
+{
+    background: url('images/package/btn/btn-ppm-6.jpg');
+}
+
+.btn-premium
+{
+    background: url('images/package/btn/btn-premium.jpg');
+}
+
+.btn-lite
+{
+    background: url('images/package/btn/btn-lite.jpg');
+}
+.btn-moviechannel, .btn-movie
+{
+    background: url('images/package/btn/btn-moviechannel.jpg');
+}
+
+.btn-text
+{
+    position: relative;
+    top: 21px;
+    left: 120px;
+}
+
+
+.btn-text a
+{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-text a:hover
+{
+    text-decoration: underline;
+}
+
+.btn-ppm a
+{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-ppm a:hover
+{
+    text-decoration: underline;
+}

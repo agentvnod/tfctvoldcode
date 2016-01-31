@@ -1,0 +1,30 @@
+﻿<ul id="reload-type">
+    @{if (GlobalConfig.IsCreditCardReloadModeEnabled)
+      {
+          if (ViewBag.CreditCardList != null)
+          { 
+        <li class="@(String.Compare(ViewBag.Selection, "CreditCard", true) == 0 ? "selected" : "")">@Html.ActionLink("Credit Card", "CreditCard")</li>
+          }
+      }
+    }
+    @{if (GlobalConfig.IsPaypalReloadModeEnabled && ViewBag.IsPayPalSupported)
+      {
+        <li class="@(String.Compare(ViewBag.Selection, "PayPal", true) == 0 ? "selected" : "")">@Html.ActionLink("PayPal", "PayPal")</li>
+      }
+    }
+    @{if (GlobalConfig.IsPpcReloadModeEnabled)
+      { 
+        <li class="@(String.Compare(ViewBag.Selection, "PrepaidCard", true) == 0 ? "selected" : "")">@Html.ActionLink("Prepaid Card", "PrepaidCard")</li>
+      }
+    }
+    @{if (String.Compare(ViewBag.UserCountryCode, GlobalConfig.JapanCountryCode) == 0)
+      {
+        <li class="@(String.Compare(ViewBag.Selection, "SmartPit", true) == 0 ? "selected" : "")">@Html.ActionLink("SmartPit", "SmartPit")</li>
+      }
+    }
+    @{if (GlobalConfig.IsMopayReloadModeEnabled && ViewBag.IsMopaySupported)
+      { 
+        <li class="@(String.Compare(ViewBag.Selection, "Mopay", true) == 0 ? "selected" : "")">@Html.ActionLink("mopay", "Mopay")</li>
+      }
+    }
+</ul>

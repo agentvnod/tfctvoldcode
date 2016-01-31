@@ -1,0 +1,124 @@
+﻿/* File Created: January 16, 2013 */
+.player-adapt
+{
+    display: block;
+    float: left;
+    width: 115px;
+    height: 28px;
+    background: url('images/buttons/player-adapt.png') bottom;
+    text-indent: -99999px;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+.player-adapt:hover
+{
+    background-position: 0 0;
+}
+
+.player-high
+{
+    display: block;
+    float: left;
+    width: 115px;
+    height: 28px;
+    background: url('images/buttons/player-high2.png') bottom;
+    text-indent: -99999px;
+    margin-right: 10px;
+}
+
+.player-high:hover
+{
+    background-position: 0 0;
+}
+
+
+.player-low
+{
+    display: block;
+    float: left;
+    width: 115px;
+    height: 28px;
+    background: url('images/buttons/player-low2.png') bottom;
+    text-indent: -99999px;
+    margin-right: 10px;
+}
+
+.player-low:hover
+{
+    background-position: 0 0;
+}
+
+
+.player-download
+{
+    display: block;
+    float: left;
+    width: 115px;
+    height: 28px;
+    background: url('images/buttons/player-download.png') bottom;
+    text-indent: -99999px;
+    margin-right: 10px;
+}
+
+.player-download:hover
+{
+    background-position: 0 0;
+}
+
+
+.player-menu-container
+{
+    height: 32px;
+    width: 100%;
+    background-color: #000;
+    padding-top: 5px;
+}
+
+.mode-selected
+{
+    background-position: 0 0;
+}
+
+.player-menu-subcontainer
+{
+    margin-left: 22.3%;
+}
+
+.player-learn
+{
+    display: block;
+    float: left;
+    width: 115px;
+    height: 28px;
+    background: url('images/buttons/player-learn-more.png') bottom;
+    text-indent: -99999px;
+    /*margin-right: 10px;
+    margin-left: 15px;*/
+}
+
+#playerFAQ
+{
+width: 450px;
+height: 400px;
+}
+
+#playerFAQ .genericHeader
+{
+    width: 450px;
+}
+
+#playerFAQ .sectionHeaderTitle
+{
+    color: #000;
+}
+
+#playerFAQ p {
+font-size: 12px;
+}
+
+
+#playerFAQ .hl {
+color: #0198E1;
+font-weight: bold;
+}

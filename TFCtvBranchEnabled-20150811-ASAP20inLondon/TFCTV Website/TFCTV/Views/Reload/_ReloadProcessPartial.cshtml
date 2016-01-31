@@ -1,0 +1,101 @@
+﻿@{
+
+    IPTV2_Model.User recipient = ViewBag.Recipient;
+    IPTV2_Model.Product product = ViewBag.Product;
+    ViewBag.Title = "Reload Your E-Wallet";
+
+}
+<div id="payment-container">
+    <div class="genericHeader">
+        <div id="genericHeader_header">
+            <div id="headerTitle" class="sectionHeaderTitle">
+                @ViewBag.Title</div>
+            <div id="headerCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div class="breakStandard">
+    </div>
+    <div id="payment-body">
+        <div class="breakStandard">
+        </div>
+        <div class="formSubHeaders">
+            E-Wallet Information</div>
+        <div class="info-row">
+            <div>
+                Your current balance is <span id="currentbalance" class="user-credits">@ViewBag.currentBalance</span>
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div id="reloadMethod">
+            <ul class="css-tabs">
+                @{if (GlobalConfig.IsPpcReloadModeEnabled)
+                  {
+                    <li>@Ajax.ActionLink("Prepaid Card", "PrepaidCard", "Reload", new { callId = System.Guid.NewGuid() }, new AjaxOptions { OnBegin = "emptyTab", LoadingElementId = "reload-spanner" })</li>
+                  }}
+                @{
+                    
+                    //  if (GlobalConfig.IsCreditCardReloadModeEnabled)
+                    //{
+                    if (ViewBag.CreditCardList != null)
+                    {
+                    <li>@Ajax.ActionLink("Credit Card", "CreditCard", "Reload", new { callId = System.Guid.NewGuid() }, new AjaxOptions { OnBegin = "emptyTab", LoadingElementId = "reload-spanner" })</li>
+                    }
+                    //}                  
+                }
+                @{if (GlobalConfig.IsPaypalReloadModeEnabled && ViewBag.IsPayPalSupported)
+                  {
+                    <li>@Ajax.ActionLink("PayPal", "PayPal", "Reload", new { callId = System.Guid.NewGuid() }, new AjaxOptions { OnBegin = "emptyTab", LoadingElementId = "reload-spanner" })</li>
+                  }
+                }
+            </ul>
+            <div class="css-panes" style="color: #000;">
+                <div style="display: block">
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="reload-ajax-loading">
+        <div id="reload-spanner" class="hideElement">
+            @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "loading..." })
+            <br />
+            <span id="reload-span-text">Please wait...</span>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function emptyTab() {
+            $('.css-panes > div').empty();
+        }
+        $(document).ready(function() {
+            $('ul.css-tabs').tabs('div.css-panes > div', { effect: 'ajax', initialIndex: 0, onBeforeClick: function (event, i) {
+                event.preventDefault();
+                var pane = this.getPanes('div.css-panes > div');
+                pane.html($('#reload-ajax-loading').html());
+                $('#reload-spanner').removeClass('hideElement');
+                @{if (User.Identity.IsAuthenticated)
+                  {
+                  <text>
+                  pane.load(this.getTabs().eq(i).attr('href'));
+                  </text>
+                  }
+                  else
+                  {
+                  <text>
+                  pane.load('/Buy/Authenticate');return false;
+                  </text>
+                  }
+                }
+            }
+            });
+            $('ul.css-tabs li a').live('click',function() {
+            $('ul.css-tabs li a').removeClass('cur-tab');
+            $(this).addClass('cur-tab');});
+            $('#reload-ajax-loading').css('width', '180px');
+        });
+    </script>
+    <div class="clear breakLarge">
+    </div>
+</div>

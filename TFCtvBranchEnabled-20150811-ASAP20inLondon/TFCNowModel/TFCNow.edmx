@@ -1,0 +1,785 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ABSNowModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ABSNowModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="ABSNowModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LicensePurchased" EntityType="ABSNowModel.Store.LicensePurchased" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LicensePurchasedProcessed" EntityType="ABSNowModel.Store.LicensePurchasedProcessed" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NCashWalletBalance" EntityType="ABSNowModel.Store.NCashWalletBalance" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NCashWalletBalanceTable" EntityType="ABSNowModel.Store.NCashWalletBalanceTable" store:Type="Tables" store:Schema="dbo" store:Name="NCashWalletBalanceTable">
+            <DefiningQuery>SELECT 
+      [NCashWalletBalanceTable].[userId] AS [userId], 
+      [NCashWalletBalanceTable].[cashBalance] AS [cashBalance]
+      FROM [dbo].[NCashWalletBalanceTable] AS [NCashWalletBalanceTable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NCashWalletBalanceTemp" EntityType="ABSNowModel.Store.NCashWalletBalanceTemp" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Package" EntityType="ABSNowModel.Store.Package" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubscriptionDetails" EntityType="ABSNowModel.Store.SubscriptionDetails" store:Type="Tables" store:Schema="dbo" store:Name="SubscriptionDetails">
+            <DefiningQuery>SELECT 
+      [SubscriptionDetails].[CustomerID] AS [CustomerID], 
+      [SubscriptionDetails].[SubscriptionDate] AS [SubscriptionDate], 
+      [SubscriptionDetails].[LastLoginDate] AS [LastLoginDate], 
+      [SubscriptionDetails].[LicenseExpiration] AS [LicenseExpiration], 
+      [SubscriptionDetails].[LicenseIssued] AS [LicenseIssued], 
+      [SubscriptionDetails].[TfcSub] AS [TfcSub], 
+      [SubscriptionDetails].[NonTfcSub] AS [NonTfcSub], 
+      [SubscriptionDetails].[GESCustomerID] AS [GESCustomerID], 
+      [SubscriptionDetails].[TFCDirect] AS [TFCDirect], 
+      [SubscriptionDetails].[TFCKo] AS [TFCKo], 
+      [SubscriptionDetails].[DealerID] AS [DealerID], 
+      [SubscriptionDetails].[DealerCode] AS [DealerCode], 
+      [SubscriptionDetails].[DealerDateAdded] AS [DealerDateAdded], 
+      [SubscriptionDetails].[DateUpdated] AS [DateUpdated], 
+      [SubscriptionDetails].[UpdatedBy] AS [UpdatedBy], 
+      [SubscriptionDetails].[GOMSID] AS [GOMSID]
+      FROM [dbo].[SubscriptionDetails] AS [SubscriptionDetails]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TFCNowRetailMigrationID" EntityType="ABSNowModel.Store.TFCNowRetailMigrationID" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TFCNowRetailMigrationTFCTV" EntityType="ABSNowModel.Store.TFCNowRetailMigrationTFCTV" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CustomerLicensePurchased" EntityType="ABSNowModel.Store.CustomerLicensePurchased" store:Type="Views" store:Schema="dbo" store:Name="CustomerLicensePurchased">
+            <DefiningQuery>SELECT 
+      [CustomerLicensePurchased].[LicensePurchasedID] AS [LicensePurchasedID], 
+      [CustomerLicensePurchased].[PackageID] AS [PackageID], 
+      [CustomerLicensePurchased].[CustomerID] AS [CustomerID], 
+      [CustomerLicensePurchased].[EmailAddress] AS [EmailAddress], 
+      [CustomerLicensePurchased].[LicenseEndDate] AS [LicenseEndDate], 
+      [CustomerLicensePurchased].[TransactionID] AS [TransactionID]
+      FROM [dbo].[CustomerLicensePurchased] AS [CustomerLicensePurchased]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="NCashWalletBalanceView" EntityType="ABSNowModel.Store.NCashWalletBalanceView" store:Type="Views" store:Schema="dbo" store:Name="NCashWalletBalanceView">
+            <DefiningQuery>SELECT 
+      [NCashWalletBalanceView].[userId] AS [userId], 
+      [NCashWalletBalanceView].[cashBalance] AS [cashBalance]
+      FROM [dbo].[NCashWalletBalanceView] AS [NCashWalletBalanceView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwCustomerLicensePurchased" EntityType="ABSNowModel.Store.vwCustomerLicensePurchased" store:Type="Views" store:Schema="dbo" store:Name="vwCustomerLicensePurchased">
+            <DefiningQuery>SELECT 
+      [vwCustomerLicensePurchased].[idx] AS [idx], 
+      [vwCustomerLicensePurchased].[LicensePurchasedID] AS [LicensePurchasedID], 
+      [vwCustomerLicensePurchased].[PackageID] AS [PackageID], 
+      [vwCustomerLicensePurchased].[CustomerID] AS [CustomerID], 
+      [vwCustomerLicensePurchased].[EmailAddress] AS [EmailAddress], 
+      [vwCustomerLicensePurchased].[LicenseEndDate] AS [LicenseEndDate], 
+      [vwCustomerLicensePurchased].[TransactionID] AS [TransactionID], 
+      [vwCustomerLicensePurchased].[Recency] AS [Recency]
+      FROM [dbo].[vwCustomerLicensePurchased] AS [vwCustomerLicensePurchased]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDay" Type="datetime" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="100" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneMobile" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneWork" Type="nvarchar" MaxLength="100" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="20" />
+          <Property Name="SiteID" Type="smallint" />
+          <Property Name="RegisteredDate" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecurityQuestion" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecurityAnswer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Verified" Type="bit" />
+          <Property Name="ActivationDate" Type="datetime" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LicensePurchased">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="TransactionID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="PackageDetailID" />
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="LicensePurchasedID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="TransactionID" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="TransactionAmount" Type="money" Nullable="false" />
+          <Property Name="NetAmount" Type="money" Nullable="false" />
+          <Property Name="TransactionCurrency" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LicenseDuration" Type="int" Nullable="false" />
+          <Property Name="DurationUnit" Type="char" Nullable="false" MaxLength="10" />
+          <Property Name="LicenseStartDate" Type="datetime" Nullable="false" />
+          <Property Name="LicenseEndDate" Type="datetime" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" Nullable="false" />
+          <Property Name="NewSubscription" Type="bit" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Reversed" Type="bit" Nullable="false" />
+          <Property Name="PaymentType" Type="int" Nullable="false" />
+          <Property Name="PackageDetailID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LicenseID" Type="int" />
+          <Property Name="MigrationID" Type="int" />
+        </EntityType>
+        <EntityType Name="LicensePurchasedProcessed">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LicensePurchasedID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NCashWalletBalance">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Balance" Type="decimal" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ABSNow.dbo.NCashWalletBalanceTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="NCashWalletBalanceTable">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="cashBalance" />
+          </Key>
+          <Property Name="userId" Type="varchar" Nullable="false" MaxLength="52" />
+          <Property Name="cashBalance" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NCashWalletBalanceTemp">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Balance" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Name="PackageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PackageName" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="PackageDescription" Type="ntext" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Hidden" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="VideoBoxImage" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ABSNow.dbo.SubscriptionDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SubscriptionDetails">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseIssued" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="SubscriptionDate" Type="datetime" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="LicenseExpiration" Type="datetime" />
+          <Property Name="LicenseIssued" Type="bit" Nullable="false" />
+          <Property Name="TfcSub" Type="nvarchar" MaxLength="50" />
+          <Property Name="NonTfcSub" Type="nvarchar" MaxLength="50" />
+          <Property Name="GESCustomerID" Type="int" />
+          <Property Name="TFCDirect" Type="bit" />
+          <Property Name="TFCKo" Type="bit" />
+          <Property Name="DealerID" Type="int" />
+          <Property Name="DealerCode" Type="char" MaxLength="10" />
+          <Property Name="DealerDateAdded" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="GOMSID" Type="int" />
+        </EntityType>
+        <EntityType Name="TFCNowRetailMigrationID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SubscriptionType" Type="nvarchar" MaxLength="255" />
+          <Property Name="GOMSInternalID" Type="int" />
+          <Property Name="TFCnowPackageID" Type="int" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TFCNowRetailMigrationTFCTV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubscriptionType" Type="nvarchar" MaxLength="255" />
+          <Property Name="LicenseEndDate" Type="datetime" />
+          <Property Name="TFCnowPackageID" Type="int" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IsMigrated" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ABSNow.dbo.CustomerLicensePurchased' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="CustomerLicensePurchased">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseEndDate" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="LicensePurchasedID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="LicenseEndDate" Type="datetime" Nullable="false" />
+          <Property Name="TransactionID" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ABSNow.dbo.NCashWalletBalanceView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="NCashWalletBalanceView">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="cashBalance" />
+          </Key>
+          <Property Name="userId" Type="varchar" Nullable="false" MaxLength="52" />
+          <Property Name="cashBalance" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'ABSNow.dbo.vwCustomerLicensePurchased' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="vwCustomerLicensePurchased">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseEndDate" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="idx" Type="bigint" />
+          <Property Name="LicensePurchasedID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="LicenseEndDate" Type="datetime" Nullable="false" />
+          <Property Name="TransactionID" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Recency" Type="bigint" />
+        </EntityType>
+        <Function Name="spTFCNowExtendLicense" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="packageID" Type="int" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ABSNowModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="ABSNowEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="ABSNowModel.Customer" />
+          <EntitySet Name="Packages" EntityType="ABSNowModel.Package" />
+          <EntitySet Name="LicensePurchaseds" EntityType="ABSNowModel.LicensePurchased" />
+          <AssociationSet Name="PackageLicensePurchased" Association="ABSNowModel.PackageLicensePurchased">
+            <End Role="Package" EntitySet="Packages" />
+            <End Role="LicensePurchased" EntitySet="LicensePurchaseds" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerLicensePurchased" Association="ABSNowModel.CustomerLicensePurchased">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="LicensePurchased" EntitySet="LicensePurchaseds" />
+          </AssociationSet>
+          <EntitySet Name="SubscriptionDetails" EntityType="ABSNowModel.SubscriptionDetail" />
+          <AssociationSet Name="CustomerSubscriptionDetail" Association="ABSNowModel.CustomerSubscriptionDetail">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="SubscriptionDetail" EntitySet="SubscriptionDetails" />
+          </AssociationSet>
+          <EntitySet Name="NCashWalletBalances" EntityType="ABSNowModel.NCashWalletBalance" />
+          <EntitySet Name="NCashWalletBalanceTemps" EntityType="ABSNowModel.NCashWalletBalanceTemp" />
+          <EntitySet Name="NCashWalletBalanceViews" EntityType="ABSNowModel.NCashWalletBalanceView" />
+          <EntitySet Name="NCashWalletBalanceTables" EntityType="ABSNowModel.NCashWalletBalanceTable" />
+          <EntitySet Name="TFCNowRetailMigrationIDs" EntityType="ABSNowModel.TFCNowRetailMigrationID" />
+          <EntitySet Name="TFCNowRetailMigrationTFCTVs" EntityType="ABSNowModel.TFCNowRetailMigrationTFCTV" />
+          <EntitySet Name="LicensePurchasedProcesseds" EntityType="ABSNowModel.LicensePurchasedProcessed" />
+          <EntitySet Name="CustomerLicensePurchased1" EntityType="ABSNowModel.CustomerLicensePurchased1" />
+          <FunctionImport Name="TFCnowExtendLicense">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="packageID" Mode="In" Type="Int32" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="vwCustomerLicensePurchaseds" EntityType="ABSNowModel.vwCustomerLicensePurchased" />
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Type="Int32" Name="CustomerID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="EmailAddress" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MiddleName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="BirthDay" Nullable="false" />
+          <Property Type="String" Name="Gender" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address2" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="State" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Country" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zip" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactNumber" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneMobile" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneWork" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IPAddress" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int16" Name="SiteID" />
+          <Property Type="String" Name="RegisteredDate" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SecurityQuestion" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SecurityAnswer" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Verified" />
+          <Property Type="DateTime" Name="ActivationDate" />
+          <Property Type="Guid" Name="rowguid" Nullable="false" />
+          <NavigationProperty Name="LicensePurchaseds" Relationship="ABSNowModel.CustomerLicensePurchased" FromRole="Customer" ToRole="LicensePurchased" />
+          <NavigationProperty Name="SubscriptionDetails" Relationship="ABSNowModel.CustomerSubscriptionDetail" FromRole="Customer" ToRole="SubscriptionDetail" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Type="Int32" Name="PackageID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="PackageName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PackageDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="StartDate" />
+          <Property Type="DateTime" Name="EndDate" />
+          <Property Type="Int32" Name="CategoryID" />
+          <Property Type="String" Name="Image" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Hidden" Nullable="false" />
+          <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <Property Type="String" Name="VideoBoxImage" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LicensePurchaseds" Relationship="ABSNowModel.PackageLicensePurchased" FromRole="Package" ToRole="LicensePurchased" />
+        </EntityType>
+        <EntityType Name="LicensePurchased">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="TransactionID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="PackageDetailID" />
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Type="Guid" Name="LicensePurchasedID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="TransactionID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="PackageID" Nullable="false" />
+          <Property Type="DateTime" Name="TransactionDate" Nullable="false" />
+          <Property Type="Decimal" Name="TransactionAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="NetAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="TransactionCurrency" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="LicenseDuration" Nullable="false" />
+          <Property Type="String" Name="DurationUnit" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="LicenseStartDate" Nullable="false" />
+          <Property Type="DateTime" Name="LicenseEndDate" Nullable="false" />
+          <Property Type="String" Name="Comments" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="NewSubscription" Nullable="false" />
+          <Property Type="String" Name="IPAddress" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Reversed" Nullable="false" />
+          <Property Type="Int32" Name="PaymentType" Nullable="false" />
+          <Property Type="Int32" Name="PackageDetailID" Nullable="false" />
+          <Property Type="Guid" Name="ItemID" Nullable="false" />
+          <Property Type="Int32" Name="LicenseID" />
+          <Property Type="Int32" Name="MigrationID" />
+          <NavigationProperty Name="Package" Relationship="ABSNowModel.PackageLicensePurchased" FromRole="LicensePurchased" ToRole="Package" />
+          <NavigationProperty Name="Customer" Relationship="ABSNowModel.CustomerLicensePurchased" FromRole="LicensePurchased" ToRole="Customer" />
+        </EntityType>
+        <Association Name="PackageLicensePurchased">
+          <End Type="ABSNowModel.Package" Role="Package" Multiplicity="1" />
+          <End Type="ABSNowModel.LicensePurchased" Role="LicensePurchased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageID" />
+            </Principal>
+            <Dependent Role="LicensePurchased">
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerLicensePurchased">
+          <End Type="ABSNowModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="ABSNowModel.LicensePurchased" Role="LicensePurchased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="LicensePurchased">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubscriptionDetail">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseIssued" />
+          </Key>
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="DateTime" Name="SubscriptionDate" />
+          <Property Type="DateTime" Name="LastLoginDate" />
+          <Property Type="DateTime" Name="LicenseExpiration" />
+          <Property Type="Boolean" Name="LicenseIssued" Nullable="false" />
+          <Property Type="String" Name="TfcSub" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NonTfcSub" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="GESCustomerID" />
+          <Property Type="Boolean" Name="TFCDirect" />
+          <Property Type="Boolean" Name="TFCKo" />
+          <Property Type="Int32" Name="DealerID" />
+          <Property Type="String" Name="DealerCode" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="DealerDateAdded" />
+          <Property Type="DateTime" Name="DateUpdated" />
+          <Property Type="String" Name="UpdatedBy" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="GOMSID" />
+          <NavigationProperty Name="Customer" Relationship="ABSNowModel.CustomerSubscriptionDetail" FromRole="SubscriptionDetail" ToRole="Customer" />
+        </EntityType>
+        <Association Name="CustomerSubscriptionDetail">
+          <End Type="ABSNowModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="ABSNowModel.SubscriptionDetail" Role="SubscriptionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="SubscriptionDetail">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NCashWalletBalance">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="NCashWalletBalanceTemp">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="NCashWalletBalanceView">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="cashBalance" />
+          </Key>
+          <Property Type="String" Name="userId" Nullable="false" MaxLength="52" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cashBalance" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="NCashWalletBalanceTable">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="cashBalance" />
+          </Key>
+          <Property Type="String" Name="userId" Nullable="false" MaxLength="52" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="cashBalance" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="TFCNowRetailMigrationID">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="SubscriptionType" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="GOMSInternalID" />
+          <Property Type="Int32" Name="TFCnowPackageID" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TFCNowRetailMigrationTFCTV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="Email" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SubscriptionType" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LicenseEndDate" />
+          <Property Type="Int32" Name="TFCnowPackageID" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="IsMigrated" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LicensePurchasedProcessed">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="LicensePurchasedID" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerLicensePurchased1">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseEndDate" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Type="Guid" Name="LicensePurchasedID" Nullable="false" />
+          <Property Type="Int32" Name="PackageID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="EmailAddress" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LicenseEndDate" Nullable="false" />
+          <Property Type="String" Name="TransactionID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwCustomerLicensePurchased">
+          <Key>
+            <PropertyRef Name="LicensePurchasedID" />
+            <PropertyRef Name="PackageID" />
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="LicenseEndDate" />
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Type="Int64" Name="idx" />
+          <Property Type="Guid" Name="LicensePurchasedID" Nullable="false" />
+          <Property Type="Int32" Name="PackageID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="EmailAddress" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LicenseEndDate" Nullable="false" />
+          <Property Type="String" Name="TransactionID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="Recency" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ABSNowModelStoreContainer" CdmEntityContainer="ABSNowEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ABSNowModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="SecurityAnswer" ColumnName="SecurityAnswer" />
+                <ScalarProperty Name="SecurityQuestion" ColumnName="SecurityQuestion" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="PhoneWork" ColumnName="PhoneWork" />
+                <ScalarProperty Name="PhoneMobile" ColumnName="PhoneMobile" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packages">
+            <EntityTypeMapping TypeName="ABSNowModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="VideoBoxImage" ColumnName="VideoBoxImage" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PackageDescription" ColumnName="PackageDescription" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LicensePurchaseds">
+            <EntityTypeMapping TypeName="ABSNowModel.LicensePurchased">
+              <MappingFragment StoreEntitySet="LicensePurchased">
+                <ScalarProperty Name="MigrationID" ColumnName="MigrationID" />
+                <ScalarProperty Name="LicenseID" ColumnName="LicenseID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="PackageDetailID" ColumnName="PackageDetailID" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="Reversed" ColumnName="Reversed" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="NewSubscription" ColumnName="NewSubscription" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="LicenseEndDate" ColumnName="LicenseEndDate" />
+                <ScalarProperty Name="LicenseStartDate" ColumnName="LicenseStartDate" />
+                <ScalarProperty Name="DurationUnit" ColumnName="DurationUnit" />
+                <ScalarProperty Name="LicenseDuration" ColumnName="LicenseDuration" />
+                <ScalarProperty Name="TransactionCurrency" ColumnName="TransactionCurrency" />
+                <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+                <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LicensePurchasedID" ColumnName="LicensePurchasedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionDetails">
+            <EntityTypeMapping TypeName="ABSNowModel.SubscriptionDetail">
+              <MappingFragment StoreEntitySet="SubscriptionDetails">
+                <ScalarProperty Name="GOMSID" ColumnName="GOMSID" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DealerDateAdded" ColumnName="DealerDateAdded" />
+                <ScalarProperty Name="DealerCode" ColumnName="DealerCode" />
+                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
+                <ScalarProperty Name="TFCKo" ColumnName="TFCKo" />
+                <ScalarProperty Name="TFCDirect" ColumnName="TFCDirect" />
+                <ScalarProperty Name="GESCustomerID" ColumnName="GESCustomerID" />
+                <ScalarProperty Name="NonTfcSub" ColumnName="NonTfcSub" />
+                <ScalarProperty Name="TfcSub" ColumnName="TfcSub" />
+                <ScalarProperty Name="LicenseIssued" ColumnName="LicenseIssued" />
+                <ScalarProperty Name="LicenseExpiration" ColumnName="LicenseExpiration" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="SubscriptionDate" ColumnName="SubscriptionDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCashWalletBalances">
+            <EntityTypeMapping TypeName="ABSNowModel.NCashWalletBalance">
+              <MappingFragment StoreEntitySet="NCashWalletBalance">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCashWalletBalanceTemps">
+            <EntityTypeMapping TypeName="ABSNowModel.NCashWalletBalanceTemp">
+              <MappingFragment StoreEntitySet="NCashWalletBalanceTemp">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCashWalletBalanceViews">
+            <EntityTypeMapping TypeName="ABSNowModel.NCashWalletBalanceView">
+              <MappingFragment StoreEntitySet="NCashWalletBalanceView">
+                <ScalarProperty Name="cashBalance" ColumnName="cashBalance" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NCashWalletBalanceTables">
+            <EntityTypeMapping TypeName="ABSNowModel.NCashWalletBalanceTable">
+              <MappingFragment StoreEntitySet="NCashWalletBalanceTable">
+                <ScalarProperty Name="cashBalance" ColumnName="cashBalance" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TFCNowRetailMigrationIDs">
+            <EntityTypeMapping TypeName="ABSNowModel.TFCNowRetailMigrationID">
+              <MappingFragment StoreEntitySet="TFCNowRetailMigrationID">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TFCnowPackageID" ColumnName="TFCnowPackageID" />
+                <ScalarProperty Name="GOMSInternalID" ColumnName="GOMSInternalID" />
+                <ScalarProperty Name="SubscriptionType" ColumnName="SubscriptionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TFCNowRetailMigrationTFCTVs">
+            <EntityTypeMapping TypeName="ABSNowModel.TFCNowRetailMigrationTFCTV">
+              <MappingFragment StoreEntitySet="TFCNowRetailMigrationTFCTV">
+                <ScalarProperty Name="IsMigrated" ColumnName="IsMigrated" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TFCnowPackageID" ColumnName="TFCnowPackageID" />
+                <ScalarProperty Name="LicenseEndDate" ColumnName="LicenseEndDate" />
+                <ScalarProperty Name="SubscriptionType" ColumnName="SubscriptionType" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LicensePurchasedProcesseds">
+            <EntityTypeMapping TypeName="ABSNowModel.LicensePurchasedProcessed">
+              <MappingFragment StoreEntitySet="LicensePurchasedProcessed">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LicensePurchasedID" ColumnName="LicensePurchasedID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerLicensePurchased1">
+            <EntityTypeMapping TypeName="ABSNowModel.CustomerLicensePurchased1">
+              <MappingFragment StoreEntitySet="CustomerLicensePurchased">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="LicenseEndDate" ColumnName="LicenseEndDate" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="LicensePurchasedID" ColumnName="LicensePurchasedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="TFCnowExtendLicense" FunctionName="ABSNowModel.Store.spTFCNowExtendLicense" />
+          <EntitySetMapping Name="vwCustomerLicensePurchaseds">
+            <EntityTypeMapping TypeName="ABSNowModel.vwCustomerLicensePurchased">
+              <MappingFragment StoreEntitySet="vwCustomerLicensePurchased">
+                <ScalarProperty Name="Recency" ColumnName="Recency" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="LicenseEndDate" ColumnName="LicenseEndDate" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="LicensePurchasedID" ColumnName="LicensePurchasedID" />
+                <ScalarProperty Name="idx" ColumnName="idx" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="TFCNow" ZoomLevel="76">
+        <EntityTypeShape EntityType="ABSNowModel.Customer" Width="1.5" PointX="0.875" PointY="0.5" Height="5.8263151041666656" />
+        <EntityTypeShape EntityType="ABSNowModel.Package" Width="1.5" PointX="7.125" PointY="0.75" Height="3.1340950520833331" />
+        <EntityTypeShape EntityType="ABSNowModel.LicensePurchased" Width="1.5" PointX="3.375" PointY="0.75" Height="5.057109375" />
+        <AssociationConnector Association="ABSNowModel.PackageLicensePurchased">
+          <ConnectorPoint PointX="7.125" PointY="2.3170475260416667" />
+          <ConnectorPoint PointX="4.875" PointY="2.3170475260416667" />
+        </AssociationConnector>
+        <AssociationConnector Association="ABSNowModel.CustomerLicensePurchased">
+          <ConnectorPoint PointX="2.375" PointY="3.4708561197916659" />
+          <ConnectorPoint PointX="3.375" PointY="3.4708561197916659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ABSNowModel.SubscriptionDetail" Width="1.5" PointX="6.75" PointY="4.5" Height="4.0956022135416656" />
+        <AssociationConnector Association="ABSNowModel.CustomerSubscriptionDetail">
+          <ConnectorPoint PointX="2.375" PointY="6.485278261718749" />
+          <ConnectorPoint PointX="6.75" PointY="6.485278261718749" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ABSNowModel.NCashWalletBalance" Width="1.5" PointX="3.375" PointY="7.25" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="ABSNowModel.NCashWalletBalanceTemp" Width="1.5" PointX="0.75" PointY="7.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="ABSNowModel.NCashWalletBalanceView" Width="1.5" PointX="9.375" PointY="0.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="ABSNowModel.NCashWalletBalanceTable" Width="1.5" PointX="9.375" PointY="3.75" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="ABSNowModel.TFCNowRetailMigrationID" Width="1.5" PointX="11" PointY="6.875" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ABSNowModel.TFCNowRetailMigrationTFCTV" Width="1.5" PointX="8.625" PointY="6.5" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="ABSNowModel.LicensePurchasedProcessed" Width="1.5" PointX="3.375" PointY="9.75" Height="1.5956835937500031" />
+        <EntityTypeShape EntityType="ABSNowModel.CustomerLicensePurchased1" Width="1.5" PointX="5.375" PointY="9.75" Height="2.1725878906250031" />
+        <EntityTypeShape EntityType="ABSNowModel.vwCustomerLicensePurchased" Width="1.5" PointX="7.375" PointY="9.75" Height="2.5571907552083388" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,371 @@
+﻿@model TFCTV.Models.SignUpModel
+@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IEnumerable<IPTV2_Model.Country> cList = ViewBag.ListOfCountries;
+
+    var cCode = MyUtility.getCountry(Request.GetUserHostAddressFromCloudflare()).getCode();
+    var location = MyUtility.getLocation(Request.GetUserHostAddressFromCloudflare());
+    string cState = null;
+    string cCity = null;
+    if (location != null)
+    {
+        cState = location.region;
+        cCity = location.city;
+    }
+
+    IPTV2_Model.Country cCountry = ViewBag.UserCountry;
+    var stateCount = cCountry != null ? cCountry.States.Count() : 0;
+
+    IEnumerable<IPTV2_Model.State> listOfStates = null;
+    if (stateCount > 0)
+    {
+        listOfStates = cCountry.States.OrderBy(s => s.Name).ToList();
+    }
+
+    var userCountry = cCode == "--" ? GlobalConfig.DefaultCountry : cCode;
+}
+<div id="mainBody">
+    <div id="freetrial">
+        <div style="padding-top: 20px;">
+            <div id="cmsg">
+                Thank you! You are now registered to TFC.tv!!
+            </div>
+            <center>@Html.ImageBuilder(Url, "freetrial/starts_now.png", new { alt = "Your TFC.tv free trial starts now!" })</center>
+        </div>
+        <div class="trial2-text">
+            Pwede ka nang manood ng mga paborito mong<br />
+            Kapamilya shows at mga piling movies*!
+            <div class="breakLarge">
+            </div>
+            WATCH NOW
+        </div>
+        <div style="margin: 0 auto; text-align: center; width: 100%;">
+            <a href="/Show/Details/429">@Html.ImageBuilder(Url, "freetrial/asap.png", new { alt = "ASAP 2012", title = "ASAP 2012" })</a><a
+                href="/Show/Details/382">@Html.ImageBuilder(Url, "freetrial/tv_patrol.png", new { alt = "TV Patrol", title = "TV Patrol" })</a>
+            <a href="/Show/Details/726">@Html.ImageBuilder(Url, "freetrial/walang_hanggan.png", new { alt = "Walang Hanggan", title = "Walang Hanggan" })</a></div>
+        <div style="margin: 0 auto; text-align: center; width: 100%; padding-top: 20px;">
+            <a href="/">@Html.ImageBuilder(Url, "freetrial/visit_homepage.png", new { alt = "Visit TFC.tv Homepage", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/Profile">@Html.ImageBuilder(Url, "freetrial/visit_profile.png", new { alt = "View your Profile", title = "View your Profile" })</a></div>
+        <div style="font-size: 11px; padding-left: 5px; color: #fff; padding-top: 8px;">
+            *Limited to TFC content available on the site.</div>
+    </div>
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div>@Html.ImageBuilder(Url, "register_banner.jpg", new { width = 940 })</div>
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Register a TFC.tv Account</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerLeftPane" class="floatLeft">
+                <div class="padLeftLarge">
+                    <div class="subtext social-margin">
+                        Log in to your favorite social networking site listed below<br />
+                        and sign in automatically on TFC.tv.
+                    </div>
+                    <div id="registerSocialConnection">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                </div>
+            </div>
+            <div class="floatLeft or-div">
+                <div class="or-topbar">
+                </div>
+                <span class="or-text">or</span>
+                <div class="or-botbar">
+                </div>
+            </div>
+            <div id="registerRightPane" class="floatLeft">
+                <div style="margin-top: 10px;">
+                    Create a new TFC.tv account by entering your personal information in the fields
+                    below.
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div id="registerBody">
+                    <form id="regform" method="post" action="/User/_Register">
+                    <div class="formSubHeaders">
+                        Account Information</div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.Email)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "textbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { @class = "textbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                        </div>
+                        <div>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "textbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.FirstName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "textbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.LastName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "textbox" })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.City)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.City, new { @class = "textbox", @Value = cCity })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.State)
+                        </div>
+                        <div>
+                            @{if (stateCount > 0)
+                              {
+                                @(Html.Telerik().DropDownList()
+                                .Name("StateDD")
+                                        .BindTo(new SelectList(listOfStates, "StateCode", "Name"))
+                                        .HtmlAttributes(new { @class = "textbox StateDD" })
+                                        .Value(cState))
+                              }
+                              else
+                              {
+                                @(Html.Telerik().DropDownList()
+                                .Name("StateDD")
+                                        .HtmlAttributes(new { @class = "textbox StateDD" })
+                                        .Value(cState))
+                              }
+                            }
+                            @Html.TextBoxFor(m => m.State, new { @class = "textbox", @Value = cState })
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                            @Html.LabelFor(m => m.CountryCode)
+                        </div>
+                        <div>
+                            @(Html.Telerik().DropDownList()
+                                .Name("CountryCode")
+                                        .BindTo(new SelectList(cList, "Code", "Description"))
+                                        .HtmlAttributes(new { @class = "textbox" })
+                                        .Value(userCountry)
+                                    )<span class="errstatus"></span> @*@Html.TextBoxFor(m => m.CountryCode, new { @class = "textbox required" })*@
+                        </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="editor-row">
+                        <div class="editor-label floatLeft">
+                        </div>
+                        <div id="tnc">
+                            <input type="checkbox" id="terms" name="terms" value="0" />
+                            I confirm that I have read and fully understand and accept the @Html.ActionLink("Terms and Conditions of the Subscription and/or Use", "TermsAndConditions", "Home")
+                            of TFC.tv<br />
+                            <span class="errstatus"></span>
+                        </div>
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="editor-row submit-row">
+                        <input type="submit" class="btnimage registerbtn floatLeft" id="regsubmit" value="Register" /><div
+                            id="rsb-load" class="side-button-loader padLeftStandard">
+                        </div>
+                    </div>
+                    <input type="hidden" value="@Request["iid"]" id="iid" name="iid" />
+                    </form>
+                    <div class="clear breakLarge">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner" class="register-spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "48", height = "48" })<br />
+        <span id="spannertext" class="register-spanner-text">Your registration is successful!
+            Please wait...</span>
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "user.css")}
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        function redirectToHome() {
+            window.location = "/";
+        }
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 8
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        minlength: 8,
+                        equalTo: '#Password'
+                    },
+                    FirstName: { required: true },
+                    LastName: { required: true },
+                    CountryCode: { required: true },
+                    terms: { required: true }
+                },
+                messages: {
+                    Email: {
+                        required: 'This field is required.',
+                        email: 'Invalid email address',
+                        minlength: 'Invalid email address.'
+                    },
+                    Password: {
+                        required: 'Please provide a password.',
+                        minlength: $.format('Enter at least {0} characters.')
+                    },
+                    ConfirmPassword: {
+                        required: 'Please confirm password.',
+                        minlength: $.format('Enter at least {0} characters.'),
+                        equalTo: 'Password mismatch!'
+                    },
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('<img alt="loading..." border="0" height="20" id="loading-b" src="/Content/images/ajax-loader.gif" width="20" />');
+                    $.post('/User/_Register', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#message').html(createHighlight(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('.register-spanner-text').css('margin-left', '-102px');
+                            $('#registerContainer').addClass('register-container-center-span');
+                            $('#registerContainer').html($('#ajaxloading').html());
+                            //setTimeout('redirectToHome()', 3000);
+                            $('#cmsg').html(data.errorMessage);
+                            $("#freetrial").overlay().load();
+//                            _gaq.push(['t2._trackEvent', 'User', 'Register', data.info.toString()]);
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                            $('#rsb-load').empty();
+                        }
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+
+            $('#CountryCode').bind('valueChange', function (e) {
+                jQuery.get('/Ajax/GetCountryState', { id: e.value }, function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        var stateDropDown = $('#StateDD').data('tDropDownList');
+                        stateDropDown.dataBind(data);
+                        $('.StateDD .t-input').text(data[0].Text);
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript" src="http://aspnet-scripts.telerikstatic.com/mvcz/2011.3.1115/telerik.list.min.js"></script>
+    @(Html.Telerik().ScriptRegistrar()
+                     .DefaultGroup(group => group
+                         .Compress(true))
+                         .jQuery(false)
+                         .OutputScriptFiles(false)
+    )
+    <script type="text/javascript">
+        function toggleState(stateCount) {
+            $('#StateDD').val('');
+            if (stateCount > 0) {
+                $('.StateDD').show();
+                $('#State').hide();
+            }
+            else {
+                if($('#State').is(':hidden'))
+                    $('#State').val('');
+                $('.StateDD').hide();
+                $('#State').show();
+            }
+        }
+        $(document).ready(function () {
+            toggleState(@stateCount);
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#freetrial").overlay({
+                top: 120,
+                mask: {
+                    color: '#000',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                closeOnClick: false,
+                load: false,
+                onClose: function () {
+                    redirectToHome();
+                }
+            });
+        });
+    </script>
+}

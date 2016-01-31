@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Search Results - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<div id="mainBody">
+    <div id="LeaderAdBlock" class="floatRight" style="margin-top: 20px; margin-bottom: 10px;">      
+        <!-- TFCtv_Leaderboard_728x90 -->
+        <script type='text/javascript'>
+            GA_googleFillSlot("TFCtv_Leaderboard_728x90");
+        </script>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Search Results</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div class="padLeftStandard">
+                <div>
+                    <gcse:searchresults-only><span style="color:#fff;">Loading results...</span></gcse:searchresults-only>
+                </div>
+                <div class="breakStandard">
+                </div>
+            </div>
+        </div>
+        <div class="clear breakStandard">
+        </div>
+    </div>
+</div>
+@section Stylesheet
+{
+}
+@section JScript{
+    <script type="text/javascript">
+        (function () {
+            var cx = '014045967172328131312:je8wvy59rya';
+            var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type='text/javascript'>     
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_Leaderboard_728x90");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+    <!-- End of Google Ads -->
+}
+@section JScriptBottom {
+    @Html.CssBuilder(Url, "search.css")
+}

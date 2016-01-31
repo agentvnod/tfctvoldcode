@@ -1,0 +1,71 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    string containerId = ViewBag.containerId;
+    string featureType = ViewBag.FeatureType;
+    string sectionTitle = ViewBag.SectionTitle;
+    string linkSlug = String.Empty;
+    int id = ViewBag.id;
+    int pageSize = ViewBag.pageSize;
+    bool removeShowAll = false;
+    bool isFeature = false;
+    if (ViewBag.RemoveShowAll != null)
+    {
+        removeShowAll = ViewBag.RemoveShowAll;
+    }
+    if (ViewBag.IsFeature != null)
+    {
+        isFeature = ViewBag.IsFeature;
+    }
+    if (ViewBag.LinkSlug != null)
+    {
+        linkSlug = ViewBag.LinkSlug;
+    }    
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {
+          int ctr = 0;
+    <div class="popular col-md-3 col-sm-6 col-xs-12 hide480">
+        <h2>
+            @sectionTitle
+        </h2>
+        <!-- small video box -->
+        @foreach (var item in Model)
+        {
+            string href = String.Format("/Episode/Details/{0}/{1}", item.id, item.slug);
+            string title = String.Format("{0}, {1}", item.show_name, item.airdate);
+            <div class="post clearfix">
+                <div class="pleft">
+                    <div class="video_cover">
+                        <!-- play button cover -->
+                        <a href="@href" title="@title">
+                            <img src="@Html.Raw(item.imgurl)" class="img100" title="@Html.Raw(item.blurb.Ellipsis(80))" alt="@title"/>
+                            <div class="video_play_button">
+                            </div>
+                        </a>
+                        <!-- play button -->
+                    </div>
+                </div>
+                <div class="pright">
+                    <a href="@href" title="@title">
+                        <h4>
+                            @Html.Raw(item.show_name)</h4>
+                        <p>
+                            <span class="glyphicon glyphicon-time"></span>@Html.Raw(item.airdate)</p>
+                    </a>
+                </div>
+            </div>
+            ctr = ctr + 1;
+            if (ctr > 3)
+            {
+                break;
+            }
+        }
+        <!-- end small video box -->
+    </div>
+
+      }
+  }
+  
+}

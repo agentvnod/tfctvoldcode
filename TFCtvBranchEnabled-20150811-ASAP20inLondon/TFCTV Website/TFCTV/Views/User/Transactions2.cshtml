@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "My Transactions - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:transactions";
+}
+<!--  My Transactions page body -->
+<section class="page_pagebody subscription_pagebody transactions_pagebody">
+    <div class="container">
+        <h1 class="page_title">
+            MY TRANSACTIONS</h1>
+        <!-- Responsive table for TRANSACTIONS -->
+        @Html.Action("GetTransactions")
+        <!-- end table container -->
+    </div>
+    <!-- END container -->
+</section>
+<!-- END My Transactions page body -->

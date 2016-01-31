@@ -1,0 +1,44 @@
+#alertbox
+{
+    display: none;
+    width: 650px;
+    border: 5px solid #666;
+    border: 5px solid rgba(82, 82, 82, 0.698);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    z-index: 999;
+}
+
+#alertbox div
+{
+    padding: 10px 10px 10px 0;
+    border: 1px solid #000;
+    background-color: #fff;    
+}
+
+#alertbox h2.close-window
+{
+    margin: -11px;
+    margin-bottom: 0px;
+    color: #49a4ff;
+    padding: 5px 10px;
+    font-size: 11px;
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+}
+
+#alertbox h2.close-window:hover
+{
+    text-decoration: underline;
+}
+
+#alertbox .contentWrap
+{
+}
+
+#alertbox iframe
+{
+    border: 0;
+    margin: 0;
+}

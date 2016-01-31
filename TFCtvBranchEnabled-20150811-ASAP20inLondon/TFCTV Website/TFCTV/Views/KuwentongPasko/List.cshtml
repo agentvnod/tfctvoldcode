@@ -1,0 +1,81 @@
+﻿@model IEnumerable<IPTV2_Model.Episode>
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", "Kuwento ng Pasko Saan Man sa Mundo");
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    int ctr = 0;
+    int itemPerRow = 3;
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="left sectionHeaderTitle">
+                    @Html.ActionLink("Mga Kuwento ng Pasko", "Index")</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div class="clear breakStandard">
+        </div>
+        <div class="floatRight white" style="margin-right: 20px;">
+            <div class="floatLeft" style="margin-top: 12px; margin-right: 10px;">@ViewBag.OutOf
+                of @ViewBag.TotalCount</div>
+            <a href="@Url.Action("List", "KuwentongPasko", new { id = ViewBag.Previous })" class="prev-btn-square white">
+                PREV</a><a href="@Url.Action("List", "KuwentongPasko", new { id = ViewBag.Next })" class="next-btn-square white">
+                    NEXT</a></div>
+        <div class="clear breakStandard">
+        </div>
+        <div id="latestShows_bodyContainer">
+            <div id="dsFeatureItems">
+                <div class="itemListBody">
+                    <div class="wrapper">
+                        <ul class="dsitemListing">
+                            @foreach (var item in Model)
+                            {
+                                string img = String.IsNullOrEmpty(item.ImageAssets.ImageVideo) ? GlobalConfig.AssetsBaseUrl + GlobalConfig.BlankGif : String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, item.EpisodeId, item.ImageAssets.ImageVideo);
+                            
+                            
+                                <li>
+                                    <div class="chartItem">
+                                        <div class="chartImage">
+                                            <div class="chartImageHolder">
+                                                <a href="/KuwentongPasko/@item.EpisodeId">
+                                                    <img src="@img" title="@item.Synopsis" height="98" width="151" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="chartInfo">
+                                            <div class="chartInfoTitle">
+                                                <a href="/KuwentongPasko/@item.EpisodeId">@item.EpisodeName</a></div>
+                                            @*<div class="chartInfoDate">
+                                                Posted on @item.DateAired.Value.ToString("MMMM dd, yyyy")</div>*@
+                                            <div class="chartInfoDetails">
+                                                @MyUtility.Ellipsis(item.Synopsis, 60)</div>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </li>
+                            
+                            }
+                        </ul>
+                        <div class="clear" style="border-bottom: 1px solid #393939; width: 930px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "episode.css")    
+}

@@ -1,0 +1,48 @@
+﻿@model List<IPTV2_Model.Celebrity>
+@{
+    DateTime registDt = DateTime.Now;
+}
+<div class="widget sec_loved_celebrities">
+    <!-- Loved Shows widget -->
+    <h3>
+        Loved Celebrities</h3>
+    <div class="row">
+        @{if (Model != null)
+          {
+              if (Model.Count() > 0)
+              {
+                  foreach (var item in Model)
+                  {
+                      try
+                      {
+                          string img = String.Empty;
+                          if (!String.IsNullOrEmpty(item.ImageUrl))
+                          {
+                              img = String.Format("{0}{1}/{2}", GlobalConfig.CelebrityImgPath, item.CelebrityId, item.ImageUrl);
+                          }
+                          string href = String.Format("Show/Details/{0}/{1}", item.CelebrityId, MyUtility.GetSlug(item.FullName));
+                          if (!String.IsNullOrEmpty(img))
+                          { 
+            <div class="col-md-4 col-sm-6 col-xs-4 feed_item">
+                <a href="@href">
+                    <img class="pgallary" src="@img" alt="@item.FullName" title="@item.FullName"></a>
+            </div>      
+                          }
+                      }
+                      catch (Exception) { }
+                  }
+            <div class="sec_footer">
+                <!-- section of Load more -->
+                <a href="#" class="loadMore">load more<br>
+                    @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more items" })</a>
+            </div>
+              }
+          }
+          else
+          { 
+            <p>
+                You don't like any of our celebrities :(</p>
+          }
+        }
+    </div>
+</div>

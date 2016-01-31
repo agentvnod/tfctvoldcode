@@ -1,0 +1,188 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Show
+@{
+    string titleDesc = "Watch Episodes on TFC.tv: Official ABS-CBN Online Channel";
+    if (Model is IPTV2_Model.DailyShow)
+    {
+        titleDesc = "Watch All Episodes on TFC.tv: Official ABS-CBN Online Channel";
+    }
+    ViewBag.Title = String.Format("{0} - {1}", Model.Description, titleDesc);
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    string CountryCode = ViewBag.CountryCode;
+    ViewDataDictionary dictionary = new ViewDataDictionary();
+    bool Loved = ViewBag.Loved;
+
+    CheckSubscriptionReturnObject HasActiveSubscriptionBasedOnCategoryId = ViewBag.HasActiveSubscriptionBasedOnCategoryId;
+    dictionary.Add(new KeyValuePair<string, object>("hasLoved", Loved));
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    if (User.Identity.IsAuthenticated)
+    {
+        Guid UserId = ViewBag.UserId;
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(UserId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+    }
+    string parentCategories = ContextHelper.GetShowParentCategories(Model.CategoryId);
+    var ReturnUrl = ViewContext.HttpContext.Request.Url.PathAndQuery;
+
+    var metaDesc = String.Format("Watch {0} episodes, ABS-CBN teleseryes, and more on TFC.tv. {1}", Model.Description, Model.Blurb);
+}
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="aboutTheShow">
+            <div id="aboutPoster">
+                <div class="floatLeft">
+                    @{if (!String.IsNullOrEmpty(Model.ImagePoster))
+                      {
+                        <img width="182" alt="" border="0" height="245" src="@String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Model.ImagePoster)" alt="@Html.Raw(Model.Description)" title="@Html.Raw(Model.Description)" />
+                      }
+
+                      else
+                      {
+                        @Html.ImageBuilder(Url, "blank-image.jpg", new { width = 182, height = 245 })
+                      }
+                    }
+                </div>
+                <div id="aboutWriteUp">
+                    <span class="showDescription">Date Aired: @Model.StartDate.Value.ToString("MMMM d, yyyy")<br />
+                        No. of Episodes: @ViewBag.EpisodeCount
+                        <br />
+                    </span>
+                    <p class="showSynopsis">
+                        @Html.Raw(Model.Blurb)
+                    </p>
+                    @Html.Action("GetCasts", new { id = Model.CategoryId })
+                    <div class="clear breakSmall">
+                    </div>
+                    <div class="user-reaction">
+                        @Html.Partial("_SharePartial", Model) @Html.Partial("_LovePartial", Model, dictionary)
+                    </div>
+                    <div id="ratingDiv">
+                    </div>
+                </div>
+            </div>
+            <div id="showAds">
+                <div id="adBlock" style="width: 300px; height: 250px; position: relative; top: -20px;
+                    left: -10px;">
+                    @{if (!MyUtility.IsAdRestricted(Model.CategoryId))
+                      { 
+                        <!-- Google MRec -->
+                        <script type='text/javascript'>
+                            GA_googleFillSlot("TFCtv_MediumRectangle_300x250");
+                        </script>  
+                      }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="ratings-and-review">
+            @Html.Partial("_ShowsRatingsAndReviews", Model)
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "ratingsreviews-1.1.css")
+    <!--[if IE ]>
+        @Html.CssBuilder(Url, "ie_ratingsreviews.css")
+    <![endif]-->
+    @Html.CssBuilder(Url, "show-1.3.css")
+    @Html.CssBuilder(Url, "cast.css")
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    @Html.CssBuilder(Url, "subscription-1.7.css")
+    @Html.CssBuilder(Url, "entrypoint-1.4.css")
+    @Html.CssBuilder(Url, "episode-list-0.6.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@HttpUtility.JavaScriptStringEncode(Model.Description) - @Model.StartDate.Value.ToString("MMMM d, yyyy")"/>
+    <meta property="og:description" content="@HttpUtility.JavaScriptStringEncode(Model.Blurb)"/>
+    <meta property="og:type" content="Show" />
+    <meta property="og:image" content="@GlobalConfig.ShowImgPath@Model.CategoryId/@Model.ImagePoster"/>
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDesc)" />
+    <meta name="fragment" content="!">
+    <link rel="canonical" href="@String.Format("{2}/Show/Details/{0}/{1}", Model.CategoryId, ViewBag.dbSlug, GlobalConfig.baseUrl)" />
+}
+@section JScript {
+    <!-- Google Ads -->
+    <script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+    </script>
+    <script type='text/javascript'>
+        GS_googleAddAdSenseService("ca-pub-1805244726360577");
+        GS_googleEnableAllServices();
+    </script>
+    <script type="text/javascript">
+        GA_googleAddAttr("Show", "@Model.CategoryId");
+        GA_googleAddAttr("Category", "@parentCategories");
+    </script>
+    <script type='text/javascript'>
+        GA_googleAddSlot("ca-pub-1805244726360577", "TFCtv_MediumRectangle_300x250");
+    </script>
+    <script type='text/javascript'>
+        GA_googleFetchAds();
+    </script>
+    <!-- End of Google Ads -->
+}
+@section FeatureBody {
+    <br />
+    <br />
+    <br />
+    <div id="featureBody">
+        <div id="featureBanner">
+            <div class="featureBannerItems">
+                <div class="fbanner-header">
+                    <h1 class="h1-banner-title">@Html.Raw(MyUtility.Ellipsis(Model.Description, 40))</h1>
+                    <div class="fbanner-link freposition">
+                        @{
+                            string ButtonText = "Subscribe";
+                            string classNames = "bs-big-box-subscribe";
+                            if (HasActiveSubscriptionBasedOnCategoryId.HasSubscription)
+                            {
+                                if (HasActiveSubscriptionBasedOnCategoryId.Within5DaysOrLess)
+                                {
+                                    ButtonText = "Renew Subscription";
+                                }
+                                else
+                                {
+                                    ButtonText = String.Format("Your entitlement will expire on {0:MMMM d, yyyy}", HasActiveSubscriptionBasedOnCategoryId.SubscriptionEndDate);
+                                    classNames = "bs-big-box-subscribe bs-box-fsize12";
+                                }
+                            }                        
+                        }
+                        @Html.ActionLink(ButtonText, "Details", "Subscribe", new { id = Model.CategoryId, ReturnUrl = ReturnUrl }, new { @class = classNames })
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="fbanner-content">
+                    <div class="image-title-banner">
+                        @{if (!String.IsNullOrEmpty(Model.ImageTitleBanner))
+                          {
+                            <img width="570" alt="" border="0" height="300" src="@String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, Model.CategoryId, Model.ImageTitleBanner)" alt="@Html.Raw(Model.Description)" title="@Html.Raw(Model.Description)" />
+                          }
+                          else
+                          {
+                            @Html.ImageBuilder(Url, "black.png", new { width = 570, height = 300 })
+                          }
+                        }
+                    </div>
+                    <div class="fbanner-eplist">
+                        <h2 class="title">
+                            @Html.Raw(String.Format("{0} - Episodes", MyUtility.Ellipsis(Model.Description, 30)))</h2>
+                        <div>@Html.Action("EpisodeList", new { id = Model.CategoryId })</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+}
+@section JScriptBottom {
+    @{if (!User.Identity.IsAuthenticated)
+      { 
+        <script type="text/javascript">
+            $('.bs-subscribe').on('click', function () { $('#signin').click(); return false; });
+        </script>
+      }
+    }
+}

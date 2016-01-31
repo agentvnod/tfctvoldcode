@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        @{if (MyUtility.isTVECookieValid())
+          {
+            <div>
+                @Html.ImageBuilder(Url, "register/tve-banner-green-long.jpg", new { title = "TFC Everywhere", alt = "TFC Everywhere", width = 940 })</div>
+          }
+          else
+          {
+            <div>@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE-2B.jpg", new { wdith = 940 })</div>
+          }
+        }
+        @*<div>@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE-2B.jpg", new { wdith = 940 })</div>*@
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="rheader">
+                        Congratulations! You are one step away from completing your registration.
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    @*<div class="rheader">
+                        By submitting your account info, you earned <span class="orange boldText">7 DAYS FREE
+                            TRIAL</span>!
+                    </div>*@
+                    <div id="freetrial01">
+                        <div style="padding-top: 20px;">
+                            <center>@Html.ImageBuilder(Url, "register/REGISTRATION-PAGE-2B_11.png", new { title = "Email has been sent!" })</center>
+                        </div>
+                        <div class="trial2-text">
+                            <span class="pblue">An email has been sent to you.</span>
+                        </div>
+                        <div style="font-size: 28px; font-weight: bold;">
+                            Verify your email address to complete your registration.
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        @{if (!MyUtility.isTVECookieValid())
+                          {
+                            <div>
+                                @Html.ImageBuilder(Url, "register/7-Day-Free-Trial-BOX.png")
+                                @*@Html.ImageBuilder(Url, "register/REGISTRATION-1A_22.png")*@
+                            </div>
+                          }
+                        }
+                        <div class="breakStandard">
+                        </div>
+                        <div>
+                            If you do not receive a verification email after a few minutes, click @Html.ActionLink("here", "ResendVerification", "User", null, new { @class = "orange" })
+                            to resend verification email.</div>
+                        <div class="clear">
+                        </div>
+                        <div>
+                            Kindly check the spam or junk folder of your email, as the verification email may
+                            have been sent there accidentally.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}

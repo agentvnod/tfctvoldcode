@@ -1,0 +1,65 @@
+﻿<div id="wishlistContainer">
+    <div id="wishlistPanel">
+    </div>
+</div>
+<script type="text/javascript">
+    function removeObj(obj) {
+        $(obj).remove();
+    }
+    $(document).ready(function () {
+        function bindAnchor() {
+            $('.wlink').live('click', function () {
+                var wlink = $(this).overlay({
+                    mask: 'black',
+                    fixed: false,
+                    left: 100,
+                    top: 50,
+                    closeOnClick: false,
+                    onBeforeLoad: function () {
+                        var wrap = this.getOverlay().find(".contentWrap");
+                        wrap.load(this.getTrigger().attr("href"));
+                    },
+                    onClose: function () {
+                        $('#overlay .contentWrap').empty();
+                    }
+                });
+                $(this).overlay().load();  //initiates overlay
+                wlink.load();  //loads above overlay settings
+                return false;
+            });
+
+            $('.wl-delete').live('click', function () {
+                var wid = $(this).attr('rel');
+                $.post('/Wishlist/Delete', { id: wid }, function (data) {
+                    if (data.errorCode == 0) {
+                        $('#li-' + wid).html("Wishlist has been removed.");
+                        setTimeout(function () { removeObj('#li-' + wid) }, 1500);
+                    }
+                });
+                return false;
+            });
+        }
+        $.ajax({
+
+            url: '/Wishlist/_List'
+            , dataType: 'json'
+            , data: 'id=@ViewBag.userId'
+            , beforeSend: function () { //spanner
+            }
+            , success: function (data) {
+                var conf = { container: 'wishlistPanel', data: data, options: '@ViewBag.isAllowed' }
+                new wishlist(conf).create();
+
+                if ('@ViewBag.isAllowed' == 'false')
+                    $(".wl-delete").hide();
+            }
+            , complete: bindAnchor
+        });
+
+    });
+</script>
+<div class="apple_overlay" id="overlay">
+    <!-- the external content is loaded inside this tag -->
+    <div class="contentWrap">
+    </div>
+</div>

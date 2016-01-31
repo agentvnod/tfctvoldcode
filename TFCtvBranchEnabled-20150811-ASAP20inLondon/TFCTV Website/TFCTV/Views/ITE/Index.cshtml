@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Link your IT&E Account - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    TransactionReturnType ErrorMessage = null;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+    }
+    catch (Exception) { }
+}
+<section class="page_pagebody changepass_pagebody it_e">
+    <div class="container">
+        <h1 class="page_title">LINK YOUR @Html.ImageBuilder(Url, "logo/iet_logo.png", new { @class = "iet_logo", alt = "IE&T" }) ACCOUNT</h1>
+        <!-- form  -->
+        <form method="post" role="form" action="@Url.Action("_Validate", "ITE", null, "https")">
+            @{if (ErrorMessage != null)
+            {
+                if (!String.IsNullOrEmpty(ErrorMessage.StatusMessage))
+                {
+                    <div class="row form-group">
+                        <div class="col-md-5 col-sm-7 col-xs-12">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                @ErrorMessage.StatusMessage
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            }
+            @Html.AntiForgeryToken()
+            <div class="row form-group">
+                <!-- 1st row / step 1 -->
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <p><strong>STEP 1.</strong></p>
+                    <p class="heading_pb10"><strong class="heading20 blue">Enter your IT&E Phone number or DSL Number</strong><br>( Ex: 671xxxxxxx, 670xxxxxxx, 194xxxxxxx)</p>
+
+                    <input class="form-control" type="text" name="phone_num" id="phone_num" required maxlength="10">
+                    <small><a href="#ite_msg1" data-toggle="modal"><u>Why do you need this?</u></a></small>
+
+                    <p>&nbsp;</p>
+                </div>
+            </div>   <!-- END 1st row / step 1 -->
+
+            <div class="row form-group">
+                <!-- 2nd row / step 2 -->
+                <div class="col-md-5 col-sm-7 col-xs-12">
+                    <p><strong>STEP 2.</strong></p>
+                    <p class="heading_pb10"><strong class="heading20 blue">Enter your TFC.tv Activation Code</strong><br>(Ex: 10-digit code, 8QZIF32EEL)</p>
+                    <input class="form-control" type="text" name="activation_code" id="activation_code" maxlength="10" required>
+                    <small><a href="#ite_msg2" data-toggle="modal"><u>Guide to get your Activation Code</u></a></small>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                </div>
+            </div>   <!-- END 2nd row / step 2 -->
+
+            <div class="row form-group">
+                <!-- 3rd row / submit -->
+                <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12">
+                    <div class="row form-group">
+                        <div class="col-xs-1">
+                            <input type="checkbox" required id="confirm" class="form-control css-checkbox">
+                            <label class="css-label klaus" for="confirm"></label>
+                        </div>
+                        <div class="col-xs-11">
+                            <label for="confirm">
+                                I confirm that I have read, fully understand and accept the <a href="@Url.Action("TermsAndConditions","Home")" target="_blank">
+                                    TFC.tv Terms and Conditions of Subscription and/or Use
+                                </a>.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-xs-1">
+                            <input type="checkbox" required id="confirm2" class="form-control css-checkbox">
+                            <label class="css-label klaus" for="confirm2"></label>
+                        </div>
+                        <div class="col-xs-11">
+                            <label for="confirm2">
+                                By availing of and using the TFC.tv Lite Subscription Package for IT&E Subscribers, I agree that my TFC.tv Lite Subscription shall continue as long as my subscription with IT&E is active and subject to the sole discretion of IT&E. I understand that the current terms of TFC.tv on payment, automatic renewal of subscription, and opt-out of automatic renewal shall be addressed with IT&E. For any questions or comments, please contact 1-888-302-9483 for details.
+                            </label>
+                        </div>
+                    </div>
+                    <input class="red_button" type="submit" name="submit" value="ACTIVATE NOW">
+                </div>
+            </div>   <!-- END 3rd row / submit -->
+
+        </form>   <!-- END form -->
+    </div>   <!-- END container -->
+</section>
+@section MetaTags{
+    <meta name="description" content="Link your IT&E account to your TFC.tv account" />
+    <link rel="canonical" href="@String.Format("{0}/ITE", GlobalConfig.baseUrl)" />
+}
+<!-- popup message IT&E Phone Number -->
+<div class="modal fade" id="ite_msg1" tabindex="-1" role="dialog" aria-labelledby="regSceMsgLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body ite_dig">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <p>This is needed to validate your IT&E account and ensure that you receive the right plan.</p>
+                <p>4G Customers, please enter your assigned phone number, 671-nnn-xxxx or 670-nnn-xxxx.</p>
+                <p>DSL customers, please enter you DSL service number, 194nnnxxxx where nnnxxxx is your landline number attached to your DSL service.</p>
+            </div>  <!-- END box body -->
+        </div>
+    </div>
+</div>  <!-- END popup message Activation Code -->
+<!-- popup message Activation Code -->
+<div class="modal fade" id="ite_msg2" tabindex="-1" role="dialog" aria-labelledby="regSceMsgLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body ite_dig">
+                <!-- box body -->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X
+                </button>
+                <p>When you apply for service with IT&E, you will receive your Free TFC activation code with your service packet. Activation code will only be provided if you sign up on TFC eligible plans. A copy of your activation code will be automatically sent to you via SMS or Email.</p>
+                <p>If you lost or forgot your activation code:</p>
+                <p>4G customers, please text <strong>TFC CODE</strong> to <strong>3282.</strong> <br>DSL customer, please connect to the IT&E Online Billing Site or call our 24-Hour Care Center Team for assistance.</p>
+            </div>  <!-- END box body -->
+        </div>
+    </div>
+</div>

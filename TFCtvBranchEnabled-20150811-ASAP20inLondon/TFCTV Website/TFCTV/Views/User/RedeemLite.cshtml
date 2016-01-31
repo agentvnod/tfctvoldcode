@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    bool isSuccess = (bool)ViewBag.Success;
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        @*<div>@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C.jpg", new { width = 940 })</div>*@
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    @{if (isSuccess)
+                      { <div class="rheader">
+                          Congratulations! You have redeemed your free entitlement.
+                      </div>}
+                      else
+                      { 
+                        <div class="rheader">
+                            Ooops! There seems to be a problem...
+                        </div>
+                      }
+                    }
+                    <div id="freetrial01">
+                        @{
+                            if (isSuccess)
+                            {
+                            <div style="padding-top: 20px;">
+                                <center>
+                                    <span style="font-size: 42px; font-weight: bolder;">YOUR 7-DAY FREE LITE ENTITLEMENT<br />
+                                        STARTS NOW! </span>
+                                </center>
+                            </div>
+                            }
+                        }
+                        <div class="breakLarge clear">
+                        </div>
+                        <div class="trial2-text2" style="font-size: 18px; text-align: center;">
+                            <div style="width: 840px; margin: 0 auto;">
+                                @ViewBag.ErrorMessage
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        @*<div style="margin: 0 auto; text-align: center; width: 100%; padding-top: 20px;">
+                            <a href="/">@Html.ImageBuilder(Url, "register/REGISTRATION-HOMEPAGE.png", new { alt = "Visit TFC.tv Homepage", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Subscribe/FreeTrial">@Html.ImageBuilder(Url, "register/REGISTRATION-FREETRIAL.png", new { alt = "Check the Free Trial Content!", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Profile">@Html.ImageBuilder(Url, "register/REGISTRATION-PROFILE.png", new { alt = "View your Profile", title = "View your Profile" })</a>
+                        </div>*@
+                        <div class="breakLarge">
+                        </div>
+                        @if (ContextHelper.isPromoEnabled(GlobalConfig.TFCtvFirstYearAnniversaryPromoId))
+                        {
+                            <div class="advertSpace">
+                                <a href="/FanMobPromo">@Html.ImageBuilder(Url, "banners/onlinebanner2_728x90v2.jpg", new { style = "z-index: -11;", width = "728", height = "90", title = "FAN MOB", alt = "FAN MOB" })</a>
+                            </div>
+                        }
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            @*<div id="reg-limited" class="floatLeft">
+                *Limited to TFC content available on the site.
+            </div>*@
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}

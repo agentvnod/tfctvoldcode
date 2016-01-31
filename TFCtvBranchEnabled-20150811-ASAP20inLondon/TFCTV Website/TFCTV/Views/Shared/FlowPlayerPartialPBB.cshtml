@@ -1,0 +1,71 @@
+﻿<!-- TFC.tv player -->
+@* The model toggles between what the version of the flowplayer we will use. 
+We need to use a lower version of flowplayer for Live streaming events
+
+If true, use the lower version
+If false, use the higher version
+
+*@
+@model bool
+@{
+    if (Model)
+    {
+    @Html.JsBuilder(Url, "flowplayer-3.2.6.min.js")
+    @Html.JsBuilder(Url, "flowplayer.ipad-3.2.8.min.js")
+    }
+    else
+    {
+    @Html.JsBuilder(Url, "flowplayer-3.2.11.min.js")
+    @Html.JsBuilder(Url, "flowplayer.ipad-3.2.12.min.js")
+    }
+}
+@{
+    if (GlobalConfig.IsFlowHTML5PlayerEnabled)
+    {
+        if (Request.Browser.IsMobileDevice)
+        {
+    <script type="text/javascript">
+        var playerJS = '@Html.ContentBuilder(Url, "scripts/player-1.3.12.pbb.mobile.js")';
+    </script>
+        }
+        else
+        {  
+    <script type="text/javascript">
+        var playerJS = '@Html.ContentBuilder(Url, "scripts/player-1.3.12.pbb.js")';
+    </script>
+        }
+    }
+    else
+    {    
+    <script type="text/javascript">
+        var playerJS = '@Html.ContentBuilder(Url, "scripts/player-1.3.12.pbb.js")';
+    </script>        
+    }    
+}
+<script type="text/javascript">
+    var playerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.cml-3.2.7.swf")';
+    var expressInstallSWF = '@Html.ContentBuilder(Url, "swf/expressInstall.swf")';
+    var playButtonURL = '@Html.ContentBuilder(Url, "content/images/entrypoint/playbtn-silver.png")';
+    var logoURL = '@Html.ContentBuilder(Url, "content/images/logo/player-logo.png")';
+    var controllerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.ctr-3.2.5.swf")';
+    var trackerSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.analytics.swf")';
+    var analyticsSWF = '@Html.ContentBuilder(Url, "swf/analytics-plugin-flowplayer-loader.swf")';
+    var trackerID = 'UA-2265816-2';
+    var Afp = '@Html.ContentBuilder(Url, "swf/AkamaiFlowPlugin-2.11.swf")';
+    var csmaPluginSWF = '@GlobalConfig.csmaPluginPath';
+    var contentSWF = '@Html.ContentBuilder(Url, "swf/flowplayer.content.swf")';
+</script>
+@{
+    if (MyUtility.IsIos(Request))
+    {
+    <script type="text/javascript">
+        var csmaConfig = '@GlobalConfig.AkamaiBeaconIos';
+    </script>
+    }
+    else
+    {
+    <script type="text/javascript">
+        var csmaConfig = '@GlobalConfig.AkamaiBeaconAdobeFlash';
+    </script>
+    }
+}

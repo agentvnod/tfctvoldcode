@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Activate your Prepaid Card/ePIN - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:ppc";
+
+    TransactionReturnType ErrorMessage = null;
+    try
+    {
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+    }
+    catch (Exception) { }
+}
+<section class="page_pagebody activate_page">
+    <!-- PAGE BODY SECTION -->
+    <div class="container">
+        <h1 class="page_title ppc_h1">
+            Activate TFC.tv Prepaid Card/ePIN</h1>
+        <!-- page title -->
+        <p class="page_subtitle">
+            Enter Serial Number and PIN on the fields below.</p>
+        @{if (ErrorMessage != null)
+          {                     
+            <div class="row">
+                <!-- Error msg / row -->
+                <div class="col-md-7 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+                    <div class="alert alert-danger">
+                        <a class="close" data-dismiss="alert">x</a> @ErrorMessage.StatusMessage
+                    </div>
+                </div>
+            </div>  <!-- END  Error msg / row -->                                        
+          }                  
+        }
+        <div class="row">
+            <!-- activate box  -->
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                <form role="form" method="post" action="@Url.Action("ActivatePpc", "Ppc")">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <h2 class="ppc_h2">
+                        <label for="">
+                            Serial Number</label></h2>
+                    <input type="text" name="serial" maxlength="16" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <h2 class="ppc_h2">
+                        <label for="">
+                            PIN</label></h2>
+                    <input type="text" name="pin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Activate  Now!" class="btn btn-primary blue_button">
+                    <br /><br />
+                    <p>
+                        <span class="siteseal">
+                            <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                        </span>
+                    </p>
+                </div>
+                </form>
+            </div>
+            <!-- end activate box  -->
+        </div>
+        <!-- end row  -->
+    </div>
+    <!-- end container  -->
+</section><!-- end page body section -->
+@section MetaTags{
+    <meta name="description" content="Enter Serial Number and PIN on the fields below." />
+    <link rel="canonical" href="@String.Format("{0}/ppc", GlobalConfig.baseUrl)" />
+}

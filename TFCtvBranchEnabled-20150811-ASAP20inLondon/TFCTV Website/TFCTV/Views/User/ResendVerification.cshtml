@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Resend Verification Email - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Resend Verification Email</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane" class="floatLeft">
+                <div class="rheader">
+                    If you have not yet received a verification email, enter your email address below
+                    to resend the verification email.
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div id="message" class="errtext">
+                </div>
+                <div>
+                    <form id="spcform" method="post" action="/User/_ResendVerification">
+                    <div id="SPBody" class="floatLeft">
+                        <div class="editor-row">
+                            <div class="editor-label floatLeft" style="width: 100px; margin-left: 100px;">
+                                Email Address
+                            </div>
+                            <div>
+                                <input type="text" name="EmailAddress" class="textbox" id="EmailAddress" />
+                                <span class="errstatus"></span>
+                            </div>
+                        </div>
+                        <div class="clear breakStandard">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="registerBodyLow">
+                        <div>
+                            <input type="submit" class="btnimage resendbtn" id="regsubmit" value="" /><div id="rsb-load"
+                                class="side-button-loader padLeftStandard">
+                            </div>
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<div id="ajaxloading" class="hideElement">
+    <div id="spanner" class="register-spanner">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "48", height = "48" })<br />
+        <span id="spannertext" class="register-spanner-text">Your registration is successful!
+            Please wait...</span>
+    </div>
+</div>
+<div class="modal" id="gensmartpit-modal">
+    <h2 class="title">
+        Information</h2>
+    <p class="message">
+    </p>
+    <span class="floatRight"><a class="close">Close this window</a> </span>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}
+@section JScriptBottom {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#spcform').validate({
+                rules: {
+                    EmailAddress: {
+                        required: true,
+                        email: true
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+
+            $('form#spcform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    $('#message').empty();
+                    var form = $(this);
+                    $('#rsb-load').css('top', '4px');
+                    $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait while we process your request...');
+                    $.post('/User/_ResendVerification', form.find('input').serialize(), function (data) {
+                        if (data.errorCode == 0) {
+                            $('#gensmartpit-modal .title').html('Information');
+                            $('#gensmartpit-modal .message').html(data.errorMessage);
+                            $("#gensmartpit-modal").overlay().load();
+                        }
+                        else {
+                            $('#message').html(createError(data.errorMessage) + '<div class="breakStandard"></div>');
+                        }
+                        $('#rsb-load').empty();
+                    });
+                }
+                //                else {
+                //                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                //                }
+            });
+
+            $('#CountryCode').bind('valueChange', function (e) {
+                jQuery.get('/Ajax/GetCountryState', { id: e.value }, function (data) {
+                    toggleState(data.length);
+                    if (data.length > 0) {
+                        var stateDropDown = $('#StateDD').data('tDropDownList');
+                        stateDropDown.dataBind(data);
+                        $('.StateDD .t-input').text(data[0].Text);
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#freetrial").overlay({
+                top: 120,
+                mask: {
+                    color: '#000',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                closeOnClick: false,
+                load: false,
+                onClose: function () {
+                    redirectToHome();
+                }
+            });
+
+            $("#gensmartpit-modal").overlay({
+                // some mask tweaks suitable for modal dialogs
+                top: 200,
+                mask: {
+                    color: '#000',
+                    loadSpeed: 200,
+                    opacity: 0.5
+                },
+                closeOnClick: false,
+                onClose: function () {
+                    window.location.reload();
+                }
+            });
+
+            $('#gensmartpit').click(function () {
+                $('#msg2').css('margin-top', '10px');
+                $('#msg2').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading...", style = "position: relative;top: 4px;" }) Please wait while we process your request...');
+                $.post('/User/_CreateSmartPit', function (data) {
+                    if (data.errorCode == 0) {
+                        $('#gensmartpit-modal .title').html('Success!');
+                        $('#gensmartpit-modal .message').html('Your SmartPit Card No. is <span class="boldText">' + data.spcno + '</strong>');
+                    }
+                    else {
+                        $('#gensmartpit-modal .message').html(data.errorMessage);
+                    }
+                    $("#gensmartpit-modal").overlay().load();
+                    $('#msg2').empty();
+                });
+                return false;
+            });
+        });
+    </script>
+}

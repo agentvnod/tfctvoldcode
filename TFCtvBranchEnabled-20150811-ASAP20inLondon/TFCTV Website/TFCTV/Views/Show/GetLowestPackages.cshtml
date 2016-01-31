@@ -1,0 +1,126 @@
+﻿@model ShowPackageProductPrices
+@{
+    var packagesInProductGroup = MyUtility.StringToIntList(GlobalConfig.PackagesInProductGroup);
+
+    if (Model != null)
+    {
+        if (Model.ShowPackageGroupProductList != null)
+        {
+            foreach (var item in Model.ShowPackageGroupProductList)
+            {
+                foreach (var product in item.Product2.OrderBy(p => p.ProductPrice.Amount).Take(1))
+                {
+                    var productGroupType = ContextHelper.GetProductGroupType(product);
+                    var className = String.Format("pg-{0}-{1}", productGroupType.productSubscriptionType.ToString().ToLower(), productGroupType.type);
+                    //var className = ContextHelper.GetProductName(product.ProductId).Replace("TFC.tv", "").Replace(" ", "").Replace(":", "").ToLower();
+                  
+    <text>
+    <div class="btn-ppm btn-@className">
+        @{if (className == "premium")
+          {
+            <a href="/Subscription#GoPremium">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else if (className == "lite")
+          {
+            <a href="/Subscription#GoLite">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else if (className == "moviechannel")
+          {
+            <a href="/Subscription#GoMovie">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else if (packagesInProductGroup.Contains((int)product.ProductGroupId))
+          {
+              int prodGroupId = (int)product.ProductGroupId;
+              if (prodGroupId == 1)
+              {
+            <a href="/Subscription#GoPremium">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+              }
+              else if (prodGroupId == 5)
+              {
+            <a href="/Subscription#GoLite">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+              }
+              else if (prodGroupId == 8)
+              {
+            <a href="/Subscription#GoMovie">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+              }
+          }
+          else
+          { 
+            <a href="/buy/process/@product.ProductId" rel="#bs_overlay" class="bprod">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>            
+          }
+        }
+    </div>
+    </text>
+                }
+            }
+        }
+
+        if (Model.ShowAlacarteProductList != null)
+        {
+            foreach (var item in Model.ShowAlacarteProductList)
+            {
+    <text>
+    <div class="btn-ppm btn-ppm-@item.ALaCarteSubscriptionTypeId">
+        @{foreach (var price in item.ProductPrices.Take(1))
+          {
+            <text><a href="/buy/process/@item.ProductId" rel="#bs_overlay" class="bprod">
+                <div class="btn-text">
+                    @price.Amount.ToString("F")
+                    @price.CurrencyCode</div>
+            </a>
+            </text>
+          }
+        }
+    </div>
+    </text>
+            }
+        }
+
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.bprod').live('click', function (event) {
+            $(this).overlay({
+                mask: 'black',
+                fixed: false,
+                closeOnClick: false,
+                onBeforeLoad: function () {
+                    $(".apple_overlay").width(640);
+                    var wrap = this.getOverlay().find(".contentWrap");
+                    wrap.load(this.getTrigger().attr("href"));
+                },
+                onClose: function () {
+                    $('#bs_overlay .contentWrap').empty();
+                    if ($('#bought').val() == 1) {
+                        window.location.href = document.URL;
+                    }
+                },
+                load: true
+            });
+            event.preventDefault();
+        });
+    });
+            
+</script>

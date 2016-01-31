@@ -1,0 +1,49 @@
+﻿<div id="EmailUsPanel">
+    <div class="loginHeader">
+        Or sign in using your TFC.tv credentials
+    </div>
+    <div class="breakSmall">
+    </div>
+    <div id="result" class="errors">
+    </div>
+    <div id="credentials">
+        <form id="signinform" method="post" action="@Url.Action("_Login", "User")">
+        <div class="editor-row-label">
+            <div class="editor-label floatLeft">
+                From
+            </div>
+        </div>
+        <div>
+            <div class="editor-row">
+                <input type="text" />
+                <span class="errstatus"></span>
+            </div>
+        </div>
+        <div class="editor-row-label">
+            <div class="editor-label floatLeft">
+                Title
+            </div>
+        </div>
+        <div class="editor-row">
+            <div>
+                <input type="text" />
+                <br />
+                <span class="errstatus"></span>
+            </div>
+        </div>
+        <div class="editor-row">
+            <div class="breakSmall">
+            </div>
+            <input id="submit" class="btnimage signinbtn floatLeft" type="submit" value="Login" />
+            <div id="sb-load" class="side-button-loader padLeftStandard">
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div id="ajax-loading-signin" class="hideElement">
+    <div id="spanner-signin">
+        @Html.ImageBuilder(Url, "ajax-loader.gif", new { id = "loading-b", alt = "loading...", width = "20", height = "20" })
+        <span id="spanner-text-signin" class="spanner-text-valign"></span>
+    </div>
+</div>

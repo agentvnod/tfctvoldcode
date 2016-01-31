@@ -1,0 +1,210 @@
+﻿@model IPTV2_Model.Channel
+@{
+    ViewBag.Title = Model.Description + " - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    bool isViewable = false;
+    if (ViewBag.isViewable != null)
+    {
+        isViewable = (bool)ViewBag.isViewable;
+    }
+    string trackingLabel = String.Format("{0}|{1}|{2}|{3}|{4}|{5}", Model.ChannelId, Model.ChannelName, String.Empty, "LiveStream", ViewBag.EmailAddress, Request.GetUserHostAddressFromCloudflare());
+
+    string channelImageUrl = String.Format("{0}.jpg", Model.ChannelId);
+}
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="viewingproblem">
+            If you are having problems viewing this video, please visit our @Html.ActionLink("Help Center", "Question", "Help", new { id = MyUtility.GetQuestionId(Request) }, null).</div>
+        <div class="clear breakSmall">
+        </div>
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div class="clear">
+        </div>
+        <div class="clear">
+        </div>
+        <div id="ratings-and-review">
+            <div id="ShareThisChannel1">
+            </div>
+            @*@Html.Partial("_ShowsRatingsAndReviews", Model)*@
+        </div>
+        <div class="breakLarge">
+        </div>
+    </div>
+    <div id="lighstout">
+    </div>
+    <div id="getFlash" class="hideElement">
+        <div id="playerFail">
+            @Html.ImageBuilder(Url, "flashplayer_100x100.jpg")
+            <h3>
+                Get Adobe Flash Player</h3>
+            <p>
+                You must have the latest Flash player installed. You can <a id="goGetFlash" href="http://get.adobe.com/flashplayer/"
+                    target="_blank">download it here</a>.
+            </p>
+            <br clear="all" />
+        </div>
+    </div>
+</div>
+<div id="subscribePromptcontainer_1" class="hideElement">
+    <div id="subscribePrompt_1">
+        <div>
+            <a href="#" id="gw-signin">@Html.ImageBuilder(Url, "go-watch-signin.png")</a> <a href="@Url.Action("Register", "User")">@Html.ImageBuilder(Url, "go-watch-register.png")</a>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "episode.css")
+    @Html.CssBuilder(Url, "ratingsreviews-1.1.css")
+    @Html.CssBuilder(Url, "getpackage.css")
+    @Html.CssBuilder(Url, "cast.css")
+    @Html.CssBuilder(Url, "payment.css")
+    @Html.CssBuilder(Url, "overlay-apple.css")
+    @Html.CssBuilder(Url, "tabs-no-images.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@Model.Description"/>
+    <meta property="og:description" content="Stay tuned to @Model.Description live and online!"/>
+    <meta property="og:type" content="Live Streaming" />    
+    @*@{if (Model.ChannelId == 19)
+      {
+        <meta property="og:image" content="http://cdn.tfc.tv/Content/images/livestream/ANC.jpg" />
+      }
+      else if (Model.ChannelId == 20)
+      {
+        <meta property="og:image" content="http://cdn.tfc.tv/Content/images/livestream/DZMM.jpg" />
+      }
+    }*@
+    <meta property="og:image" content="@Html.ContentBuilder(Url, String.Format("content/images/channels/{0}", channelImageUrl))" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta name="description" content="@HttpUtility.JavaScriptStringEncode(Model.Blurb))" />
+}
+@section featureBody {
+    @{if (isViewable)
+      {
+          if (MyUtility.IsIos(Request))
+          {
+        <text>
+        <br />
+        <br />
+        <br />
+        <div style="width: 940px; margin: auto; margin-bottom: -3px;">
+            @Html.ImageBuilder(Url, String.Format("channels/banners/{0}.png", Model.ChannelId), new { width = 940 })
+        </div>
+        <div id="featureBanner">
+            @Html.ImageBuilder(Url, "livestream-not-available-ios.jpg")
+        </div>
+        </text>
+          }
+          else
+          {
+        <text>
+        <br />
+        <br />
+        <br />
+        <div style="width: 940px; margin: auto; margin-bottom: -3px;">
+            @Html.ImageBuilder(Url, String.Format("channels/banners/{0}.png", Model.ChannelId), new { width = 940 })
+        </div>
+        <div id="featureBanner">
+            <div id="playerContainer">
+            </div>
+        </div>
+        </text>
+
+          }
+      }
+      else
+      {
+
+        <text>
+        <br />
+        <br />
+        <br />
+        <div style="width: 940px; margin: auto; margin-bottom: -3px;">
+            @Html.ImageBuilder(Url, String.Format("channels/banners/{0}.png", Model.ChannelId), new { width = 940 })
+        </div>
+        <div id="featureBanner">
+            @Html.ImageBuilder(Url, "video_not_available_1.jpg", new { @class = "floatRight" })
+            <div class="floatRight" style="position: absolute; color: #fff; margin-left: 460px;
+                margin-top: 180px; width: 450px; font-size: 16px;">
+                <a href="/Subscription#GoPremium" class="orange boldText">GO PREMIUM</a> and enjoy
+                streaming videos live and online.
+            </div>
+        </div>
+        </text>
+
+      }}
+}
+@section JScript {
+    @{if (isViewable)
+      {
+          if (!MyUtility.IsIos(Request))
+          {
+        <text>
+        <script type="text/javascript">            var flow = {}; var config = {}; var fplayer
+        = '@Html.ContentBuilder(Url, "scripts/player.old-1.3.js")'; var flowjs = '@Html.ContentBuilder(Url, "scripts/flowplayer-3.2.6.min.js")'; var flowipad
+        = '@Html.ContentBuilder(Url, "scripts/flowplayer.ipad-3.2.8.js")'; </script>
+        @Html.JsBuilder(Url, "packages.js")
+        </text>
+          }
+      }}
+}
+@section JScriptBottom {
+    @{if (isViewable)
+      {
+          if (!MyUtility.IsIos(Request))
+          {
+        <text>
+        <script type="text/javascript">
+        var playbackId = 0;
+        var playbackType = 2; // Channel
+            function lightsOut() {
+                $('#lighstout').fadeIn(1000);
+            } function lightsOn() { $('#lighstout').fadeOut(); } $(document).ready(function 
+        () {
+                $('#lighstout').css('height', ($(window).height() * 2.2)); $(window).live('resize',
+        function () { $('#lighstout').css('height', ($(window).height() * 2.2)); }); $.getScript(flowjs,
+        function () {
+            $.getScript(fplayer, function () {
+                $.getScript(flowipad, function 
+        () {
+                    var akObj = { url: '@Html.ContentBuilder(Url, "player/AkamaiFlowPlugin-2.11.swf")' }; var time = false; var isClip
+        = false; var categoryType = 'live';
+                    var label = '@trackingLabel';
+                    playbackId = @Model.ChannelId;
+                    var config = { container: 'playerContainer',
+                        url: '@Model.VideoStream', scaling: 'fit', swf: '@Html.ContentBuilder(Url, "player/flowplayer.swf")', apObj:
+        akObj, epId: null, time: time, subscribe: false, ipad: '@Model.VideoStream', isClip:
+        isClip, categoryType: categoryType, sid: null, label: label, playbackType: playbackType, playbackId: playbackId
+                    }; flow.Player.Create(config);
+                });
+            });
+        });
+            }); </script>
+        <script type="text/javascript">
+                var isLogin = '@User.Identity.IsAuthenticated.ToString().ToLower()';
+                $.getScript(socialPluginUrl, function () {
+                    var share = { container: 'ShareThisChannel', showCounts: 'right', isLogin: isLogin };
+                    var action = { actorUID: "@User.Identity.Name", description: "Live Streaming on TFC.tv", title: "@Ajax.JavaScriptStringEncode(Model.Description)", linkback: "@HttpContext.Current.Request.Url.AbsoluteUri", actionlinkmessage: "Read more", actionlinkurl: "@HttpContext.Current.Request.Url.AbsoluteUri", mediaitem: { type: "image", src: "@Html.ContentBuilder(Url, String.Format("content/images/channels/{0}", channelImageUrl))", href: "@HttpContext.Current.Request.Url.AbsoluteUri"} };
+                    tfc.Social.Share(share, action);
+                });
+                $("#ShareThisChannel").click(function () {
+                    if (isLogin == 'false') {
+                        tfc.Social.OnSiteLogin();
+                    }
+                });
+        </script>
+        </text>
+          }
+      }
+    }
+}

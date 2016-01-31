@@ -1,0 +1,48 @@
+﻿@model  List<EpisodeObject>
+@{
+    var id = Url.RequestContext.RouteData.Values["id"];
+
+    int episodeCount = 0;
+    try
+    {
+        episodeCount = Convert.ToInt32(ViewBag.currentEpisodeCount);
+    }
+    catch (Exception) { }
+}
+@{if (Model != null)
+  {
+      if (Model.Count > 0)
+      {
+          foreach (var item in Model)
+          {
+              string href = String.Format("/Episode/Details/{0}/{1}", item.EpisodeId, item.slug);
+    <div>
+        <div class="e-img-large">
+            <a href="@href">
+                <img width="151" height="98" alt="" border="0" src="@Html.Raw(item.ImgUrl)" title="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" alt="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" /></a></div>
+        <div class="e-body-large">
+            <div class="e-title-large">
+                <span class="episode-number-small">@episodeCount.</span><a href="@href">@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))</a></div>
+            <div class="e-desc-large">@Html.Raw(item.Synopsis)</div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="e-linebreak">
+        </div>
+    </div>
+              episodeCount--;
+          }
+          if (Model.Count() >= GlobalConfig.NumberOfItemsInEpisodeListInEpisodePage)
+          { 
+    <div class="loadmore-b">
+        <div class="loadmore-btn">
+            @Html.ActionLink("LOAD MORE EPISODES", "GetMoreEpisodes", new { id = id, page = ViewBag.page, partialViewName = "GetMoreEpisodesForEpisodeDetails", currentEpisodeCount = episodeCount, isEpisodePage = true }, new { @class = "e-loadmore-large" })
+        </div>
+    </div>
+    
+          }
+      }
+      else { }
+  }
+  else { }
+}

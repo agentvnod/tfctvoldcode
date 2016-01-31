@@ -1,0 +1,58 @@
+﻿@using TFCTV.Helpers
+@model IPTV2_Model.Product           
+@{
+    IPTV2_Model.ProductPrice productPrice = ViewBag.ProductPrice;
+    DateTime ExpirationDate = ViewBag.ExpirationDate;
+    var amount = String.Format("{0} {1}", productPrice.Currency.Code, productPrice.Amount.ToString("F"));
+    List<string> list = ViewBag.ListOfDescription;
+    
+}
+<div class="summary-bg fold-bottom">
+    <div class="highlight-2">
+        @Model.Name</div>
+    @*<div>
+        <a href="#">Change subscription</a></div>*@
+    <div class="breakLarge">
+    </div>
+    <div class="small-text">
+        <div class="highlight-red">
+            @{if (list != null)
+              { 
+                @Html.Raw(list.Last())              
+              }
+            }
+        </div>
+        @{if (list != null)
+          {
+            <div class="breakStandard">
+            </div>
+            <ul class="summary">
+                @foreach (var item in list.Take(list.Count() - 1))
+                {                                    
+                    <li>@Html.Raw(item)</li>
+                }
+            </ul>
+          }
+          else
+          { 
+            <div>
+                @Html.Raw(ViewBag.ShowDescription)
+            </div>
+          }
+        }
+    </div>
+    <div class="breakLarge">
+    </div>
+    <div class="small-text">
+        Expiration Date: <span class="underline">@ExpirationDate.ToString("MMMM d, yyyy")</span></div>
+    <div class="breakStandard">
+    </div>
+    @*Uncomment when the new subscription page is finished. Link to that page*@ @*<div>
+        <a href="#">Read more about the package</a></div>*@
+    <div class="breakLarge">
+    </div>
+    <div class="highlight">
+        Total: @Html.Raw(amount)</div>
+    <div class="breakSmall">
+    </div>
+</div>

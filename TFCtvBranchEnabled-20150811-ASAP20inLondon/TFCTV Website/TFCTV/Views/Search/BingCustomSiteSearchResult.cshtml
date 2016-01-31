@@ -1,0 +1,49 @@
+﻿@model TFCTV.Models.SearchResponse
+@{
+    ViewBag.Title = "Search Results";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    string beginStr = "<span class=\"searchHighlightText\">";
+    string endStr = "</span>";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Search Results</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div class="padLeftLarge">
+                <p class="white">
+                    Found @Model.Web.Total.ToString("#,##0") results for the query <strong>@Model.Query.SearchTerms</strong>.
+                </p>
+                <ul>
+                    @foreach (var item in Model.Web.Results)
+                    {
+                        <li><a href="@item.Url" class="searchtitle">@Html.Raw(MyUtility.ReplaceHighlightingCharacters(item.Title, beginStr, endStr))</a>
+                            <p class="white searchdesc">@Html.Raw(MyUtility.ReplaceHighlightingCharacters(item.Description, beginStr, endStr))</p>
+                            <p class="searchlink">@Html.Raw(MyUtility.ReplaceHighlightingCharacters(item.DisplayUrl, beginStr, endStr))</p>
+                        </li>
+                    }
+                </ul>
+                @Html.Action("BingCustomSiteSearchPagination", new { totalPages = String.IsNullOrEmpty(ViewBag.Total) ? @Model.Web.Total : ViewBag.TotalPages, currentPage = 1, offSet = @Model.Web.Offset })
+                <div class="breakStandard">
+                </div>
+            </div>
+        </div>
+        <div class="clear breakStandard">
+        </div>
+    </div>
+</div>
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "search.css")
+}

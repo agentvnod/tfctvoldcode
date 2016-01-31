@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "ReferAKapamilya";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    
+}
+<br />
+<br />
+<br />
+<br />
+<p style="margin-left: 150px;">
+    @HttpContext.Current.Session.IsNewSession
+    <br />
+    @HttpContext.Current.Session.SessionID
+    @{if (MyUtility.isUserLoggedIn())
+      {
+
+          HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+          FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+          
+        <text>
+        <br />
+        The current session is @ViewBag.IsValidSessionID.
+        <br />
+        This is the accountid: @authCookie.Value
+        </text>
+      }}
+</p>
+<br />
+<br />
+<br />
+<h2>
+    ReferAKapamilya</h2>
+<a id="popfriends" href="#">Show my friends</a>
+
+<a href="@ViewBag.IosUrl">IOS LINK</a>
+@section JScriptBottom{
+    <script type="text/javascript">
+        $('#popfriends').click(function () {
+            var params = { width: 300, height: 400, cid: "", enabledProviders: providers };
+            tfc.Social.ShowFriendSelectorUI(params);
+            return false;
+        });
+    </script>
+}

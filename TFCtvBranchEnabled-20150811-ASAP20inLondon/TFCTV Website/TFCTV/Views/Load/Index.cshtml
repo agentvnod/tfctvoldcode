@@ -1,0 +1,748 @@
+﻿@{
+    ViewBag.Title = "Load - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:wallet-load";
+
+    List<TFCTV.Helpers.CreditCard> CreditCardList = null;
+    System.Collections.ArrayList MonthList = null;
+    System.Collections.ArrayList YearList = null;
+    bool CreditCardAvailability = false;
+    bool IsPayPalSupported = false;
+    bool IsSmartPitAvailable = false;
+    TransactionReturnType ErrorMessage = null;
+    IPTV2_Model.UserWallet wallet = null;
+    List<IPTV2_Model.MopayButton> buttonIds = null;
+    string SmartPitCardNumber = String.Empty;
+    try
+    {
+        if (ViewBag.CreditCardList != null)
+        {
+            CreditCardList = ViewBag.CreditCardList;
+        }
+        if (ViewBag.CreditCardAvailability != null)
+        {
+            CreditCardAvailability = ViewBag.CreditCardAvailability;
+        }
+
+        if (ViewBag.Months != null)
+        {
+            MonthList = ViewBag.Months;
+        }
+        if (ViewBag.Years != null)
+        {
+            YearList = ViewBag.Years;
+        }
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+        }
+        if (ViewBag.UserWallet != null)
+        {
+            wallet = ViewBag.UserWallet;
+        }
+        if (ViewBag.MopayButtonIds != null)
+        {
+            buttonIds = ViewBag.MopayButtonIds;
+        }
+
+        if (ViewBag.SmartPitCardNumber != null)
+        {
+            SmartPitCardNumber = ViewBag.SmartPitCardNumber;
+        }
+
+        if (ViewBag.IsPayPalSupported != null)
+        {
+            IsPayPalSupported = ViewBag.IsPayPalSupported;
+        }
+
+        if (ViewBag.IsSmartPitAvailable != null)
+        {
+            IsSmartPitAvailable = ViewBag.IsSmartPitAvailable;
+        }
+    }
+    catch (Exception) { }
+
+    NetsuiteReturnObj netsuiteObj = ContextHelper.IsNetsuiteUnderMaintenance();
+
+}
+<section class="page_pagebody page_registration page_sub page_subscription">
+    <!--  subscription page body -->
+    <div class="container">
+        <!-- subscription page top -->
+        <div class="row">
+            <div class="reg_hleft col-md-9 col-sm-8 col-xs-12">
+                <h1 class="page_title_black">
+                    Reload your E-Wallet today!
+                </h1>
+            </div>
+            <div class="reg_hright col-md-3 col-sm-4 hidden-xs">
+                <span class="siteseal">
+                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                </span>
+            </div>
+            <div class="col-xs-12 page_description">
+                Just choose from the following payment options below to add credits to your E-Wallet:
+            </div>
+        </div>
+        <!-- end top -->
+        <!-- Accordion container for payment methods -->
+        <div class="panel-group" id="accordion">
+            @{if (CreditCardList != null && GlobalConfig.IsCreditCardReloadModeEnabled)
+            {
+                <div class="row panel panel-default credit_card">
+                    <!-- Credit card section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 1 heading -->
+                        <a id="credit_card_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#creditcard_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Credit Card
+                                @{foreach (var item in CreditCardList)
+                                {
+                                    @Html.ImageBuilder(Url, String.Format("cclogos/{0}.png", item.value), new { @class = "cclogo-nopos" })
+                                }
+                                }
+                            </h2>
+                        </a>
+                    </div>
+                    <!-- END panel 1 heading -->
+                    <!-- panel 1 body -->
+                    @{if (netsuiteObj.IsUnderMaintenance)
+                    {
+                        if (!String.IsNullOrEmpty(netsuiteObj.StatusMessage))
+                        {
+                            <div class="col-xs-12 panel-collapse collapse" id="creditcard_body">
+                                <div class="alert alert-danger">
+                                    @Html.Raw(netsuiteObj.StatusMessage)
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 panel-collapse collapse" id="creditcard_body">
+                            <form method="post" name="form_credit_card" id="form_credit_card" action="@Url.Action("_LoadViaCreditCard", "Load")">
+                                @Html.AntiForgeryToken()
+                                @{if (ErrorMessage != null)
+                                {
+                                    if (String.Compare(ErrorMessage.info, "CreditCard", true) == 0)
+                                    {
+                                        <div class="alert alert-danger">
+                                            <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                                        </div>
+                                    }
+                                }
+                                }
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group amount_load">
+                                            <label for="amount">
+                                                Amount
+                                            </label>
+                                            <input type="text" class="form-control p_amount" name="camount" id="camount" maxlength="5"
+                                                   required>
+                                            <span class="left">@wallet.Currency</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="first_name">
+                                                Type of Credit Card
+                                            </label>
+                                            <select class="form-control" name="CreditCard" id="CreditCard" required>
+                                                @{if (CreditCardList != null)
+                                                {
+                                                    foreach (var item in CreditCardList)
+                                                    {
+                                                        @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.value, item.text))
+                                                    }
+                                                }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="card_name">
+                                                Cardholder's Name
+                                            </label>
+                                            <input type="text" class="form-control" name="cardholdername" id="cardholdername"
+                                                   maxlength="150" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="last_name">
+                                                Card Number
+                                            </label>
+                                            <input type="text" class="form-control" name="cardnumber" id="cardnumber" maxlength="16"
+                                                   required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="expiration_date">
+                                                Expiration Date
+                                            </label>
+                                            <select class="form-control" name="ExpiryMonth" id="ExpiryMonth" required>
+                                                @{if (MonthList != null)
+                                                {
+                                                    foreach (SelectListItem item in MonthList)
+                                                    {
+                                                        @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text))
+                                                    }
+                                                }
+                                                }
+                                            </select><span class="desh"></span><select class="form-control" name="ExpiryYear"
+                                                                                       id="ExpiryYear" required>
+                                                @{if (YearList != null)
+                                                {
+                                                    foreach (SelectListItem item in YearList)
+                                                    {
+                                                        @Html.Raw(String.Format("<option value=\"{0}\">{1}</option>", item.Value, item.Text))
+                                                    }
+                                                }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3">
+                                        <div class="form-group security_codec">
+                                            <label for="security_code">
+                                                Security Code
+                                            </label>
+                                            <input type="password" class="form-control" name="securitycode" id="securitycode"
+                                                   required maxlength="4"><a href="#">
+                                                <span class="glyphicon glyphicon-question-sign tooltipH"
+                                                      data-placement="left" data-toggle="tooltip" data-original-title="The card security code (CSC) is a 3- or 4-digit number (not part of the credit card number) that appears on the credit card. On most cards, the CSC appears on the back of the card (usually in the signature field)."></span>
+                                            </a>
+                                            <span class="glyphicon glyphicon-lock bgi"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="card_name">
+                                                Street Address
+                                            </label>
+                                            <input type="text" class="form-control" name="address" id="address" maxlength="255"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="last_name">
+                                                City
+                                            </label>
+                                            <input type="text" class="form-control" name="city" id="city" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="card_name">
+                                                Postal Code
+                                            </label>
+                                            <input type="text" class="form-control" name="zip" id="zip" maxlength="16" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    </div>
+                                </div>
+                                <div class="row options">
+                                    <!-- options [check boxs] -->
+                                    <div class="col-xs-12">
+                                        <p>
+                                            <b>
+                                                Service Agreement. Please place a check mark on each box below by clicking on the
+                                                box to signify your agreement to our service terms.
+                                            </b>
+                                        </p>
+                                        <p>
+                                            <input type="checkbox" class="css-checkbox" name="agree1" id="agree1" required>
+                                            <label for="agree1" class="css-label klaus">
+                                            </label>
+                                            <label for="agree1">
+                                                I hereby certify that my computer meets the system requirements and I can view the
+                                                free videos.
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <input type="checkbox" class="css-checkbox" name="agree2" id="agree2" required>
+                                            <label for="agree2" class="css-label klaus">
+                                            </label>
+                                            <label for="agree2">
+                                                I hereby certify that the above information is correct.
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <input type="checkbox" class="css-checkbox" name="agree3" id="agree3" required>
+                                            <label for="agree3" class="css-label klaus">
+                                            </label>
+                                            <label for="agree3">
+                                                I hereby authorize @MyUtility.GetABSCBNSubsidiary() to deduct payments in connection
+                                                with my subscription to TFC.tv. I also agree that said payments are non-refundable.
+                                            </label>
+                                        </p>
+                                        <input type="submit" value="LOAD NOW!" class="btn btn-primary blue_button sub_pro_msgb">
+                                        <!-- popup box trigger && submit button -->
+                                        <p>
+                                            <span class="siteseal">
+                                                <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- END options [check boxs] -->
+                            </form>
+                        </div>
+                    }
+                    }
+                    <!-- END panel 1 body -->
+                </div>  <!-- END Credit card section -->
+            }}
+            @{if (GlobalConfig.IsPaypalReloadModeEnabled && IsPayPalSupported)
+            {
+                <div class="row panel panel-default pay_pal">
+                    <!-- Pay pal section -->
+                    <a id="paypal_anchor" class="tab_anchor">
+                        <div class="col-xs-12 panel-heading">
+                            <!-- panel 2 heading -->
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#paypal_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Pay Pal
+                                @Html.ImageBuilder(Url, "ux/paypal.jpg", new { alt = "Paypal" })
+                            </h2>
+                        </div>
+                    </a>
+                    <!-- END panel 2 heading -->
+                    <!-- panel 2 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="paypal_body">
+                        <form id="paypal_form" name="paypal_form" target="_blank" method="post" enctype="multipart/form-data" action="@GlobalConfig.PayPalSubmitUrl">
+                            <p>
+                                <b>
+                                    To proceed with your credit purchase, click on the "Continue to PayPal" button and
+                                    log on using your PayPal email and password.
+                                </b>
+                            </p>
+                            <div class="row">
+                                <div class="form-group amount_load">
+                                    <div class="col-sm-4">
+                                        <label for="amount">
+                                            Amount
+                                        </label>
+                                        <input type="text" class="form-control p_amount" name="pamount" id="pamount" maxlength="5"
+                                               required>
+                                        <span class="left">@wallet.Currency</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" value="Continue to PayPal" class="btn btn-primary blue_button sub_pro_msgb"><!-- popup box trigger && submit button -->
+                            <p>
+                                <span class="siteseal">
+                                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                </span>
+                            </p>
+                            <input type="hidden" name="cmd" value="_xclick" />
+                            <input type="hidden" name="business" value="@GlobalConfig.PayPalBusiness" />
+                            <input type="hidden" id="item_name" name="item_name" />
+                            <input type="hidden" id="amount" name="amount" value="0" />
+                            <input type="hidden" id="currency_code" name="currency_code" value="@wallet.Currency" />
+                            <input type="hidden" name="return" value="@GlobalConfig.PayPalReloadReturnUrl" />
+                            <input type="hidden" id="custom" name="custom" />
+                            <input type="hidden" name="no_shipping" value="1" />
+                        </form>
+                    </div>
+                    <!-- END panel 2 body -->
+                </div>   <!-- END Pay pal section -->
+            }
+            }
+            @{if (GlobalConfig.IsPpcReloadModeEnabled)
+            {
+                <div class="row panel panel-default prepaid_card">
+                    <!-- Prepaid card section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 3 heading -->
+                        <a id="prepaid_card_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#prepaidcard_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>Prepaid Card/ePIN
+                            </h2>
+                        </a>
+                    </div>
+                    <!-- END panel 3 heading -->
+                    <!-- panel 3 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="prepaidcard_body">
+                        @{if (ErrorMessage != null)
+                        {
+                            if (String.Compare(ErrorMessage.info, "PrepaidCard", true) == 0)
+                            {
+                                <div class="alert alert-danger">
+                                    <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                                </div>
+                            }
+                        }
+                        }
+                        <form method="post" name="form_prepaid_Card" id="form_prepaid_Card" action="@Url.Action("_LoadViaPrepaidCard", "Load")">
+                            @Html.AntiForgeryToken()
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label for="serial_number">
+                                        Serial Number
+                                    </label>
+                                    <input type="text" class="form-control" id="serialnumber" name="serialnumber" maxlength="20"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <label for="pin">
+                                        PIN
+                                    </label>
+                                    <input type="text" class="form-control" id="pin" name="pin" maxlength="200" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-xs-12">
+                                    <input type="submit" value="SUBSCRIBE  Now!" class="btn btn-primary blue_button sub_pro_msgb">
+                                    <!-- popup box trigger && submit button -->
+                                    <p>
+                                        <span class="siteseal">
+                                            <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- END panel 3 body -->
+                </div>
+                <!-- END Prepaid card section -->
+            }
+            }
+            @{if (GlobalConfig.IsSmartPitReloadEnabled && IsSmartPitAvailable)
+            {
+                <div class="row panel panel-default smartpit">
+                    <!-- Prepaid card section -->
+                    <a id="smartpit_anchor" class="tab_anchor">
+                        <div class="col-xs-12 panel-heading">
+                            <!-- panel 3 heading -->
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#smartPit_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>SmartPit
+                            </h2>
+                        </div>
+                    </a>
+                    <!-- END panel 3 heading -->
+                    <!-- panel 3 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="smartPit_body">
+                        @{if (String.IsNullOrEmpty(SmartPitCardNumber))
+                        {
+                            if (ErrorMessage != null)
+                            {
+                                if (String.Compare(ErrorMessage.info, "SmartPit", true) == 0)
+                                {
+                                    <div class="alert alert-danger">
+                                        <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                                    </div>
+                                }
+                            }
+                            <p>
+                                <b>
+                                    Maaari na kayong magbayad at mag-load sa pinakamalapit na SmartPit Payment Terminals
+                                    ng Lawson at Familymart. I-type lang sa ilalim ang inyong SmartPit Card number para
+                                    ma-connect ito sa inyong TFC.tv account.
+                                </b>
+                            </p>
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-12 left">
+                                    <!-- left form [SmartPit Card number] -->
+                                    <form name="form_smartPit_number" id="form_smartPit_number" method="post" action="@Url.Action("_EnrollSmartPitCardNumber", "Load", null, "http")">
+                                        @Html.AntiForgeryToken()
+                                        <div class="row form-group">
+                                            <div class="col-md-8 col-sm-12 col-xs-8">
+                                                <label for="SmartPitCardNumber">
+                                                    SmartPit Card Number
+                                                </label>
+                                                <input type="text" class="form-control" id="SmartPitCardNumber" name="SmartPitCardNumber"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="ENROLL YOUR SMARTPIT CARD NUMBER" class="btn btn-primary blue_button sub_pro_msgb">
+                                            <!-- popup box trigger && submit button -->
+                                            <p>
+                                                <span class="siteseal">
+                                                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END left form [SmartPit Card number] -->
+                                <div class="col-sm-6 col-xs-12 right">
+                                    <!-- right form [generate Card number] -->
+                                    <form name="form_generate_smartPit" id="form_generate_smartPit" method="post" action="@Url.Action("_EnrollSmartPitCardNumber", "Load", null, "http")">
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-group">
+                                            <label for="serial_number">
+                                                Don't have SmartPit Card Number? Click "Generate Your SmartPit Card Number" button
+                                                below to get one
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="GENERATE YOUR SMARTPIT CARD NUMBER" class="btn btn-primary blue_button sub_pro_msgb">
+                                            <!-- popup box trigger && submit button -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        /* User has smartpit card number already */
+                        else
+                        {
+                            <p>
+                                <b>
+                                    Puwedeng magbayad at mag-load anytime sa mga sumusunod na convenience store: Lawson,
+                                    Family Mart, Circle K, Sunkus, 3 F, Ministop. Isulat ang inyong SmartPit card number
+                                    at magbayad sa pinakamalapit na convenience store.
+                                    <br />
+                                    Questions? Give us a call: (24 hours)<br />
+                                    Landline users (toll-free)- 0120-832-863
+                                    <br />
+                                    Mobile users (fee required): 03-6868-2024
+                                </b>
+                            </p>
+                            <p>
+                                <b>Your current SmartPit Card Number is <span class="red_button btn_helv">@SmartPitCardNumber</span></b>
+                            </p>
+                        }
+                        }
+                    </div>
+                    <!-- END panel 3 body -->
+                </div>   <!-- END SmartPit section -->
+            }
+            }
+            @{if (GlobalConfig.IsMopayReloadModeEnabled && buttonIds != null)
+            {
+                <div class="row panel panel-default mopay">
+                    <!-- mopay section -->
+                    <div class="col-xs-12 panel-heading">
+                        <!-- panel 2 heading -->
+                        <a id="mopay_anchor" class="tab_anchor">
+                            <h2 class="graw_subtitle panel-title" data-toggle="collapse" data-target="#mopay_body"
+                                data-parent="#accordion">
+                                <span class="glyphicon glyphicon-chevron-right bgi"></span>mopay
+                            </h2>
+                        </a>
+                    </div>
+                    <!-- END panel 2 heading -->
+                    <!-- panel 2 body -->
+                    <div class="col-xs-12 panel-collapse collapse" id="mopay_body">
+                        @{if (ErrorMessage != null)
+                        {
+                            if (String.Compare(ErrorMessage.info, "EWallet", true) == 0)
+                            {
+                                <div class="alert alert-danger">
+                                    <a class="close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                                </div>
+                            }
+                        }
+                        }
+                        <form id="mopay_form" name="mopay_form" method="post" action="@GlobalConfig.MopayFormPostAddress" target="ftarget">
+                            <p>
+                                <b>Please click the desired amount to be loaded in your E-Wallet.</b>
+                            </p>
+                            <div>
+                                @{if (buttonIds != null)
+                                {
+                                    foreach (IPTV2_Model.MopayButton buttonId in buttonIds)
+                                    {
+                                        <a class="buttonFormSubmit" href="#" data-token="@MyUtility.HashMD5(String.Format("{0}{1}{2}Reload", buttonId.ButtonId, User.Identity.Name, GlobalConfig.MopayBackURL), GlobalConfig.MopayLoadSaltCode)" data-country="@buttonId.CountryCode" id="@buttonId.ButtonId" onclick="">
+                                            <button type="button" class="btn btn-danger red_button">
+                                                @String.Format("{0} {1}", buttonId.Amount.ToString("F"), buttonId.Currency)
+                                            </button>
+                                        </a>
+                                    }
+                                }
+                                }
+                            </div>
+                            <br />
+                            <p>
+                                <span class="siteseal">
+                                    <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                                </span>
+                            </p>
+                            <input type="hidden" name="buttonid" value="" />
+                            <input type="hidden" name="country" value="" />
+                            <input type="hidden" name="backurltarget" value="_top" />
+                            <input type="hidden" name="myid" value="@User.Identity.Name" />
+                            <input type="hidden" name="backurl" value="@GlobalConfig.MopayBackURL" />
+                            <input type="hidden" name="productname" value="Reload" />
+                            <input type="hidden" name="servicename" value="" />
+                            <input type="hidden" name="token" value="" />
+                        </form>
+                    </div>
+                    <!-- END panel 2 body -->
+                </div>
+            }
+            }
+        </div>
+        <!-- END Accordion container for payment methods -->
+    </div>
+    <!-- END Container -->
+</section>
+<!-- end page body section -->
+<!-- popup processing message -->
+<div class="modal fade" id="subProMsg" tabindex="-1" role="dialog" aria-labelledby="subProMsgLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- box body -->
+                <p class="boxHead boxSmaller">
+                    Please do not close your browser. We are currently processing your transaction.
+                </p>
+            </div>
+            <!-- END box body -->
+        </div>
+    </div>
+</div>
+<!-- END popup successful message -->
+@section JScriptBottom {
+    @{if (GlobalConfig.IsPaypalReloadModeEnabled && IsPayPalSupported)
+    {
+        <script type="text/javascript">
+            function roundNumber(num, dec) {
+                var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
+                return result;
+            }
+            $(document).ready(function () {
+                $('#paypal_form').submit(function (event) {
+                    var form = $(this);
+                    var amount = roundNumber($('#pamount').val(), 2).toFixed(2);
+                    var item_name = 'TFC.tv Credits (' + $('#currency_code').val() + ' ' + amount + ')';
+                    var custom = amount + '&@User.Identity.Name';
+                    $('#amount').val(amount);
+                    $('#item_name').val(item_name);
+                    $('#custom').val(custom);
+                    window.open('', 'paypalwindow');
+                    this.target = 'paypalwindow';
+                });
+            });
+        </script>
+    }
+    }
+    <script type="text/javascript">
+        /* warn user against page reloading */
+        //if (needConfirm || $('#subProMsg').is(':visible'))
+        var needConfirm = false;
+        function askConfirm() {
+            if (needConfirm) {
+                return 'The system is currently processing your request. Leaving this page might cause some problems.';
+            }
+        }
+        $("select, input, textarea").change(function () {
+            needConfirm = true;
+        });
+
+        $(document).ready(function () {
+            window.onbeforeunload = askConfirm;
+        });
+
+        $(window).unload(function () {
+            needConfirm = true;
+        });
+
+        $("form").submit(function () {
+            needConfirm = false;
+        });
+
+    </script>
+    @{if (ErrorMessage != null)
+    {
+        if (String.Compare(ErrorMessage.info, "PrepaidCard", true) == 0)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#prepaidcard_body').addClass('in');
+                    $('html, body').animate({ scrollTop: $('#prepaid_card_anchor').offset().top }, 'slow');
+                    return false;
+                });
+            </script>
+        }
+        else if (String.Compare(ErrorMessage.info, "CreditCard", true) == 0)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#creditcard_body').addClass('in');
+                    $('html, body').animate({ scrollTop: $('#credit_card_anchor').offset().top }, 'slow');
+                    return false;
+                });
+            </script>
+        }
+        else if (String.Compare(ErrorMessage.info, "SmartPit", true) == 0)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#smartPit_body').addClass('in');
+                    $('html, body').animate({ scrollTop: $('#smartpit_anchor').offset().top }, 'slow');
+                    return false;
+                });
+            </script>
+        }
+    }
+    }
+    <script type="text/javascript">
+        // on page script only for this page
+        $(document).ready(function () {
+            // whow bootstrap tooltip
+            $("[data-toggle=tooltip]").tooltip();
+
+            // for form light box
+            $('form').submit(function (e) {
+                var form = this;
+                e.preventDefault();
+                $('#subProMsg').modal({
+                    keyboard: false,
+                    backdrop: "static"
+                });
+                setTimeout(function () {
+                    form.submit();
+                }, 2000); // in milliseconds
+            });
+
+
+        });
+    </script>
+    @{if (GlobalConfig.IsMopayReloadModeEnabled)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.buttonFormSubmit').on('click', function () {
+                    var windowWidth = 600; var windowHeight = 450;
+                    var windowLeft = parseInt((screen.availWidth / 2) - (windowWidth / 2));
+                    var windowTop = parseInt((screen.availHeight / 2) - (windowHeight / 2));
+                    var mywindow = window.open("", "ftarget", "menubar=0,resizable=0,width=" + windowWidth + ",height=" + windowHeight + ",left=" + windowLeft + ",top=" + windowTop + ",modal=yes,location=0,scrollbars=0,menubar=no,status=1");
+                    var idstr = this.id;
+                    $('input[name=buttonid]').val(idstr);
+                    $('input[name=token]').val($(this).data('token'));
+                    $('input[name=country]').val($(this).data('country'));
+                    $('#mopay_form').submit();
+                    mywindow.focus();
+                    return false;
+                });
+            });
+        </script>
+
+    }
+    }
+}

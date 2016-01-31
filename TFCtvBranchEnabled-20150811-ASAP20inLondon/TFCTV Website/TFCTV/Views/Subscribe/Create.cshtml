@@ -1,0 +1,118 @@
+﻿@model IPTV2_Model.Product
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="payment_genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="payment_sectionHeaderTitle">
+                    Payment Details for Subscription</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="subscriptionContainer">
+            <div class="breakStandard">
+            </div>
+            <div class="padLeftLarge">
+                <div class="subtext">
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div id="message">
+                </div>
+                <div id="subscriptionBody">
+                    <div class="formSubHeaders">
+                        Product Information</div>
+                    <div class="info-row">
+                        <div class="info-row-label floatLeft">
+                            Product Name
+                        </div>
+                        <div class="boldText">
+                            @Model.Name <span class="miniText"><a href="#">[?]</a></span>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label floatLeft">
+                            Description
+                        </div>
+                        <div class="boldText">
+                            @Model.Description
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label floatLeft">
+                            Amount:
+                        </div>
+                        <div class="boldText">
+                            @ViewBag.ProductAmountFormat
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label floatLeft">
+                            Duration:
+                        </div>
+                        <div class="boldText">
+                            30 days
+                        </div>
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="formSubHeaders">
+                        Choose your payment method</div>
+                    <div id="paymentMethod">
+                        <ul class="poptions">
+                            <li>@Ajax.ActionLink("Pay via Wallet", "Wallet", "Subscribe", new { id = Model.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                            <li>@Ajax.ActionLink("Pay via Prepaid Card", "PrepaidCard", "Subscribe", new { id = Model.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                            <li>@Ajax.ActionLink("Pay via Credit Card", "CreditCard", "Subscribe", new { id = Model.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                            <li>@Ajax.ActionLink("Pay via PayPal", "PayPal", "Subscribe", new { id = Model.ProductId }, new AjaxOptions { OnBegin = "checkUser", LoadingElementId = "spanner", UpdateTargetId = "paymentMethod_container" })</li>
+                        </ul>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div id="spanner">
+                        @Html.ImageBuilder(Url, "loading.gif", new { alt = "loading..." })
+                        <br />
+                        <span id="spannertext">please wait while we process your request...</span>
+                    </div>
+                    <div id="paymentMethod_container">
+                    </div>
+                    <div class="clear breakLarge">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "subscribe.css")
+     @Html.CssBuilder(Url, "payment.css")
+}
+@section JScriptBottom{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#paymentMethod a').click(function () {
+                $('#paymentMethod a').removeClass('current');
+                $(this).addClass('current');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function checkUser() {
+            $('#paymentMethod_container').empty();
+            var isLogin = @User.Identity.IsAuthenticated.ToString().ToLower()@Html.Raw(";")
+            if(!isLogin) {
+                   $('.t-window-title').html('Ooops! It seems that you are not logged in..');
+                   $('#Window').data('tWindow').center().open();
+                   return false;
+            }
+        }
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿@model List<JsonCarouselItem>
+@{    
+    JsonCarouselItem item = Model.FirstOrDefault();    
+}
+@{if (item != null)
+  {       
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').css('background', 'url(@item.BannerImageUrl) no-repeat center 0');
+        });
+    </script>    
+  }
+}

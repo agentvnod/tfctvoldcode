@@ -1,0 +1,390 @@
+﻿#menuNavigation
+{
+    z-index: 100;
+    position: relative;
+}
+#menuNavigation li
+{
+    float: left;
+}
+.menuImg
+{
+    margin-top: -3px;
+    background: none;
+}
+#menuEntertainment
+{
+    width: 188px;
+    height: 30px;
+    cursor: pointer;
+}
+#menuEntertainment a, #menuMovies a, #menuNews a, #menuLive a
+{
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#menuEntertainment a
+{
+    width: 188px;
+}
+
+#menuMovies a
+{
+    width: 97px;
+}
+#menuNews a
+{
+    width: 76px;
+}
+#menuLive a
+{
+    width: 60px;
+}
+.selectedMenu
+{
+    display: block !important;
+}
+.selectedMenu a
+{
+    color: #49a4ff !important;
+    border-bottom: 2px solid #49a4ff;
+}
+
+#menuNews
+{
+    width: 76px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuMovies
+{
+    width: 97px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuLive
+{
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.iconImage
+{
+    position: relative;
+    z-index: 1000;
+}
+.revSubMenu
+{
+    background-color: #222;
+    width: 940px;
+    position: relative;
+    float: left;
+    z-index: 100;
+    height: 339px;
+    background-color: #231f20;
+    border-color: #49a4ff;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    left: -221px;
+}
+.menuListHeader
+{
+    font-size: large;
+    font-family: @Arial Unicode MS;
+    width: 100%;
+    float: left;
+    cursor: default;
+    color: #fff;
+    background-color: #000;
+    bottom: 0px;
+    width: 235px;
+}
+.menuListheaderPixelbar
+{
+    background-image: url('images/menuBar/menu-pixelbar.jpg');
+    background-repeat: no-repeat;
+    background-position: 0px 5px;
+}
+.menuListHeader h3
+{
+    margin-bottom: 0px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.episodeMenuListHeader
+{
+    width: 470px;
+    position: relative;
+    cursor: default;
+}
+.moreLink a
+{
+    color: #000 !important;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: inherit;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    text-decoration: underline !important;
+}
+
+.moreEpisodesLink a
+{
+    color: #a7a9ac;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: inherit;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.selectedSubMenu
+{
+    background-color: #a7a9ac !important;
+    color: #000 !important;
+}
+
+
+
+
+.liGenre, .liShows
+{
+    float: left;
+    clear: left;
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: medium;
+    font-weight: bold;
+    width: 225px;
+    color: #49a4ff;
+}
+.liGenre
+{
+    color: #49a4ff;
+    z-index: 5;
+}
+.liShows
+{
+    color: #000;
+    z-index: 100;
+}
+.liGenre:hover
+{
+    color: #000;
+}
+.liGenre a, .liShows a
+{
+    text-decoration: none;
+    color: #000;
+}
+.liGenre a, .liShows a :visited
+{
+    color: inherit;
+}
+
+
+.dGenre
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: relative;
+    padding-bottom: 5px;
+    min-width: 235px;
+    max-width: 235px;
+    background-color: #231f20;
+    float: left;
+    min-height: 331px;
+    z-index: 5;
+}
+.dShows h3
+{
+    color: #fff;
+}
+.dShows
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: absolute;
+    padding-bottom: 5px;
+    min-width: 235px;
+    max-width: 235px;
+    background-color: #a7a9ac;
+    float: left;
+    min-height: 331px;
+    z-index: 1000;
+    top: 0px;
+    left: 235px;
+}
+.dEpisodes
+{
+    border-bottom: 1px dotted #666;
+    margin: 0;
+    position: absolute;
+    padding-bottom: 5px;
+    min-width: 470px;
+    max-width: 470px;
+    background-color: #fff;
+    float: left;
+    min-height: 331px;
+    z-index: 7;
+    top: 0px;
+    left: 235px;
+    font-size: 12px;
+}
+#invisibleMenuTree
+{
+    z-index: 99999999;
+}
+.subMenuLeaderboard
+{
+    min-height: 70px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 940px;
+}
+.displayToggle
+{
+    display: block;
+}
+
+.dsourceShows, .dLatestEpisodes
+{
+    display: none;
+}
+.dsourceEpisodes
+{
+    width: 235px;
+    float: left;
+    height: 240px;
+}
+
+.episodeHeader
+{
+    min-width: 470px;
+    color: #fff;
+}
+
+.dsourceEpisodes > a img
+{
+    display: block;
+    margin-top: 10px;
+}
+.dsourceEpisodes > p
+{
+    max-width: 190px;
+}
+
+
+
+
+.selectedShowMenu
+{
+    background-color: #fff;
+}
+
+.watchnow:hover
+{
+    background-position: 0 0;
+}
+.watchnow
+{
+    display: block;
+    width: 114px;
+    height: 20px;
+    background: url('images/menuBar/WatchNow.png') bottom;
+    text-indent: -99999px;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 40px;
+}
+.dEpisodes a
+{
+    border-bottom: none !important;
+}
+.watchnowmovie
+{
+    float: none;
+    bottom: 9px;
+}
+.posterImage, .blurbWatchNow
+{
+    float: left;
+    width: 235px;
+    position: relative;
+    display: block;
+}
+.posterImage
+{
+    height: 260px;
+}
+.posterImage img
+{
+    padding: 10px;
+}
+.blurbWatchNow
+{
+    height: 260px;
+}
+.blurbWatchNow > p
+{
+    left: 10px;
+    max-width: 190px;
+}
+.dsourceMovieEpisode
+{
+    min-width: 470px;
+}
+
+.dmenuHeaderTitle
+{
+    color: #000;
+    font-size: 55px;
+    font-weight: bold;
+    float: left;
+    position: absolute;
+    top: 30px;
+}
+
+
+.sourceEpLeft > a img
+{
+    margin-left: 10px;
+}
+.sourceEpLeft > p
+{
+    margin-left: 10px;
+}
+.ulGenre, .ulShows, .dsourceGenre, .dsourceShows
+{
+    width: 235px;
+}
+
+.ieBrowser .dShows
+{
+    top: -5px;
+    min-height: 339px;
+}
+.ieBrowser .dEpisodes
+{
+    min-height: 339px;
+}

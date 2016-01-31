@@ -1,0 +1,34 @@
+﻿@model IPTV2_Model.User
+<div id="likedCelebsContainer">
+    <div class="titleContainer">
+        <div id="likedCelebsTitle">
+            LOVED <span style="color: #185695; font-weight: bold;">CELEBS</span>
+        </div>
+    </div>
+    <div id="likedCelebsContent" class="featuredItems">
+        <div class="itemListBody">
+            <div class="wrapper">
+                <div class="loader-left-profile">
+                    @Html.ImageBuilder(Url, "ajax-loader.gif", new { alt = "", width = 50, height = 50 })</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //Get user's loved celebrities
+
+    $(document).ready(function () {
+        var features = [{ url: "/SocialEngagement/GetUserLovedCelebrities/" + '@Model.UserId', type: "person", itemperslide: 9, container: "likedCelebsContent"}];
+        $.each(features, function (x, item) {
+            jQuery.get(item.url, function (data) {
+                if (data.length > 0) {
+                    var list = new featureItem({
+                        json_str: data, type: item.type, itemperslide: item.itemperslide, container: item.container
+                    }).listing();
+                }
+                else
+                    $("#likedCelebsContent").html("User has not loved any celebrity yet.");
+            }, 'json');
+        });
+    });
+</script>

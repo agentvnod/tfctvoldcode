@@ -1,0 +1,149 @@
+body
+{
+    margin: 0px;
+    padding: 0px;
+    color: #FFF;
+    font-family: Helevetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 1.5em;
+    background-color: #000;
+    background-image: url(images/beta/bg.jpg);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.clear
+{
+    clear: both;
+}
+.float_l
+{
+    float: left;
+}
+.input_cont
+{
+    width: 150px;
+}
+
+#main_wrapper
+{
+    margin: 0 auto; /*background-image:url(images/bg.jpg);*/
+}
+#content_wrapper
+{
+    clear: both;
+    margin: 0 auto;
+    padding-top: 105px;
+    width: 1000px;
+    height: auto;
+}
+#sidebar_wrapper
+{
+    float: right;
+    width: 242px;
+    height: 495px;
+    margin-right: 118px;
+    background-image: url(images/beta/log_in.png);
+}
+
+#copy_1
+{
+    margin: 15px;
+    padding: 22px 3px 30px 3px;
+    padding-bottom: 0px;
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 28px;
+}
+#copy_2
+{
+    clear: both;
+    margin: 15px;
+    margin-top: 10px;
+    font-weight: bold;
+    padding-top: 5px;
+    font-size: 12px;
+}
+.color_red
+{
+    color: #cf4a41;
+}
+
+#contact_form
+{
+    margin: 10px;
+    margin-top: -5px;
+    padding: 0;
+}
+#contact_form form
+{
+    margin: 0px;
+    padding: 0px;
+}
+#contact_form form .input_field
+{
+    width: 150px;
+    height: 22px;
+    padding: 2px;
+    background: #FFF;
+    border: 1px solid #17160d;
+}
+
+#contact_form form textarea
+{
+    width: 150px;
+    height: 200px;
+    background: #494730;
+    border: 1px solid #17160d;
+}
+#contact_form form .submit_btn
+{
+    float: right;
+    width: 57px;
+    height: 27px;
+    padding: 1px 0 5px 0;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background: url(images/beta/btn_submit.jpg) no-repeat;
+}
+#contact_form form .submit_btn:hover
+{
+    color: #FFF;
+    background-image: url(images/beta/btn_submit.jpg) no-repeat;
+}
+
+.logintext
+{
+    margin-top: 3px;
+    font-size: 11px;
+}
+
+.login-label
+{
+    font-size: 11px;
+    width: 75px;
+}
+
+#loginpanel
+{
+    margin-top: -5px;
+}
+label.error
+{
+    font-size: 10px;
+}
+
+#contact_form form label
+{
+    display: block;
+    width: 180px;
+    margin-right: 0px;
+    font-size: 11px;
+    color: #da4b4b;
+}
+
+.errorText
+{
+    font-size: 11px;
+}

@@ -1,0 +1,66 @@
+﻿@model List<TVEContentListObj>
+@{
+    IPTV2_Model.Category category = null;
+    if (ViewBag.Category != null)
+    {
+        category = ViewBag.Category;
+    }
+    bool IsActive = false;
+    if (ViewBag.IsActive != null)
+    {
+        IsActive = ViewBag.IsActive;
+    }
+}
+<div class="row tab-pane fade in @String.Format("{0}", IsActive ? "active" : String.Empty)" id="@category.CategoryId">
+    <!-- outer tab c 1 -->
+    <div class="tet_header">
+        <!-- TFC everywhere tab header-->
+        @Html.ImageBuilder(Url, String.Format("tve/banners/{0}.jpg", category.CategoryId), new { alt = category.Description, height = "210", width = "724", @class = "tet_header_img", title = category.Description })
+        <!-- page header image -->
+        <!-- page description -->
+        <div class="page_description col-xs-12 clearfix">
+            <p>
+                @Html.Raw(category.Blurb)</p>
+            <!-- end page description -->
+            <div class="border">
+            </div>
+            <!-- border -->
+        </div>
+    </div>
+    <!-- END TFC everywhere tab header-->
+    <!-- TFC everywhere tab body -->
+    <div class="tet_body">
+        <div class="subtitle">
+            Content List</div>
+        @{if (Model != null)
+          {
+              if (Model.Count() > 0)
+              {
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12 list_box">
+                        <h3>
+                            @item.MainCategory</h3>
+                        @if (item.shows != null)
+                        {
+                            if (item.shows.Count() > 0)
+                            {
+                            <ul>
+                                @foreach (var show in item.shows)
+                                {
+                                    string href = String.Format("/Show/Details/{0}/{1}", show.id, MyUtility.GetSlug(show.name));
+                                    <li><a href="@href">@show.name</a></li>
+                                }
+                            </ul>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+              }
+          }              
+        }
+    </div>
+    <!-- END TFC everywhere tab body -->
+</div>

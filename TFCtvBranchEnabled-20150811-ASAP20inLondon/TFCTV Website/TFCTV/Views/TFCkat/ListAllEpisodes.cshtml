@@ -1,0 +1,79 @@
+﻿@model IEnumerable<IPTV2_Model.Episode>
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", "TFCkat");
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div style="width: 940px; height: 141px; background-color: #fff;">
+        <img src="http://cdnassets.tfc.tv/content/images/banners/tfckat2013.png" style="z-index: -11;"
+            width="940" height="141" title="TFCkat" alt="TFCkat" />
+    </div>
+    <div class="transparentBg floatLeft">
+        <div id="dTopLinksFour" style="display: table; margin: 0 auto;">
+            @Html.ActionLink("MAIN PAGE", "Index", "TFCkat") | @Html.ActionLink("PROMO MECHANICS", "Mechanics", "TFCkat")
+            | @Html.ActionLink("THE CONTENDERS", "Finalists", "TFCkat") | @Html.ActionLink("GRAND WINNERS", "GrandWinners", "TFCkat")</div>
+        <div class="clear breakStandard">
+        </div>
+        <div class="floatRight white" style="margin-right: 20px;">
+            <div class="floatLeft" style="margin-top: 12px; margin-right: 10px;">@ViewBag.OutOf
+                of @ViewBag.TotalCount</div>
+            <a href="@Url.Action("ListAllEpisodes", "TFCkat", new { id = ViewBag.Previous })" class="prev-btn-square white">
+                PREV</a><a href="@Url.Action("ListAllEpisodes", "TFCkat", new { id = ViewBag.Next })" class="next-btn-square white">
+                    NEXT</a></div>
+        <div class="clear breakStandard">
+        </div>
+        <div id="latestShows_bodyContainer" class="transparentBg">
+            <div id="dsFeatureItems">
+                <div class="itemListBody">
+                    <div class="wrapper">
+                        <ul class="dsitemListing">
+                            @foreach (var item in Model)
+                            {
+                                string img = String.IsNullOrEmpty(item.ImageAssets.ImageVideo) ? GlobalConfig.AssetsBaseUrl + GlobalConfig.BlankGif : String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, item.EpisodeId, item.ImageAssets.ImageVideo);
+                            
+                                <li>
+                                    <div class="chartItem">
+                                        <div class="chartImage">
+                                            <div class="chartImageHolder">
+                                                <a href="/TFCkat/OnDemand/@item.EpisodeId">
+                                                    <img src="@img" title="@item.Synopsis" height="98" width="151" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="chartInfo">
+                                            <div class="chartInfoTitle">
+                                                <a href="/UAAP/OnDemand/@item.EpisodeId">@item.EpisodeName</a></div>
+                                            <div class="chartInfoDate">
+                                                Posted on @item.DateAired.Value.ToString("MMMM d, yyyy")</div>
+                                            @*<div class="chartInfoDetails">
+                                                @MyUtility.Ellipsis(item.Synopsis, 60)</div>*@
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                </li>
+                            
+                            }
+                        </ul>
+                        <div class="clear" style="border-bottom: 1px solid #393939; width: 930px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "uaap.3.css")
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.2-1.css")
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "episode.css")
+    @Html.CssBuilder(Url, "tfckat.6.css")
+}

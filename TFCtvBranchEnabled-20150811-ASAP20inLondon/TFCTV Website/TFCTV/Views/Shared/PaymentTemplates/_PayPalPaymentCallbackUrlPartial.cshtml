@@ -1,0 +1,28 @@
+﻿<html>
+<head>
+    <title>TFC.tv</title>
+    @Html.JsBuilder(Url, "jquery-1.7.1.min.js")
+</head>
+<body>
+    <script type="text/javascript">
+        //var p = window.opener.document.getElementById('spanner');
+        var subheader = window.opener.$('#PaypalSubHeader');
+        var body = window.opener.$('#enterPin');
+        $(subheader).html('Thank you for purchasing this product!');
+        var item = window.opener.$('#li-@ViewBag.WishlistId');
+        $(item).remove();
+        var bought = window.opener.$('#bought');
+        $(bought).val('1');
+        $(body).html('<div>We have received your payment. Please take note of the details found below.</div><div class="breakStandard"></div><div>@Html.Raw(ViewBag.errorMessage)</div>');
+
+        @{if (!String.IsNullOrEmpty(ViewBag.RecipientName))
+          {
+          <text>
+          var recipient = window.opener.$('#recipient');
+          $(recipient).html('Your gift was successfully sent to @ViewBag.RecipientName');
+          </text>
+          }}
+          window.close();
+    </script>
+</body>
+</html>

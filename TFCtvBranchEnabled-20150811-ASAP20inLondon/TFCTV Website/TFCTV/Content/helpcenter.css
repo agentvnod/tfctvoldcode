@@ -1,0 +1,624 @@
+#helpContents
+{
+    width: 910px;
+    height: 200px;
+    margin: 0px 10px;
+}
+#helpContents h1
+{
+    text-align: left;
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #123859;
+}
+#helpContents input#searchBox
+{
+    width: 600px;
+    float: left;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    padding-left: 3px;
+}
+#helpContents input#searchBtn, input.hotBtn
+{
+    padding: 7px 15px;
+    background: #333;
+    border: 1px solid #333;
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: bold;
+    border-radius: 4px;
+    color: #ddd;
+    text-shadow: 0px -1px 0px #000;
+    cursor: pointer;
+}
+#helpContents input#searchBtn
+{
+    float: right;
+}
+
+#helpContents h2
+{
+    width: 100%;
+    font-size: 15px;
+    color: #333;
+    text-align: left;
+    margin: 10px 0px;
+    float: left;
+}
+#faqContents
+{
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+}
+#faqContents #tabs
+{
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+}
+ul#subcateg
+{
+    width: 300px;
+    float: left;
+    background: #ddd;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #666;
+}
+ul#subcateg li
+{
+    background: url('images/help/righttooltip.png') center right no-repeat;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+ul#subcateg li a, .subcateglist li a
+{
+    font-size: 13px;
+    color: #333;
+    text-decoration: none;
+}
+.subcateglist li
+{
+    text-align: left;
+    margin-left: 30px;
+}
+.subcateglist li:hover
+{
+    text-decoration: underline;
+}
+.subcateglist li
+{
+    padding: 10px;
+    cursor: pointer;
+}
+ul#subcateg li:hover
+{
+    background: #eee;
+}
+ul#subcateg li.active
+{
+    background: #eee;
+}
+div.tabcontents
+{
+    float: right;
+    width: 400px;
+    background: #eee;
+}
+
+ul#icons li
+{
+    width: 85px;
+    float: left;
+    margin-right: 20px;
+}
+ul#icons li a
+{
+    height: 85px;
+    background: #2b2b2b;
+    border-radius: 5px;
+    color: #eee;
+    border: 3px solid #eee;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px #000;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+ul#icons li a:hover
+{
+    border-color: #fff;
+}
+ul#icons li:hover
+{
+    background: url(images/help/selectedicon.png) bottom center no-repeat;
+}
+ul#icons li a
+{
+    float: left;
+    text-align: center;
+    width: 85px;
+    font-family: "Helvetica Neue" , "Arial";
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 9px;
+    color: #9b9b9b;
+    line-height: 12px;
+}
+ul#icons li a img.iconimg
+{
+    width: 40px;
+}
+ul#icons li:hover a
+{
+    color: #f5a061;
+    text-shadow: 0px 0px 2px #f5a061;
+}
+
+.helpPage .container
+{
+    width: 768px;
+}
+.helpPage .container #helpContents
+{
+    width: 100%;
+}
+#helpContents h2
+{
+    color: #f29703;
+}
+#helpcenterSearch
+{
+    background: url('images/help/topicBG.png');
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 728px;
+    padding: 20px;
+    padding-top: 5px;
+    float: left;
+    margin: 10px 0;
+}
+#helpcenterSearch ul#searchresults li, .SubTopicAnswers ul#searchresults li
+{
+    list-style: disc inside;
+    width: 100%;
+    float: left;
+    text-align: left;
+    list-style-position: inside;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+#helpcenterSearch ul#searchresults li a, .SubTopicAnswers ul#searchresults li a
+{
+    color: #2169a3;
+    text-decoration: none;
+    font-weight: normal;
+}
+#helpcenterSearch ul#searchresults li a:hover, .SubTopicAnswers ul#searchresults li a:hover
+{
+    text-decoration: underline;
+}
+.questionContent
+{
+    display: none;
+    width: 610px;
+    float: left;
+    margin: 10px 0;
+    padding: 10px;
+}
+#questionContents
+{
+    float: left;
+}
+#questionContents p, .questionContent p
+{
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 17px;
+}
+#questionContents a, .questionContent a
+{
+    text-decoration: none;
+    color: #f29703;
+}
+.ratethis
+{
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+}
+.helpful
+{
+    font-size: 14px;
+    margin-left: 10px;
+    float: left;
+}
+.helpful a
+{
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+}
+#needhelp
+{
+    text-align: right;
+    font-size: 11px;
+}
+#needhelp a
+{
+    text-decoration: none;
+    color: #222;
+    font-weight: bold;
+}
+.SubTopicAnswers
+{
+    background: url('images/help/dottedBG.png');
+    width: 748px;
+    float: left;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: left;
+}
+.SubTopicAnswers p
+{
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.relatedquestions li a
+{
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+.pointSubtopic
+{
+    font-family: Arial;
+    font-weight: normal;
+}
+#help_box
+{
+    width: 220px;
+    padding: 15px;
+    margin-left: 15px;
+    float: left;
+    background: #f9f9f6;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+}
+
+#chat_box
+{
+    margin-left: 15px;
+    float: left;
+    width: 180px;
+    text-align: center;
+    color: #fff;
+}
+
+#chat_box a
+{
+    font-size: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+#chat_box a:hover
+{
+    text-decoration: underline;
+}
+#help_box p
+{
+    font-size: 15px;
+    font-weight: 300;
+    margin-bottom: 5px;
+    margin-top: 0px;
+}
+#help_box a
+{
+    color: #fff;
+    text-decoration: none;
+    float: left;
+    padding: 7px 10px;
+    font-size: 14px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+#help_email
+{
+    background: #3192d7;
+}
+#help_email:hover
+{
+    background: #0082d7;
+}
+#help_chat
+{
+    background: #ab654c;
+    margin-left: 7px;
+}
+#help_chat:hover
+{
+    background: #ab554c;
+}
+#helpcenterSearch h3
+{
+    text-align: left;
+    color: #333;
+}
+
+#help_faq_container
+{
+    width: 420px;
+    border: 1px solid #ddd;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    float: left;
+    background: url(images/help/subCatBGx.png);
+}
+#help_faq_container h3
+{
+    background: url(images/help/topicBG.png);
+    color: #123859;
+    font-size: 20px;
+    text-align: left;
+    font-weight: normal;
+    margin: 0;
+    float: left;
+    padding: 10px 0px;
+    width: 410px;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 16px;
+}
+#help_faq_container ul
+{
+    margin-left: 10px;
+    margin: 10px;
+    float: left;
+}
+#help_faq_container ul li
+{
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 12px;
+    background: url(images/help/righttooltip.png) center left no-repeat;
+    padding-left: 13px;
+}
+#help_faq_container ul li a
+{
+    color: #bbb;
+    text-decoration: none;
+}
+#help_faq_container ul li a:hover
+{
+    text-decoration: underline;
+    color: #fff;
+}
+
+#help_hot_container
+{
+    width: 476px;
+    border: 1px solid #ddd;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    float: left;
+    background: url(images/help/subCatBGx.png);
+    margin-left: 10px;
+}
+#help_hot_container h4
+{
+    background: url(images/help/topicBG.png);
+    color: #123859;
+    font-size: 20px;
+    text-align: left;
+    font-weight: normal;
+    margin: 0;
+    float: left;
+    padding: 10px 0px;
+    width: 466px;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 16px;
+}
+#help_hot_container ul
+{
+    margin-left: 10px;
+    margin: 10px;
+    float: left;
+}
+#help_hot_container ul li
+{
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 12px;
+    background: url(images/help/righttooltip.png) center left no-repeat;
+    padding-left: 13px;
+}
+#help_hot_container ul li a
+{
+    color: #aaa;
+    text-decoration: none;
+    font-size: 11px;
+}
+#help_hot_container ul li a:hover
+{
+    text-decoration: underline;
+    color: #fff;
+}
+
+.help_hot_content
+{
+    border-bottom: 1px solid #ccc;
+    float: left;
+    width: 100%;
+}
+input.hotBtn
+{
+    float: left;
+    margin: 20px;
+    background: #123859;
+    text-shadow: none;
+    border: 1px solid #305f9f;
+}
+
+div.topicMenu
+{
+    width: 908px;
+    float: left;
+    background: url(images/help/topicBG.png);
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    height: auto;
+    border: 1px solid #ddd; /*border-top: none;*/
+    margin-bottom: 30px;
+}
+ul.subcategoryMenu
+{
+    width: 240px;
+    float: left;
+    background: url(images/help/subcatBG.png);
+    height: 350px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0px 0px 3px;
+    border-right: 1px solid #fff;
+}
+ul.subcategoryMenu li
+{
+    background: url(images/help/subcatList.png) bottom right no-repeat;
+    float: left;
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+    width: 210px;
+    height: 20px;
+    margin-top: 20px;
+}
+ul.subcategoryMenu li:hover
+{
+    background: url(images/help/subcatListHover.png) bottom right no-repeat;
+}
+ul.subcategoryMenu li a
+{
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    color: #9b9b9b;
+    text-shadow: 0px 1px 0px #333;
+    text-decoration: none;
+}
+ul.subcategoryMenu li a:hover
+{
+    color: #fff;
+}
+
+div.catQuestionsMenu
+{
+    float: left;
+    padding: 20px;
+    padding-right: 0px;
+    width: 610px;
+}
+div.catQuestionsMenu h1
+{
+    color: #123859;
+    font-size: 30px;
+    text-align: left;
+    font-weight: normal;
+    margin: 0;
+}
+div.catQuestionsMenu hr
+{
+    width: 100%;
+    float: left;
+    border: none;
+    border-top: 1px solid #a4a5a3;
+    border-bottom: 1px solid #fff;
+    margin: 0;
+    margin-bottom: 5px;
+}
+ul.catQuestionsList li
+{
+    width: 100%;
+    float: left;
+    text-align: left;
+    color: #333;
+    list-style-type: disc;
+    list-style-position: inside;
+    font-size: 12px;
+    margin-top: 10px;
+}
+ul.catQuestionsList li a
+{
+    color: #2169a3;
+    text-decoration: none;
+}
+ul.catQuestionsList li a:hover
+{
+    text-decoration: underline;
+}
+
+#helpContents input#searchBoxLanding
+{
+    width: 860px;
+    float: left;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    padding-left: 3px;
+}
+
+.helplandingPage #helpContents
+{
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+
+.question
+{
+    text-transform: none;
+}
+
+.help_lower_container
+{
+    width: 100%;
+}
+
+#help_email_chat
+{
+    width: 476px;
+}
+
+.backtoHelp
+{
+    float: right;
+    margin-top: 20px;
+    position: relative;
+    left: 140px;
+    top: 20px;
+}
+
+.backtoHelp a
+{
+    color: #000;
+    text-decoration: none;
+}
+
+.backtoHelp a:hover
+{
+    text-decoration: underline;
+}

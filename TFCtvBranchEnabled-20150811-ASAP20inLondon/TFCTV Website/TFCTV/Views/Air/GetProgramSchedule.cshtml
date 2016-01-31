@@ -1,0 +1,38 @@
+﻿@model List<IPTV2_Model.ProgramSchedule>
+@{if (Model != null)
+  {
+
+      if (Model.Count() > 0)
+      {
+          int count = Model.Count() / 2;
+          try
+          {
+              var h = Decimal.Divide(Model.Count(), 2);
+              count = Convert.ToInt32(Math.Ceiling(h));
+          }
+          catch (Exception)
+          {
+          }          
+    <div class="psked">
+        <div class="left pull-left">
+            <ul class="programsked">
+                @{foreach (var item in Model.OrderBy(m => m.StartTime).Take(count))
+                  {
+                    <li>@String.Format("{0} - {1}", item.StartTime, item.EndTime) - <span class="white">@Html.Raw(item.ShowName)</span></li>
+                  }
+                }
+            </ul>
+        </div>
+        <div class="right">
+            <ul class="programsked">
+                @{foreach (var item in Model.OrderBy(m => m.StartTime).Skip(count))
+                  {
+                    <li>@String.Format("{0} - {1}", item.StartTime, item.EndTime) - <span class="white">@Html.Raw(item.ShowName)</span></li>
+                  }
+                }
+            </ul>
+        </div>
+    </div>
+      }
+  }
+}

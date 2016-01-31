@@ -1,0 +1,424 @@
+﻿.showImage
+{
+    width: 151px;
+}
+
+.sectionContent
+{
+    width: 100%;
+}
+
+#aboutPoster
+{
+    padding-top: 30px;
+    padding-left: 20px;
+    width: 600px;
+}
+
+#aboutWriteUp
+{
+    float: left;
+    width: 370px;
+    color: #fff;
+    padding-left: 10px;
+}
+
+#aboutWriteUp .showTitle
+{
+    font-size: 20px;
+    text-align: left;
+    font-weight: bold;
+    color: #e5e5e5;
+    float: left;
+}
+
+#aboutWriteUp .showDescription
+{
+    color: #fff;
+}
+
+#aboutWriteUp .showSynopsis
+{
+    color: #fff;
+}
+
+#aboutReviews a
+{
+    color: #000;
+    text-decoration: none;
+}
+
+#aboutReviews a:hover
+{
+    text-decoration: underline;
+}
+
+.columnRight
+{
+    float: right;
+}
+
+#episodeAds
+{
+    float: right; /*border: #ffffff 1px solid;*/
+}
+
+#adBlock
+{
+    margin: 0 auto;
+    width: 300px; /*padding-left: 10px;     padding-top: 20px;     padding-right: 20px;*/
+    azimuth: inherit; /*height: 250px;*/
+}
+
+.genericSubHeader
+{
+    margin-left: 20px;
+    padding-top: 10px;
+    line-height: 28px;
+    height: 28px;
+    width: 595px;
+    border-bottom: 1px solid #5e5e5e;
+}
+
+#episodesContainer
+{
+    width: 95%;
+    margin: 0 auto;
+    padding-bottom: 15px;
+    position: relative;
+    height: auto;
+}
+
+.episodeList_container
+{
+    padding-left: 10px;
+    padding-top: 5px;
+    height: 20px;
+    width: 100%;
+    background-color: #3d3d3d;
+    vertical-align: middle;
+    color: #fff;
+    font-weight: bold;
+}
+
+.episodeItem_container
+{
+    background-color: #fff;
+    padding-left: 10px;
+    width: 100%;
+    line-height: 28px;
+    vertical-align: middle;
+    border-bottom: 1px dotted #ccc;
+}
+
+.episodeItem_container a
+{
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+}
+.episodeItem_container a:hover
+{
+    text-decoration: underline;
+}
+.episodeNumber
+{
+    width: 82px;
+}
+
+.episodeTitle
+{
+    width: 400px;
+}
+
+.episodeAirDate
+{
+    width: 120px;
+}
+
+.episodeDuration
+{
+    width: 100px;
+}
+
+#castContainer
+{
+    width: 585px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    height: auto;
+}
+
+.castList_container
+{
+    padding-left: 10px;
+    padding-top: 5px;
+    height: 20px;
+    width: 100%;
+    background-color: #fff;
+    vertical-align: middle;
+    color: #000;
+    font-weight: bold;
+}
+
+#packageContainer
+{
+    width: 95%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    position: relative;
+    height: auto;
+}
+
+/*
+#featureBody_container
+{
+    padding-top: 30px;
+}
+*/
+
+#showNavigation
+{
+    background: url('images/shownavbg.png');
+    width: 100%;
+    height: 49px;
+    float: left;
+}
+#showNavigation ul
+{
+    height: 49px;
+}
+#showNavigation ul li
+{
+    float: left;
+    font-size: 16px;
+    background: url('images/shownavsep.png') top right no-repeat;
+    padding-right: 1px;
+}
+#showNavigation ul li a
+{
+    color: #e5e5e5;
+    text-decoration: none;
+    height: 34px;
+    float: left;
+    padding: 0px 30px;
+    padding-top: 15px;
+}
+#showNavigation ul li a:hover
+{
+    color: #fff;
+    background: url('images/shownavsel.png');
+}
+
+.featuredContentBg
+{
+    width: 940px;
+    height: 300px;
+    background: url('http://asset1.tfctvapp.com/images/greenrose/GreenRose-Banner-960x300.jpg') no-repeat center bottom;
+}
+
+.previewEpisodes
+{
+    position: relative;
+    width: 332px;
+    height: 100px;
+    top: 200px;
+    left: 198px;
+    background: url('images/preview-bg.png') no-repeat;
+}
+
+.previewEpisodes a img
+{
+    border: 1px solid #fff;
+    margin-left: 9px;
+    margin-top: 12px;
+}
+
+#playerContainer
+{
+    height: 406px;
+    width: 100%;
+    position: relative;
+    z-index: 30;
+}
+
+#featureBanner
+{
+    width: 940px;
+    margin: auto;
+}
+
+#lighstout
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    background: url('images/transBg.png') repeat;
+    display: none;
+    text-align: left;
+}
+
+#aboutWriteUp .showTitle a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+#aboutWriteUp .showTitle a:hover
+{
+    text-decoration: underline;
+}
+
+#EpisodeBar
+{
+    width: 300px; /*margin: 0 auto;*/
+    padding-top: 10px;
+    padding-bottom: 10px; /*margin-left: 20px;*/
+    position: relative;
+    height: auto;
+    color: #fff;
+    background: url('images/1x30.png') repeat-x;
+}
+
+#aboutEpisodes
+{
+    display: none;
+}
+
+#EpisodeBar_body
+{
+    font-weight: bold;
+    margin-top: -10px;
+    padding-left: 5px;
+    color: #fff;
+}
+
+#ep-nav
+{
+    position: relative;
+    top: -11px;
+}
+
+#EpisodeBar_body img
+{
+    margin: 0;
+}
+
+#EpisodeBar_body a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
+#ep-down
+{
+    position: relative;
+    top: 3px;
+}
+
+#EpisodeBar_body a:hover
+{
+    color: #49A4FF;
+    text-decoration: underline;
+}
+#showAds
+{
+    float: right;
+}
+#headerTitle a
+{
+    text-decoration: none;
+    color: white;
+}
+#headerTitle a:hover
+{
+    text-decoration: underline;
+}
+
+#subscribePrompt
+{
+    margin: 0 auto;
+    height: 100px;
+    z-index: 30;
+    text-align: center;
+    position: relative;
+    top: -200px;
+    margin-top: -125px;
+}
+
+#subscribePrompt > div
+{
+    margin-top: 25px;
+    font-size: 16px;
+}
+
+#subscribePrompt a
+{
+    color: #000;
+    text-decoration: none;
+}
+
+#subscribePrompt a:hover
+{
+    text-decoration: underline;
+}
+
+#viewingproblem
+{
+    width: 940px;
+    margin: 0 auto;
+    float: right;
+    text-align: right;
+    font-size: 11px;
+    color: #fff;
+    margin-right: 10px;
+    font-style: italic;
+}
+
+#viewingproblem a
+{
+    color: #e95d0a;
+    text-decoration: none;
+}
+
+#viewingproblem a:hover
+{
+    text-decoration: underline;
+}
+
+#subscribePrompt_1
+{
+    background: url('images/go-watch-new.jpg');
+    width: 540px;
+    height: 406px;
+    margin: 0 auto;
+    z-index: 30;
+    text-align: center;
+    position: relative;
+    margin-top: -406px;
+}
+
+#subscribePrompt_1 > div
+{
+    position: relative;
+    top: 270px;
+}
+
+.castTitle a {
+color: #49A4FF;
+text-decoration: none;
+}
+
+.castTitle a:hover {
+text-decoration: underline;
+}
+
+.h1-sectionHeaderTitle { 
+font-weight: normal;
+margin: 0;
+color: #fff;
+font-size: 25px;
+}

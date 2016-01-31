@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Register An Account - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="clear">
+        </div>
+        <div>@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C.jpg", new { width = 940 })</div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div id="registerPane">
+                <div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="rheader">
+                        Congratulations! You are now registered to TFC.tv.
+                    </div>
+                    @*<div class="rheader">
+                        @{if (ViewBag.isConnectedToSocialNetworks)
+                          {
+                            <text>By confirming your account info,</text>
+                          }
+                          else
+                          {
+                            <text>By verifying your email address,</text>
+                          }
+                        }
+                        you earned <span class="orange boldText">7-DAY FREE TRIAL</span>!
+                    </div>*@
+                    <div id="freetrial01">
+                        <div style="padding-top: 20px;">
+                            <center>@*@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C_11.png", new { alt = "Your TFC.tv free trial starts now!" })*@
+                                <span style="font-size: 42px; font-weight: bolder;">YOUR 7-DAY FREE TRIAL<br />
+                                    STARTS NOW!</span>
+                            </center>
+                        </div>
+                        <div class="breakLarge clear">
+                        </div>
+                        <div class="trial2-text2" style="font-size: 18px;">
+                            Pwede ka nang manood ng mga piling Kapamilya shows at movies.<br />
+                            Visit your Free Trial page to see what's available and start watching! @*Pwede ka
+                            nang manood ng mga paborito mong<br />
+                            Kapamilya shows at mga piling movies*!*@
+                            <div class="breakLarge">
+                            </div>
+                            @*  WATCH NOW*@
+                        </div>
+                        @*<div style="margin: 0 auto; text-align: center; width: 100%;">
+                            <a href="/Show/Details/429">@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C_21.png", new { alt = "ASAP 2012", title = "ASAP 2012" })</a><a
+                                href="/Show/Details/382">@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C_22.png", new { alt = "TV Patrol", title = "TV Patrol" })</a>
+                            <a href="/Show/Details/726">@Html.ImageBuilder(Url, "register/REGISTRATION-PAGES-2C_24.png", new { alt = "Walang Hanggan", title = "Walang Hanggan" })</a></div>*@
+                        <div style="margin: 0 auto; text-align: center; width: 100%; padding-top: 20px;">
+                            <a href="/">@Html.ImageBuilder(Url, "register/REGISTRATION-HOMEPAGE.png", new { alt = "Visit TFC.tv Homepage", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Subscribe/FreeTrial">@Html.ImageBuilder(Url, "register/REGISTRATION-FREETRIAL.png", new { alt = "Check the Free Trial Content!", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Profile">@Html.ImageBuilder(Url, "register/REGISTRATION-PROFILE.png", new { alt = "View your Profile", title = "View your Profile" })</a>
+                            @*<a href="/">@Html.ImageBuilder(Url, "freetrial/visit_homepage.png", new { alt = "Visit TFC.tv Homepage", title = "Go to TFC.tv" })</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Profile">@Html.ImageBuilder(Url, "freetrial/visit_profile.png", new { alt = "View your Profile", title = "View your Profile" })</a>*@
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        @if (ContextHelper.isPromoEnabled(GlobalConfig.TFCtvFirstYearAnniversaryPromoId))
+                        {
+                            <div class="advertSpace">
+                                <a href="/FanMobPromo">@Html.ImageBuilder(Url, "banners/onlinebanner2_728x90v2.jpg", new { style = "z-index: -11;", width = "728", height = "90", title = "FAN MOB", alt = "FAN MOB" })</a>
+                            </div>
+                        }
+                    </div>
+                    <div class="breakLarge">
+                    </div>
+                </div>
+            </div>
+            <div class="breakStandard">
+            </div>
+            @*<div id="reg-limited" class="floatLeft">
+                *Limited to TFC content available on the site.
+            </div>*@
+            <div class="breakLarge">
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+<!-- end of list -->
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "register.css")}
+@section JScript {
+}
+@section JScriptBottom {
+    <!-- Facebook -->
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6006354635910';
+        fb_param.value = '0.00';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true; fpw.src = '//connect.facebook.net/en_US/fp.js'; var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })(); 
+    </script>
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6006354635910&amp;value=0" /></noscript>
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6010367609310';
+        fb_param.value = '0.00';
+        fb_param.currency = 'USD';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6010367609310&amp;value=0&amp;currency=USD" /></noscript>
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6010367618710';
+        fb_param.value = '0.00';
+        fb_param.currency = 'USD';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6010367618710&amp;value=0&amp;currency=USD" /></noscript>
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6010367630310';
+        fb_param.value = '0.00';
+        fb_param.currency = 'USD';
+        (function () {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>
+    <noscript>
+        <img height="1" width="1" alt="" style="display: none" src="https://www.facebook.com/offsite_event.php?id=6010367630310&amp;value=0&amp;currency=USD" /></noscript>
+    <!-- Google -->
+    <script type="text/javascript">
+        var google_conversion_id = 981607038;
+        var google_conversion_language = "en";
+        var google_conversion_format = "2";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "X5nQCPKJ6wQQ_sSI1AM";
+        var google_conversion_value = 0; 
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/981607038/?value=0&amp;label=X5nQCPKJ6wQQ_sSI1AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- DE Price-->
+    <script type="text/javascript">
+        var google_conversion_id = 1015737467;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "EaXyCJWw_gcQ-9ir5AM";
+        var google_conversion_value = 0;
+        var google_remarketing_only = false;
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=EaXyCJWw_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- IT Free -->
+    <script type="text/javascript">
+        var google_conversion_id = 1015737467;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "_wXcCIWy_gcQ-9ir5AM";
+        var google_conversion_value = 0;
+        var google_remarketing_only = false;
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=_wXcCIWy_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <!-- TW -->
+    <script type="text/javascript">
+        var google_conversion_id = 1015737467;
+        var google_conversion_language = "en";
+        var google_conversion_format = "3";
+        var google_conversion_color = "ffffff";
+        var google_conversion_label = "joARCPWz_gcQ-9ir5AM";
+        var google_conversion_value = 0;
+        var google_remarketing_only = false;
+    </script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+        <div style="display: inline;">
+            <img height="1" width="1" style="border-style: none;" alt="" src="//www.googleadservices.com/pagead/conversion/1015737467/?value=0&amp;label=joARCPWz_gcQ-9ir5AM&amp;guid=ON&amp;script=0" />
+        </div>
+    </noscript>
+    <script type="text/javascript">
+        $(document).ready(function () { $('iframe').css('position', 'absolute'); }); 
+    </script>
+}

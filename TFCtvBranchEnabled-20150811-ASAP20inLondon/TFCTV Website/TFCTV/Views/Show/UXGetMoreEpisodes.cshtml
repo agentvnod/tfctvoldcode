@@ -1,0 +1,58 @@
+﻿@model  List<EpisodeObject>
+@{
+    var id = Url.RequestContext.RouteData.Values["id"];
+    int pageSize = ViewBag.pageSize;
+
+    bool HasMoreEpisodes = true;
+    try
+    {
+        if (ViewBag.HasMoreEpisodes != null)
+        {
+            HasMoreEpisodes = ViewBag.HasMoreEpisodes;
+        }
+    }
+    catch (Exception) { }
+}
+@{if (Model != null)
+  { 
+    <div class="row small_movie_item ux_ep_list">
+        @foreach (var item in Model)
+        {
+            string href = String.Format("/Episode/Details/{0}/{1}", item.EpisodeId, item.slug);
+            string title = String.Format("{0} - {1}", item.Show, item.DateAiredStr);
+            <div class="col-xs-4">
+                <div class="video_cover">
+                    <!-- play button cover -->
+                    <a href="@href" title="@title">
+                        <img width="151" height="98"  border="0" src="@Html.Raw(item.ImgUrl)" title="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" alt="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" class="img100" />
+                        <div class="video_play_button">
+                        </div>
+                        <!-- play button -->
+                    </a>
+                    <!-- play button -->
+                </div>
+            </div>
+            <!-- END play button cover -->
+            <div class="col-xs-8">
+                <h4>
+                    <a href="@href">@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))</a></h4>
+                <p>
+                    @Html.Raw(item.Synopsis.Ellipsis(90))</p>
+            </div>
+            <div class="clear breakSmall">
+            </div>
+        }
+    </div>
+        if (Model.Count() <= pageSize && Model.Count() > 0 && HasMoreEpisodes)
+        { 
+    <!-- end small video box -->
+    <div class="sec_footer">
+        <!-- load more -->
+        <a href="@Url.Action("GetMoreEpisodes", new { id = id, page = ViewBag.page, NextEpisodeId = ViewBag.NextEpisodeId, PreviousEpisodeId = ViewBag.PreviousEpisodeId, EpisodeNumber = ViewBag.EpisodeNumber, EpisodeCount = ViewBag.EpisodeCount, partialViewName = "UXGetMoreEpisodes", pageSize = pageSize })" class="loadMore">
+            load more<br>
+            @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "Load more episodes" })
+        </a>
+    </div>}
+
+  }
+}

@@ -1,0 +1,261 @@
+﻿@model JWPObject
+<script type="text/javascript" src="http://jwpsrv.com/library/I6r41iyqEeS3LiIAC0MJiQ.js"></script>
+@{if (Request.IsLocal || GlobalConfig.isUAT)
+  {
+    @Html.JsBuilder(Url, "jwp6.js", ContentSource.Site)
+  }
+  else
+  {
+    @Html.JsBuilder(Url, "obfplyr.js", ContentSource.Site)
+  }
+}
+<script type="text/javascript">
+        var jConfig = {
+            playerContainer: "playerContainer"
+            , ajaxUri: "@Html.Raw(Model.playbackUri)"
+            , img: "@Model.ScreenImage"
+            , autoPlay: false
+            , eId: @Model.EpisodeId
+            , adUri: null
+            , title: "@HttpUtility.JavaScriptStringEncode(Model.title)"
+            , height: 406
+            , playbackType: 1 //episode
+            , smedia: { message: gmessage, title: gtitle, description: gdescription, img: gimg, href: ghref }
+        };
+        var player = new Jwp(jConfig);
+</script>
+<!-- StreamSense -->
+<script type="text/javascript">
+        var clips = [{
+            ns_st_cn: 1,
+            ns_st_ci: "@Model.EpisodeId",
+            ns_st_pr: "@Model.show.Description",
+            ns_st_ep: "@Model.title",
+            ns_st_cu: null,
+            ns_st_pn: 1,
+            ns_st_tp: 1,
+            ns_st_cl: null,
+            ns_st_pu: "TFC.tv",
+            ns_st_ty: "@Model.clipType",
+        }];
+</script>
+<script type="text/javascript">
+    var streamSense;
+    function initializeStreamSense() {
+        try {
+            var videoObj = [];
+            streamSense = new ns_.StreamSense(videoObj,
+                    'http://b.scorecardresearch.com/p?c1=2&c2=7385337&ns_site=tfc-tv&ns_vsite=instant&pageview=true'
+                );
+            if (streamSense != undefined) {
+                clips[0].ns_st_cl = jwplayer(jConfig.playerContainer).getDuration() * 1000;
+                streamSense.setLabel("pb_position", jwplayer(jConfig.playerContainer).getPosition());
+                streamSense.setClip(clips[0], 0);
+            }
+        }
+        catch (e) { }
+    }
+
+    function setQualityLevels(event) {
+        jwplayer(jConfig.playerContainer).onQualityLevels(function (event) {
+            if (event.levels.length != null) {
+                if (event.levels.length > 1)
+                    jwplayer(jConfig.playerContainer).setCurrentQuality(1);
+            }
+        });
+    }
+</script>
+@{if (GlobalConfig.isUAT || Request.IsLocal)
+  {
+    <script type="text/javascript">
+        var loadCount = 0;
+        function addPlayerBehaviour(em) {
+            setTimeout(function () {
+                $(em).show();
+                $(em).click(function () {
+                    jwplayer(jConfig.playerContainer).play();
+                    $(em).hide();
+                    loadCount = 0; //reset
+                    return false;
+                });
+                jwplayer(jConfig.playerContainer)
+                        .onBeforePlay(function () {
+                            $(em).hide();
+                            if (!$(em).is(":visible"))
+                                $('#jw_ajaxloader1').show();
+                        })
+                        .onPlay(function () { $('#jw_ajaxloader1').hide(); })
+                        .onError(function () {
+                            if ($(em).is(":visible"))
+                                $('#jw_ajaxloader1').hide();
+                        })
+                        .onComplete(function () { $(em).show(); });
+            }, 500);
+        }
+
+        $(document).ready(function () {
+            var loaded = false;
+            player.GenerateUri().done(function (data) {
+                if (data.errorCode == 0) {
+                    clips[0].ns_st_cu = data.data.Url;
+                    $("#rl_url").text(data.data.Url);
+                    $('#arl_url').attr('href', data.data.Url);
+                    player.Initialize(data);
+                    var em = (data.data.SubClip != null) ? ".bs_pb" : ".bs_pb1";
+                    var player_instance = player
+                    .CreateObject()
+                    .onReady(function (event) {
+                        console.log("PLAYER LOADED"); addPlayerBehaviour(em); setQualityLevels(event); initializeStreamSense();
+                    })
+                    .onPlay(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.PLAY, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onPause(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.PAUSE, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onBuffer(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.BUFFER, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onComplete(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.END, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        player.ShareMedia();
+                        $(em).show();
+                    })
+                    .onIdle(function () { $(em).show(); })
+                    .onFullscreen(function (e) { })
+                    .onSetupError(function (e) {
+                        $(em).hide();
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.CUSTOM, { ns_st_ev: "setup_error",
+                            my_player_err: e.message
+                        }, 0);
+                    })
+                    .onError(function (e) {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.CUSTOM, { ns_st_ev: "error",
+                            my_player_err: e.message
+                        }, 0);
+
+                        if (loadCount + 1 < 10) {
+                            setTimeout(function () {
+                                player.GenerateUri().done(function (data) {
+                                    if (data.errorCode == 0)
+                                        jwplayer(jConfig.playerContainer).load([{ file: data.data.Url}]);
+                                    setTimeout(function () { jwplayer(jConfig.playerContainer).play(); }, 850);
+                                }, 1000);
+                            });
+                            loadCount++;
+                        }
+                        else {
+                            $("#jw_ajaxloader1").hide();
+                            $(".bs_pb").off("click");
+                            $('.bs_screentext').css("font-size", "@Model.ErrorFontSize").html("@Model.ErrorMessage").show();
+                        }
+                    });
+                }
+                else {
+                    $("#jw_ajaxloader1").hide();
+                    $('.bs_screentext').css("font-size", "@Model.ErrorFontSize").html(data.errorMessage).show();
+                    $(".bs_pb").off("click");
+                }
+            });
+        });
+    </script>
+ 
+  }
+  else
+  {
+    <script type="text/javascript">
+        var loadCount = 0;
+        function addPlayerBehaviour(em) {
+            setTimeout(function () {
+                $(em).show();
+                $(em).click(function () {
+                    jwplayer(jConfig.playerContainer).play();
+                    $(em).hide();
+                    loadCount = 0; //reset
+                    return false;
+                });
+                jwplayer(jConfig.playerContainer)
+                        .onBeforePlay(function () {
+                            $(em).hide();
+                            if (!$(em).is(":visible"))
+                                $('#jw_ajaxloader1').show();
+                        })
+                        .onPlay(function () { $('#jw_ajaxloader1').hide(); })
+                        .onError(function () {
+                            if ($(em).is(":visible"))
+                                $('#jw_ajaxloader1').hide();
+                        })
+                        .onComplete(function () { $(em).show(); });
+            }, 500);
+        }
+
+        $(document).ready(function () {
+            var loaded = false;
+            player.GenerateUri().done(function (data) {
+                if (data.errorCode == 0) {
+                    clips[0].ns_st_cu = data.data.Url;
+                    player.Initialize(data);
+                    var em = (data.data.SubClip != null) ? ".bs_pb" : ".bs_pb1";
+                    var player_instance = player
+                    .CreateObject()
+                    .onReady(function () { console.log("PLAYER LOADED"); addPlayerBehaviour(em); setQualityLevels(event); initializeStreamSense(); })
+                    .onPlay(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.PLAY, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onPause(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.PAUSE, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onBuffer(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.BUFFER, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        $(em).hide();
+                    })
+                    .onComplete(function () {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.END, { pb_position: jwplayer(jConfig.playerContainer).getPosition() }, jwplayer(jConfig.playerContainer).getPosition());
+                        player.ShareMedia();
+                        $(em).show();
+                    })
+                    .onIdle(function () { $(em).show(); })
+                    .onFullscreen(function (e) { })
+                    .onSetupError(function (e) {
+                        $(em).hide();
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.CUSTOM, { ns_st_ev: "setup_error",
+                            my_player_err: e.message
+                        }, 0);
+                    })
+                    .onError(function (e) {
+                        streamSense.notify(ns_.StreamSense.PlayerEvents.CUSTOM, { ns_st_ev: "error",
+                            my_player_err: e.message
+                        }, 0);
+
+                        if (loadCount + 1 < 10) {
+                            setTimeout(function () {
+                                player.GenerateUri().done(function (data) {
+                                    if (data.errorCode == 0)
+                                        jwplayer(jConfig.playerContainer).load([{ file: data.data.Url}]);
+                                    setTimeout(function () { jwplayer(jConfig.playerContainer).play(); }, 850);
+                                }, 1000);
+                            });
+                            loadCount++;
+                        }
+                        else {
+                            $("#jw_ajaxloader1").hide();
+                            $(".bs_pb").off("click");
+                            $('.bs_screentext').css("font-size", "@Model.ErrorFontSize").html("@Model.ErrorMessage").show();
+                        }
+                    });
+                }
+                else {
+                    $("#jw_ajaxloader1").hide();
+                    $('.bs_screentext').css("font-size", "@Model.ErrorFontSize").html(data.errorMessage).show();
+                    $(".bs_pb").off("click");
+                }
+            });
+        });
+    </script>
+  }
+}

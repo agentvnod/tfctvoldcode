@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "FPJ: Idolo ng Pilipino - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<!--  FPJ Main page body -->
+<section class="page_pagebody page_fpj">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header img -->
+            @Html.ImageBuilder(Url, "ux/fpj_main_head.jpg", new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header img -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li class="active"><a href="@Url.Action("Index", "FPJ")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Library", "FPJ")">MOVIE LIBRARY</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="fpjslider">
+            <!-- page slider -->
+            <div id="fpjslider" class="carousel slide" data-ride="carousel">
+                @Html.Action("GetFPJThemes", "FPJ")
+            </div>
+        </div>
+        <!--  END page slider -->
+        <!-- movies -->
+        @Html.Action("GetFPJContent", "FPJ", new { partialViewName = "GetFPJContent", pageSize = 4, id = "fpj_allmovies" })
+        <!-- end movies -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- END FPJ Main page body -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    @Html.JsBuilder(Url, "jquery.bxslider.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer gray jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+}

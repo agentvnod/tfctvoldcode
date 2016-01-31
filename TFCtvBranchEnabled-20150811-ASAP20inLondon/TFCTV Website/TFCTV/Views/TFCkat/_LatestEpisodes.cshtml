@@ -1,0 +1,43 @@
+﻿<div id="aboutEpisodes">
+    <div class="genericHeader">
+        <div class="genericHeader_header">
+            @if (string.Compare(GlobalConfig.TFCkatShowExclusives, "false") == 0)
+            {
+                <div id="epSubHeaderCategoryName-1" class="sectionHeader">
+                    Latest Videos
+                </div>
+            }
+            else
+            {
+                <div id="epSubHeaderCategoryName-1" class="sectionHeader">
+                    Latest Videos | <a style="text-decoration: none;" id="ExclusivesClick" href="#">Exclusive
+                        Videos</a>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="episodesContainer">
+        @(Html.Kendo().Grid<EpisodeObject>()
+                            .Name("Grid")
+                               .Columns(columns =>
+                               {
+                                   columns.Bound(t => t.ImgUrl).Title("ImgUrl").HeaderHtmlAttributes(new { style = "display: none;" }).Width(171)
+                                       .ClientTemplate("<div><a href=\"" + Url.Action("OnDemand", "TFCkat", new { id = "#= EpisodeId#", slug = "#= slug#" }) + "\"><img width=\"151\" height=\"98\" alt=\"\" border=\"0\" src=\"#= ImgUrl #\" title=\"\" /></a></div>").Title("");//.HtmlAttributes(new { style = "padding-top: 4px;" });
+                                   columns.Bound(t => t.DateAiredStr).Title("Name/Description").HeaderHtmlAttributes(new { style = "display: none;" })
+                                       .HtmlAttributes(new { style = "vertical-align: top;" })
+                                       .ClientTemplate("<div><div class=\"ktitle\"><a href=\"" + Url.Action("OnDemand", "TFCkat", new { id = "#= EpisodeId#", slug = "#= slug#" }) + "\">#= DateAiredStr#</a></div><div class=\"kdesc\">#= Synopsis#</div></div>");
+                                   columns.Bound(t => t.EpisodeId).Hidden();
+                                   columns.Bound(t => t.Name).Hidden();
+                                   columns.Bound(t => t.Synopsis).Hidden();
+                                   columns.Bound(t => t.slug).Hidden();
+                               })
+                                .DataSource(dataSource => dataSource
+                                .Ajax()
+                                                        .Read(read => read.Action("GetListOfEpisodes", "Show", new { id = GlobalConfig.TFCkatCategoryId }))
+                                )
+                                .Pageable(paging => paging.PreviousNext(true).Numeric(false))
+                                .Scrollable()
+                                .HtmlAttributes(new { style = "width: 549px; height: 570px;" })
+                            )</div>
+    
+</div>

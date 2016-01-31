@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Search Results - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Search Results</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        <div id="registerContainer">
+            <div class="breakStandard">
+            </div>
+            <div class="padLeftLarge">
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { id = "sform1" }))
+                {
+                    @(Html.UltimateSearchInputMVC()
+                    .SearchTextBox(stb => stb.ForeColor(System.Drawing.Color.Black))
+
+                .Render())
+                }
+                @(Html.UltimateSearchOutputMVC()
+                        .TextCssClass("searchResults-body")
+                        .TitleCssClass("searchResults-cell")
+                        .DisplayCounter(false)
+                        .CurrentPageLinkCssClass("searchResultsPL")
+                        .HighlightCssClass("searchHL")
+                        .UrlCssClass("fullUrl")
+                        .NoDocumentsFoundFormat(@"<div class=""noresults"">Your search - <span class=""sterms"">[SearchTerms]</span> - did not match any documents.</div>")
+                        .AllowPaging(true)
+                                .HeaderFormat(@"<div class=""searchheader"">Results <b>[FirstIndex]</b> - <b>[LastIndex]</b> of <b>[ResultCount]</b> for <span class=""sterms"">[SearchTerms]</span>.</div>")
+                        .FooterFormat(@"<div class=""searchfooter"">Result Page: <b>[FirstPageText]&nbsp;&nbsp;[PrevPageText]</b>[PrevPageImage]&nbsp;&nbsp;[PageLinks]&nbsp;&nbsp;[NextPageImage]<b>[NextPageText]&nbsp;&nbsp;[LastPageText]</b></div>")
+                        .Render()
+                )</div>
+        </div>
+        <div class="clear breakStandard">
+        </div>
+    </div>
+</div>
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "search.css")
+}

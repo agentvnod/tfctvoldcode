@@ -1,0 +1,7 @@
+﻿@model IPTV2_Model.ProgramSchedule
+@{if (Model != null)
+  { 
+    <h3 class="title">
+        <span class="white">You Are Watching:</span> <span class="gray curr_show">@Html.Raw(Model.ShowName)</span></h3>
+  }
+}

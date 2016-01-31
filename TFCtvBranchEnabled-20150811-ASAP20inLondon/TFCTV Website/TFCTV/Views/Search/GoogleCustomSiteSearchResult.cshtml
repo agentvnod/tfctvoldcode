@@ -1,0 +1,87 @@
+﻿@model TFCTV.Models.CustomSearchApiResponse
+@{
+    ViewBag.Title = "Search Results";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    int totalResults = 0;
+    int startIndex = 0;
+    int nextPage_startIndex = -1;
+    int previousPage_startIndex = -1;
+    if (Model.items != null)
+    {
+        totalResults = Convert.ToInt32(Model.queries.request.First().totalResults);
+        startIndex = Convert.ToInt32(Model.queries.request.First().startIndex) - 1;
+
+        if (Model.queries.nextPage != null)
+        {
+            nextPage_startIndex = Model.queries.nextPage.First().startIndex;
+        }
+
+        if (Model.queries.previousPage != null)
+        {
+            previousPage_startIndex = Model.queries.previousPage.First().startIndex;
+        }
+    }
+
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="sectionHeaderTitle">
+                    Search Results</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <!-- start of list -->
+        @{if (Model.items == null)
+          {
+            <div id="registerContainer">
+                <div class="breakStandard">
+                </div>
+                <div class="padLeftLarge">
+                    <p class="white">
+                        <strong>No results found.</strong>
+                    </p>
+                </div>
+            </div>
+          }
+          else
+          {
+            <div id="registerContainer">
+                <div class="breakStandard">
+                </div>
+                <div class="padLeftLarge">
+                    <p class="white">
+                        Found about @totalResults.ToString("#,##0") results for the query <strong>@Model.queries.request.First().searchTerms</strong>.
+                    </p>
+                    @{if (totalResults > 0)
+                      {
+                        <ul>
+                            @foreach (var item in Model.items)
+                            {
+                                <li><a href="@item.link" class="searchtitle">@Html.Raw(item.htmlTitle)</a>
+                                    <p class="white searchdesc">@Html.Raw(item.htmlSnippet.Replace("<br>", ""))</p>
+                                    <p class="searchlink">@Html.Raw(item.htmlFormattedUrl)</p>
+                                </li>
+                            }
+                        </ul>
+                      }}
+                    @Html.Action("GoogleCustomSiteSearchPagination", new { totalPages = totalResults, page = 1, nextPage = nextPage_startIndex, previousPage = previousPage_startIndex })
+                    <div class="breakStandard">
+                    </div>
+                </div>
+            </div>
+          }
+        }
+        <div class="clear breakStandard">
+        </div>
+    </div>
+</div>
+@section Stylesheet
+{
+    @Html.CssBuilder(Url, "search.css")
+}

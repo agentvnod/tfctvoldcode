@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "My Subscriptions - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:user:entitlements";
+}
+<section class="page_pagebody subscription_pagebody">
+    <div class="container">
+        <h1 class="page_title">
+            MY SUBSCRIPTIONS</h1>
+        <!-- Responsive table for Subscriptions -->
+        @Html.Action("GetEntitlements")
+        <!-- end table container -->
+    </div>
+    <!-- END container -->
+</section>
+<!-- END My Subscriptions page body -->

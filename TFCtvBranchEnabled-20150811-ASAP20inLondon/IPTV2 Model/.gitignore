@@ -1,0 +1,9 @@
+# git ignore file
+*.zip
+*.bak
+*.suo
+
+# Build Folders
+bin
+obj
+Microsoft.WindowsAzure.Caching

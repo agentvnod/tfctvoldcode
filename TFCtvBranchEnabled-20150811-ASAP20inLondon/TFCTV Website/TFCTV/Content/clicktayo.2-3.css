@@ -1,0 +1,221 @@
+﻿/* File Created: September 12, 2012 */
+/* Additional CSS */
+#clickLogo
+{
+    height: 140px;
+    text-align: center;
+    padding: 5px;
+}
+
+#videoPlayerMenu
+{
+    min-height: 480px;
+    border: 1px solid #CBA02A;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#videoPlayer
+{
+    float: left;
+    width: 570px;
+    min-height: 470px;
+    position: relative;
+}
+
+#videoEmbed
+{
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+#videoJoin
+{
+    height: 190px;
+    width: 312px;
+    background: #3571AB;
+    position: absolute;
+    height: 190px;
+    top: 50%;
+    left: 50%;
+    margin-left: -160px;
+    margin-top: -100px;
+    position: absolute;
+    display: none;
+}
+
+#videoCurrent
+{
+    /*    height: 200px; */
+    width: 100%;
+}
+
+#videoCurrentInfo
+{
+    margin-top: 10px;
+}
+
+#videoMenu
+{
+    float: left;
+    width: 350px;
+}
+
+#videoMenuPreviews
+{
+    height: 180px;
+    background: url('images/transBg.png') repeat;
+}
+
+#allVideos
+{
+    height: 180px;
+}
+
+.videoTitle
+{
+    color: #49a4ff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.videoDate, .videoDescription
+{
+    color: #aaaaaa;
+}
+
+
+.review-selector
+{
+    color: #fff;
+}
+
+
+.review-selector a
+{
+    color: #49A4FF;
+    text-decoration: none;
+}
+
+.review-selector a:hover
+{
+    color: #49A4FF;
+    text-decoration: underline;
+}
+
+.review-selector .active
+{
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.ds-tabs li
+{
+    float: left;
+    padding-right: 10px;
+    font-size: 16px;
+    color: #CBA02A;
+    font-weight: bold;
+}
+
+
+.ds-tabs li:hover
+{
+    color: #fff;
+}
+
+
+.chartItem
+{
+    width: 313px;
+    height: 160px;
+    float: left;
+}
+
+.chartImage
+{
+    width: 168px;
+    height: 200px;
+    float: left;
+}
+
+.chartImageHolder
+{
+    margin-top: 21px;
+    text-align: center;
+}
+
+.chartInfo
+{
+    padding-top: 0px;
+    padding-right: 15px;
+    padding-left: 5px;
+}
+
+.chartInfoTitle
+{
+    margin-top: 21px;
+    color: #0E5EB7;
+    font-weight: bolder;
+}
+
+.chartInfoDate
+{
+    color: #585858;
+    font-size: 10px;
+}
+
+.chartInfoDetails
+{
+    color: #585858;
+}
+
+.chartInfoTitle a
+{
+    color: #49a4ff;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.chartInfoTitle a:hover
+{
+    text-decoration: underline;
+}
+
+#dsFeatureItems .itemListBody .wrapper .dsitemListing li
+{
+    padding: 0px;
+    float: left;
+}
+
+
+.ds-tabs li a
+{
+    display: block;
+    color: #CBA02A;
+    text-decoration: none;
+}
+
+.ds-tabs li a:hover
+{
+    color: #fff;
+}
+
+#other-videos { display: none; }
+
+.h1-videoTitle { 
+color: #49a4ff;
+margin: 0;
+font-size: 18px;
+font-weight: bold;
+}
+
+.dsFeatureItems .itemListBody .wrapper .dsitemListing li
+{
+    padding: 0px;
+    float: left;
+}

@@ -1,0 +1,826 @@
+﻿@model IPTV2_Model.Episode
+@{    
+    Layout = "~/Views/Shared/_UXProjectAir.cshtml";
+    string playbackUrl = String.Format("/Ajax/GetMedia/{0}", Model.EpisodeId);
+    List<IPTV2_Model.CategoryClass> CategoryClassSubCategories = null;
+    IPTV2_Model.Show show = null;
+    List<IPTV2_Model.Country> cList = null;
+    List<IPTV2_Model.State> cState = null;
+    Maxmind.Location location = null;
+    TransactionReturnType ErrorMessage = null;
+    System.Collections.Specialized.NameValueCollection qs = null;
+    string login_email = String.Empty;
+    string first_name = String.Empty;
+    string last_name = String.Empty;
+    string CountryCode = GlobalConfig.DefaultCountry;
+    string City = String.Empty;
+    string State = String.Empty;
+    string uid = String.Empty;
+    string provider = String.Empty;
+    bool IsSignUpSuccessful = false;
+    IPTV2_Model.User user = null;
+    string LoginErrorMessage = String.Empty;
+    string CountryCodeIp = CountryCode;
+    try
+    {
+        if (ViewBag.Show != null)
+        {
+            show = ViewBag.Show;
+        }
+        if (ViewBag.User != null)
+        {
+            user = ViewBag.User;
+        }
+        CountryCodeIp = MyUtility.GetCountryCodeViaIpAddressWithoutProxy();
+    }
+    catch (Exception) { }
+
+    string ts = String.Format("{0}", (int)MyUtility.ConvertToTimestamp(DateTime.Now));
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+
+    string pageTitle = String.Format("{0}, {1} Episode", show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"));
+    /* ShareBar Metadata */
+    string title = String.Format("{0}, {1}", show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"));
+    string img = String.Format("{0}{1}/{2}", GlobalConfig.EpisodeImgPath, Model.EpisodeId, Model.ImageAssets.ImageVideo);
+    string description = MyUtility.trimmer.Replace(Model.Description.Ellipsis(160), " ");
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = description,
+        containerId = Request.Browser.IsMobileDevice && Request.Browser.ScreenPixelsWidth <= 640 ? "shareDivMobile" : "shareDiv",
+        elementType = "episode",
+        id = Model.EpisodeId
+    };
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}, {1}", title, MyUtility.trimmer.Replace(Model.Synopsis, " "));
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "video.episode";
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Episode_{0}", Model.EpisodeId);
+    string categoryID = "Episodes";
+    if (show is IPTV2_Model.Movie || show is IPTV2_Model.SpecialShow || show is IPTV2_Model.LiveEvent)
+    {
+
+        title = show.Description;
+        img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, show.CategoryId, show.ImagePoster);
+        pageTitle = title;
+        streamID = String.Format("Show_{0}", show.CategoryId);
+        categoryID = "Shows";
+        description = show.Blurb;
+
+        /* Change the type to Show & id to CategoryId if found to be a Movie/Special/LiveEvent */
+        ShareObj.elementType = "show";
+        ShareObj.id = show.CategoryId;
+        ShareObj.title = title;
+        ShareObj.img = img;
+        ShareObj.description = description;
+
+        /* Change the meta description if it is a movie */
+        metaDescription = String.Format("{0}, {1}", show.Description, MyUtility.trimmer.Replace(show.Blurb, " "));
+
+        /* Change Open Graph data */
+        og_type = "video.movie";
+    }
+
+    string tabTitle = String.Format("TFC.tv {0} {1}", Model.Metadata.Replace(",", "|"), Model.Description);
+    ViewBag.Title = tabTitle;
+    og_type = "website";
+    /* Robot Crawlability */
+    var noCommentText = String.Format("There are no comments available for {0}", title);
+    bool IsAjaxCrawlable = Request.IsAjaxCrawlingCapable();
+
+    try
+    {
+        if (ViewBag.CategoryClassSubCategories != null)
+        {
+            CategoryClassSubCategories = ViewBag.CategoryClassSubCategories;
+        }
+
+        if (show != null)
+        {
+            if (!String.IsNullOrEmpty(show.ImageSocialNetwork))
+            {
+                img = String.Format("{0}{1}/{2}", GlobalConfig.ShowImgPath, show.CategoryId, show.ImageSocialNetwork);
+                ShareObj.img = img;
+            }
+        }
+        if (ViewBag.ListOfCountries != null)
+        {
+            cList = ViewBag.ListOfCountries;
+        }
+        if (ViewBag.ListOfStates != null)
+        {
+            cState = ViewBag.ListOfStates;
+        }
+        if (ViewBag.CountryCode != null)
+        {
+            CountryCode = ViewBag.CountryCode;
+        }
+        if (ViewBag.location != null)
+        {
+            location = ViewBag.location;
+            City = location.city;
+            State = location.regionName;
+        }
+        if (TempData["ErrorMessage"] != null)
+        {
+            ErrorMessage = (TransactionReturnType)TempData["ErrorMessage"];
+            if (ErrorMessage.StatusCode == (int)ErrorCodes.Success)
+            {
+                IsSignUpSuccessful = true;
+            }
+        }
+
+        if (TempData["LoginErrorMessage"] != null)
+        {
+            LoginErrorMessage = (string)TempData["LoginErrorMessage"];
+        }
+
+        if (ViewBag.qs != null)
+        {
+            qs = ViewBag.qs;
+            first_name = qs["firstName"];
+            last_name = qs["lastName"];
+            login_email = qs["email"];
+            uid = qs["UID"];
+            provider = qs["provider"];
+        }
+    }
+    catch (Exception) { }
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj,
+        IsAjaxCrawlable = IsAjaxCrawlable
+    };
+    var kissTitle = HttpUtility.JavaScriptStringEncode(title);
+
+    List<IPTV2_Model.ProgramSchedule> programGuide = null;
+    IPTV2_Model.ProgramSchedule currentlyShowing = null;
+    try
+    {
+        if (ViewBag.ProgramGuide != null)
+        {
+            programGuide = ViewBag.ProgramGuide;
+        }
+        if (ViewBag.CurrentlyShowing != null)
+        {
+            currentlyShowing = ViewBag.CurrentlyShowing;
+        }
+    }
+    catch (Exception) { }        
+}
+<!-- project air video player section -->
+<section class="player project_air">
+    <div class="container">
+        <div class="row">
+            <div class="player_body col-xs-12 pb_container">
+                <div id="playerContainer" class="video_part">
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="video_info">
+                    @Html.Action("GetCurrentlyShowing", new { obj = currentlyShowing })
+                    <div class="social project_air_social hide640">
+                        <div class="diblock pl_10 hide640">
+                            <a href="#air_guide" class="ib_tab" id="tab_air_guide">@Html.ImageBuilder(Url, "air/Project-Air-v1_06.jpg", new { @class = "img-responsive", alt = "guide" })<span
+                                class="hide640">guide</span></a> <a href="#air_comment" class="ib_tab" id="tab_air_comment">@Html.ImageBuilder(Url, "air/Project-Air-v1_08.jpg", new { @class = "img-responsive", alt = "comment" })<span
+                                    class="hide640">comments</span></a>
+                        </div>
+                        <div id="shareDiv" class="social_air clearfix diblock hide640">
+                        </div>
+                    </div>
+                    <div class="social project_air_social mobile mt12 show640">
+                        <div id="shareDivMobile" class="social_air pdtop mdle show640">
+                        </div>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content air_top_social">
+                        <div class="tab-pane" id="air_guide">
+                            @Html.Action("GetProgramSchedule", new { obj = programGuide })
+                        </div>
+                        <div class="tab-pane" id="air_comment">
+                            <!-- show all review -->
+                            <div id="@CommentsUIObj.containerId" class="row post_review clearfix">
+                                @{if (IsAjaxCrawlable)
+                                  {
+                                      try
+                                      {
+                                          var responseData = GigyaMethods.GetComments(categoryID, streamID);
+                                          if (responseData != null)
+                                          {
+                                              if (responseData.errorCode == 0)
+                                              {
+                                                  if (responseData.commentCount > 0)
+                                                  {
+                                    @Html.Raw(responseData.comments)
+                                                  }
+                                                  else
+                                                  { 
+                                    <span>@noCommentText</span>
+                                                  }
+                                              }
+                                          }
+                                      }
+                                      catch (Exception) { }
+                                  }
+                                }
+                            </div>
+                            <!-- end show all review -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /video player sec [project air] -->
+<!-- page body section [local] -->
+<section class="page_pagebody page_videopage">
+    <div class="container">
+        <!-- row one -->
+        <div class="row row1">
+            <div class="col-sm-3 left tfc_adv w50p hide480 hide600 ipm">
+                <!-- TFCtv_FreePage_MediumRecLeft_300x250 -->
+                <div id="div-gpt-ad-1411988455626-2" style="width: 300px; height: 250px;" class="cm50">
+                    <script type="text/javascript">
+                        googletag.cmd.push(function () {
+                            googletag.display('div-gpt-ad-1411988455626-2');
+                        });                        
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-6 center hide480 hide786 hideadblock">
+                <!-- TFCtv_FreePage_CenterPanel_485x250 -->
+                <div id="div-gpt-ad-1411988455626-0" class="center-block">
+                    <script type="text/javascript">
+                        googletag.cmd.push(function () {
+                            googletag.display('div-gpt-ad-1411988455626-0');
+                        });                        
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-3 right cmargin1 w50p ipm center600">
+                <!-- TFCtv_FreePage_MediumRecRight_300x250 -->
+                <div id="div-gpt-ad-1411988455626-3" style="width: 300px; height: 250px; background: #000;"
+                    class="cmargin2 cm50">
+                    <script type="text/javascript">
+                        googletag.cmd.push(function () {
+                            googletag.display('div-gpt-ad-1411988455626-3');
+                        });                        
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- / row 1 -->
+        @Html.Action("BuildSection", "Home", new { id = GlobalConfig.LatestFullEpisodes, sectionTitle = "Sa konting halaga, unlimited ang saya!", containerId = "latest_episodes", featureType = "episode", removeShowAll = true, isFeature = true, pageSize = 8 })
+        <!-- page adv -->
+        <div class="row add page_add width_add text-center">
+            <div class="inner">
+                <!-- TFCtv_FreePage_LeaderboardBottom_728x90 -->
+                <div id="div-gpt-ad-1411988455626-1" class="center-block">
+                    <script type="text/javascript">
+                        googletag.cmd.push(function () {
+                            googletag.display('div-gpt-ad-1411988455626-1');
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- END page adv -->
+        @Html.Action("BuildSection", new { id = GlobalConfig.Movies, sectionTitle = "May kasama pang bigating mga pelikula!", containerId = "latest_shows_air", featureType = "show", pageSize = 12, removeShowAll = true, isFeature = true })
+        <br />
+    </div>
+</section>
+<!-- end page body section -->
+<!-- popup signup  box -->
+<div class="modal fade ib_signup normal" id="ib_signup_copy" tabindex="-1" role="dialog"
+    aria-labelledby="subsignup" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    X</button>
+                <p class="boxHead">
+                    TRY FOR FREE!<br>
+                    No credit card required.</p>
+                <div class="left">
+                    <form role="form" id="form_create_account" autocomplete="off" action="@Url.Action("_Register", "User", new { source = "air" }, "https")" method="post">
+                    @Html.AntiForgeryToken()
+                    @{if (ErrorMessage != null)
+                      {
+                          if (String.Compare(ErrorMessage.TransactionType, "Registration", true) == 0 && ErrorMessage.StatusCode != (int)ErrorCodes.Success)
+                          {                                  
+                        <div class="alert alert-danger">
+                            <a class="alert_close" data-dismiss="alert">×</a> @ErrorMessage.StatusMessage
+                        </div>
+                          }
+                      }                  
+                    }
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Full Name" id="full_name" name="full_name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email Address" id="login_email"
+                            name="login_email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Choose a password" class="form-control" id="login_pass"
+                            name="login_pass" required>
+                    </div>
+                    <div class="form-group row for_confirm">
+                        <div class="col-xs-2">
+                            <input type="checkbox" class="form-control css-checkbox" id="confirm" required>
+                            <label for="confirm" class="css-label klaus">
+                            </label>
+                        </div>
+                        <div class="col-xs-10">
+                            <label for="confirm">
+                                I confim that I have read and fully understand and accept the <a href="@Url.Action("TermsAndConditions", "Home")" target="_blank">
+                                    Terms and Conditions of Subscription and/or Use of TFC.tv and the Terms and Conditions
+                                    of the Use of Watch Now</a>.</label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="first_name" name="first_name" value="" />
+                    <input type="hidden" id="last_name" name="last_name" value="" />
+                    <input type="hidden" name="city" id="city" value="@String.Format("{0}", String.IsNullOrEmpty(City) ? CountryCode : City)" />
+                    <input type="hidden" name="country" id="country" value="@CountryCode" />
+                    <input type="hidden" name="state" id="state" value="@String.Format("{0}", String.IsNullOrEmpty(State) ? CountryCode : State)" />
+                    <input type="hidden" name="provider" id="provider" value="@provider" />
+                    <input type="hidden" name="uid" id="uid" value="@uid" />
+                    <input type="submit" id="submit_create_account" class="btn btn-primary blue_button"
+                        value="Register Now!">
+                    </form>
+                    <div class="clearfix">
+                        <div class="center">
+                            <b>OR</b></div>
+                    </div>
+                    <div class="clearfix bottom_row">
+                        <div class="col-sm-12 social">
+                            <div id="modalRegistrationPanel" class="registerpane">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <a class="no_br sign_in_footer_link a_member" href="#">Already a member?</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end left -->
+                <div class="clearfix">
+                    <p>
+                        <span class="siteseal pull-right">
+                            <script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=fZ0cB9nrBGjhlW5r6DJKXUD9NE0tNx0WddTWSOxEMItms6df4AAc"></script>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- end modal body -->
+        </div>
+    </div>
+</div>
+<!-- END popup signup -->
+@{if (ErrorMessage != null)
+  {
+      if (ErrorMessage.StatusCode == (int)ErrorCodes.Success)
+      { 
+    <!-- popup successful message -->
+    <div class="modal fade" id="regSceMsg" tabindex="-1" role="dialog" aria-labelledby="regSceMsgLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <p class="boxHead">
+                        @ErrorMessage.StatusHeader</p>
+                    <p>
+                        @ErrorMessage.StatusMessage</p>
+                    <p>
+                        @Html.Raw(ErrorMessage.StatusMessage2)
+                    </p>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+    <!-- END popup successful message -->
+      }
+  }  
+}
+@section JScriptBottom {
+    <script type="text/javascript" src="http://jwpsrv.com/library/I6r41iyqEeS3LiIAC0MJiQ.js"></script>
+    @Html.JsBuilder(Url, "jquery.timer.min.js")
+    @Html.Partial("AirShareUI", ShareObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    <script type="text/javascript">
+        var bufferCount = 0;
+        var minBandwidth = -1;
+        var maxBandwidth = -1;
+        var totalBandwidth = 0;
+        var bwCount = 0;
+        var completed = false;
+        var playerContainer = "playerContainer";
+    </script>
+    @{if (User.Identity.IsAuthenticated)
+      {
+          if (user != null)
+          { 
+        <script type="text/javascript">
+            _kmq.push(['identify', '@user.EMail']);
+            udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&' + 'name=' + document.title + '&ns_site=tfc-tv' + '&ns_type=hidden' + '&email=@user.EMail');
+        </script>
+          }
+      }
+    }
+    <script type="text/javascript">
+        //CreatePlayer()
+        function CreatePlayerJW(uri, ap) {        
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            var initial = true;
+                            var error = false;
+                            var type = data.data.Url.split('?').shift().split('.').pop();
+                            jwplayer(playerContainer).setup({
+                                file: data.data.Url,
+                                image: "@img",
+                                width: "100%",
+                                aspectratio: "16:9",
+                                stretching: "uniform",
+                                type: type,
+                                abouttext: 'TFC.tv',
+                                androidhls: true,
+                                autostart: ap,
+                                autoplay: ap,
+                                ga: {},
+                                advertising: {
+                                    client: "vast",
+                                    companiondiv: { id: "adrectangle", height: 250, width: 300 },
+                                    skipoffset: 5,
+                                    admessage: 'Your video will resume in XX seconds...'
+                                }
+                            })
+                            .onPlay(function (e) {
+                                _kmq.push(['record', 'PLAY_VIDEO', {'EpisodeId':'@Model.EpisodeId', 'FirstPlay': initial, 'title': '@kissTitle'}]);
+                                if (initial) {
+                                    $.post('/Ajax/LogUserToPromo', function (data) { });
+                                    $.post('/Ajax/LogPlayback', { type: 1, id: data.eid, playTypeId: 1, fullDuration: jwplayer(playerContainer).getDuration(), isPreview: false, positionDuration: jwplayer(playerContainer).getDuration(), streamType: 0 }, function (data) { });
+                                    @{if (!User.Identity.IsAuthenticated)
+                                      {
+                                      <text>
+                                      setTimeout(function () { $('#ib_signup_copy').modal('show'); jwplayer(playerContainer).stop(); initial = true; }, 180000);
+                                      </text>
+                                      }
+                                     }
+                                    initial = false;
+                                }
+                            })
+                            .onPause(function () {
+                                _kmq.push(['record', 'STOP_VIDEO', {'EpisodeId':'@Model.EpisodeId', 'title': '@kissTitle', 'type': 'Pause video'}]);
+                                initial = true;
+                                $.post('/Ajax/LogPlayback', { type: 1, id: data.eid, playTypeId: 4, fullDuration: jwplayer(playerContainer).getDuration(), isPreview: false, positionDuration: jwplayer(playerContainer).getDuration(), streamType: 0, bufferCount: bufferCount, minBandwidth: minBandwidth, maxBandwidth: maxBandwidth, avgBandwidth: parseInt(totalBandwidth / bwCount) }, function (data) { });
+                            })
+                            .onComplete(function () {
+                                if (error == false) {
+                                    initial = true;
+                                    $.post('/Ajax/LogPlayback', { type: 1, id: data.eid, playTypeId: 2, fullDuration: jwplayer(playerContainer).getDuration(), isPreview: false, positionDuration: jwplayer(playerContainer).getDuration(), streamType: 0, bufferCount: bufferCount, minBandwidth: minBandwidth, maxBandwidth: maxBandwidth, avgBandwidth: parseInt(totalBandwidth / bwCount) }, function (data) { });
+                                    _kmq.push(['record', 'FINISH_VIDEO', {'EpisodeId':'@Model.EpisodeId', 'title': '@kissTitle'}]);
+                                    completed = true;
+                                }
+                                else
+                                    window.location.reload();
+                            })
+                            .onBuffer(function () {
+                                 bufferCount = bufferCount + 1;
+                                _kmq.push(['record', 'BUFFER_VIDEO', {'EpisodeId':'@Model.EpisodeId', 'title': '@kissTitle'}]);
+                             })
+                             .onMeta(function(e) {
+                                if(e.metadata.bandwidth) {
+                                    var bw = e.metadata.bandwidth;
+                                    if(minBandwidth == -1)
+                                        minBandwidth = bw;
+                                    if(bw < minBandwidth)
+                                        minBandwidth = bw;
+                                    else if(bw > maxBandwidth)
+                                        maxBandwidth = bw;
+                                    totalBandwidth = totalBandwidth + bw;
+                                    bwCount = bwCount + 1;
+                                }
+                             })
+                            .onBeforePlay(function () { jwplayer(playerContainer).playAd("http://pubads.g.doubleclick.net/gampad/ads?sz=1140x641&iu=/2744311/TFCtv_FreePage_VideoPlayer&ciu_szs&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=http://tfc.tv/WatchNow&description_url=http%3A%2F%2Ftfc.tv%2FWatchNow&correlator=@ts"); })
+                            .onError(function (e) {
+                                //jwplayer(playerContainer).load({ file: "http://content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4", image: "http://content.jwplatform.com/thumbs/7RtXk3vl-480.jpg", type: "mp4" });
+                                //jwplayer(playerContainer).play();
+                                _kmq.push(['record', 'ERROR_LOADING_VIDEO', {'EpisodeId':'@Model.EpisodeId', 'title': '@kissTitle'}]);                                
+                                setTimeout(function () { CreatePlayerJW(uri, true); }, 1000);                                
+                                error = true;
+                            })
+                            .onReady(function() { initializeStreamSense(); });
+                        }
+                    }
+            });
+        }        
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '@playbackUrl';
+            CreatePlayerJW(uri, false);
+        });
+    </script>
+    @{if (!User.Identity.IsAuthenticated)
+      {
+          if (!IsSignUpSuccessful && String.IsNullOrEmpty(LoginErrorMessage))
+          {           
+        <script type="text/javascript">
+            $(document).ready(function (e) {
+                $('#ib_signup_copy').modal({
+                    keyboard: true,
+                    backdrop: "static"
+                });
+            });
+        </script>
+          }        
+        <script type="text/javascript">
+            $(document).ready(function (e) {
+                $('.a_member').click(function () {
+                    $('#ib_signup_copy').modal('hide');
+                    return false;
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            var modal_register_params =
+            {
+                width: 240
+                , height: '100%'
+                , containerID: 'modalRegistrationPanel'
+                , buttonsStyle: 'fullLogoColored'
+                , facepilePosition: 'none'
+                , hideGigyaLink: true
+                , showTermsLink: false
+                , buttonSize: 26
+                , redirectURL: '/Social/Socialize?source=air'
+                , version: 2                
+            }
+            gigya.socialize.showLoginUI(modal_register_params);
+        </script>
+      }
+    }
+    @{if (!String.IsNullOrEmpty(State))
+      { 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () { $('#state').val('@State'); }, 120);
+            });        
+        </script>
+      }
+    }
+    @{if (ErrorMessage != null)
+      {
+          if (IsSignUpSuccessful)
+          { 
+        <script type="text/javascript">
+            $(document).ready(function () { $('#regSceMsg').modal('show'); });            
+        </script>
+          }
+      }         
+    }
+    <!-- kissmetric specific tags-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            _kmq.push(['record', 'Viewed Project Air Page']);
+            _kmq.push(['trackSubmit', 'form_create_account', 'Registration']);
+            _kmq.push(['trackSubmit', 'loginForm', 'Login']);
+            _kmq.push(['set', { 'CountryCode': '@CountryCodeIp'}]);
+        });
+    </script>
+    @{if (ErrorMessage != null)
+      {
+          if (ErrorMessage.StatusCode == (int)ErrorCodes.Success)
+          {
+
+              if (String.Compare(ErrorMessage.TransactionType, "Registration", true) == 0)
+              {
+                  if (ErrorMessage.StatusCode == 0)
+                  {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                dataLayer.push({ 'pageview': '/user/registerattempt', 'pagetitle': 'Registration Attempt', 'event': 'vpv' });
+                createCookie("rcDate", new Date().toUTCString(), 1826);
+                checkRegistration();
+                _kmq.push(['record', 'Registration Attempt', { 'Email': '@ErrorMessage.info7'}]);
+                udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&' + 'name=' + document.title + '&ns_site=tfc-tv' + '&ns_type=hidden' + '&action=Registration_Attempt&Email=@ErrorMessage.info7');
+            });            
+        </script>
+                  }
+              }
+              else if (String.Compare(ErrorMessage.TransactionType, "Activation", true) == 0)
+              {
+                  if (ErrorMessage.StatusCode == 0)
+                  {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                dataLayer.push({ 'pageview': '/user/registercomplete', 'pagetitle': 'Registration Complete', 'event': 'vpv' });
+                createCookie("rcDate", new Date().toUTCString(), 1826);
+                checkRegistration();
+                _kmq.push(['record', 'Registration Complete', { 'Email': '@ErrorMessage.info7'}]);
+                udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&' + 'name=' + document.title + '&ns_site=tfc-tv' + '&ns_type=hidden' + '&action=Registration_Complete&Email=@ErrorMessage.info7');
+            });            
+        </script>
+                  }
+              }
+              else if (String.Compare(ErrorMessage.TransactionType, "SocialRegistration", true) == 0)
+              {
+                  if (ErrorMessage.StatusCode == 0)
+                  {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                dataLayer.push({ 'pageview': '/user/registerattempt', 'pagetitle': 'Registration Attempt', 'event': 'vpv' });
+                dataLayer.push({ 'pageview': '/user/registercomplete', 'pagetitle': 'Registration Complete', 'event': 'vpv' });
+                createCookie("rcDate", new Date().toUTCString(), 1826);
+                checkRegistration();
+                _kmq.push(['record', 'Registration Attempt', { 'Email': '@ErrorMessage.info7'}]);
+                _kmq.push(['record', 'Registration Complete', { 'Email': '@ErrorMessage.info7'}]);
+                udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&' + 'name=' + document.title + '&ns_site=tfc-tv' + '&ns_type=hidden' + '&action=Registration_Attempt&Email=@ErrorMessage.info7');
+                udm_('http' + (document.location.href.charAt(4) == 's' ? 's://sb' : '://b') + '.scorecardresearch.com/b?c1=2&c2=7385337&' + 'name=' + document.title + '&ns_site=tfc-tv' + '&ns_type=hidden' + '&action=Registration_Complete&Email=@ErrorMessage.info7');
+            });            
+        </script>
+                  }
+              }
+          }
+          else
+          {
+              if (ErrorMessage.StatusCode != (int)ErrorCodes.Success)
+              { 
+        <script type="text/javascript">
+            $('.alert_close').click(function () {
+                $('.' + $(this).data('dismiss')).hide();
+                return false;
+            });
+        </script>
+              }
+          }
+      }
+    }
+    <script type="text/javascript">
+        $('#tab_air_comment').click(function () { $('.gig-comment-img').removeAttr('style'); return true; });
+        $(document).ready(function () {
+            $('#form_create_account').submit(function (e) {
+                var fname = $('#full_name').val().split(' ');
+                $('#first_name').val(fname.shift());
+                $('#last_name').val(fname.pop());
+            });
+        });        
+    </script>
+    <script type="text/javascript">
+        // hide on double click
+        $('.ib_tab').click(function (e) {
+            e.preventDefault();
+            if ($(this).hasClass('active')) {
+                $($(this).attr("href")).removeClass('active');
+                $('.ib_tab').removeClass('active');
+            } else {
+                $('.ib_tab').removeClass('active');
+                $(this).addClass('active');
+                $('.air_top_social .tab-pane').removeClass('active');
+                $($(this).attr("href")).addClass('active');
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(window).bind('beforeunload', function () {
+            _kmq.push(['record', 'STOP_VIDEO', { 'EpisodeId': '@Model.EpisodeId', 'title': '@kissTitle', 'type': 'Left page'}]);
+            if (!completed && jwplayer(playerContainer).getState() != "IDLE")
+                $.post('/Ajax/LogPlayback', { type: 1, id: @Model.EpisodeId, playTypeId: 3, fullDuration: jwplayer(playerContainer).getDuration(), isPreview: false, positionDuration: jwplayer(playerContainer).getDuration(), streamType: 0, bufferCount: bufferCount, minBandwidth: minBandwidth, maxBandwidth: maxBandwidth, avgBandwidth: parseInt(totalBandwidth / bwCount) }, function (data) { });
+        });
+    </script>
+    <script type="text/javascript">
+        setInterval(function () {
+            $.post("/Ajax/GetCurrentShow", function (data) { $('.curr_show').html(data.Name); });
+        }, 60000);
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.a_register_link').click(function (e) {
+                e.preventDefault();
+                $('#ib_signup_copy').modal({
+                    keyboard: true,
+                    backdrop: "static"
+                });
+                $('.login_box').hide(300);
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var streamSense;
+        function initializeStreamSense() {
+            try {
+                var videoObj = $('video');
+                var vidObj;
+                if (videoObj.length > 0) {
+                    vidObj = videoObj.get(0);
+                    streamSense = new ns_.StreamSense.Html5(vidObj,
+                {
+                    c2: 7385337
+                    , persistentlabels: 'ns_site: tfc-tv'
+                    , pageview: true
+                    , labelmapping: 'ns_st_ep=title'
+                });
+                    vidObj.oncanplay() = function () {
+                        streamSense.setPlaylist({ ns_st_pl: "Air Playlist" });
+                    };
+                }
+            }
+            catch (e) { }
+        }
+    </script>
+}
+@section JScript {
+    <script type='text/javascript'>
+        (function () {
+            var useSSL = 'https:' == document.location.protocol;
+            var src = (useSSL ? 'https:' : 'http:') +
+'//www.googletagservices.com/tag/js/gpt.js';
+            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+        })();
+    </script>
+    <script type='text/javascript'>
+        googletag = window.googletag || { cmd: [] };
+        googletag.cmd.push(function () {
+
+            var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[485, 250]])
+                .addSize([320, 0], [300, 250])
+                .build();
+            //googletag.defineSlot('/2744311/TFCtv_FreePage_CenterPanel_485x250', [[485, 250], [300, 250]], 'div-gpt-ad-1411988455626-0').defineSizeMapping(mapping).addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_FreePage_CenterPanel_485x250', [[485, 250], [300, 250]], 'div-gpt-ad-1411988455626-0').defineSizeMapping(mapping).addService(googletag.pubads());
+            mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[728, 90]])
+                .addSize([640, 0], [[468, 60]])
+                .addSize([320, 0], [320, 50])
+                .build();
+            googletag.defineSlot('/2744311/TFCtv_FreePage_LeaderboardBottom_728x90', [[728, 90], [468, 60], [320, 50]], 'div-gpt-ad-1411988455626-1').defineSizeMapping(mapping).addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_FreePage_MediumRecLeft_300x250', [300, 250], 'div-gpt-ad-1411988455626-2').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_FreePage_MediumRecRight_300x250', [300, 250], 'div-gpt-ad-1411988455626-3').addService(googletag.pubads());
+            googletag.defineSlot('/2744311/TFCtv_FreePage_SuperleaderboardTop_970x90', [970, 90], 'div-gpt-ad-1411988455626-4').addService(googletag.pubads());
+            googletag.pubads().enableSyncRendering();
+            googletag.enableServices();
+        });        
+    </script>
+    <script type="text/javascript" src="http://b.scorecardresearch.com/c2/plugins/streamsense_plugin_html5.js"></script>
+}
+@section TopAdSection{
+    <section class="topadd hide_lg970">
+        <div class="container">
+            <div class="row add top_add width_add text-center center_ad">
+                <!-- TFCtv_FreePage_SuperleaderboardTop_970x90 -->
+                <div id="div-gpt-ad-1411988455626-4" class="center-block cbm10">
+                    <script type="text/javascript">
+                        googletag.cmd.push(function () {
+                            googletag.display('div-gpt-ad-1411988455626-4');
+                        });                        
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}
+@section Stylesheet {
+    @Html.CssBuilder(Url, "air.css", ContentSource.Site)
+    <!--[if IE]>
+        @Html.CssBuilder(Url, "air-ie.css", ContentSource.Site)
+    <![endif]-->
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta name="keywords" content="@Model.Metadata" />
+    <link rel="canonical" href="@String.Format("{0}/WatchNow", GlobalConfig.baseUrl)" />
+    <link rel="image_src" href="@img">
+}

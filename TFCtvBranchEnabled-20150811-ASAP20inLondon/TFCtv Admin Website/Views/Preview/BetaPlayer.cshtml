@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = String.Format("TFC.tv cPanel - {0}", "Beta Player");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    TFC.tv Beta Player</h2>
+<form id="form1" method="post" action="#">
+<div class="floatLeft">
+    <table>
+        <tr>
+            <th>
+                Episode Id
+            </th>
+            <td>@Html.TextBox("EpisodeId", null, new { placeholder = "Enter Episode Id here..." })
+            </td>
+            <td colspan="3">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Pick your poison
+            </th>
+            <td colspan="4">
+                <div id="play-options">
+                    <a href="0" title="Adaptive sucks!" class="player-adapt player-option">adapt</a>
+                    <a href="1" title="Play in high quality!" class="player-high player-option">high</a>
+                    <a href="2" title="Play in low quality!" class="player-low player-option">low</a>
+                    <a href="3" title="Play in HD!" class="player-hd player-option">HD</a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Asset Url
+            </th>
+            <td colspan="2">@Html.TextBox("AssetUrl")
+            </td>
+            <td colspan="2">
+                <span id="isvalid" class="hidden">@Html.ImageBuilder(Url, "check.png", new { id = "resimg", width = 25, height = 25 })</span>
+            </td>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <td colspan="4">
+                <input type="submit" value="Load Video" id="cmdSubmit" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center;">
+                <span id="result" class="hidden">Please wait... @Html.ImageBuilder(Url, "circle-loader.gif", new { width = 15, height = 15 })</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="rightPanel" class="floatLeft">
+    <div id="playerContainer">
+    </div>
+</div>
+<div class="clear">
+</div>
+</form>
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "flowplayer-3.2.11.min.js")
+    <script type="text/javascript">
+        var url;
+        var result = $('#result');
+        $('.player-option').click(function () {
+            $('#AssetUrl').val('');
+            $('#isvalid').hide();
+            var eid = $('#EpisodeId').val();
+            result.show();
+            $('#cmdSubmit').attr('disabled','disabled');
+            $.get("/Ajax/GetMedia", { id: eid, p: $(this).attr('href') },
+            function (data) {
+                if (data.StatusCode == 0) {
+                    $('#AssetUrl').val(data.data.Url);
+                    $('#isvalid').show();
+                    hideElement(result, false);
+                }
+                else {
+                    hideElement(result, false);
+                    $.pnotify({
+                        text: data.StatusMessage,
+                        type: 'error',
+                        styling: 'jqueryui',
+                        icon: false
+                    }).delay(1500);
+                }
+            }).done(function () {
+                $('#cmdSubmit').removeAttr('disabled');
+            });
+            return false;
+        });
+    </script>
+    <script type="text/javascript">
+        var playerContainer = 'playerContainer';
+        var playerJS = '@Url.Content("~/scripts/player.js")';
+        var playerSWF = '@Url.Content("~/swf/flowplayer.swf")';
+        var expressInstallSWF = '@Url.Content("~/swf/expressInstall.swf")';
+        var playButtonURL = '@Url.Content("~/content/images/play-btn.png")';
+        var logoURL = '@Url.Content("~/content/images/player-logo.png")';
+        var controllerSWF = '@Url.Content("~/swf/flowplayer.controls.swf")';
+        var flow = {}; var config = {};
+        $(document).ready(function () {
+            $.getScript(playerJS).done(function () {
+                var akObj = { url: '/swf/AkamaiFlowPlugin.swf' };
+                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, result: result, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, apObj: akObj };
+                flow.Player.Create(config);
+            });
+        });        
+    </script>
+    <script type="text/javascript">
+        var errorText = '';
+        $(document).ready(function () {
+            var validator = $('form#form1').validate({
+                rules: {
+                    AssetUrl: {
+                        required: true
+                    }
+                },
+                messages: {
+                    AssetUrl: { required: 'Asset Url is required.' }
+                },
+                errorPlacement: function (error, element) {
+                    if (errorText != error.text()) {
+                        $.pnotify({
+                            text: error.text(),
+                            type: 'error',
+                            styling: 'jqueryui',
+                            icon: false
+                        }).delay(1500);
+                        errorText = error.text();
+                    }
+
+                }
+            });
+
+            $('#form1').submit(function (event) {
+                event.preventDefault();
+                errorText = '';
+                var form = $(this);
+                var cmdSubmit = $('#cmdSubmit');
+                var result = $('#result');
+                if (validator.numberOfInvalids() == 0) {
+                    disableButton(cmdSubmit);
+                    hideElement(result, false);
+                    var fplayer = $f(playerContainer);
+                    var clip = fplayer.getClip();
+                    var assetURL = $('#AssetUrl').val();
+                    clip.update({
+                        bufferLength: 8,
+                        provider: 'akamai',
+                        scaling: 'fit',
+                        url: assetURL
+                    });
+                    fplayer.play();
+                    enableButton(cmdSubmit, 'Load Video');
+                }
+            });
+
+        });
+    </script>
+}

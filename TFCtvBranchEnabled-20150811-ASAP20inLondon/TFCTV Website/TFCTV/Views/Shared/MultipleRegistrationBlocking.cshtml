@@ -1,0 +1,14 @@
+﻿<script type="text/javascript">
+    function checkRegistration() {
+        var date1 = new Date(readCookie("rcDate"));
+        var date2 = new Date();
+        var diffDays = dateDiffInDays(date1, date2);
+        if (diffDays < 45) {
+            $('.register_link').remove();
+            $('#login_buttoni').css('position', 'relative').css('top', '8px');
+        }
+    }
+    $(document).ready(function () {
+        checkRegistration();
+    });        
+</script>

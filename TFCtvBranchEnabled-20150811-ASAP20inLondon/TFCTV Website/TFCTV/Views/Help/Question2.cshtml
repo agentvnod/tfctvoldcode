@@ -1,0 +1,36 @@
+﻿@model IPTV2_Model.Show
+@{
+    ViewBag.Title = "Help Center - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+}
+<section class="page_pagebody">
+    <!-- PAGE BODY SECTION -->
+    <div class="container">
+        <h1 class="page_title">
+            Help Center</h1>
+        <!-- page title -->
+        <div class="row help_sec">
+            <div class="col-sm-9 col-xs-12">
+                <div class="breadcrumbs">
+                    <!-- Breadcrumbs -->
+                    @{if (!String.IsNullOrEmpty(ViewBag.Maincategory))
+                      {
+                        @String.Format("{0} > {1}", ViewBag.Maincategory, ViewBag.Subcategory)
+                      }
+                    }
+                </div>
+                <h3>
+                    @Html.Raw(Model.Description)</h3>
+                <br>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.Blurb))
+                <br>
+            </div>
+            <!-- end left side -->
+            <!-- right widget bar [same in help.html & help-inner.html]-->
+            @Html.Action("RightWidget", new { Top5 = null as List<IPTV2_Model.CategoryClass> })
+            <!-- end right widget bar -->
+        </div>
+        <!-- end help section -->
+    </div>
+    <!-- end container -->
+</section><!-- end page body section -->

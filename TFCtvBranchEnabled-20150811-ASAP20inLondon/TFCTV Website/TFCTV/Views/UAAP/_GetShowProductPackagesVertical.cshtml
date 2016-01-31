@@ -1,0 +1,141 @@
+﻿@using IPTV2_Model
+@using TFCTV.Helpers
+@model ShowPackageProductPrices
+@if (Model != null)
+{
+    <div id="aboutPackage">
+        <div class="genericHeader">
+            <div class="genericHeader_header">
+                <div id="pkgSubHeaderCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div id="packageContainer">
+            <br />
+            <div class="packageList_container">
+                <!-- Package Products  -->
+                @if (Model.ShowPackageGroupProductList != null)
+                {
+                    foreach (var packageGroupItem in Model.ShowPackageGroupProductList)
+                    {
+                    <div class="packageitem_container">
+                        <div class="packageproduct_container">
+                            @Html.ImageBuilder(Url, "package/buttons/img_" + packageGroupItem.ProductGroupId + ".png", new { height = "58", width = "227", alt = packageGroupItem.ProductGroupId, prdid = packageGroupItem.ProductGroupId })
+                        </div>
+                        <div class="pckgActionBtn">
+                            <a pckId="@packageGroupItem.PackageId" class="subscribe_btn">Subscribe</a>
+                            <div class="tooltip">
+                                @foreach (var product in packageGroupItem.Product2)
+                                {
+                                    <a  href="/buy/process/@product.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        <div class="prod-left">
+                                            @if (product.ProductPrice.CurrencyCode == "AED" || product.ProductPrice.CurrencyCode == "SAR")
+                                            {
+                                                <span>@String.Format("{0} {1}", product.ProductPrice.CurrencyCode, product.ProductPrice.Amount.ToString("F"))</span>
+                                            }
+                                            else
+                                            {
+                                                if (product.ProductPrice.IsLeft)
+                                                {
+                                                <span>@String.Format("{0}{1}", product.ProductPrice.Symbol, product.ProductPrice.Amount.ToString("F"))</span>
+                                                }
+                                                else
+                                                {
+                                                <span>@String.Format("{0}{1}", product.ProductPrice.Amount.ToString("F"), product.ProductPrice.Symbol)</span>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="prod-right">
+                                            &nbsp;| @(product.DurationType == "m" ? product.Duration + "-Month" : product.Duration + "-Day")
+                                        </div>
+                                    </a>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="pckgActionBtn border_left">
+                            <a pckId="@packageGroupItem.PackageId" class="addwishlist_btn">Add to Wishlist</a>
+                            <div class="tooltip">
+                                @foreach (var item in packageGroupItem.Product2)
+                                {
+                                    <div>
+                                        <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                            @(item.DurationType == "m" ? item.Duration + "-Month" : item.Duration + "-Day")
+                                            @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+                <!-- Show Products -->
+                @if (Model.ShowAlacarteProductList != null)
+                {
+                    foreach (var showProductItem in Model.ShowAlacarteProductList)
+                    {
+                    <div class="packageitem_container">
+                        <div class="packageproduct_container">
+                            @Html.ImageBuilder(Url, "package/buttons/pay-" +
+                                   (showProductItem.ALaCarteSubscriptionTypeId ?? 1).ToString()
+                                + ".png"
+                                  , new { height = "58", width = "227", alt = showProductItem.ProductId, prdid = showProductItem.ProductId })
+                        </div>
+                        <div class="pckgActionBtn">
+                            <a class="subscribe_btn">Subscribe</a>
+                            <div class="tooltip">
+                                <div class="scrollpane">
+                                    @foreach (var productPricesItem in showProductItem.ProductPrices)
+                                    {
+                                        <div>
+                                            <a  href="/buy/process/@showProductItem.ProductId" rel="#bs_overlay" class="buyproduct">
+                                                <div class="prod-left">
+                                                    @if (productPricesItem.CurrencyCode == "AED" || productPricesItem.CurrencyCode == "SAR")
+                                                    {
+                                                        <span>@String.Format("{0} {1}", productPricesItem.CurrencyCode, productPricesItem.Amount.ToString("F"));</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (productPricesItem.IsLeft)
+                                                        {
+                                                        <span>@String.Format("{0}{1}", productPricesItem.Symbol, productPricesItem.Amount.ToString("F"))</span>
+                                                        }
+                                                        else
+                                                        {
+                                                        <span>@String.Format("{0}{1}", productPricesItem.Amount.ToString("F"), productPricesItem.Symbol)</span>
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="prod-right">
+                                                    &nbsp;| @(showProductItem.DurationType == "m" ? showProductItem.Duration + "-Month" : showProductItem.Duration + "-Day")
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pckgActionBtn border_left">
+                            <a class="subscribe_btn">Add to Wishlist</a>
+                            <div class="tooltip">
+                                <div class="scrollpane">
+                                    @foreach (var productPricesItem in showProductItem.ProductPrices)
+                                    {
+                                        <div>
+                                            <a href="#Wish" prodid="@showProductItem.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                                @(showProductItem.DurationType == "m" ? showProductItem.Duration + "-Month" : showProductItem.Duration + "-Day")
+                                                @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,25 @@
+﻿Please <a href="/User" id="bsignin" rel="#signinoverlay">sign in</a> first to continue
+purchase.
+<script type="text/javascript">
+    function loadSignin() {
+        var slink = $('#signin').overlay({
+            mask: 'black',
+            closeOnClick: false,
+            onBeforeLoad: function () {
+                $('#overlay').css('width', '500px')
+                var wrap = this.getOverlay().find(".contentWrap");
+                wrap.load('/User');
+            }
+        });
+        $('#signin').overlay().load();  //initiates overlay
+        slink.load();
+    }
+    $(document).ready(function () {
+        $('#bsignin').live('click', function () {
+            $("#overlay").width(500);
+            $('.buyproduct').overlay().close();
+            setTimeout('loadSignin();', 300);
+            return false;
+        });
+    });
+</script>

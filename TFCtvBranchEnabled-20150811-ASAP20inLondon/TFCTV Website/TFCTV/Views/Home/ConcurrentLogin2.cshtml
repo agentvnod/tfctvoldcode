@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Multiple Login Detected - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    ViewBag.DaxName = "tfc-tv:concurrent-login";
+}
+<section class="page_pagebody concurrent_login">
+    <!-- START PAGE BODY -->
+    <div class="container">
+        <!-- page top -->
+        <h1 class="page_title">
+            Kapamilya, You have been signed out of your account
+        </h1>
+        <!-- END page top -->
+        <p>
+            <b>
+                Maaaring ito ay dahil naka-sign in ang iyong account gamit ang ibang internet browser
+                or sa ibang gadget
+                <br>
+                (i.e. smartphone, tablet, ibang computer, etc.)
+            </b>
+        </p>
+        <p>
+            <b>
+                Kung nais buksan ang iyong account gamit muli ang internet browser at device na ito,
+                i-click lamang ang button sa ilalim.
+            </b>
+        </p>
+        <p>
+            @Html.ActionLink("SIGN IN AGAIN", "Login", "User", null, new { @class = "red_button sign_in_footer_link" })            
+        </p>
+        <p>
+            Kung meron kayong karagdagang tanong, bumisita sa
+            <br>
+            <a href="@Url.Action("Index", "Help")">TFC.tv Help Center</a>
+        </p>
+    </div>
+    <!-- end container -->
+</section>
+<!-- end page body section -->
+@section JScriptBottom {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            gigya.socialize.logout({ callback: function (response) { } });
+        });
+    </script>
+}

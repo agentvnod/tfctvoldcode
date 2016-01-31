@@ -1,0 +1,127 @@
+﻿@{
+    bool isJapanUser = false;
+    bool isMigrated = false;
+    bool hasFreeTrial = false;
+    bool isTVEverywhere = false;
+
+    var freeTrialproductIds = MyUtility.StringToIntList(GlobalConfig.FreeTrialPackageIds);
+    DateTime registDt = DateTime.Now;
+    if (User.Identity.IsAuthenticated)
+    {
+        var context = new IPTV2_Model.IPTV2Entities();
+        var userId = new Guid(User.Identity.Name);
+        var user = context.Users.FirstOrDefault(u => u.UserId == userId);
+        if (user != null)
+        {
+            if (user.Country != null)
+            {
+                if (user.Country.Code == GlobalConfig.JapanCountryCode) { isJapanUser = true; }
+            }
+
+            if (!String.IsNullOrEmpty(user.TfcNowUserName))
+            {
+                isMigrated = true;
+            }
+
+            if (user.PackageEntitlements.Count(p => freeTrialproductIds.Contains(p.PackageId) && p.EndDate > registDt) > 0)
+            {
+                hasFreeTrial = true;
+            }
+            if (user.IsTVEverywhere == true)
+            {
+                isTVEverywhere = true;
+            }
+        }
+
+    }
+
+}
+<div class="userStatusBar_container">
+    <div id="userStatusBar">
+        <div id="userStatusBarRightContainer">
+            @{  if (User.Identity.IsAuthenticated)
+                {
+                <div class="floatLeft" id="userGreeting">
+                    Kumusta,
+                    @Html.Raw(String.Format("<a href=\"/Profile\">{0}</a>", ViewBag.Name))
+                </div>
+                @Html.Action("Balance", "Load")
+                <div class="floatLeft">
+                    <ul class="acc-menu">
+                        <li><a id="myaccount" href="#">My Account</a>
+                            <ul>
+                                <li><a href="/Profile">My Profile</a></li>
+                                @{if (hasFreeTrial)
+                                  {
+                                    <li>@Html.ActionLink("Free Trial Page", "FreeTrial", "Subscribe")</li>
+                                  }}
+                                <li>@Html.ActionLink("My Entitlements", "Entitlements", "User")</li>
+                                <li>@Html.ActionLink("My Transactions", "Transactions", "User")</li>
+                                <li><a href="/Ppc">Prepaid Card</a></li>
+                                @if (GlobalConfig.IsTFCtvFanMobPromoEnabled)
+                                {<li>@Html.ActionLink("Fan Mob Promo", "Profile", "FanMobPromo")</li>}
+                                @{
+                                if (GlobalConfig.IsTVERegistrationEnabled)
+                                {
+                                    if (MyUtility.IsTVEAllowedInCurrentCountry())
+                                    {
+                                        if (!isTVEverywhere)
+                                        {
+                                    <li>@Html.ActionLink("Activate TFC Everywhere", "RegisterToTFCEverywhere", "User")</li>
+                                        }
+                                    }
+                                }
+                                }
+                                @{if (isJapanUser)
+                                  {
+                                    <li>@Html.ActionLink("Enroll SmartPit Card", "EnrollSmartPit", "User")</li>
+                                  }
+                                }
+                                @{if (!isMigrated && !GlobalConfig.IsTVERegistrationEnabled)
+                                  {
+                                    <li>@Html.ActionLink("Migrate TFCnow", "Index", "Migration")</li>
+                                  }
+                                }
+                                <li>@Html.ActionLink("Help Center", "Index", "Help")</li>
+                                <li>@Html.ActionLink("Sign Out", "LogOut", "User")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                }
+                else
+                {
+                <div class="floatLeft">
+                    <a href="#" id="signin" rel="#overlay">Sign In</a> <a>@Html.ImageBuilder(Url, "menuBar/scrollingarrow_disable_right.png", new { id = "gigyaLoginShow", alt = "Show Gigya LogIn", style = "height: 10px; width: 10px;" })
+                    </a>
+                </div>
+                <div id="socialConnections" class="floatLeft hideElement">
+                </div>
+                <div class="floatLeft">
+                    <a>@Html.ImageBuilder(Url, "menuBar/scrollingarrow_disable_left.png", new { @class = "hideElement", id = "gigyaLoginHide", alt = "Hide Gigya LogIn", style = "height: 10px; width: 10px;" })
+                    </a>
+                </div>
+                <div class="floatLeft">
+                    <span style="margin-right: 6px; margin-left: 10px;">| </span>@Html.ActionLink("Register for Free Trial", "Register", "User")
+                </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#gigyaLoginShow').on('click', function () {
+            $('#socialConnections').show();
+            $('#gigyaLoginShow').addClass('hideElement');
+            $('#gigyaLoginHide').removeClass('hideElement');
+            return false;
+        });
+        $('#gigyaLoginHide').on('click', function () {
+            $('#socialConnections').hide();
+            $('#gigyaLoginHide').addClass('hideElement');
+            $('#gigyaLoginShow').removeClass('hideElement');
+            return false;
+        });
+    });
+</script>

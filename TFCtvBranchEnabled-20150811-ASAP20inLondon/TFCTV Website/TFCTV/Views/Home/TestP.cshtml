@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Login to TFC.tv - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdateLogin.cshtml";
+    Maxmind.Location location = null;
+    try
+    {
+        if (ViewBag.location != null)
+        {
+            location = ViewBag.location;
+        }
+    }
+    catch (Exception) { }
+
+    var sample = MyUtility.GetRecommendedItems("abc");
+}
+
+<h2>Deets!</h2>
+<div class="location_body">
+    <div class="row">
+        <div class="col-sm-4">
+            Country
+        </div>
+        <div class="col-sm-4">
+            @location.countryName
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            CountryCode
+        </div>
+        <div class="col-sm-4">
+            @location.countryCode
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            Region Name
+        </div>
+        <div class="col-sm-4">
+            @location.regionName
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            Region
+        </div>
+        <div class="col-sm-4">
+            @location.region
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            City
+        </div>
+        <div class="col-sm-4">
+            @location.city
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            Postal Code
+        </div>
+        <div class="col-sm-4">
+            @location.postalCode
+        </div>
+    </div>
+
+    <div>
+        @{foreach (var item in sample.item.link.Where(x => !x.text.StartsWith("show")))
+        {
+            var value = item.text.Split('-');
+            <span>
+                @String.Format("http://tfc.tv/Episode/Details/{0}", value[1])
+            </span>
+            <div class="clear"></div>
+        }}
+    </div>
+</div>

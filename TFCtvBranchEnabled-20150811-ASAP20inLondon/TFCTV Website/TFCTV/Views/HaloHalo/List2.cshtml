@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Halo Halo Clicks - TFC.tv";
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    ViewBag.DaxName = "tfc-tv:entertainment:free-videos:list";
+}
+<section class="page_pagebody hhcv_pagebody">
+    <!-- Halo Halo clicks videos page body -->
+    @Html.Action("BuildContentList", "HaloHalo")
+    <!-- end container -->
+</section>
+<!-- END Live Channel page body -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.movie_sec').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+}
+@section MetaTags{
+    <meta name="description" content="Halo-Halo Clicks, Your mixed dessert of short and exclusive Kapamilya content you can watch, love and share online." />
+    <link rel="canonical" href="@href" />
+}

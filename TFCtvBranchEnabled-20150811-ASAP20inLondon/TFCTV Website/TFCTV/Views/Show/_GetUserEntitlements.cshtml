@@ -1,0 +1,203 @@
+﻿@using IPTV2_Model
+@using TFCTV.Helpers
+@{
+    List<ShowPackageGroupProduct> UserPackageEntitlements = ViewBag.UserPackageEntitlementList ?? new List<ShowPackageGroupProduct>();
+    List<ShowAlacarteProduct> UserShowEntitlement = ViewBag.userShowEntitlement ?? new List<ShowAlacarteProduct>();
+   
+    int? CurrentUserProductId = null;
+}
+<div time="@ViewBag.ElapsedTime" style="display:none">
+</div>
+<div id="aboutPackage">
+    <div class="genericHeader">
+        <div class="genericHeader_header">
+            <div id="pkgSubHeaderTitle" class="sectionHeaderTitle">
+                Already accessible on
+            </div>
+            @*<div>
+                <a id="right_headertitle" href="/GoPremium">
+                    See all packages
+                </a>
+            </div>*@
+            <div id="pkgSubHeaderCategoryName" class="sectionHeader">
+            </div>
+        </div>
+    </div>
+    <div id="packageContainer">
+        <br />
+        <div class="packageList_container">
+                                   
+                @if (UserPackageEntitlements != null && UserPackageEntitlements.Count() > 0)
+                {
+                    foreach (var item in UserPackageEntitlements)
+                    {
+                        if (item.ExpiryDate != null && item.ExpiryDate != DateTime.MinValue)
+                        {
+                <div class="packageitem_container">
+                    <div class="exp_date full_width">
+                    
+                        <a href="/User/Entitlements">Valid Until: @string.Format("{0:MMM d, yyyy}", item.ExpiryDate)
+                        </a>
+                    
+                    </div>
+                    <div class="packageproduct_container">
+                        @Html.ImageBuilder(Url, "package/buttons/img_" + item.ProductGroupId + ".png", new { height = "58", width = "227", alt = item.ProductGroupId, prdid = item.ProductGroupId })
+                    </div>
+                    <div class="pckgActionBtn">
+                        <a pckId="@item.PackageId" class="subscribe_btn">Extend Access</a>
+                        <div class="tooltip">
+                            @foreach (var product in item.Product2)
+                            {
+                                CurrentUserProductId = product.ProductId;
+                                <div>
+                                    <a  href="/buy/process/@product.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        
+                                            @if (product.ProductPrice.CurrencyCode == "AED" || product.ProductPrice.CurrencyCode == "SAR")
+                                            {
+                                            <span>@String.Format("{0} {1}", product.ProductPrice.CurrencyCode, product.ProductPrice.Amount.ToString("F"))</span>
+                                            }
+                                            else
+                                            {
+                                                if (product.ProductPrice.IsLeft)
+                                                {
+                                            <span>@String.Format("{0}{1}", product.ProductPrice.Symbol, product.ProductPrice.Amount.ToString("F"))</span>
+                                                }
+                                                else
+                                                {
+                                            <span>@String.Format("{0}{1}", product.ProductPrice.Amount.ToString("F"), product.ProductPrice.Symbol)</span>
+                                                }
+                                            }                                       
+                                        |
+                                        @product.Duration @(product.DurationType == "m" ? "Month(s)" : "Day(s)")
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="pckgActionBtn border_left">
+                        <a pckId="@item.PackageId" class="addwishlist_btn">Add to Wishlist</a>
+                        <div class="tooltip">
+                            @foreach (var product in item.Product2)
+                            {
+                                <div>
+                                    <a href="#Wish" prodid="@product.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                        @(product.DurationType == "m" ? product.Duration + "-Month" : product.Duration + "-Day")
+                                        @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                        }
+                        @*else
+                        {
+                         <div class="packageitem_container">
+                    <div class="packageproduct_container updateTopPad">
+                        @Html.ImageBuilder(Url, "package/buttons/" + item.ProductGroupId + "_upgrade.png", new { height = "58", width = "227", alt = item.ProductGroupId, prdid = item.ProductGroupId })
+                    </div>
+                    <div class="pckgActionBtn full_width updateBtn">
+                        <a pckId="@item.ProductGroupId" class="subscribe_btn">Upgrade Subscription</a>
+                        <div class="tooltip">
+                            @foreach (var product in item.Product2)
+                            {
+                                CurrentUserProductId = product.ProductId;
+                                <div>
+                                    <a  href="/buy/process/@product.ProductId?cpid=@UserShowEntitlement.FirstOrDefault().ProductId" rel="#bs_overlay" class="buyproduct">
+                                        
+                                            @if (product.ProductPrice.CurrencyCode == "AED" || product.ProductPrice.CurrencyCode == "SAR")
+                                            {
+                                            <span>@String.Format("{0} {1}", product.ProductPrice.CurrencyCode, product.ProductPrice.Amount.ToString("F"))</span>
+                                            }
+                                            else
+                                            {
+                                                if (product.ProductPrice.IsLeft)
+                                                {
+                                            <span>@String.Format("{0}{1}", product.ProductPrice.Symbol, product.ProductPrice.Amount.ToString("F"))</span>
+                                                }
+                                                else
+                                                {
+                                            <span>@String.Format("{0}{1}", product.ProductPrice.Amount.ToString("F"), product.ProductPrice.Symbol)</span>
+                                                }
+                                            }                                       
+                                        |
+                                        @product.Duration @(product.DurationType == "m" ? "Month(s)" : "Day(s)")
+                                    </a>
+                                </div>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>   
+                        }*@
+                    }
+                }
+                    
+                @if (UserShowEntitlement != null && UserShowEntitlement.Count() > 0)
+                {
+                    foreach (var item in UserShowEntitlement)
+                    {   
+                <div class="packageitem_container">
+                    <div class="exp_date full_width">
+                    @if (item.ExpiryDate != null && item.ExpiryDate != DateTime.MinValue)
+                    {
+                        <a href="/User/Entitlements">Valid Until: @string.Format("{0:MMM d, yyyy}", item.ExpiryDate)
+                        </a>
+                    }
+                    </div>
+                    <div class="packageproduct_container">
+                        @Html.ImageBuilder(Url, "package/buttons/pay-" + (item.ALaCarteSubscriptionTypeId ?? 1).ToString() + ".png", new { height = "58", width = "227", alt = item.ALaCarteSubscriptionTypeId ?? 1, prdid = item.ProductId })
+                    </div>
+                    <div class="pckgActionBtn">
+                        <a class="subscribe_btn">Extend Access</a>
+                        <div class="tooltip">
+                            <div class="scrollpane">
+                                <div>
+                                    <a  href="/buy/process/@item.ProductId" rel="#bs_overlay" class="buyproduct">
+                                        @foreach (var productprice in item.ProductPrices)
+                                        {
+                                            if (productprice.CurrencyCode == "AED" || productprice.CurrencyCode == "SAR")
+                                            {
+                                            <span>@String.Format("{0} {1}", productprice.CurrencyCode, productprice.Amount.ToString("F"))</span>
+                                            }
+                                            else
+                                            {
+                                                if (productprice.IsLeft)
+                                                {
+                                            <span>@String.Format("{0}{1}", productprice.Symbol, productprice.Amount.ToString("F"))</span>
+                                                }
+                                                else
+                                                {
+                                            <span>@String.Format("{0}{1}", productprice.Amount.ToString("F"), productprice.Symbol)</span>
+                                                }
+                                            }
+                                        }
+                                        | @item.Duration @(item.DurationType == "m" ? " Month(s)" : " Day(s)")
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pckgActionBtn border_left">
+                        <a class="subscribe_btn">Add to Wishlist</a>
+                        <div class="tooltip">
+                            <div class="scrollpane">
+                               
+                                    <div>
+                                        <a href="#Wish" prodid="@item.ProductId" rel="#bs_overlay" class="addwishlist" >
+                                            @(item.DurationType == "m" ? item.Duration + "-Month" : item.Duration + "-Day")
+                                            @Html.ImageBuilder(Url, "package/buttons/wishlist.png", new { alt = "add to wishlist", width = "15" })
+                                        </a>
+                                    </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>                 
+                    }
+                } 
+        
+                
+        </div>
+    </div>
+</div>

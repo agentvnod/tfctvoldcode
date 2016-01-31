@@ -1,0 +1,2613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://secured.netsuite2.abs-cbni.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://secured.netsuite2.abs-cbni.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://secured.netsuite2.abs-cbni.com/">
+      <s:element name="TestConnectivity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqTestConnectivity" type="tns:ReqTestConnectivity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqTestConnectivity">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ReqBase" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PWD" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TestConnectivityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestConnectivityResult" type="tns:RespTestConnectivity" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespTestConnectivity">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="RespBase" abstract="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsSuccess" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="RegisterSubscriber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqRegisterSubscriber" type="tns:ReqRegisterSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqRegisterSubscriber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Gender" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LeadSource" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownPostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CountryCurrencyId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="RegisterSubscriberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterSubscriberResult" type="tns:RespRegisterSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespRegisterSubscriber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="RegisterSubscriber2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqRegisterSubscriber2" type="tns:ReqRegisterSubscriber2" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqRegisterSubscriber2">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Gender" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LeadSource" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownPostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CountryCurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="RegistrationDate" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="RegisterSubscriber2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterSubscriber2Result" type="tns:RespRegisterSubscriber2" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespRegisterSubscriber2">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetSmartPitCardListByCustomerId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetSmartPitCardListByCustomerId" type="tns:ReqGetSmartPitCardListByCustomerId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetSmartPitCardListByCustomerId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetSmartPitCardListByCustomerIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSmartPitCardListByCustomerIdResult" type="tns:RespGetSmartPitCardListByCustomerId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetSmartPitCardListByCustomerId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitList">
+                <s:complexType mixed="true">
+                  <s:sequence>
+                    <s:any />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="EnrollSmartPitCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqEnrollSmartPitCard" type="tns:ReqEnrollSmartPitCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqEnrollSmartPitCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitCardNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="EnrollSmartPitCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnrollSmartPitCardResult" type="tns:RespEnrollSmartPitCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespEnrollSmartPitCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitCardNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpdateSubscriber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqUpdateSubscriber" type="tns:ReqUpdateSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqUpdateSubscriber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="IsCountryChanged" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DateOfBirth" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Gender" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CivilStatus" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LeadSource" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownPostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CountryCurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletBalance" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpdateSubscriberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateSubscriberResult" type="tns:RespUpdateSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespUpdateSubscriber">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetSubscriberInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetSubscriberInfo" type="tns:ReqGetSubscriberInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetSubscriberInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetSubscriberInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSubscriberInfoResult" type="tns:RespGetSubscriberInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetSubscriberInfo">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Gender" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CivilStatus" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LeadSource" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HometownPostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCity" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentState" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentCountry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CountryCurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitCardNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetExchangeRateByCurrency">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetExchangeRateByCurrency" type="tns:ReqGetExchangeRateByCurrency" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetExchangeRateByCurrency">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="BaseCurrency" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConvertedCurrency" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetExchangeRateByCurrencyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExchangeRateByCurrencyResult" type="tns:RespGetExchangeRateByCurrency" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetExchangeRateByCurrency">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="EffectiveDate" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetExchangeRates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetExchangeRates" type="tns:ReqGetExchangeRates" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetExchangeRates">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="BaseCurrency" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConvertedCurrency" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetExchangeRatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetExchangeRatesResult" type="tns:RespGetExchangeRates" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetExchangeRates">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ExchangeRates">
+                <s:complexType>
+                  <s:sequence>
+                    <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                    <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPriceInLocalCurrency">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetPriceInLocalCurrency" type="tns:ReqGetPriceInLocalCurrency" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetPriceInLocalCurrency">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="BasePrice" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="BaseCurrency" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ConvertedCurrency" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetPriceInLocalCurrencyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPriceInLocalCurrencyResult" type="tns:RespGetPriceInLocalCurrency" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetPriceInLocalCurrency">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ConvertedPrice" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetAllItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetAllItems" type="tns:ReqGetAllItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetAllItems">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetAllItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllItemsResult" type="tns:RespGetItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetItems">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ItemList">
+                <s:complexType mixed="true">
+                  <s:sequence>
+                    <s:any />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetItemList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetItemList" type="tns:ReqGetItemList" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetItemList">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ItemIds" type="tns:ArrayOfInt" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetItemListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemListResult" type="tns:RespGetItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetItemById" type="tns:ReqGetItemById" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetItemById">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetItemByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemByIdResult" type="tns:RespGetItemById" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetItemById">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemDescription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LocalCurrencyPrice" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="BasePrice" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetWalletInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetWalletInfo" type="tns:ReqGetWallet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetWallet">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetWalletInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWalletInfoResult" type="tns:RespGetWallet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetWallet">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletBalanceLocal" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletExpirationDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LatestWalletTransaction" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LatestWalletApplication" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrder_Old">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrder" type="tns:ReqCreateOrder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateOrder">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrderItems" type="tns:ArrayOfOrderItem" />
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaymentMethod" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCSecurityCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCExpiry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCStreet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Recipient" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PaypalReferenceNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfOrderItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="OrderItem" nillable="true" type="tns:OrderItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="OrderItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="AmountBaseCurrency" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="AmountLocalCurrency" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UpgradeDaysAdjustment" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateOrder_OldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrder_OldResult" type="tns:RespCreateOrder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateOrder">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrder" type="tns:ReqCreateOrder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderResult" type="tns:RespCreateOrder" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderRecurringEnrollment_Old">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderRecurringEnrollment" type="tns:ReqCreateOrderRecurringEnrollment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateOrderRecurringEnrollment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrderItems" type="tns:ArrayOfOrderItem" />
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaymentMethod" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCSecurityCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCExpiry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCStreet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CCType" type="tns:ReqCreditCardType" />
+              <s:element minOccurs="1" maxOccurs="1" name="Recipient" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PaypalReferenceNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="ReqCreditCardType">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotSpecified" />
+          <s:enumeration value="AmericanExpress" />
+          <s:enumeration value="Discover" />
+          <s:enumeration value="JCB" />
+          <s:enumeration value="MasterCard" />
+          <s:enumeration value="Visa" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreateOrderRecurringEnrollment_OldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderRecurringEnrollment_OldResult" type="tns:RespCreateOrderRecurringEnrollment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateOrderRecurringEnrollment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCCEnrollmentSuccess" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCEnrollmentStatusMessage" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderRecurringEnrollment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderRecurringEnrollment" type="tns:ReqCreateOrderRecurringEnrollment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderRecurringEnrollmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderRecurringEnrollmentResult" type="tns:RespCreateOrderRecurringEnrollment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderRecurringPayment_Old">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderRecurringPayment" type="tns:ReqCreateOrderRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateOrderRecurringPayment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrderItems" type="tns:ArrayOfOrderItem" />
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaymentMethod" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Recipient" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderRecurringPayment_OldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderRecurringPayment_OldResult" type="tns:RespCreateOrderRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateOrderRecurringPayment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderRecurringPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderRecurringPayment" type="tns:ReqCreateOrderRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderRecurringPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderRecurringPaymentResult" type="tns:RespCreateOrderRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelRecurringPayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCancelRecurringPayment" type="tns:ReqCancelRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCancelRecurringPayment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CancelRecurringPaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelRecurringPaymentResult" type="tns:RespCancelRecurringPayment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCancelRecurringPayment">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderFreeTrial_Old">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderFreeTrial" type="tns:ReqCreateOrderFreeTrial" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateOrderFreeTrial">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrderItems" type="tns:ArrayOfOrderItem" />
+              <s:element minOccurs="1" maxOccurs="1" name="Recipient" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PaypalReferenceNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderFreeTrial_OldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderFreeTrial_OldResult" type="tns:RespCreateOrderFreeTrial" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateOrderFreeTrial">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateOrderFreeTrial">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateOrderFreeTrial" type="tns:ReqCreateOrderFreeTrial" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrderFreeTrialResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrderFreeTrialResult" type="tns:RespCreateOrderFreeTrial" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateWalletLoad_Old">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateWalletLoad" type="tns:ReqCreateWalletLoad" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateWalletLoad">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="LoadAmountLocalCurrency" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaymentMethod" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCSecurityCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCExpiry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCStreet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCPostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PaypalReferenceNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PPCSerialNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PPCPin" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitCardNo" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitChargeId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartPitBillItemId" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateWalletLoad_OldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateWalletLoad_OldResult" type="tns:RespCreateWalletLoad" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateWalletLoad">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateWalletLoad">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateWalletLoad" type="tns:ReqCreateWalletLoad" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateWalletLoadResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateWalletLoadResult" type="tns:RespCreateWalletLoad" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsumePrepaidCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqConsumePrepaidCard" type="tns:ReqConsumePrepaidCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqConsumePrepaidCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="PPCSerial" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PPCPin" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubscriptionStartDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubscriptionEndDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ConsumePrepaidCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsumePrepaidCardResult" type="tns:RespConsumePrepaidCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespConsumePrepaidCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubscriptionRedemptionItem" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Denomination" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AdjustWalletBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqAdjustWalletBalance" type="tns:ReqAdjustWalletBalance" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqAdjustWalletBalance">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="WalletId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubscriptionId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionAmount" type="s:double" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AdjustWalletBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AdjustWalletBalanceResult" type="tns:RespAdjustWalletBalance" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespAdjustWalletBalance">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftsByRecipientServiceId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetGifts" type="tns:ReqGetGiftsByRecipientServiceId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetGiftsByRecipientServiceId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftsByRecipientServiceIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGiftsByRecipientServiceIdResult" type="tns:RespGetGiftsByRecipientServiceId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetGiftsByRecipientServiceId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="GiftList">
+                <s:complexType mixed="true">
+                  <s:sequence>
+                    <s:any />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftsBySenderServiceId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetGifts" type="tns:ReqGetGiftsBySenderServiceId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetGiftsBySenderServiceId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SenderServiceId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftsBySenderServiceIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGiftsBySenderServiceIdResult" type="tns:RespGetGiftsBySenderServiceId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetGiftsBySenderServiceId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="GiftList">
+                <s:complexType mixed="true">
+                  <s:sequence>
+                    <s:any />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqGetGiftItems" type="tns:ReqGetGiftItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqGetGiftItems">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="GiftId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetGiftItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGiftItemsResult" type="tns:RespGetGiftItems" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespGetGiftItems">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="GiftItems">
+                <s:complexType mixed="true">
+                  <s:sequence>
+                    <s:any />
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AcceptGift">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqAcceptGift" type="tns:ReqAcceptGift" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqAcceptGift">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="GiftId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AcceptGiftResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AcceptGiftResult" type="tns:RespAcceptGift" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespAcceptGift">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateSupportCase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqCreateSupportCase" type="tns:ReqCreateSupportCase" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqCreateSupportCase">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SupportCaseId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="AssignedToId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaseIssueId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaseSubIssueId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MessageId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="MessageSubject" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MessageContent" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateSupportCaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateSupportCaseResult" type="tns:RespCreateSupportCase" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespCreateSupportCase">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ValidatePrepaidCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqValidatePrepaidCard" type="tns:ReqValidatePrepaidCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqValidatePrepaidCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SerialNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Pin" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CustomerCurrencyId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ValidatePrepaidCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidatePrepaidCardResult" type="tns:RespValidatePrepaidCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespValidatePrepaidCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ActivateService">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqActivateService" type="tns:ReqActivateService" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqActivateService">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ActivateServiceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ActivateServiceResult" type="tns:RespActivateService" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespActivateService">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ActivateSlave">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqActivateSlave" type="tns:ReqActivateSlave" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqActivateSlave">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SlaveId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ActivateSlaveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ActivateSlaveResult" type="tns:RespActivateSlave" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespActivateSlave">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpgradeSubscription">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqUpgradeSubscription" type="tns:ReqUpgradeSubscription" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqUpgradeSubscription">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Item" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExpirationDate" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="UpgradeSubscriptionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpgradeSubscriptionResult" type="tns:RespUpgradeSubscription" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespUpgradeSubscription">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddSubscription">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqAddSubscription" type="tns:ReqAddSubscription" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqAddSubscription">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ItemId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ActivationDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ExpirationDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="StatusId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="MigrationId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsFreeTrial" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddSubscriptionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddSubscriptionResult" type="tns:RespAddSubscription" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespAddSubscription">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SubscriptionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ClaimTVE">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqClaimTVE" type="tns:ReqClaimTVE" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqClaimTVE">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TFCTVCustomerId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TFCTVServiceId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="MacAddressOrSmartCard" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ActivationCode" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ClaimTVEResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ClaimTVEResult" type="tns:RespClaimTVE" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespClaimTVE">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TFCTVSubId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TFCTVSubItemId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="ExpiryDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TFCServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TVEServiceId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SmartpitCardNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="GomsTransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ResendTVEActivationCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqResendTVEActivationCode" type="tns:ReqResendTVEActivationCode" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqResendTVEActivationCode">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="MacAddressOrSmartCard" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AccountNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ResendTVEActivationCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ResendTVEActivationCodeResult" type="tns:RespResendTVEActivationCode" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespResendTVEActivationCode">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ValidateCreditCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reqValidateCreditCard" type="tns:ReqValidateCreditCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ReqValidateCreditCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ReqBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrderItems" type="tns:ArrayOfOrderItem" />
+              <s:element minOccurs="1" maxOccurs="1" name="PhoenixId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubsidiaryId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="OrderType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExchangeRate" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="PaymentMethod" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCSecurityCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCExpiry" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCStreet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CCPostalCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CCType" type="tns:ReqCreditCardType" />
+              <s:element minOccurs="1" maxOccurs="1" name="Recipient" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="RecipientServiceId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrencyId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PaypalReferenceNo" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="ValidateCreditCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateCreditCardResult" type="tns:RespValidateCreditCard" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespValidateCreditCard">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:RespBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TransactionId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TestConnectivitySoapIn">
+    <wsdl:part name="parameters" element="tns:TestConnectivity" />
+  </wsdl:message>
+  <wsdl:message name="TestConnectivitySoapOut">
+    <wsdl:part name="parameters" element="tns:TestConnectivityResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSubscriberSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterSubscriber" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSubscriberSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterSubscriberResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSubscriber2SoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterSubscriber2" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSubscriber2SoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterSubscriber2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetSmartPitCardListByCustomerIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSmartPitCardListByCustomerId" />
+  </wsdl:message>
+  <wsdl:message name="GetSmartPitCardListByCustomerIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSmartPitCardListByCustomerIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnrollSmartPitCardSoapIn">
+    <wsdl:part name="parameters" element="tns:EnrollSmartPitCard" />
+  </wsdl:message>
+  <wsdl:message name="EnrollSmartPitCardSoapOut">
+    <wsdl:part name="parameters" element="tns:EnrollSmartPitCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSubscriberSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateSubscriber" />
+  </wsdl:message>
+  <wsdl:message name="UpdateSubscriberSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateSubscriberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriberInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSubscriberInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriberInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSubscriberInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExchangeRateByCurrencySoapIn">
+    <wsdl:part name="parameters" element="tns:GetExchangeRateByCurrency" />
+  </wsdl:message>
+  <wsdl:message name="GetExchangeRateByCurrencySoapOut">
+    <wsdl:part name="parameters" element="tns:GetExchangeRateByCurrencyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetExchangeRatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetExchangeRates" />
+  </wsdl:message>
+  <wsdl:message name="GetExchangeRatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetExchangeRatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPriceInLocalCurrencySoapIn">
+    <wsdl:part name="parameters" element="tns:GetPriceInLocalCurrency" />
+  </wsdl:message>
+  <wsdl:message name="GetPriceInLocalCurrencySoapOut">
+    <wsdl:part name="parameters" element="tns:GetPriceInLocalCurrencyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllItems" />
+  </wsdl:message>
+  <wsdl:message name="GetAllItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetItemListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemList" />
+  </wsdl:message>
+  <wsdl:message name="GetItemListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetItemByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemById" />
+  </wsdl:message>
+  <wsdl:message name="GetItemByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWalletInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWalletInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetWalletInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWalletInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrder_OldSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrder_Old" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrder_OldSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrder_OldResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrder" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringEnrollment_OldSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringEnrollment_Old" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringEnrollment_OldSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringEnrollment_OldResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringEnrollmentSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringEnrollment" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringEnrollmentSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringEnrollmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringPayment_OldSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringPayment_Old" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringPayment_OldSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringPayment_OldResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringPayment" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderRecurringPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderRecurringPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelRecurringPaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelRecurringPayment" />
+  </wsdl:message>
+  <wsdl:message name="CancelRecurringPaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelRecurringPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderFreeTrial_OldSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderFreeTrial_Old" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderFreeTrial_OldSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderFreeTrial_OldResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderFreeTrialSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrderFreeTrial" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrderFreeTrialSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrderFreeTrialResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateWalletLoad_OldSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateWalletLoad_Old" />
+  </wsdl:message>
+  <wsdl:message name="CreateWalletLoad_OldSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateWalletLoad_OldResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateWalletLoadSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateWalletLoad" />
+  </wsdl:message>
+  <wsdl:message name="CreateWalletLoadSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateWalletLoadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsumePrepaidCardSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsumePrepaidCard" />
+  </wsdl:message>
+  <wsdl:message name="ConsumePrepaidCardSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsumePrepaidCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="AdjustWalletBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:AdjustWalletBalance" />
+  </wsdl:message>
+  <wsdl:message name="AdjustWalletBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:AdjustWalletBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftsByRecipientServiceIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGiftsByRecipientServiceId" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftsByRecipientServiceIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGiftsByRecipientServiceIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftsBySenderServiceIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGiftsBySenderServiceId" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftsBySenderServiceIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGiftsBySenderServiceIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGiftItems" />
+  </wsdl:message>
+  <wsdl:message name="GetGiftItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGiftItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AcceptGiftSoapIn">
+    <wsdl:part name="parameters" element="tns:AcceptGift" />
+  </wsdl:message>
+  <wsdl:message name="AcceptGiftSoapOut">
+    <wsdl:part name="parameters" element="tns:AcceptGiftResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateSupportCaseSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateSupportCase" />
+  </wsdl:message>
+  <wsdl:message name="CreateSupportCaseSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateSupportCaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePrepaidCardSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidatePrepaidCard" />
+  </wsdl:message>
+  <wsdl:message name="ValidatePrepaidCardSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidatePrepaidCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActivateServiceSoapIn">
+    <wsdl:part name="parameters" element="tns:ActivateService" />
+  </wsdl:message>
+  <wsdl:message name="ActivateServiceSoapOut">
+    <wsdl:part name="parameters" element="tns:ActivateServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSlaveSoapIn">
+    <wsdl:part name="parameters" element="tns:ActivateSlave" />
+  </wsdl:message>
+  <wsdl:message name="ActivateSlaveSoapOut">
+    <wsdl:part name="parameters" element="tns:ActivateSlaveResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeSubscriptionSoapIn">
+    <wsdl:part name="parameters" element="tns:UpgradeSubscription" />
+  </wsdl:message>
+  <wsdl:message name="UpgradeSubscriptionSoapOut">
+    <wsdl:part name="parameters" element="tns:UpgradeSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddSubscriptionSoapIn">
+    <wsdl:part name="parameters" element="tns:AddSubscription" />
+  </wsdl:message>
+  <wsdl:message name="AddSubscriptionSoapOut">
+    <wsdl:part name="parameters" element="tns:AddSubscriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ClaimTVESoapIn">
+    <wsdl:part name="parameters" element="tns:ClaimTVE" />
+  </wsdl:message>
+  <wsdl:message name="ClaimTVESoapOut">
+    <wsdl:part name="parameters" element="tns:ClaimTVEResponse" />
+  </wsdl:message>
+  <wsdl:message name="ResendTVEActivationCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ResendTVEActivationCode" />
+  </wsdl:message>
+  <wsdl:message name="ResendTVEActivationCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ResendTVEActivationCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateCreditCard" />
+  </wsdl:message>
+  <wsdl:message name="ValidateCreditCardSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateCreditCardResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServicePhoenixSoap">
+    <wsdl:operation name="TestConnectivity">
+      <wsdl:input message="tns:TestConnectivitySoapIn" />
+      <wsdl:output message="tns:TestConnectivitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber">
+      <wsdl:input message="tns:RegisterSubscriberSoapIn" />
+      <wsdl:output message="tns:RegisterSubscriberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber2">
+      <wsdl:input message="tns:RegisterSubscriber2SoapIn" />
+      <wsdl:output message="tns:RegisterSubscriber2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSmartPitCardListByCustomerId">
+      <wsdl:input message="tns:GetSmartPitCardListByCustomerIdSoapIn" />
+      <wsdl:output message="tns:GetSmartPitCardListByCustomerIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnrollSmartPitCard">
+      <wsdl:input message="tns:EnrollSmartPitCardSoapIn" />
+      <wsdl:output message="tns:EnrollSmartPitCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubscriber">
+      <wsdl:input message="tns:UpdateSubscriberSoapIn" />
+      <wsdl:output message="tns:UpdateSubscriberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberInfo">
+      <wsdl:input message="tns:GetSubscriberInfoSoapIn" />
+      <wsdl:output message="tns:GetSubscriberInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRateByCurrency">
+      <wsdl:input message="tns:GetExchangeRateByCurrencySoapIn" />
+      <wsdl:output message="tns:GetExchangeRateByCurrencySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRates">
+      <wsdl:input message="tns:GetExchangeRatesSoapIn" />
+      <wsdl:output message="tns:GetExchangeRatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPriceInLocalCurrency">
+      <wsdl:input message="tns:GetPriceInLocalCurrencySoapIn" />
+      <wsdl:output message="tns:GetPriceInLocalCurrencySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <wsdl:input message="tns:GetAllItemsSoapIn" />
+      <wsdl:output message="tns:GetAllItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <wsdl:input message="tns:GetItemListSoapIn" />
+      <wsdl:output message="tns:GetItemListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <wsdl:input message="tns:GetItemByIdSoapIn" />
+      <wsdl:output message="tns:GetItemByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWalletInfo">
+      <wsdl:input message="tns:GetWalletInfoSoapIn" />
+      <wsdl:output message="tns:GetWalletInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder_Old">
+      <wsdl:input message="tns:CreateOrder_OldSoapIn" />
+      <wsdl:output message="tns:CreateOrder_OldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <wsdl:input message="tns:CreateOrderSoapIn" />
+      <wsdl:output message="tns:CreateOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment_Old">
+      <wsdl:input message="tns:CreateOrderRecurringEnrollment_OldSoapIn" />
+      <wsdl:output message="tns:CreateOrderRecurringEnrollment_OldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment">
+      <wsdl:input message="tns:CreateOrderRecurringEnrollmentSoapIn" />
+      <wsdl:output message="tns:CreateOrderRecurringEnrollmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment_Old">
+      <wsdl:input message="tns:CreateOrderRecurringPayment_OldSoapIn" />
+      <wsdl:output message="tns:CreateOrderRecurringPayment_OldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment">
+      <wsdl:input message="tns:CreateOrderRecurringPaymentSoapIn" />
+      <wsdl:output message="tns:CreateOrderRecurringPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelRecurringPayment">
+      <wsdl:input message="tns:CancelRecurringPaymentSoapIn" />
+      <wsdl:output message="tns:CancelRecurringPaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial_Old">
+      <wsdl:input message="tns:CreateOrderFreeTrial_OldSoapIn" />
+      <wsdl:output message="tns:CreateOrderFreeTrial_OldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial">
+      <wsdl:input message="tns:CreateOrderFreeTrialSoapIn" />
+      <wsdl:output message="tns:CreateOrderFreeTrialSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad_Old">
+      <wsdl:input message="tns:CreateWalletLoad_OldSoapIn" />
+      <wsdl:output message="tns:CreateWalletLoad_OldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad">
+      <wsdl:input message="tns:CreateWalletLoadSoapIn" />
+      <wsdl:output message="tns:CreateWalletLoadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsumePrepaidCard">
+      <wsdl:input message="tns:ConsumePrepaidCardSoapIn" />
+      <wsdl:output message="tns:ConsumePrepaidCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AdjustWalletBalance">
+      <wsdl:input message="tns:AdjustWalletBalanceSoapIn" />
+      <wsdl:output message="tns:AdjustWalletBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsByRecipientServiceId">
+      <wsdl:input message="tns:GetGiftsByRecipientServiceIdSoapIn" />
+      <wsdl:output message="tns:GetGiftsByRecipientServiceIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsBySenderServiceId">
+      <wsdl:input message="tns:GetGiftsBySenderServiceIdSoapIn" />
+      <wsdl:output message="tns:GetGiftsBySenderServiceIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftItems">
+      <wsdl:input message="tns:GetGiftItemsSoapIn" />
+      <wsdl:output message="tns:GetGiftItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AcceptGift">
+      <wsdl:input message="tns:AcceptGiftSoapIn" />
+      <wsdl:output message="tns:AcceptGiftSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateSupportCase">
+      <wsdl:input message="tns:CreateSupportCaseSoapIn" />
+      <wsdl:output message="tns:CreateSupportCaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePrepaidCard">
+      <wsdl:input message="tns:ValidatePrepaidCardSoapIn" />
+      <wsdl:output message="tns:ValidatePrepaidCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateService">
+      <wsdl:input message="tns:ActivateServiceSoapIn" />
+      <wsdl:output message="tns:ActivateServiceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSlave">
+      <wsdl:input message="tns:ActivateSlaveSoapIn" />
+      <wsdl:output message="tns:ActivateSlaveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSubscription">
+      <wsdl:input message="tns:UpgradeSubscriptionSoapIn" />
+      <wsdl:output message="tns:UpgradeSubscriptionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSubscription">
+      <wsdl:input message="tns:AddSubscriptionSoapIn" />
+      <wsdl:output message="tns:AddSubscriptionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ClaimTVE">
+      <wsdl:input message="tns:ClaimTVESoapIn" />
+      <wsdl:output message="tns:ClaimTVESoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ResendTVEActivationCode">
+      <wsdl:input message="tns:ResendTVEActivationCodeSoapIn" />
+      <wsdl:output message="tns:ResendTVEActivationCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateCreditCard">
+      <wsdl:input message="tns:ValidateCreditCardSoapIn" />
+      <wsdl:output message="tns:ValidateCreditCardSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicePhoenixSoap" type="tns:ServicePhoenixSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnectivity">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/TestConnectivity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/RegisterSubscriber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber2">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/RegisterSubscriber2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmartPitCardListByCustomerId">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetSmartPitCardListByCustomerId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnrollSmartPitCard">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/EnrollSmartPitCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubscriber">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/UpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberInfo">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetSubscriberInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRateByCurrency">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetExchangeRateByCurrency" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRates">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetExchangeRates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPriceInLocalCurrency">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetPriceInLocalCurrency" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetAllItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetItemList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetItemById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWalletInfo">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetWalletInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder_Old">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrder_Old" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment_Old">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringEnrollment_Old" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringEnrollment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment_Old">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringPayment_Old" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelRecurringPayment">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CancelRecurringPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial_Old">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderFreeTrial_Old" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderFreeTrial" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad_Old">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateWalletLoad_Old" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateWalletLoad" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsumePrepaidCard">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ConsumePrepaidCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdjustWalletBalance">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/AdjustWalletBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsByRecipientServiceId">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftsByRecipientServiceId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsBySenderServiceId">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftsBySenderServiceId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftItems">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcceptGift">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/AcceptGift" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSupportCase">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateSupportCase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePrepaidCard">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ValidatePrepaidCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateService">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ActivateService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSlave">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ActivateSlave" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSubscription">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/UpgradeSubscription" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubscription">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/AddSubscription" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClaimTVE">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ClaimTVE" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResendTVEActivationCode">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ResendTVEActivationCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateCreditCard">
+      <soap:operation soapAction="http://secured.netsuite2.abs-cbni.com/ValidateCreditCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServicePhoenixSoap12" type="tns:ServicePhoenixSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TestConnectivity">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/TestConnectivity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/RegisterSubscriber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterSubscriber2">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/RegisterSubscriber2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmartPitCardListByCustomerId">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetSmartPitCardListByCustomerId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnrollSmartPitCard">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/EnrollSmartPitCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSubscriber">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/UpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberInfo">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetSubscriberInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRateByCurrency">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetExchangeRateByCurrency" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExchangeRates">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetExchangeRates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPriceInLocalCurrency">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetPriceInLocalCurrency" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllItems">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetAllItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetItemList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemById">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetItemById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWalletInfo">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetWalletInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder_Old">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrder_Old" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrder">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment_Old">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringEnrollment_Old" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringEnrollment">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringEnrollment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment_Old">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringPayment_Old" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderRecurringPayment">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderRecurringPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelRecurringPayment">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CancelRecurringPayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial_Old">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderFreeTrial_Old" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrderFreeTrial">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateOrderFreeTrial" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad_Old">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateWalletLoad_Old" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateWalletLoad">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateWalletLoad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsumePrepaidCard">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ConsumePrepaidCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AdjustWalletBalance">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/AdjustWalletBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsByRecipientServiceId">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftsByRecipientServiceId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftsBySenderServiceId">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftsBySenderServiceId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGiftItems">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/GetGiftItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AcceptGift">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/AcceptGift" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateSupportCase">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/CreateSupportCase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidatePrepaidCard">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ValidatePrepaidCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateService">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ActivateService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateSlave">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ActivateSlave" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpgradeSubscription">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/UpgradeSubscription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSubscription">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/AddSubscription" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClaimTVE">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ClaimTVE" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResendTVEActivationCode">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ResendTVEActivationCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateCreditCard">
+      <soap12:operation soapAction="http://secured.netsuite2.abs-cbni.com/ValidateCreditCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServicePhoenix">
+    <wsdl:port name="ServicePhoenixSoap" binding="tns:ServicePhoenixSoap">
+      <soap:address location="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServicePhoenixSoap12" binding="tns:ServicePhoenixSoap12">
+      <soap12:address location="https://secured.netsuite.abs-cbni.com/interfacephoenixps/servicephoenix.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

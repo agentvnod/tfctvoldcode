@@ -1,0 +1,155 @@
+body
+{
+    font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    border: 0px; /*test background color only*/
+    background-color: #0b519a;
+}
+
+#main_container
+{
+    width: 100%;
+}
+
+.left
+{
+    float: left;
+}
+
+#body_container
+{
+    margin: 0 auto;
+    width: 974px;
+    margin-top: 20px;
+    line-height: 150%;
+}
+
+#topContainer
+{
+    display: inline-block;
+    width: 859px;
+}
+
+#bottomContainer
+{
+    width: 100%;
+    margin-top: 10px;
+}
+
+#bottomWrap
+{
+    background-color: #5583b1;
+    display: inline-block;
+    padding: 13px;
+    width: 916px;
+}
+
+#gopremium
+{
+    background: url(images/package/gopremium/go-prem-header.jpg?width=974) no-repeat;
+    width: 940px;
+    height: 329px;
+    position: relative;
+    left: 16px;
+}
+
+#subscription
+{
+    display: inline-block;
+    background: url(images/package/gopremium/subscription1.1.jpg?width=420) no-repeat;
+    width: 420px;
+    height: 202px;
+    margin-left: 20px;
+}
+
+#alacarte
+{
+    display: inline-block;
+    background: url(images/package/gopremium/alacarte1.1.jpg?width=420) no-repeat;
+    width: 420px;
+    height: 202px;
+    margin-left: 35px;
+}
+
+#gopremiumInfoContainer
+{
+    width: 300px;
+    display: inline-block;
+    margin-top: 95px;
+    margin-left: 95px;
+}
+
+#gopremiumInfo
+{
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 250px;
+    border-left: #FFFFFF 3px solid;
+    padding-left: 15px;
+    text-decoration: none;
+}
+
+#subscriptionInfo
+{
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 250px;
+    border-left: #FFFFFF 3px solid;
+    padding-left: 15px;
+    margin-left: 25px;
+    margin-top: 60px;
+}
+
+#subscriptionPriceInfo
+{
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    width: 250px;
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+#alacarteInfo
+{
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 220px;
+    border-left: #FFFFFF 3px solid;
+    padding-left: 15px;
+    margin-left: 25px;
+    margin-top: 60px;
+    text-decoration: none;
+}
+
+#alacartePriceInfo
+{
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    width: 250px;
+    margin-left: 25px;
+    margin-top: 5px;
+}
+#bottomWrap a
+{
+    text-decoration: none;
+}
+
+.gp-subscribe
+{
+    display: block;
+    width: 353px;
+    height: 50px;
+    background: url('images/package/gopremium/gp-subscribe.1.png') bottom;
+    text-indent: -99999px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.gp-subscribe:hover
+{
+    background-position: 0 0;
+}
+

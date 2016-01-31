@@ -1,0 +1,371 @@
+﻿@model IPTV2_Model.Episode
+@{
+    ViewBag.Title = String.Format("{0} - TFC.tv", Model.EpisodeName);
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    ViewDataDictionary dictionary = null;
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+
+    if (MyUtility.isUserLoggedIn())
+    {
+        dictionary = new ViewDataDictionary();
+        dictionary.Add(new KeyValuePair<string, object>("hasLoved", (bool)ViewBag.Loved));
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+        dictionary.Add(new KeyValuePair<string, object>("userData", userData));
+    }
+
+    string privacy = MyUtility.GetActivityFeedPrivacy(userData);
+    string scope = MyUtility.GetActivityFeedScope(userData);
+
+    var externalShare = userData.IsExternalSharingEnabled.Contains("true") ? "true" : "false";
+    var internalShare = userData.IsInternalSharingEnabled.Contains("true") ? "true" : "false";
+
+    var isLoggedIn = User.Identity.IsAuthenticated.ToString().ToLower();
+    var streamID = "Episode_" + Model.EpisodeId;
+    var categoryID = "Comments";
+    var cid = Model.EpisodeCode;
+
+    var show = (IPTV2_Model.Show)ViewBag.Show;
+
+    string trackingLabel = String.Format("{0}|{1}|{2}|{3}|{4}|{5}", Model.EpisodeId, show.Description, Model.DateAired.Value.ToString("MMMM d, yyyy"), ViewBag.CategoryType, ViewBag.EmailAddress, Request.GetUserHostAddressFromCloudflare());
+
+}
+<br />
+<br />
+<div id="mainBody">
+    <form id="form1" name="form1" method="post" action="#">
+    <div class="transparentBg">
+        <div class="breakStandard">
+        </div>
+        <!-- click tayo header -->
+        <div id="clickLogo">
+            @Html.ImageBuilder(Url, "clicktayo/click.png", new { title = Model.EpisodeName, alt = Model.EpisodeName })</div>
+        <!-- Video and Menu -->
+        <div id="videoPlayerMenu">
+            <div id="videoPlayer">
+                <div id="videoEmbed">
+                    <div id="playerContainer" style="width: 540px; height: 406px;">
+                    </div>
+                </div>
+                <div id="videoJoin">
+                    <div style="margin-top: 15px; font-weight: bolder; padding: 10px; color: #FFF; font-size: 16px;
+                        text-align: center">
+                        Magpasikat sa buong mundo by starring in your own version of the Click Tayo! Music
+                        Video for a chance to win a Samsung Galaxy Note 2!</div>
+                    <div style="padding: 10px; text-align: center">
+                        @Html.ImageBuilder(Url, "clicktayo/Popup-button.png", new { title = "Join Now!", alt = "Join Now!" })</div>
+                </div>
+            </div>
+            <div id="videoMenu">
+                <div id="videoCurrent">
+                    <div id="videoCurrentInfo">
+                        <div class="videoTitle">@Model.EpisodeName
+                        </div>
+                        <div class="breakStandard">
+                        </div>
+                        <div class="videoDate">
+                            Posted on @Model.DateAired.Value.ToString("MMMM d, yyyy")
+                        </div>
+                        <div class="breakSmall">
+                        </div>
+                        <div class="videoDescription">@Model.Description
+                        </div>
+                        <div class="breakLarge">
+                        </div>
+                        <div>
+                            @Html.Partial("_SharePartial", Model) @Html.Partial("_LovePartial", Model, dictionary)
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.ImageBuilder(Url, "clicktayo/videoDivider.png", new { alt = "" })
+                </div>
+                <div class="review-selector">
+                    <a href="#" id="write-review">Post a comment</a> | <a href="#" id="show-review" class="active">
+                        See comments</a>
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div class="show-reviews">
+                    <div id="commentDiv">
+                        <div class="itemListBody">
+                            <div class="wrapper">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="write-a-review hideElement">
+                    <div id="result" class="hideElement">
+                    </div>
+                    <div class="breakStandard">
+                    </div>
+                    <div>
+                        <textarea rows="4" maxlength="5000" id="tComment" name="tComment" style="width: 340px;
+                            height: 170px;"></textarea></div>
+                    <div class="breakStandard">
+                    </div>
+                    <div class="floatRight">
+                        <input id="cmdSubmit" type="submit" name="submit" value="Post" /></div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div id="videoOthers">
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+        <div id="user-comments">
+            <div class="genericHeader">
+                <div id="genericHeader_header">
+                    <div id="headerTitle" class="sectionHeaderTitle">
+                        User Comments
+                    </div>
+                    <div id="headerCategoryName" class="sectionHeader">
+                    </div>
+                </div>
+            </div>
+            <div class="itemListBody">
+                <div class="wrapper">
+                </div>
+            </div>
+            <div id="load-more" class="hideElement">
+                load more comments</div>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="breakLarge">
+        </div>
+    </div>
+    </form>
+</div>
+@section StyleSheet {
+    @Html.CssBuilder(Url, "comment.css")
+    @Html.CssBuilder(Url, "clicktayo.css")
+    <meta property="og:url" content="@HttpContext.Current.Request.Url.AbsoluteUri"/>
+    <meta property="og:title" content="@Model.EpisodeName"/>
+    <meta property="og:description" content="@Model.Synopsis"/>
+    <meta property="og:type" content="Video" />
+    <meta property="og:image" content="@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo" />
+    <meta property="og:site_name" content="TFC.tv" />
+}
+}
+@section JScriptBottom{
+    @Html.JsBuilder(Url, "jquery.cycle.all.js")
+    @Html.JsBuilder(Url, "jquery.timeago.js")
+    @Html.JsBuilder(Url, "commentsGenerator.js")    
+    @Html.JsBuilder(Url, "jquery.validate.min.js")
+    <script type="text/javascript">
+        var socializePluginUrl = '@Html.ContentBuilder(Url, "scripts/socialize.1.js")';        
+    </script>
+    <script type="text/javascript">
+        var nextTS = '';
+        var hasMore = true;
+        var limit = 5;
+        var paginated = '';
+        var commentCount = 0;
+        var loadMore = $('#load-more');
+        function toggleLoadMore() {
+            if (hasMore)
+                loadMore.show();
+            else
+                loadMore.hide();
+        }
+        function loadComments(paginated) {
+            $.ajax({
+                url: paginated.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        //loadMore.addClass('activate').text('Loading...');
+                        loadMore.text('loading comments...');
+                    }
+                    , success: function (data) {
+                        if (data.commentCount > 0) {
+                            var list = new comments({ json_str: data.comments, container: paginated.container, append: paginated.append }).paginated();
+                            nextTS = data.next;
+                            hasMore = data.hasMore;
+                            loadMore.text('load more comments');
+                            toggleLoadMore();
+                        }
+                        else {
+                            $('#' + paginated.container + ' .itemListBody .wrapper').addClass('white').addClass('padLeftLarge');
+                            $('#' + paginated.container + ' .itemListBody .wrapper').html('<br />Be the first to comment on this video!');
+                        }
+                    }
+                    , complete: function () {
+                        //loadMore.removeClass('activate');
+                    }
+            });
+        }
+
+        function loadCommentTicker() {
+            var commentsTicker = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&callId=" + Math.random(), container: "commentDiv", itemperslide: 2 };
+            $.ajax({
+                url: commentsTicker.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                    }
+                    , success: function (data) {
+                        commentCount = data.commentCount;
+                        if (data.commentCount > 0)
+                            var list = new comments({ json_str: data.comments, itemperslide: commentsTicker.itemperslide, container: commentsTicker.container }).listing();
+                        else {
+                            $('#' + commentsTicker.container + ' .itemListBody .wrapper').addClass('white');
+                            $('#' + commentsTicker.container + ' .itemListBody .wrapper').html('Be the first to comment on this video!');
+                        }
+                    }
+            });
+        }
+        $(document).ready(function () {
+            loadCommentTicker();
+            paginated = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&limit=" + limit + "&start=" + nextTS, container: "user-comments", append: false };
+            loadComments(paginated);
+
+            $('#load-more').click(function () {
+                paginated = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&limit=" + limit + "&start=" + nextTS, container: "user-comments", append: true };
+                loadComments(paginated);
+                return false;
+            });
+
+            if (commentCount > 0) {
+                $('#commentDiv').hover(function () {
+                    $('#commentDiv .itemListBody .wrapper').cycle('pause');
+                }, function () {
+                    $('#commentDiv .itemListBody .wrapper').cycle('resume');
+                });
+            }
+            $('#write-review').click(function () { $('.show-reviews').hide(); $('.write-a-review').show(); $('#write-review').addClass('active'); $('#show-review').removeClass('active'); return false; });
+            $('#show-review').click(function () { $('.show-reviews').show(); $('.write-a-review').hide(); $('#show-review').addClass('active'); $('#write-review').removeClass('active'); return false; });
+        });        
+    </script>
+    <script type="text/javascript">
+        var userActionURL = '@HttpContext.Current.Request.Url.AbsoluteUri';    
+        var playerContainer = 'playerContainer';        
+        var label = '@trackingLabel';
+        var eid = @Model.EpisodeId;
+        var sid = @show.CategoryId;
+        var flow = {}; var config = {};               
+    </script>
+    <script type="text/javascript">
+        var actionParams = {
+            description: '@Ajax.JavaScriptStringEncode(Model.Synopsis)',
+            title: '@show.Description - @Model.DateAired.Value.ToString("MMMM d, yyyy")',
+            url: userActionURL,
+            actionname: "Read more",
+            subtitle: '@GlobalConfig.baseUrl',
+            src: '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo'
+        };
+        var action;
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getScript(socializePluginUrl).done(function () {
+                action = tfc.Socialize.CreateUserAction(actionParams);
+            });
+            
+            var result = $('#result');
+            var button = $('#cmdSubmit');
+            if (!@isLoggedIn) {
+                result.empty();
+                result.addClass('errorText').addClass('smallRoundCorners');
+                result.html('Please login first to post a comment.').show();
+                button.attr('disabled', 'disabled');
+            }
+
+            var validator = $('form#form1').validate({
+                rules: {
+                    tComment: {
+                        required: true
+                    }
+                },
+                messages: {
+                    tComment: {
+                        required: 'Oops! It seems that you haven\'t entered any comment.'
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    result.empty();
+                    result.addClass('errorText').addClass('smallRoundCorners');
+                    result.html(error.html()).show();
+                }
+            });
+
+            function PublishUserAction(external,internal,commentText) {
+                $.getScript(socializePluginUrl).done(function () {
+                    //External
+                    action.actorUID = '@User.Identity.Name';
+                    action.userMessage = commentText;
+                    var externalParams = { UID: '@User.Identity.Name', userAction: action, enabledProviders: providers, cid: '@cid', scope: 'external' };
+                    if(external)
+                        tfc.Socialize.PublishUserAction(externalParams);                                
+                    //Internal
+                    action.description = 'has posted a comment: "' + commentText + '"';
+                    action.userMessage = '';
+                    var internalParams = { UID: '@User.Identity.Name', userAction: action, cid: '@cid', scope: 'internal', privacy: '@privacy', feedID: 'UserAction' };
+                    if(internal)
+                        tfc.Socialize.PublishUserAction(internalParams);
+                });
+            }
+
+            function postProcess(response) {
+                if (response.errorCode != 0) {
+                    result.empty();
+                    result.addClass('errorText').addClass('smallRoundCorners');
+                    result.html(response.errorMessage).show();                    
+                }
+                else {                    
+                    result.addClass('highlightText').addClass('smallRoundCorners');
+                    result.html('Thank you! Your comment has been posted.').show();
+                    paginated = { url: "/Ajax/GetComments?categoryID=@categoryID&streamID=@streamID&limit=" + limit + '&callid=' + Math.random(), container: "user-comments", append: false };
+                    loadCommentTicker();
+                    loadComments(paginated);                            
+                    PublishUserAction(@externalShare, @internalShare, response.comment.commentText);
+                    $('#tComment').val('');
+                }
+                button.removeAttr('disabled');
+                button.val('Post');
+            }
+
+            var commentParams = { categoryID: '@categoryID', streamID: '@streamID', userAction: null, uid: '@User.Identity.Name', commentText: null, cid: '@cid', callback: postProcess };
+            $('form#form1').submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                var returnObj = {};
+                if (validator.numberOfInvalids() == 0) {                    
+                        result.empty().hide();
+                        commentParams.commentText = $('#tComment').val();
+                        gigya.comments.postComment(commentParams);
+                        button.attr('disabled', 'disabled');
+                        button.val('Please wait...');                    
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var uri = '/Promo/GetAsset';
+            $.ajax({
+                url: uri
+                    , dataType: 'json'
+                    , success: function (data) {
+                        if (data.errorCode == 0) {
+                            $.getScript(playerJS).done(function () {
+                                var akObj = { url: Afp };
+                                var config = { container: playerContainer, playerSWF: playerSWF, expressInstallSWF: expressInstallSWF, playButtonURL: playButtonURL, logoURL: logoURL, controllerSWF: controllerSWF, apObj: akObj, scaling: 'fit', url: data.data.Url, categoryType: 'ClickTayoMV', label: label, sid: sid, eid: eid, isClip: false, trackerSWF: trackerSWF, trackerID: trackerID, userActionURL: userActionURL, uri: uri, time: true, ipadUrl: data.data.Url, allowShare: true, analyticsSWF: analyticsSWF };
+                                flow.Player.Create(config);
+                            });
+                        }
+                    }
+            });
+        }); 
+    </script>
+}

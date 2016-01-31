@@ -1,0 +1,30 @@
+﻿@model StreamSenseObj
+@{
+    var ns_st_ep = Model.program;
+    if (Model.dateaired != null && Model.IsEpisode)
+    {
+        ns_st_ep = ((DateTime)Model.dateaired).ToString("yyyyMMdd");
+    }
+
+}
+@{if (GlobalConfig.StreamSenseEnabled)
+{
+    @Html.JsBuilder(Url, "streamsense.4.1505.18.min.js")
+    <script type="text/javascript">
+        var streamComscore = new ns_.StreamSense({}, 'http://b.scorecardresearch.com/p?c1=2&c2=7385337&ns_site=tfc-tv');
+        if(typeof streamComscore != 'undefined'){
+            var clips = [{
+                ns_st_cn : 1
+                ,ns_st_ci : @Model.id
+                ,ns_st_pr:  "@Model.program"
+                ,ns_st_ep: "@ns_st_ep"
+                ,ns_st_pn : 1
+                ,ns_st_tp : 1
+                ,ns_st_cl : 0
+            }];
+            streamComscore.setPlaylist({ ns_st_pl: "@Model.playlist" });
+            streamComscore.setClip(clips[0]);
+            //streamComscore.notify(ns_.StreamSense.PlayerEvents.PLAY, {}, ((typeof this.getTime != 'undefined') ? this.getTime:0));
+        }
+    </script>
+}}

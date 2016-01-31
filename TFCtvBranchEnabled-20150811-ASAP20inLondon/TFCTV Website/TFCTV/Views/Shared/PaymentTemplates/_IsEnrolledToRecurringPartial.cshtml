@@ -1,0 +1,13 @@
+﻿@model TFCTV.Helpers.RecurringBillingContainer
+<div style="display: block">
+    <p>
+        <strong>You are currently automatically renewing this subscription product through credit
+            card.</strong></p>
+    <p>
+        Your current subscription will expire on <strong>@Model.entitlement.EndDate.ToString("MMMM d, yyyy")</strong>
+        You have until <strong>@Model.entitlement.EndDate.AddDays(-4).ToString("MMMM d, yyyy")</strong>
+        to discontinue the automatic renewal for the next subscription duration.</p>
+    <p>
+        To remove automatic renewal for this subscription product, visit your Edit Your
+        Profile page.</p>
+</div>

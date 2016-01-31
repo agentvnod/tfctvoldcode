@@ -1,0 +1,45 @@
+﻿@model List<HomepageFeatureItem>
+@{
+    int id = ViewBag.id;
+    int pageSize = ViewBag.pageSize;
+    int page = ViewBag.page;
+}
+<div class="row v_list team_video">
+    <!-- team video -->
+    @{if (Model != null)
+      {
+          if (Model.Count() > 0)
+          {
+              foreach (var item in Model)
+              { 
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 movie">
+            <!-- video  -->
+            <div class="row">
+                <div class="col-xs-12 left">
+                    <img class="img100" src="@item.imgurl" alt="@item.name">
+                </div>
+                <div class="col-xs-12 vright">
+                    <h3>
+                        @item.name</h3>
+                    <p>
+                        Date Aired: @item.airdate</p>
+                </div>
+            </div>
+        </div>
+              }
+          }
+      }}
+    @{if (Model.Count() > 0)
+      { 
+        <div class="col-xs-12">
+            <div class="sec_footer">
+                <!-- load more -->
+                <a href="@Url.Action("LoadMoreGames", new { id = id, page = page, pageSize = pageSize })" class="loadMore">
+                    load more<br>
+                    @Html.ImageBuilder(Url, "ux/load_more.png", new { alt = "loadmore" })
+                </a>
+            </div>
+        </div>        
+      }
+    }
+</div>

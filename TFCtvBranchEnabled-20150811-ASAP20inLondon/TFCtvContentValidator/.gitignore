@@ -1,0 +1,13 @@
+# git ignore file
+*.zip
+*.bak
+*.xlsx
+*.txt
+
+
+# Build Folders
+bin
+obj
+csx
+Profiles
+Microsoft.WindowsAzure.Caching

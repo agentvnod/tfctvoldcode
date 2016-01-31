@@ -1,0 +1,41 @@
+﻿@model  List<EpisodeObject>
+@{    
+    var id = Url.RequestContext.RouteData.Values["id"];
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      { 
+    <div class="episode-list">
+        @foreach (var item in Model)
+        {
+            string href = String.Format("/Episode/Details/{0}/{1}", item.EpisodeId, item.slug);
+            <div>
+                <div class="e-img">
+                    <a href="@href">
+                        <img width="151" height="98" alt="" border="0" src="@Html.Raw(item.ImgUrl)" title="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" alt="@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))" /></a></div>
+                <div class="e-body">
+                    <div class="e-title">
+                        <a href="@href">@Html.Raw(String.Format("{0} - {1}", item.Show, item.DateAiredStr))</a></div>
+                    <div class="e-desc">@Html.Raw(item.Synopsis.Ellipsis(80))</div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        }
+        @Html.ActionLink("load past episodes?", "GetMoreEpisodes", new { id = id, page = 1 }, new { @class = Model.Count() < GlobalConfig.NumberOfItemsInEpisodeList ? "e-loadmore e-hidden" : "e-loadmore" })
+    </div>
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.episode-list').jscroll({                
+                loadingHtml: '<small class="e-loader">fetch more episodes...</small>',
+                nextSelector: 'a.e-loadmore:last'
+            });
+        });
+    </script> 
+      }
+      else { }
+  }
+  else { }
+}

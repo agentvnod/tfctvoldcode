@@ -1,0 +1,250 @@
+﻿@model IPTV2_Model.Celebrity
+@{
+
+    ViewBag.Title = String.Format("{0} - TFC.tv", Model.FullName);
+    Layout = "~/Views/Shared/_UXUpdate.cshtml";
+
+    /* Ratings&Reviews Metadata */
+    string streamID = String.Format("Celebrity_{0}", Model.CelebrityId);
+    string categoryID = "Celebrities";
+
+    /* ShareBar Metadata */
+    string title = String.Format("Learn more about the {0} on TFC.tv", Model.FullName);
+    string href = new Uri(Request.Url.AbsoluteUri).GetLeftPart(UriPartial.Path);
+    string img = Model.ImageUrl;
+    string description = Model.Description.Ellipsis(160);
+
+    /* Meta description */
+    string metaDescription = String.Format("{0}, {1}", title, Model.Description);
+
+    /* Open Graph */
+    string open_graph_img = img; //will add sns later
+    string og_type = "profile";
+
+    var descfull = Model.Description;
+    if (String.Compare(descfull, "No description yet.", true) != 0)
+    {
+        descfull = "<p>" + descfull.Replace("|", "</p><p>") + "</p>";
+        descfull = descfull.Replace(":", "<br />");
+    }
+
+    string[] desc = descfull.Split('$');
+    if (desc != null)
+    {
+        description = desc[0];
+        metaDescription = String.Format("{0}, {1}", title, desc[0]);
+    }
+
+    /* ShareBar Obj */
+    var ShareObj = new GigyaShareObj()
+    {
+        title = title,
+        href = href,
+        img = img,
+        description = Model.FullName,
+        containerId = "shareDiv",
+        elementType = "celebrity",
+        id = Model.CelebrityId
+    };
+
+    /* CommentsUI Obj */
+    var CommentsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "commentsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    /* Reactions Obj */
+    var ReactionsUIObj = new GigyaWidgetUIObj()
+    {
+        streamID = streamID,
+        categoryID = categoryID,
+        containerId = "reactionsDiv",
+        ShareObj = ShareObj
+
+    };
+
+    ViewBag.DaxName = String.Format("tfc-tv:uaap:teams:{0}", MyUtility.GetDaxSlug(Model.FullName));
+
+}
+<!-- uaap team page body  -->
+<section class="page_pagebody uaap_main">
+    <div class="container">
+        <div class="row channel_header">
+            <!-- page header -->
+           @Html.ImageBuilder(Url, String.Format("banners/uaap_{0}.jpg", GlobalConfig.UAAPMainCategoryId.ToString()), new { @class = "img100", alt = "" })
+        </div>
+        <!-- END page header -->
+        <div class="row subnav">
+            <!-- sub nav -->
+            <ul>
+                <li><a href="@Url.Action("Index", "UAAP")">MAIN PAGE</a></li>
+                <li><a href="@Url.Action("Live", "UAAP")">LIVE STREAM</a></li>
+                <li class="active"><a href="@Url.Action("Teams", "UAAP")">THE TEAMS</a></li>
+            </ul>
+        </div>
+        <!-- END sub nav -->
+        <div class="row channel_subheader">
+            <!-- page sub header -->
+            <img class="img100" src="@Model.ZodiacSign" alt="@Model.FullName">
+        </div>
+        <!-- END page sub header -->
+        <div class="row team_profile">
+            <!-- team profile [1st bloke] -->
+            <div class="col-xs-3">
+                <!-- profile img -->
+                <img alt="@Model.FullName" src="@Model.ImageUrl" class="img100">
+            </div>
+            <!-- END profile img -->
+            <div class="col-xs-9">
+                <!-- profile right side -->
+                <h2 class="section_title">
+                    @Model.FullName
+                </h2>
+                <div class="love_bar clearfix">
+                    <!-- lave bar -->
+                    <div id="@ReactionsUIObj.containerId" class="love_button">
+                    </div>
+                    <div id="@ShareObj.containerId" class="social">
+                    </div>
+                </div>
+                <!-- END lave bar -->
+                <p>
+                    @(new HtmlString(desc[0]))
+                </p>
+                <p>
+                    In Elimination: @Model.Height
+                </p>
+                <p>
+                    @Model.Weight
+                </p>
+                <p>
+                    @{if (!String.IsNullOrEmpty(Model.ChineseYear))
+                    {
+                        <a href="#see_lp" data-toggle="modal">See List of Players</a>
+                    }
+                    }
+                    @{if (!String.IsNullOrEmpty(Model.Birthplace))
+                    {
+                        <a href="#game_s" data-toggle="modal">Game Schedules</a>
+                    }
+                    }
+                </p>
+            </div>
+            <!-- END profile right side -->
+        </div>
+        <!-- END team profile [1st bloke] -->
+        <div class="sec_header">
+            <!-- team video sec [2nd bloke] -->
+            <h2 class="section_title">
+                @String.Format("{0} Games", Model.FullName)
+            </h2>
+        </div>
+        @Html.Action("GetTeamGames", "UAAP", new { id = Model.CelebrityId, pageSize = GlobalConfig.FeatureItemsPageSize, page = 0 })
+        <!-- END team video -->
+        <!-- END team video sec [2nd bloke] -->
+        <div class="row team_bottom">
+            <!-- team bottom sec [3rd bloke] -->
+            <div class="col-md-8 col-sm-7 col-xs-12">
+                <!-- 3rd left -->
+                <!-- Review section -->
+                <div class="reviewsec">
+                    <h3>
+                        @String.Format("{0} - COMMENTS", Model.FullName)
+                    </h3>
+                    <br />
+                    <div class="reviewsec_inner" id="@CommentsUIObj.containerId">
+                    </div>
+                    <!-- end duplicate -->
+                </div>
+                <!-- end Review section -->
+            </div>
+            <!-- END 3rd left -->
+            <div class="col-md-4 col-sm-5 col-xs-12 right">
+                <!-- 3rd right -->
+                <h3>
+                    VIEW OTHER TEAMS
+                </h3>
+                @Html.Action("GetFeaturedTeams", "UAAP", new { partialViewName = "ListTeams" })
+            </div>
+            <!-- end 3rd right-- >
+            </div>  <!-- END team bottom sec [3rd bloke] -->
+        </div>
+        <!-- end container -->
+    </div>
+</section>
+<!-- END uaap team page body  -->
+<!-- image popup box [for "See List of Players"] -->
+@{if (!String.IsNullOrEmpty(Model.ChineseYear))
+{
+    <div class="modal fade ib_img_popbox" id="see_lp" tabindex="-1" role="dialog" aria-labelledby="see_lp_Label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <img src="@Model.ChineseYear" class="img100" alt="@Model.FullName">
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+}
+}
+<!-- END image popup box [for "See List of Players"] -->
+<!-- image popup box [for "Game Schedules"] -->
+@{if (!String.IsNullOrEmpty(Model.Birthplace))
+{
+    <div class="modal fade ib_img_popbox" id="game_s" tabindex="-1" role="dialog" aria-labelledby="game_s_Label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- box body -->
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        X
+                    </button>
+                    <p>@Html.Raw(Model.Birthplace)</p>
+                </div>
+                <!-- END box body -->
+            </div>
+        </div>
+    </div>
+}
+}
+<!-- END image popup box [for "Game Schedules"] -->
+@section JScriptBottom {
+    @Html.JsBuilder(Url, "jquery.jscroll.min.js")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.team_video').jscroll({
+                autoTrigger: false,
+                nextSelector: 'a.loadMore:last',
+                loadingHtml: '<div class="sec_footer jscroll_sec_footer">loading...<br><img alt="Load more episodes" border="0" src="/Content/images/ux/load_more.png"></div>'
+            });
+        });
+    </script>
+    @Html.Partial("_UXShareUI", ShareObj)
+    @Html.Partial("_UXCommentsUI", CommentsUIObj)
+    @Html.Partial("_UXReactionsUI", ReactionsUIObj)
+}
+@section MetaTags {
+    <meta name="fragment" content="!">
+    <meta name="description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <link rel="canonical" href="@href" />
+    <link rel="image_src" href="@img">
+}
+@section OpenGraph {
+    <meta property="og:url" content="@href" />
+    <meta property="og:site_name" content="TFC.tv" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@HttpUtility.HtmlEncode(metaDescription)" />
+    <meta property="og:type" content="@og_type" />
+    <meta property="og:image" content="@open_graph_img" />
+}

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Multiple Login Detected - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+
+    bool CallGigyaLogout = Convert.ToBoolean(ViewBag.CallGigyaLogout);
+}
+<div id="mainBody">
+    <br />
+    <br />
+    <div class="transparentBg floatLeft">
+        <div class="genericHeader">
+            <div id="genericHeader_header">
+                <div id="headerTitle" class="left sectionHeaderTitle">
+                    Kapamilya, you have been signed out of your account.</div>
+                <div id="headerCategoryName" class="sectionHeader">
+                </div>
+            </div>
+        </div>
+        <div class="breakStandard">
+        </div>
+        <div class="padLeftLarge">
+            <div class="floatLeft white" style="width: 450px; font-size: 16px; line-height: 24px;">
+                <p>
+                    Maaring ito ay dahil naka-sign in na ang iyong account gamit ang ibang internet
+                    browser o sa ibang gadget (ie. smartphone, tablet, ibang computer, etc.). Kung nais
+                    buksan ang iyong account gamit muli ang internet browser at device na ito, i-click
+                    lamang ang button sa ilalim.
+                </p>
+                <p>
+                    Kung meron kayong karagdagang tanong, bumisita sa<br />
+                    <a href="/Help" class="light-blue">TFC.tv Help Center.</a>
+                </p>
+                <div class="breakLarge">
+                </div>
+                <div>
+                    @Html.ImageBuilder(Url, "sign-in-again.jpg", new { width = 200, id = "sign-in-again" })
+                </div>
+            </div>
+            <div style="position: relative; left: 80px; width: 405px; float: left;">@Html.ImageBuilder(Url, "multiple-users.png", new { width = 300, height = 300 })</div>
+        </div>
+        <div class="breakStandard clear">
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "category.css")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        $('#sign-in-again').click(function () {
+            tfc.Social.OnSiteLogin();
+            return false;
+        });     
+    </script>
+    @{if (CallGigyaLogout)
+      {
+        <script type="text/javascript">
+            $(document).ready(function () {                
+                gigya.socialize.logout({ callback: function (response) {  } });
+            });          
+        </script>
+      }
+    }
+}

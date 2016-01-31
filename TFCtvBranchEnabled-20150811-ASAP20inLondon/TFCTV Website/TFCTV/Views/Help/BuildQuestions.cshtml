@@ -1,0 +1,51 @@
+﻿@model List<TFCTV.Models.HelpCenterQuestionModel>
+@{
+    int id = 0;
+    bool IsActive = false;
+    if (ViewBag.id != null)
+    {
+        id = ViewBag.id;
+    }
+    if (ViewBag.IsActive != null)
+    {
+        IsActive = ViewBag.IsActive;
+    }
+}
+@{if (Model != null)
+  {
+      if (Model.Count() > 0)
+      {
+    <div class="tab-pane fade in @String.Format("{0}", IsActive ? "active" : String.Empty)" id="@String.Format("a{0}", id)">
+        <!-- inner t 1 -->
+        <div class="panel-group help_acc" id="helpi_accordion">
+            <!-- accordion container -->
+            @{foreach (var item in Model)
+              {                  
+                <div class="panel panel-default">
+                    <!-- panel 1 -->
+                    <div class="panel-heading">
+                        <!-- panel head -->
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#helpi_accordion" href="@String.Format("#faq{0}", item.id)">@item.Q
+                            </a>
+                        </h4>
+                    </div>
+                    <!-- END panel head -->
+                    <div id="@String.Format("faq{0}", item.id)" class="panel-collapse collapse">
+                        <!-- panel body -->
+                        <div class="panel-body">
+                            <p>
+                                @Html.Raw(HttpUtility.HtmlDecode(item.Answer))</p>
+                        </div>
+                    </div>
+                    <!-- END panel body -->
+                </div>  <!-- END panel 1 -->
+              }
+            }
+        </div>
+    </div>
+
+      }
+  }
+  
+}

@@ -1,0 +1,164 @@
+﻿/* File Created: January 28, 2012 */
+
+#registerContainer
+{
+    color: #fff;
+}
+
+.formSubHeaders
+{
+    border-bottom: 1px dotted #eee;
+    margin-bottom: 10px;
+    width: 90%;
+    font-size: 14px;
+    font-weight: bold;
+    color: #49A4FF;
+}
+
+.textbox
+{
+    border: 0px;
+    width: 180px;
+    font-size: 12px;
+}
+
+.editor-label
+{
+    width: 120px;
+}
+
+#registerSocialConnection
+{
+    padding-top: 10px;
+    margin: 0px auto;
+}
+
+.submit-row
+{
+    margin-left: 120px;
+}
+
+#registrationContainer a
+{
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+#registrationContainer a:hover
+{
+    text-decoration: underline;
+}
+
+.register-spanner
+{
+    width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 400px;
+}
+
+.register-spanner img
+{
+    margin: auto;
+    margin-top: 15%;
+    padding-bottom: 5px;
+}
+
+.register-container-center-span
+{
+    margin: 0px auto;
+    width: 100px;
+}
+
+#registerLeftPane
+{
+    width: 350px;
+}
+
+.social-margin
+{
+    margin-bottom: -10px;
+    margin-top: 10px;
+}
+.or-div
+{
+    margin-top: 160px;
+    height: auto;
+    width: 70px;
+}
+
+.or-text
+{
+    font-size: 25px;
+    font-weight: bold;
+    padding-left: 18px;
+    color: #49a4ff;
+}
+
+#registerRightPane
+{
+    width: 470px;
+    margin-left: 30px;
+}
+
+#registerSocialConnection
+{
+    margin-left: -10px;
+}
+
+#freetrial
+{
+    display: none;
+    width: 650px;
+    height: 433px;
+    background: url('images/freetrial/freetrial_bg.png') no-repeat;
+}
+
+#cmsg
+{
+    font-weight: bold;
+    font-size: 14px;
+    padding-bottom: 25px;
+    text-align: center;
+    color: #fff;
+}
+
+.trial2-text
+{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    width: 480px;
+    color: #fff;
+    padding-top: 20px;
+}
+
+#tnc a
+{
+    color: #49A4FF;
+    text-decoration: none;
+}
+
+#tnc a:hover
+{
+    text-decoration: underline;
+}
+
+.or-topbar
+{
+    border-left: 1px dotted #fff;
+    margin-left: 31px;
+    margin-top: -120px;
+    height: 120px;
+    position: absolute;
+}
+
+.or-botbar
+{
+    border-left: 1px dotted #fff;
+    margin-left: 31px;
+    margin-top: 0px;
+    height: 120px;
+    position: absolute;
+}

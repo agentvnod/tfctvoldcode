@@ -1,0 +1,94 @@
+﻿#latestShows_bodyContainer
+{
+    height: inherit;
+    margin: 20px;
+}
+
+.showItem_preview
+{
+    float: left;
+    width: 180px;
+    padding-bottom: 5px;
+}
+.showItem_image
+{
+    height: 200px;
+}
+
+.showItem_info
+{
+    margin-top: 10px;
+    margin-left: 0px;
+    width: 150px;
+}
+
+.showItem_info .showTitle a
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+.showItem_info .showTitle a:hover
+{
+    text-decoration: underline;
+}
+
+.showItem_info .showAirdate
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    text-decoration: none;
+}
+
+.showItem_info .showCast
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    text-decoration: none;
+}
+
+.showItem_info .showCast a
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+.showItem_info .showCast a:hover
+{
+    text-decoration: underline;
+}
+#sort_container
+{
+    float: right;
+    color: White;
+    font-size: 11px;
+}
+.ht_265
+{
+    height: 265px;
+}
+.left
+{
+    float: left;
+}
+
+#sort_container a
+{
+    font-size: 11px;
+    color: #49a4ff;
+    text-decoration: none;
+}
+
+#sort_container a:hover
+{
+    text-decoration: underline;
+}

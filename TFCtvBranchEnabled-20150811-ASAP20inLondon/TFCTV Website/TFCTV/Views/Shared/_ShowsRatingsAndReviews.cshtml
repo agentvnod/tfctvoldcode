@@ -1,0 +1,185 @@
+﻿@model IPTV2_Model.Show
+@{    
+    TFCTV.Helpers.UserData userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(null);
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = new Guid(User.Identity.Name);
+        userData = TFCTV.Helpers.MyUtility.GetUserPrivacySetting(userId);
+    }
+    int attribActionId = (int)AnniversaryPromo.AnnivPromo_PostingREVIEW;
+    string attribDescription = String.Format("You commented on <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, Model.Description);
+    var streamID = String.Format("Show_{0}", Model.CategoryId);
+    var noCommentText = String.Format("There are no comments available for {0}", Model.Description);
+}
+<div class="breakLarge clear">
+</div>
+<div class="breakStandard">
+</div>
+<div class="reviews-comments-Header">
+    <h2 class="h2-comments-header">
+        @Html.Raw(String.Format("{0} - Ratings And Reviews", MyUtility.Ellipsis(Model.Description, 40)))</h2>
+</div>
+@{using (Html.BeginForm(String.Empty, String.Empty, FormMethod.Post, new { id = "naform1", style = "display: none;" }))
+  {                  
+    <div class="clear">@Html.AntiForgeryToken()</div>
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+  }
+
+  bool IsAjaxCrawlable = false;
+  if (ViewBag.IsAjaxCrawlable != null)
+  {
+      IsAjaxCrawlable = (bool)ViewBag.IsAjaxCrawlable;
+  }
+}
+<br />
+<div class="transparentBgs">
+    <div id="category-ratings-reviews">
+        <div id="commentsDiv">
+            @{if (IsAjaxCrawlable)
+              {
+                  try
+                  {
+                      var responseData = GigyaMethods.GetComments("Shows", streamID);
+                      if (responseData != null)
+                      {
+                          if (responseData.errorCode == 0)
+                          {
+                              if (responseData.commentCount > 0)
+                              {
+                @Html.Raw(responseData.comments)
+                              }
+                              else
+                              { 
+                <span>@noCommentText</span>
+                              }
+                          }
+                      }
+                  }
+                  catch (Exception) { }
+              }
+            }
+        </div>
+    </div>
+</div>
+<br />
+<script type='text/javascript'>           
+    var ratingsParams = {
+        categoryID: 'Shows',
+        streamID: '@streamID',
+        containerID: 'ratingDiv',
+        linkedCommentsUI: 'commentsDiv',
+        ratingTemplate: 'Average rating: $stars $addReviewButton'
+    }
+    gigya.services.socialize.showRatingUI(ratingsParams);                                                
+
+    $(".gig-rating-readReviewsLink,.gig-rating-writeYourReview").live("click", function () {
+        $('html,body').animate({ scrollTop: $("#commentsDiv").offset().top }, 'slow');
+        return false;
+    });
+                
+    function publishInternalUserAction(params) {
+        var actInternal = new gigya.services.socialize.UserAction();
+        actInternal.setLinkBack(location.href);
+        actInternal.setTitle('@Ajax.JavaScriptStringEncode(Model.Description)');                    
+        actInternal.setDescription('has posted a comment : "' + params.comment + '"');                    
+        actInternal.addMediaItem({ type: 'image', src: '@GlobalConfig.ShowImgPath@Model.CategoryId/@Model.ImagePoster', href: location.href });                    
+        actInternal.actorUID = '@User.Identity.Name';                    
+        var params = {
+            feedID: 'UserAction',
+            userAction: actInternal,
+            scope: 'internal',
+            privacy: 'public',
+            callback: publishInternalUserAction_callback
+        };
+        @{
+            if (userData != null)
+            {
+                if (userData.IsInternalSharingEnabled.Contains("true"))
+                {
+                <text>
+                gigya.services.socialize.publishUserAction(params);
+                </text>
+                }
+            }
+        }                    
+    }
+    function publishInternalUserAction_callback(response) {
+        if (response.errorCode != 0) {                    
+        }
+    }            
+</script>
+@{if (!IsAjaxCrawlable)
+  { 
+    <script type="text/javascript">
+        var act = new gigya.services.socialize.UserAction();
+        act.setLinkBack(location.href);
+        act.setTitle("Pinoy TV Shows on TFC.tv");
+        act.setSubtitle("tfc.tv");
+        act.addActionLink("Read More", location.href);
+        act.addMediaItem({ type: 'image', src: '@GlobalConfig.ShowImgPath@Model.CategoryId/@Model.ImagePoster', href: location.href });
+        act.setUserMessage("has posted a comment about @Ajax.JavaScriptStringEncode(Model.Description)");
+
+        var params = {
+            enabledProviders: '@GlobalConfig.SocialProvidersList',
+            userAction: act,
+            categoryID: 'Shows',
+            streamID: '@streamID',
+            containerID: 'commentsDiv',
+            userAction: act,
+            cid: '@Model.CategoryName',
+            width: 860,
+            useSiteLogin: true,
+            onLoad: onLoadHandler,
+            shortURLs: 'never',
+            onSiteLoginClicked: onSiteLoginHandler,
+            onCommentSubmitted: onCommentSubmittedHandler,
+            version: 2
+        }
+        gigya.comments.showCommentsUI(params);
+
+        function onLoadHandler(event) {
+            tfc.Social.OnRatingsAndReviews({ rated: '@ViewBag.Rated' });
+            changeRatingsAttribute();
+        }
+
+        function onSiteLoginHandler(event) {
+            tfc.Social.OnSiteLogin();
+        }
+
+        function onCommentSubmittedHandler(eventObj) {
+            var userId = '@User.Identity.Name';
+            var reactionTypeId = tfc.Social.getEngagementId('rate');
+            var categoryId = '@Model.CategoryId';
+
+            $.post('/SocialEngagement/ShowReactions',
+                {
+                    userId: userId,
+                    reactionTypeId: reactionTypeId,
+                    categoryId: categoryId,
+                    action: 'add'
+                }, function (data) {
+                });
+
+            var nform = $('form#naform1');
+            $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+            });
+            if ("providerPostIDs" in eventObj) {
+                reactionTypeId = tfc.Social.getEngagementId('share');
+                $.post('/SocialEngagement/ShowReactions',
+                    {
+                        userId: userId,
+                        reactionTypeId: reactionTypeId,
+                        categoryId: categoryId,
+                        action: 'add'
+                    }, function (data) {
+                    });
+            }
+            gigya.services.socialize.showRatingUI(ratingsParams);
+            var params = { comment: eventObj.commentText };
+            publishInternalUserAction(params);
+            tfc.Social.OnRatingsAndReviews({ rated: 'True' });
+        }
+    </script>
+  }
+}

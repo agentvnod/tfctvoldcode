@@ -1,0 +1,37 @@
+﻿@{
+    int attribActionIdC = (int)AnniversaryPromo.AnnivPromo_LinkingSNS;
+    string attribDescriptionC = String.Format("You connected to a social network");
+
+    using (Html.BeginForm(String.Empty, String.Empty, FormMethod.Post, new { id = "naformC", style = "display: none;" }))
+    {                  
+    <div class="hideElement">@Html.AntiForgeryToken()</div>
+    @Html.TextBox("naId", attribActionIdC, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescriptionC), new { id = "naDescription", type = "hidden" })
+    }
+}
+<script type="text/javascript">
+    function ConnectSNS(eventObj) {
+        $.post('/Ajax/ConnectSNS', { provider: eventObj.provider, UID: eventObj.user.UID }, function (data) {
+            if ($('#step1Msg').length != 0) {
+                $('#step1Msg').html(data.StatusMessage);
+            }
+        });
+        PromoNotifyAction(eventObj);
+    }
+
+    function PromoNotifyAction(eventObj) {
+        var defaultprovider = "a social network.";
+        if (eventObj.provider)
+            defaultprovider = eventObj.provider;
+        $('#naDescription').val('You connected to ' + defaultprovider);
+        var nform = $('form#naformC');
+        $.post("/Ajax/NotifyAction", nform.find('input').serialize(), function (data) {
+            //do something
+        });
+    }
+
+    gigya.socialize.addEventHandlers({
+        onConnectionAdded: ConnectSNS
+    }
+);
+</script>

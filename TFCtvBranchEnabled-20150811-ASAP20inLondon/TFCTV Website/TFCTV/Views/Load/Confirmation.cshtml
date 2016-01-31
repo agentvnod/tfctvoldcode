@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Reload Confirmation - TFC.tv";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+
+    IPTV2_Model.ReloadTransaction transaction = null;
+    if (ViewBag.Transaction != null)
+    {
+        transaction = (IPTV2_Model.ReloadTransaction)ViewBag.Transaction;
+    }
+
+    IPTV2_Model.UserWallet wallet = null;
+    if (ViewBag.UserWallet != null)
+    {
+        wallet = ViewBag.UserWallet;
+    }
+}
+<br />
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div id="transact-container">
+            <div class="breadcrumbs">
+                E-WALLET &raquo; RELOAD TYPE &raquo; CONFIRMATION
+            </div>
+            <div id="transact-body">
+                <div id="payment-selection">
+                    @Html.Action("ReloadSelection", new { pselection = ViewBag.ReloadMode })
+                </div>
+                <div id="confirm-main">
+                    <div class="breakLarge">
+                    </div>
+                    <div class="purchase-summary fold-top">
+                        <div class="breakStandard">
+                        </div>
+                        <div class="title">
+                            Thank you for reloading!</div>
+                        <div class="breakLarge">
+                        </div>
+                        <div class="breakSmall">
+                        </div>
+                        <div class="breakdown">
+                            <div class="highlight">
+                                @String.Format("You have loaded {0} {1}", transaction.Currency, transaction.Amount.ToString("F"))</div>
+                            <div class="small-text description">
+                                <p>
+                                    @String.Format("Congratulations! You have just loaded {0} {1} on your wallet.", transaction.Currency, transaction.Amount.ToString("F"))<br />
+                                    <br />
+                                    Please see the details of your transaction below</p>
+                            </div>
+                            <div class="white-bg">
+                                <div class="small-text description">
+                                    <div>
+                                        <div class="left-row">
+                                            Transaction id</div>
+                                        <div>
+                                            @transaction.TransactionId
+                                        </div>
+                                    </div>
+                                    <div class="breakSmall clear">
+                                    </div>
+                                    <div>
+                                        <div class="left-row">
+                                            Transaction date</div>
+                                        <div>
+                                            @transaction.Date.ToLongDateString()
+                                        </div>
+                                    </div>
+                                    <div class="breakSmall clear">
+                                    </div>
+                                    <div>
+                                        <div class="left-row">
+                                            Amount</div>
+                                        <div>
+                                            @String.Format("{0} {1}", transaction.Currency, transaction.Amount.ToString("F"))
+                                        </div>
+                                    </div>
+                                    <div class="breakSmall clear">
+                                    </div>
+                                    <div>
+                                        <div class="left-row">
+                                            Payment mode</div>
+                                        <div>
+                                            @ContextHelper.GetTransactionType(transaction)
+                                        </div>
+                                    </div>
+                                    <div class="breakSmall clear">
+                                    </div>
+                                    <div>
+                                        <div class="left-row">
+                                            Reference</div>
+                                        <div>
+                                            @transaction.Reference
+                                        </div>
+                                    </div>
+                                    <div class="breakSmall clear">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear breakStandard">
+                            </div>
+                            <div class="clear breakStandard">
+                            </div>
+                            <div class="small-text">
+                                Your wallet has now a total of <span class="underline">@String.Format("{0} {1}", wallet.Currency, wallet.Balance.ToString("F"))</span>.</div>
+                            <div class="breakStandard">
+                            </div>
+                            @*<div>
+                                <a href="#">Read more about the package</a></div>*@
+                            <div class="clear breakLarge">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear breakLarge">
+                    </div>
+                    <div class="btn-container">
+                        <a href="/" class="nbutton nbutton-anchor">Return to home</a></div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    <!--[if IE 7]>
+    @Html.CssBuilder(Url, "transaction.ie7-1.1.css")
+    <![endif]-->
+    <meta name="robots" content="nofollow" />
+}

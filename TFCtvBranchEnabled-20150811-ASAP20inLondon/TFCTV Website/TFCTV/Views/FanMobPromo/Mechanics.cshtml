@@ -1,0 +1,596 @@
+﻿@{
+    ViewBag.Title = "Earn promo entries and win!";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+    bool isLoggedIn = MyUtility.isUserLoggedIn();
+}
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="main-container">
+            <div class="main-banner-img">
+                @Html.ImageBuilder(Url, "banners/annivpromotopbanner960x141.png", new { style = "z-index: -11;", width = "940", height = "141", title = "FAN MOB", alt = "FAN MOB" })
+            </div>
+            <div class="breakSmall">
+            </div>
+            @if ((bool)ViewBag.UserJoined)
+            {
+                <div class="main-container-links">
+                    @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("MECHANICS", "Mechanics")
+                    | @Html.ActionLink("MY ENTRIES", "Profile")
+                </div>}
+            else
+            {<div class="main-container-links">
+                @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("JOIN", "Mechanics")
+            </div> }
+            <div class="breakStandard">
+            </div>
+            <div class="main-container-body">
+                <div class="mechanics-center-image">
+                    @Html.ImageBuilder(Url, "banners/webbanner_B_720x209.jpg", new { width = 720, height = 209 })<a
+                        href="#promoTextStart" id="promoTextStart"></a>
+                </div>
+                <div class="breakLarge">
+                </div>
+                <div class="mechanics-join" style="margin-bottom: 20px;">
+                    @if (!(bool)ViewBag.UserJoined)
+                    {
+                        using (Html.BeginForm("_EnterPromo", "FanMobPromo", FormMethod.Post, new { id = "regform", style = "text-align: center;" }))
+                        { 
+                        <text>
+                        <p class="prf-link" style="font-size: 18px; font-weight: bold;">
+                            <input type="checkbox" id="terms" name="terms" value="0" />I have read and agreed
+                            to the Terms and Conditions.@*@Html.ActionLink("Terms and Conditions", "Mechanics", "FanMobPromo", new { id = "termsLink" })*@<br />
+                            <span class="errstatus smallfont"></span>
+                        </p>
+                        <br />
+                        <div class="clear">@Html.AntiForgeryToken()</div>
+                        </text>
+                            if (isLoggedIn)
+                            {
+                        <input type="submit" class="nbutton no-decor" id="regsubmit" value="Join Now!" />
+                            }
+                            else
+                            { <div id="signinButton" class="nbutton no-decor signinBtns">
+                                LOG IN TO JOIN</div> }
+                        }
+                        <div id="notificationMsg" class="hideElement" style="max-width: 890px; text-align: center;">
+                            <span style="color: Red;">Success!</span> You have now joined the promo. Redirecting
+                            in 5 seconds.
+                        </div>
+                    }
+                </div>
+                <div class="mechanics-text">
+                    <div class="mechanics-text-header main-container-title">
+                        PROMO TERMS AND CONDITIONS
+                    </div>
+                    <div class="mechanics-text-content">
+                        <ol>
+                            <li>
+                                <p>
+                                    Registered TFC.tv users (the “Participant”) may join TFC.tv’s anniversary contest
+                                    “TFC.tv Fan Mob” (the “Contest”). The objective of the Contest is to enable Participants
+                                    to earn raffle entries and to win prizes for their actions on TFC.tv.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    ABS-CBN employees, service provider and their relatives up to the 2nd degree of
+                                    consanguinity and affinity are not allowed to join the Contest.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    The Contest shall run from @GlobalConfig.PromoRunDateString (“Contest Period”).</p>
+                            </li>
+                            <li>
+                                <p>
+                                    To join the Contest, the Participant must visit the website page of the Contest
+                                    at <a href="/FanMobPromo">http://tfc.tv/FanMobPromo</a> (the “TFC.tv Fan Mob Website”).</p>
+                            </li>
+                            <li>
+                                <p>
+                                    Thereafter, the Participant will be required to do the following in order to successfully
+                                    register for the Contest:</p>
+                                <ol type="a">
+                                    <li>If the Participant is not yet a registered TFC.tv user, the Participant will be
+                                        required to register on TFC.tv, to link at least one (1) social account with TFC.tv,
+                                        and to read and accept the Terms & Conditions of the Contest.</li>
+                                    <li>If the Participant is a registered TFC.tv user but has not yet linked a social account
+                                        with TFC.tv, Participant shall be requested to link at least one (1) social account
+                                        with TFC.tv and to accept the Terms & Conditions of the Contest.</li>
+                                    <li>If the Participant is a registered TFC.tv user and has previously linked his/her
+                                        social account with TFC.tv, the Participant will be requested to read and accept
+                                        the Terms & Conditions of the Contest.</li>
+                                </ol>
+                            </li>
+                            <li>
+                                <p>
+                                    Upon successful registration for the Contest, the Participant may continue using
+                                    TFC.tv. For each of the following Participant’s Action, the Participant shall earn
+                                    the corresponding electronic raffle entries (“Raffle Entries”) provided below subject
+                                    to the limitations provided in section 7:</p>
+                                <br />
+                                <table class="mechanicsTable" style="width: 500px;">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                Action
+                                            </th>
+                                            <th>
+                                                Equivalent Raffle Entries
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Love an episode/show/celebrity
+                                            </td>
+                                            <td>
+                                                1
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Watch free videos
+                                            </td>
+                                            <td>
+                                                5
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Share on own SNS network
+                                            </td>
+                                            <td>
+                                                5
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Write a comment
+                                            </td>
+                                            <td>
+                                                10
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Write a review
+                                            </td>
+                                            <td>
+                                                10
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Watch premium videos
+                                            </td>
+                                            <td>
+                                                10
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Link account to SNS
+                                            </td>
+                                            <td>
+                                                50
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <p>
+                                    The following limitations shall be observed on Participant’s opportunity to earn
+                                    electronic raffle entries:</p>
+                                <ol type="a">
+                                    <li>Daily Cap – Maximum number of raffle entries that Participant can earn in a day
+                                        for a particular action.</li>
+                                    <li>Lifetime Cap –Maximum number of raffle entries that Participant can earn in the
+                                        contest for a particular action.</li>
+                                    <li>Second Interval –Required period that should lapse from the time Participant performed
+                                        an action that earned him a raffle entry in order for Participant to earn another
+                                        raffle entry for the same action.</li></ol>
+                                <p>
+                                    Please refer to the table below for the complete list of the applicable limitations
+                                    for Participant’s actions that earn raffle entries:</p>
+                                <table class="mechanicsTable" style="width: 800px;">
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                Action
+                                            </th>
+                                            <th>
+                                                Lifetime Cap
+                                            </th>
+                                            <th>
+                                                Daily Cap
+                                            </th>
+                                            <th>
+                                                Second Interval
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Attach SNS
+                                            </td>
+                                            <td>
+                                                3 lifetime caps
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Post Comment
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                100
+                                            </td>
+                                            <td>
+                                                60 sec interval
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Post Review
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                50
+                                            </td>
+                                            <td>
+                                                180 sec interval
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Loving Content
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                50
+                                            </td>
+                                            <td>
+                                                90 sec interval
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Sharing Content
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                50
+                                            </td>
+                                            <td>
+                                                90 sec interval
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Watching Preview
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                50
+                                            </td>
+                                            <td>
+                                                90 sec interval
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Watching Paid
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                None
+                                            </td>
+                                            <td>
+                                                300 sec interval
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>The Participant may continue to earn Raffle Entries during the Contest Period. Participant
+                                must log on to TFC.tv before performing any action on TFC.tv to ensure that Participant
+                                shall earn Raffle Entries for the actions.<br />
+                                By joining the Contest, the Participant permits TFC.tv to display ad to update on
+                                FanMob or on any page of TFC.tv the number of entries that the Participant has earned
+                                during the term of the Contest.</li>
+                            <li>There will be ten (10) weekly winners, one (1) monthly winner and one (1) grand
+                                winner who will receive the following prizes:<br />
+                                <table class="mechanicsTable" style="width: 800px;">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 150px;">
+                                            </th>
+                                            <th>
+                                                Prizes
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                10 Weekly Winners
+                                            </td>
+                                            <td>
+                                                TFC.tv Pay-Per-Movie access. TFC.tv reserves the right to select the movie that
+                                                shall be provided.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                1 Monthly Winner
+                                            </td>
+                                            <td>
+                                                Samsung Netbook (Model: N102S-B04)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                1 Grand Winner
+                                            </td>
+                                            <td>
+                                                Round trip ticket for winner and one companion. Accommodations for winner and one
+                                                companion for three (3) days and two (2) nights. Meals for winner and one companion
+                                                for three (3) days and two (2)nights Per diem of One Thousand Pesos (Php 1,000.00)
+                                                per day each for the winner and companion. Studio Tours tickets for winner and one
+                                                companion. ASAP 18 tickets for winner and one companion.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <p>
+                                    For the Grand Winner, the following terms shall be followed:</p>
+                                <ol type="a">
+                                    <li>TFC.tv reserves the right to determine the schedule of the flight and to determine
+                                        the travel class.</li>
+                                    <li>TFC.tv reserves the right to determine the accommodation of winner and companion
+                                        and the meals that will be served to them.</li>
+                                    <li>Winner and companion shall be liable for other charges, such as but not limited
+                                        to charges for telephone calls, consumption of mini-bar, laundry, pay TV, internet
+                                        or other hotel amenities.</li>
+                                    <li>TFC.tv reserves the right to determine the schedule of the studio tour and ASAP
+                                        show.</li>
+                                    <li>Winner and companion shall be solely responsible for their security and well-being
+                                        during their stay in the Philippines and agrees to indemnify and hold ABS-CBN, its
+                                        officers, directors, agents, stockholders and employees free and harmless from and
+                                        against any and all damages, liabilities, costs and expenses, including attorney’s
+                                        fees, arising from or in connection with winner and companion’s stay in the Philippines.</li>
+                                    <li>Expenses that are not explicitly included in the Prize are the sole responsibility
+                                        of the winner. If the ASAP show or studio tour is cancelled, postponed or delayed
+                                        for any reason, TFC.tv is under no obligation to provide winner with additional
+                                        compensation or with substitution prize. </li>
+                                </ol>
+                            </li>
+                            <li>
+                                <p>
+                                    The winners shall be drawn via electronic raffle on the following raffle dates.
+                                    The Raffle Entries received by TFC.tv as of the given cut-off date shall qualify
+                                    for the specified raffle draw.</p>
+                                <table class="mechanicsTable" style="width: 800px;">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 80px;">
+                                                Draws
+                                            </th>
+                                            <th>
+                                                Drwa Dates
+                                            </th>
+                                            <th>
+                                                Cut-off Date and Time
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                Weekly Draw
+                                            </td>
+                                            <td>
+                                                10:00 am Pacific Time Zone (PST) for the following dates:<ul>
+                                                    <li>22 November 2013</li>
+                                                    <li>29 November 2013</li>
+                                                    <li>06 December 2013</li>
+                                                    <li>13 December 2013</li>
+                                                    <li>20 December 2013</li>
+                                                    <li>27 December 2013</li>
+                                                    <li>3 January 2014</li>
+                                                    <li>10 January 2014</li>
+                                                    <li>17 January 2014</li>
+                                                    <li>24 January 2014</li>
+                                                    <li>31 January 2014</li></ul>
+                                            </td>
+                                            <td>
+                                                Cut-off time is 11:59 pm PST for the following dates:
+                                                <ul>
+                                                    <li>21 November 2013</li>
+                                                    <li>28 November 2013</li>
+                                                    <li>05 December 2013</li>
+                                                    <li>12 December 2013</li>
+                                                    <li>19 December 2013</li>
+                                                    <li>26 December 2013</li>
+                                                    <li>2 January 2014</li>
+                                                    <li>9 January 2014</li>
+                                                    <li>16 January 2014</li>
+                                                    <li>23 January 2014</li>
+                                                    <li>30 January 2014</li></ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                Monthly Draw
+                                            </td>
+                                            <td>
+                                                10:00 am Pacific Time Zone (PST) for the following dates:<ul>
+                                                    <li>13 December 2013</li><li>17 January 2014</li></ul>
+                                            </td>
+                                            <td>
+                                                Cut-off time is 11:59 pm PST for the following dates:<ul>
+                                                    <li>12 December 2013</li><li>16 January 2014</li></ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                Grand Draw
+                                            </td>
+                                            <td>
+                                                10:00 am Pacific Time Zone (PST) on 7 February 2014
+                                            </td>
+                                            <td>
+                                                All entries received from 18 November 2013 until 31 January 2014, 11:59 pm PST
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>
+                                <p>
+                                    The Participant’s chances of winning shall depend on the number of eligible Raffle
+                                    Entries that TFC.tv shall receive from the Participant upon cut-off date/time of
+                                    the applicable raffle draw.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    Raffle Entries received by TFC.tv that is eligible for a particular raffle draw
+                                    shall not be carried over or shall not be eligible for the succeeding raffle draw
+                                    except that all entries received by TFC.tv from 18 November 2013 until 31 January
+                                    2014 cut-off time are eligible for the Grand Draw.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    The winners will be announced on <a href="www.tfc.tv">www.tfc.tv</a> and on TFC.tv’s
+                                    Facebook Page. TFC.tv will send an email notice to winner’s registered email address
+                                    (“Email Notice”). The Email Notice will provide instruction on how the winner can
+                                    claim his/her Prize. The Prize is not convertible to cash and cannot be assigned
+                                    to a third party. Prizes not claimed as of 15 March 2014 will be forfeited.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    Any and all taxes or levies which may be imposed in connection with the Prizes shall
+                                    be for the sole account of the winner.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    The decision of TFC.tv authorized representative shall be final and binding on all
+                                    matters related to the Contest.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    TFC.tv, ABS-CBN, its subsidiaries and affiliates are not responsible for technical
+                                    hardware or software malfunctions of any kind, lost or unavailable network connections,
+                                    failed, incorrect, incomplete, inaccurate, garbled or delayed electronic communications
+                                    caused by the user or by any of the equipment or programming associated with or
+                                    utilized in this Contest or by any human error which may occur in the processing
+                                    of the entries.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    TFC.tv reserves the right at its sole discretion to disqualify a TFC.tv subscriber
+                                    that tampers or attempts to tamper with the operation of TFC.tv website, violates
+                                    official rules or acts in an unsportsmanship or disruptive manner.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    In the event of a dispute as to the identity of the Participant, the authorized
+                                    account holder of the email address used to create the TFC.tv account shall be deemed
+                                    to be the Participant. The authorized account holder of an email address is defined
+                                    as the natural person who is assigned to an email address by an Internet Access
+                                    provider, an on-line service provider, or other organization that is responsible
+                                    for assigning the email addresses for the domain associated with the submitted email
+                                    address.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    TFC.tv reserves the right, at its sole discretion to cancel, modify or suspend the
+                                    Contest for any reason including but not limited to infection of computer virus,
+                                    technical failures or any other problems beyond the control of TFC.tv.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    TFC.tv, ABS-CBN, its subsidiaries and affiliates shall have no liability or responsibility
+                                    for any claim arising in connection with the Contest or the Prizes awarded.</p>
+                            </li>
+                            <li>
+                                <p>
+                                    The winner’s acceptance of the Prize constitutes the winner’s grant to TFC.tv, his/her
+                                    name and likeness for promotional purpose in any and all media worldwide and without
+                                    further compensation except where prohibited by law.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="clear breakStandard">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    @Html.CssBuilder(Url, "whitelayout-1.2.css")
+}
+@section JScriptBottom{
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var validator = $('form#regform').validate({
+                rules: {
+                    terms: { required: true }
+                },
+                messages: {
+                    terms: { required: 'Please accept the Terms and Conditions' }
+                },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().find('.errstatus'));
+                }
+            });
+            $('form#regform').submit(function (event) {
+                event.preventDefault();
+                if (validator.numberOfInvalids() == 0) {
+                    var form = $(this);
+                    $.post('/FanMobPromo/_EnterPromo', form.find('input, select').serialize(), function (data) {
+                        if (data.StatusCode == 0) {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html('<span style="color: Red;">Congratulations!</span> ' + data.StatusMessage + ' Redirecting in 5 seconds.');
+                            setTimeout(function () { window.location.href = '/FanMobPromo/Profile'; }, 5000);
+                        } else {
+                            $('#notificationMsg').removeClass('hideElement');
+                            $('#notificationMsg').html(data.StatusMessage);
+                        }
+                    }).fail(function () {
+                        $('#notificationMsg').removeClass('hideElement');
+                        $('#notificationMsg').html(data.StatusMessage);
+                    });
+                }
+                else {
+                    $('#message').html(createError('Please fill up the mandatory fields.') + '<div class="breakStandard"></div>');
+                }
+            });
+            $(document).on('click', '.signinBtns', function () {
+                $('#signin').click();
+                return false;
+            });
+
+        });
+    </script>
+}

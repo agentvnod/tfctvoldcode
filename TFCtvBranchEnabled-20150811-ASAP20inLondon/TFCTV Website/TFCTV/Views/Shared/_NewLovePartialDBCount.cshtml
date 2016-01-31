@@ -1,0 +1,277 @@
+﻿@model dynamic
+@{
+    var isLoggedIn = User.Identity.IsAuthenticated.ToString().ToLower();
+    string barID = String.Empty;
+    string description = String.Empty;
+    object idx = 0;
+    string type = String.Empty;
+    string loveText = "Love";
+    UserData userData = null;
+    if (ViewData["hasLoved"] != null)
+    {
+        loveText = (bool)ViewData["hasLoved"] ? "Unlove" : "Love";
+    }
+
+    string privacy = "public";
+    string internalShare = "true";
+    string feedID = "UserAction";
+    if (ViewData["userData"] != null)
+    {
+        userData = (UserData)ViewData["userData"];
+        privacy = MyUtility.GetActivityFeedPrivacy(userData);
+        internalShare = userData.IsInternalSharingEnabled.Contains("true") ? "true" : "false";
+    }
+    int containerid = 0;
+
+
+    if (Model is IPTV2_Model.Celebrity)
+    {
+        var celeb = (IPTV2_Model.Celebrity)Model;
+        containerid = celeb.CelebrityId;
+
+    }
+    var containeridstring = String.Format("socialLoveContainer-{0}", containerid);
+    var lcontainer = "lcount1";
+
+    int attribActionId = (int)AnniversaryPromo.AnnivPromo_Loving;
+    string attribDescription = String.Format("You loved <a href=\"{0}\">{1}</a>", Request.Url.AbsoluteUri, String.Format("{0} {1}", Model.FirstName, Model.LastName));
+}
+<div id="naformL" class="hideElement">
+    @Html.AntiForgeryToken()
+    @Html.TextBox("naId", attribActionId, new { id = "naId", type = "hidden" })
+    @Html.TextBox("naDescription", HttpUtility.HtmlEncode(attribDescription), new { id = "naDescription", type = "hidden" })
+</div>
+<div id="@containeridstring" style="position: relative;" class="floatLeft">
+</div>
+<div style="position: relative; margin-left: 5px;" class="floatLeft">
+    <div style="color: #000; background: #fff; padding: 2px; border-radius: 2px; margin-left: -4px;"
+        id="lcount" class="hideElement">
+    </div>
+</div>
+<div class="hideElement dcoverL">
+    @Html.ImageBuilder(Url, "transparent.png", new { width = 120, height = 40, @class = "cover", alt = "", style = "position: absolute; top: 0; left: 0; cursor: pointer;" })
+</div>
+<script type="text/javascript">    
+    var socializePluginUrl = '@Html.ContentBuilder(Url, "scripts/socialize.4.nads.js")';    
+    var src = '';
+    var url = '@HttpContext.Current.Request.Url.AbsoluteUri';
+    var myReactions = [
+            {
+                text: '@loveText',
+                ID: 'love',
+                iconImgUp: '@Html.ContentBuilder(Url, "content/images/social/Love-2.png")',
+                iconImgDown:'@Html.ContentBuilder(Url, "content/images/social/Loved-2.png")',
+                tooltip: null,
+                headerText: null,
+                noButtonBorders:'true'
+            }
+        ];
+    var loveParams = { container: '@containeridstring', barID: '', myReactions: null, isLoggedIn: @isLoggedIn, userAction: null, type: null, idx: null, postUrl: '/SocialEngagement/UpdateReaction', LoveUserActionParams: null, buttonId: '', lcontainer: '' };
+</script>
+@{if (Model is IPTV2_Model.Episode)
+  {
+      var episode = (IPTV2_Model.Episode)Model;
+      var show = episode.EpisodeCategories.FirstOrDefault(e => e.CategoryId != GlobalConfig.FreeTvCategoryId).Show;
+      description = String.Format("{0} - {1}", String.Compare(episode.EpisodeCode, episode.EpisodeName, true) == 0 ? show.Description : episode.EpisodeName, episode.DateAired.Value.ToString("MMMM d, yyyy"));
+      barID = String.Format("Episode_{0}", episode.EpisodeId);
+      idx = episode.EpisodeId;
+      type = "episode";
+      var episode_title = String.Compare(episode.EpisodeCode, episode.EpisodeName, true) == 0 ? String.Format("{0} - {1}", show.Description, episode.DateAired.Value.ToString("MMMM d, yyyy")) : episode.EpisodeName;
+    <text>
+    <script type="text/javascript">
+        title = '@episode_title';
+        src = '@GlobalConfig.EpisodeImgPath@Model.EpisodeId/@Model.ImageAssets.ImageVideo';        
+        var eLoveUserActionParams = {
+            description: 'Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',
+            usermessage: 'I love ' + title + '!',
+            src: src           
+        }
+        var LoveUserActionParams = {
+            description: 'has loved',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',            
+            src: src,
+            privacy: '@privacy',
+            feedID: '@feedID',
+            internal: @internalShare
+        };              
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Show)
+  {
+      var show = (IPTV2_Model.Show)Model;
+      barID = String.Format("Show_{0}", show.CategoryId);
+      description = show.Description;
+      idx = show.CategoryId;
+      type = "show";
+      if (show is IPTV2_Model.Movie)
+      { type = "movie"; }
+    <text>
+    <script type="text/javascript">
+        title = '@Model.Description';
+        src = '@GlobalConfig.ShowImgPath@Model.CategoryId/@Model.ImagePoster';        
+        var eLoveUserActionParams = {
+            description: 'Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',
+            usermessage: 'I love ' + title + '!',
+            src: src           
+        }
+        var LoveUserActionParams = {
+            description: 'has loved',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',            
+            src: src,
+            privacy: '@privacy',
+            feedID: '@feedID',
+            internal: @internalShare            
+        };
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Celebrity)
+  {
+      var celebrity = (IPTV2_Model.Celebrity)Model;
+      barID = String.Format("Celebrity_{0}", celebrity.CelebrityId);
+      description = String.Format("{0} {1}", celebrity.FirstName, celebrity.LastName);
+      idx = celebrity.CelebrityId;
+      type = "celebrity";
+    <text>
+    <script type="text/javascript">
+        title = '@Model.FullName';
+        src = '@Model.ImageUrl';        
+        var eLoveUserActionParams = {
+            description: 'Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',
+            usermessage: 'I love ' + title + '!',
+            src: src           
+        }
+        var LoveUserActionParams = {
+            description: 'has loved',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',            
+            src: src,
+            privacy: '@privacy',
+            feedID: '@feedID',
+            internal: @internalShare            
+        };
+    </script>
+    </text>
+  }
+  else if (Model is IPTV2_Model.Channel)
+  {
+      var channel = (IPTV2_Model.Channel)Model;
+      barID = String.Format("Channel_{0}", channel.ChannelId);
+      description = channel.Description;
+      idx = channel.ChannelId;
+      type = "channel";
+      var channelSrc = Html.ContentBuilder(Url, "content/images/channels/" + channel.ChannelId + ".jpg").ToString();      
+    <text>
+    <script type="text/javascript">
+        title = '@Model.Description';
+        src = '@channelSrc';
+        var eLoveUserActionParams = {
+            description: 'Express your love for your favorite TFC celebrities, TV shows and movies with just a click of a button.',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',
+            usermessage: 'I love ' + title + '!',
+            src: src           
+        }
+        var LoveUserActionParams = {
+            description: 'has loved',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',            
+            src: src,
+            privacy: '@privacy',
+            feedID: '@feedID',
+            internal: @internalShare            
+        };
+    </script>
+    </text>
+  }
+  else if (Model is TFCTV.Models.Youtube.YoutubeAPISingleVideoResponse)
+  {
+      var youtube = (TFCTV.Models.Youtube.YoutubeAPISingleVideoResponse)Model;
+      barID = String.Format("Youtube_{0}", youtube.data.id);
+      description = youtube.data.description;
+      idx = youtube.data.id;
+      type = "youtube";
+      var youtubeSrc = youtube.data.thumbnail.sqDefault;
+    <text>
+    <script type="text/javascript">
+        title = '@youtube.data.title';
+        src = '@youtubeSrc';
+        var eLoveUserActionParams = {
+            description: 'Sali na sa TFC.tv Barkadaoke! Watch, share, love or create the best Click Tayo music video for you.',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',
+            usermessage: 'Love ko tong Barkadaoke video. Talagang #ClickTayo sa TFC.tv!',
+            src: src           
+        }
+        var LoveUserActionParams = {
+            description: 'has loved',
+            title: title,
+            url: url,
+            actionname: "Love this too",
+            subtitle: '@GlobalConfig.baseUrl',            
+            src: src,
+            privacy: '@privacy',
+            feedID: '@feedID',
+            internal: @internalShare            
+        };
+    </script>
+    </text>
+  }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Reactions
+        var reactionParams = { barID: '@barID', buttonId: 'love', lcontainer: '@lcontainer' };
+        loveParams.buttonId = reactionParams.buttonId;
+        loveParams.lcontainer = reactionParams.lcontainer;
+        //Love
+        loveParams.nattributes = $('#naformL').find('input').serialize();
+        loveParams.userAction = userAction;
+        eLoveUserActionParams.actorUID = '@User.Identity.Name';
+        loveParams.userAction = eLoveUserActionParams;
+        loveParams.myReactions = myReactions;
+        loveParams.barID = '@barID';
+        loveParams.idx = '@idx';
+        loveParams.type = '@type';
+        loveParams.userAction.actorUID = '@User.Identity.Name';
+        LoveUserActionParams.actorUID = '@User.Identity.Name';
+        loveParams.LoveUserActionParams = LoveUserActionParams;
+        myReactions[0].tooltip = '@description';
+        myReactions[0].headerText = 'You love @description';
+        $.getScript(socializePluginUrl).done(function () {
+            tfc.Socialize.LoveDBCountWithTemplate(loveParams);
+            tfc.Socialize.GetReactionDBCount(reactionParams);
+        });
+
+        $('#@containeridstring .cover').live('click', function () {
+            tfc.Social.OnSiteLogin();
+        });
+    });
+</script>

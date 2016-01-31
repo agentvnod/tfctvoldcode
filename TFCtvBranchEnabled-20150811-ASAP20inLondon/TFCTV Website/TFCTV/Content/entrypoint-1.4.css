@@ -1,0 +1,151 @@
+.black-screen-940x406
+{
+    width: 940px;
+    height: 406px;
+    background: url('images/entrypoint/blank-line-h406.png') repeat-x;
+    text-align: center;
+	position: absolute;
+	z-index: 30;
+}
+
+.bs-play
+{
+    position: relative;
+    top: 130px;
+}
+
+.bs-play > img
+{
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.bs-watch
+{
+    margin-top: 10px;
+    font-size: 28px;
+    color: #fff;
+}
+
+.bs-sbar
+{
+    height: 40px;
+    width: 940px;
+    position: relative;    
+    z-index: 31;
+    background-color: #fff;
+    text-align: left;
+    text-indent: 10px;
+	margin-top: -37px;
+}
+
+.bs-sbar > span
+{
+    font-size: 16px;
+    position: relative;
+    top: 5px;
+}
+
+.bscr-container
+{
+    width: 940px;
+    height: 406px;
+    text-align: center;
+    z-index: 30;
+    position: absolute;
+}
+
+.bs-atag
+{
+    color: #e95d0a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.bs-atag:hover
+{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#playerContainer
+{
+    z-index: 29 !important;
+}
+
+
+.switch-to-540
+{
+    width: 540px !important;
+}
+
+.switch-to-540 > span
+{
+    font-size: 11px !important;
+}
+
+
+
+.bs-box
+{
+    background: url('images/subscribe/btn-small-box.png') bottom;
+    width: 88px;
+    height: 32px;
+    display: inline-table;
+	*zoom: 1;
+    *display: inline;
+    font-size: 14px;
+    color: #fff !important;
+    position: relative;
+    top: -1px;
+    line-height: 32px;
+    text-decoration: none;
+}
+
+.bs-box-renew
+{
+    text-indent: 18px;
+}
+
+.bs-box-subscribe
+{
+    font-size: 13px;
+    text-indent: 6px !important;
+}
+
+.bs-box-signin
+{
+    font-size: 16px;
+    text-indent: 13px !important;
+    line-height: 32px !important;
+}
+
+.bs-box:hover
+{
+    background-position: 0 0;
+    text-decoration: none;
+}
+
+
+.bs-big-box-subscribe
+{
+    background: url('images/subscribe/btn-big-box.png') bottom;
+    width: 360px;
+    height: 32px;
+    display: block;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    line-height: 32px;
+    margin-right: 5px;
+}
+
+.bs-big-box-subscribe:hover
+{
+    text-decoration: underline;
+}
+
+.bs-sbar-mobile {
+position: relative !important;
+top: 406px !important;
+}

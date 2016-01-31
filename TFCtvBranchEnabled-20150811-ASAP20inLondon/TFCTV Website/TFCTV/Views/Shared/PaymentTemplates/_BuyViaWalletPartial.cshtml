@@ -1,0 +1,57 @@
+﻿<div id="walletContainer">
+    @*<div class="breakStandard">
+    </div>
+    <div class="formSubHeaders">
+        Your TFC.tv E-Wallet</div>
+    <div class="breakStandard">
+    </div>*@
+    <div id="walletBalance" class="paymentSubHeaders">
+        @* @ViewBag.WalletBalanceFormat*@Your TFC.tv wallet has a balance of <span id="wallet-balance"
+            class="user-credits">@ViewBag.Currency @ViewBag.WalletBalance</span></div>
+    <div class="breakLarge">
+    </div>
+    <div id="confirmPayment">
+        @{if (ViewBag.isBuyable)
+          {
+            <div>
+                You are about to purchase a TFC.tv product.<br />
+                Click @Ajax.ActionLink("here", "_Wallet", new { id = ViewBag.ProductId, wid = ViewBag.WishlistId, cpid = ViewBag.CurrentProductId }, new AjaxOptions { HttpMethod = "POST", LoadingElementId = "spanner", OnBegin = "hidePaymentContainer", OnSuccess = "OnConfirmPayment" })
+                to confirm your payment.</div>
+            <div id="rsb-load" class="side-button-loader padLeftStandard">
+            </div>
+          }
+          else
+          {
+            <div>
+                You do not have enough credits to purchase this product.
+            </div>
+            <div>
+                Click <a href="@Url.Content("/Ppc")" class="orange">here</a> to reload your account.<br />
+                Or you could try our alternative payment methods.
+            </div>
+          }
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function OnConfirmPayment(data) {
+        if (data.errorCode == 0) {
+            $('#confirmPayment').html('Thank you for purchasing this product!<div class="breakStandard"></div>' + createHighlight('The amount of this product has been deducted from your wallet.') + '<div class="breakStandard"></div>' + createHighlight(data.errorMessage));
+            $('#rsb-load').empty();
+            $('#bought').val('1');
+            if (data.recipient != undefined)
+                $('#recipient').html('Your gift was successfully sent to ' + data.recipient);
+            $('#li-' + data.wid).remove();
+            getUserBalance();
+        }
+        else
+            $('#confirmPayment').html(createError(data.errorMessage));
+        $('#paymentMethod_container').show();
+    }
+
+    function hidePaymentContainer() {
+        $('#rsb-load').css('top', '4px');
+        $('#rsb-load').html('@Html.ImageBuilder(Url, "ajax-loader.gif", new { width = 20, height = 20, id = "loading-b", border = 0, alt = "loading..." })');
+        $('#paymentMethod_container').hide();
+    }
+</script>

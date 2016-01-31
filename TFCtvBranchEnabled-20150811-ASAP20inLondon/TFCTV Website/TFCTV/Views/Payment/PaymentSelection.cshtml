@@ -1,0 +1,32 @@
+﻿@{
+    var ReturnUrl = ViewContext.HttpContext.Request["ReturnUrl"];
+}
+<ul id="payment-type">
+    @{if (GlobalConfig.IsCreditCardPaymentModeEnabled)
+      {
+          if (ViewBag.CreditCardList != null)
+          {
+        <li class="@(String.Compare(ViewBag.Selection, "CreditCard", true) == 0 ? "selected" : "")">
+            @Html.ActionLink("Credit Card", "CreditCard", new { id = ViewBag.Id, ReturnUrl = ReturnUrl })</li>
+          }
+      }
+    }
+    @{if (GlobalConfig.IsPaypalPaymentModeEnabled)
+      {
+        <li class="@(String.Compare(ViewBag.Selection, "PayPal", true) == 0 ? "selected" : "")">
+            @Html.ActionLink("PayPal", "PayPal", new { id = ViewBag.Id, ReturnUrl = ReturnUrl })</li>
+      }
+    }
+     @{if (GlobalConfig.IsPpcPaymentModeEnabled)
+      { 
+        <li class="@(String.Compare(ViewBag.Selection, "PrepaidCard", true) == 0 ? "selected" : "")">
+            @Html.ActionLink("Prepaid Card", "PrepaidCard", new { id = ViewBag.Id, ReturnUrl = ReturnUrl })</li>
+      }
+    }
+    @{if (GlobalConfig.IsEWalletPaymentModeEnabled)
+      {
+        <li class="@(String.Compare(ViewBag.Selection, "EWallet", true) == 0 || String.Compare(ViewBag.Selection, "Wallet", true) == 0 ? "selected" : "")">
+            @Html.ActionLink("E-Wallet", "EWallet", new { id = ViewBag.Id, ReturnUrl = ReturnUrl })</li>
+      }
+    }   
+</ul>

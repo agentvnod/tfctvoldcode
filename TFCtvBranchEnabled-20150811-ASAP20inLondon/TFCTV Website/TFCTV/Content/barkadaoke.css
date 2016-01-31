@@ -1,0 +1,96 @@
+﻿/* File Created: September 25, 2012 */
+.record-btn
+{
+    display: block;
+    float: left;
+    width: 235px;
+    height: 48px;
+    background: url('images/barkadaoke/record.png') bottom;
+    text-indent: -99999px;
+}
+
+.record-btn:hover
+{
+    background-position: 0 0;
+}
+
+.gallery-btn
+{
+    display: block;
+    float: left;
+    width: 238px;
+    height: 48px;
+    background: url('images/barkadaoke/gallery.png') bottom;
+    text-indent: -99999px;
+}
+
+.gallery-btn:hover
+{
+    background-position: 0 0;
+}
+
+.mechanics-btn
+{
+    display: block;
+    float: left;
+    width: 232px;
+    height: 48px;
+    background: url('images/barkadaoke/mechanics.png') bottom;
+    text-indent: -99999px;
+}
+
+.mechanics-btn:hover
+{
+    background-position: 0 0;
+}
+
+.prizes-btn
+{
+    display: block;
+    float: left;
+    width: 235px;
+    height: 48px;
+    background: url('images/barkadaoke/prizes.png') bottom;
+    text-indent: -99999px;
+}
+
+.prizes-btn:hover
+{
+    background-position: 0 0;
+}
+
+
+.yt-thumb
+{
+    width: 225px;
+    margin: 0;
+    float: left;
+}
+
+.yt-videos
+{
+    width: 940px;
+    margin: 0;
+    text-align: center;
+}
+
+
+.yt-info
+{
+    text-align: left;
+    margin-left: 55px;
+}
+
+
+.yt-title
+{
+    font-size: 13px;
+    font-weight: bold;
+    color: #49a4ff;
+}
+
+.yt-subtitle
+{
+    font-size: 11px;
+    color: #fff;
+}

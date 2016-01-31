@@ -1,0 +1,92 @@
+﻿@model ShowPackageProductPrices
+@{if (Model != null)
+  {
+      if (Model.ShowPackageGroupProductList != null)
+      {
+          foreach (var item in Model.ShowPackageGroupProductList)
+          {
+              foreach (var product in item.Product2.OrderBy(p => p.ProductPrice.Amount).Take(1))
+              {
+                  var className = ContextHelper.GetProductName(product.ProductId).Replace("TFC.tv", "").Replace(" ", "").Replace(":", "").ToLower();
+    <text>
+    <div class="btn-ppm btn-@className">
+        @{if (className == "premium")
+          {
+            <a class="odlink" href="/Subscription#GoPremium">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else if (className == "lite")
+          {
+            <a class="odlink" href="/Subscription#GoLite">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else if (className == "moviechannel")
+          {
+            <a class="odlink" href="/Subscription#GoMovie">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>
+          }
+          else
+          { 
+            <a href="/buy/process/@product.ProductId" rel="#bs_overlay" class="bprod">
+                <div class="btn-text">@product.ProductPrice.Amount.ToString("F")
+                    @product.ProductPrice.CurrencyCode</div>
+            </a>            
+          }
+        }
+    </div>
+    </text>
+              }
+          }
+      }
+
+      if (Model.ShowAlacarteProductList != null)
+      {
+          foreach (var item in Model.ShowAlacarteProductList)
+          {
+    <text>
+    <div class="btn-ppm btn-ppm-@item.ALaCarteSubscriptionTypeId">
+        @{foreach (var price in item.ProductPrices.Take(1))
+          {
+            <text><a href="/buy/process/@item.ProductId" rel="#bs_overlay" class="bprod">
+                <div class="btn-text">
+                    @price.Amount.ToString("F")
+                    @price.CurrencyCode</div>
+            </a>
+            </text>
+          }
+        }
+    </div>
+    </text>
+          }
+      }
+
+  }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.bprod').click(function () {
+            $(this).overlay({
+                mask: 'black',
+                fixed: false,
+                closeOnClick: false,
+                onBeforeLoad: function () {
+                    $(".apple_overlay").width(640);
+                    var wrap = this.getOverlay().find(".contentWrap");
+                    wrap.load(this.getTrigger().attr("href"));
+                },
+                onClose: function () {
+                    $('#bs_overlay .contentWrap').empty();                   
+                },
+                load: true
+            });
+            return false;
+        });
+    });
+            
+</script>

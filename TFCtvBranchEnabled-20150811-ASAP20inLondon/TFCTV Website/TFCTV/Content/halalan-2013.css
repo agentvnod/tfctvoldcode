@@ -1,0 +1,35 @@
+﻿/* File Created: March 15, 2013 */
+#latestShows_bodyContainer
+{
+    margin-left: 5px;
+}
+
+.h_section .itemListBody  .wrapper{
+	margin-left: 35px;
+}
+
+.fullHeader {
+width: 930px;
+}
+
+.halalan_section_header {
+font-size: 16px;
+font-weight: bolder;
+color: #fff;
+text-shadow: 1px 1px 15px #000;
+}
+
+.section_header_40 {
+margin-left: 40px;}
+
+
+#halalan-faq h3 { font-size: 18px;}
+
+
+#halalan-faq p {
+font-size: 15px;
+line-height: 24px;}
+
+#halalan-faq {width: 900px;}
+
+#featuredItems_NewsAlerts { display: none; }

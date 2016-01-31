@@ -1,0 +1,13 @@
+﻿@{if ((bool)ViewBag.retVal)
+  {
+    <script type="text/javascript">
+        location.href = '@GlobalConfig.MultipleLoginRedirectedUrl';
+    </script>
+  }
+  else
+  { 
+    <text>
+    <!-- carry on --->
+    </text>
+  }
+}

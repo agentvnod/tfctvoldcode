@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Earn promo entries and win!";
+    Layout = "~/Views/Shared/_TFCTVBlue.cshtml";
+}
+<br />
+<div id="mainBody">
+    <div class="transparentBg">
+        <div class="main-container">
+            <div class="main-banner-img">
+                @Html.ImageBuilder(Url, "banners/annivpromotopbanner960x141.png", new { style = "z-index: -11;", width = "940", height = "141", title = "FAN MOB", alt = "FAN MOB" })
+            </div>
+            <div class="breakSmall">
+            </div>
+            @if ((Boolean)ViewBag.UserJoined)
+            {
+                <div class="main-container-links">
+                    @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("MECHANICS", "Mechanics")
+                    | @Html.ActionLink("MY ENTRIES", "Profile") | @Html.ActionLink("WINNERS", "WINNERS")
+                </div>}
+            else
+            {<div class="main-container-links">
+                @Html.ActionLink("MAIN PAGE", "Index") | @Html.ActionLink("JOIN", "Mechanics")
+            </div> }
+            <div class="breakSmall">
+            </div>
+            <div class="main-container-body">
+                <div class="main-container-title">
+                    It's fun to be a fan!
+                </div>
+                <div class="breakStandard">
+                </div>
+                <div class="mpadbottom">
+                    <div class="main-leftPanel floatLeft" style="width: 430px; margin-right: 10px; font-size: 16px;">
+                        <p>
+                            Solid Kapamilyas unite!
+                        </p>
+                        <p>
+                            Join the TFC.tv Fan Mob and be one with other Kapamilya fans! Rally behind your
+                            favorite TFC shows and stars, lead the mob, and enjoy special privilege reserved
+                            only for the ultimate fans.</p>
+                        <p>
+                            The more loves, shares, views, and reviews you make, the bigger your chances of
+                            winning the ultimate Fan experience – a round trip ticket for two to the Philippines
+                            and front-row seats to live Kapamilya shows to see your favorite Kapamilya idols!
+                            Keep coming back and just do the things you’ve always loved doing here on TFC.tv.</p>
+                        @if (ViewBag.UserJoined == true)
+                        {
+                            @Html.ActionLink("See your points", "Profile", null, new { @class = "nbutton no-decor" });
+                        }
+                        else
+                        { @Html.ActionLink("Maki-Fan Mob na!", "Mechanics", null, new { @class = "nbutton no-decor" });
+                        }
+                    </div>
+                    <div>
+                        @Html.ImageBuilder(Url, "banners/webbanner_A_470x353_revised2.jpg", new { @class = "fanMobMedium" })
+                    </div>
+                </div>
+                <div class="clear breakStandard">
+                </div>
+                <div class="main-container-subtitle main-indent">
+                    Top Participants
+                </div>
+                <div class="breakSmall">
+                </div>
+                <div class="main-top-users" id="featuredItems_TopUsers">
+                    <div class="itemListBody">
+                        <div class="wrapper">
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear breakStandard">
+                </div>
+            </div>
+            <div class="clear breakStandard">
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+</div>
+@section Stylesheet {
+    @Html.CssBuilder(Url, "featureditem.css")
+    @Html.CssBuilder(Url, "transaction-1.6.css")
+    @Html.CssBuilder(Url, "whitelayout-1.2.css")
+}
+@section JScriptBottom {
+    <script type="text/javascript">
+        var promoName = '@GlobalConfig.GigyaPromoChallengeID';
+        var defaultphotoURL = '@Html.ContentBuilder(Url, "content/images/userprofile/profile.jpg")';
+        var cycleJs = '@Html.ContentBuilder(Url, "scripts/jquery.cycle.all.js")';
+        var featureItemGeneratorJs = '@Html.ContentBuilder(Url, "scripts/featureItemsGenerator-1.4.js")';        
+    </script>
+    <script type="text/javascript">
+        function loadData(item) {
+            $.ajax({
+                url: item.url
+                    , dataType: 'json'
+                    , beforeSend: function () {
+                        $('#' + item.container + ' .itemListBody .wrapper').empty();
+                        $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">Loading users...</div>');
+                    }
+            })
+            .done(function (data) {
+                if (data.errorCode == 0) {
+                    $.getScript(cycleJs).done(function () {
+                        $.getScript(featureItemGeneratorJs).done(function () {
+                            var list = new featureItem({
+                                json_str: data.users, type: item.type, itemperslide: item.itemperslide, container: item.container, nid: item.nid, maxCount: 10, section: '/Profile', defaultphotoURL: defaultphotoURL, promoName: promoName
+                            }).topUsers();
+                        });
+                    });
+                }
+                else {
+                    $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">The system encountered an error while retrieving the users. Please click <a href="#" class="retryTopUsers">here</a> to try again.</div>');
+                }
+            })
+            .fail(function () { $('#' + item.container + ' .itemListBody .wrapper').html('<div class="white">The system encountered an error while retrieving the users. Please click <a href="#" class="retryTopUsers">here</a> to try again.</div>'); });
+        }
+
+        function init() {
+            var item = { url: "/Ajax/GetTopUsers", type: "profile", itemperslide: 5, container: "featuredItems_TopUsers", nid: "nav-topusers" };
+            loadData(item);
+        }
+
+        $(document).ready(function () {
+            init();
+            $(document).on('click', '.retryTopUsers', function () { init(); return false; });
+        });
+       
+    </script>
+}

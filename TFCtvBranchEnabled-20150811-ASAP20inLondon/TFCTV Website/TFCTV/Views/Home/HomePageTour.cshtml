@@ -1,0 +1,48 @@
+﻿@{if (User.Identity.IsAuthenticated && !Request.Browser.IsMobileDevice)
+  {   
+    <script type="text/javascript">
+
+        var tour = new Tour({
+            steps: [
+  {
+      element: "#main_menu",
+      title: "Navigation",
+      content: "Easier access to your favorite shows and movies",
+      placement: 'left'
+  },
+  {
+      element: "#my_settings_menu",
+      title: "My Account",
+      content: "Shortcuts to manage your account",
+      placement: 'left'
+  },
+  {
+      element: "#latest_episodes",
+      title: "New Layout",
+      content: "Experience a cleaner look and streamlined design",
+      placement: 'top'
+  },
+  {
+      element: "#latest_episodes-loadmore",
+      title: "See more Content",
+      content: "Click on load more to view more content!",
+      placement: 'top'
+  },
+  {
+      element: "#footer_get_started",
+      title: "New footer look",
+      content: "Additional links for your convenience!",
+      placement: 'top'
+  }
+],
+            backdrop: false
+        });
+
+        // Initialize the tour
+        tour.init();
+
+        // Start the tour
+        tour.start();
+    </script>
+  }
+}

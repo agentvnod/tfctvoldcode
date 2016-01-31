@@ -1,0 +1,14 @@
+# git ignore file
+*.zip
+*.bak
+*.config
+*.user
+TFCtv Azure VS2013.ccproj.user
+TFCtv Azure VS2013.ccproj.*
+
+# Build Folders
+bin
+obj
+csx
+rcf
+Profiles
